@@ -1,0 +1,62 @@
+<xliff xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd" xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file original="lit-localize-inputs" datatype="plaintext" source-language="en" target-language="bg">
+    <body>
+      <trans-unit id="sb55ca4fcc0201a78">
+        <source>Epidemic simulation layout</source>
+        <target>Схема за симулиране на епидемия</target>
+      </trans-unit>
+      <trans-unit id="s7ede1c55e35ce9d6">
+        <source>Simulation</source>
+        <target>Симулация</target>
+      </trans-unit>
+      <trans-unit id="s6eb1e58d961a30ab">
+        <source>Agent simulation canvas</source>
+        <target>Платформа за симулация на агенти</target>
+      </trans-unit>
+      <trans-unit id="s33fc11842b7fede3">
+        <source>Agents move in this panel; colors represent susceptible, infected, and recovered.</source>
+        <target>В този панел се движат агенти; цветовете обозначават податливи, заразени и оздравели.</target>
+      </trans-unit>
+      <trans-unit id="s388e7d961027d025">
+        <source>SIR chart</source>
+        <target>Графика на SIR</target>
+      </trans-unit>
+      <trans-unit id="s1fde783f72a49313">
+        <source>SIR line chart canvas</source>
+        <target>Платно за линейна диаграма SIR</target>
+      </trans-unit>
+      <trans-unit id="s61172c3c93cb5bde">
+        <source>Live counts for susceptible, infected, and recovered are plotted over time.</source>
+        <target>На графиката са изобразени данните за броя на податливите, заразените и оздравелите лица във времето.</target>
+      </trans-unit>
+      <trans-unit id="s83cd32b685ccc9b7">
+        <source>Controls</source>
+        <target>Управление</target>
+      </trans-unit>
+      <trans-unit id="s6144a4a2c984c772">
+        <source>Population</source>
+        <target>Население</target>
+      </trans-unit>
+      <trans-unit id="se24130f1123560a0">
+        <source>Speed</source>
+        <target>Скорост</target>
+      </trans-unit>
+      <trans-unit id="s7b564dc9f5db9ad8">
+        <source>Infection radius</source>
+        <target>Радиус на заразяване</target>
+      </trans-unit>
+      <trans-unit id="s71ffa36b183c46fd">
+        <source>Infection probability</source>
+        <target>Вероятност за инфекция</target>
+      </trans-unit>
+      <trans-unit id="s09943be8697420ce">
+        <source>Recovery duration</source>
+        <target>Продължителност на възстановяването</target>
+      </trans-unit>
+      <trans-unit id="s6c42c02bb3a76cef">
+        <source>Reset simulation</source>
+        <target>Възстановяване на симулацията</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

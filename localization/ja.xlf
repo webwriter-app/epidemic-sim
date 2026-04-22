@@ -1,0 +1,62 @@
+<xliff xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd" xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file original="lit-localize-inputs" datatype="plaintext" source-language="en" target-language="ja">
+    <body>
+      <trans-unit id="sb55ca4fcc0201a78">
+        <source>Epidemic simulation layout</source>
+        <target>疫病シミュレーションの構成</target>
+      </trans-unit>
+      <trans-unit id="s7ede1c55e35ce9d6">
+        <source>Simulation</source>
+        <target>シミュレーション</target>
+      </trans-unit>
+      <trans-unit id="s6eb1e58d961a30ab">
+        <source>Agent simulation canvas</source>
+        <target>エージェントシミュレーションキャンバス</target>
+      </trans-unit>
+      <trans-unit id="s33fc11842b7fede3">
+        <source>Agents move in this panel; colors represent susceptible, infected, and recovered.</source>
+        <target>このパネル内ではエージェントが移動します。色は、未感染、感染、回復を表しています。</target>
+      </trans-unit>
+      <trans-unit id="s388e7d961027d025">
+        <source>SIR chart</source>
+        <target>SIR曲線</target>
+      </trans-unit>
+      <trans-unit id="s1fde783f72a49313">
+        <source>SIR line chart canvas</source>
+        <target>SIR線グラフキャンバス</target>
+      </trans-unit>
+      <trans-unit id="s61172c3c93cb5bde">
+        <source>Live counts for susceptible, infected, and recovered are plotted over time.</source>
+        <target>感染リスクのある人、感染者、回復者のリアルタイムの数値が、時間の経過とともにグラフ化されています。</target>
+      </trans-unit>
+      <trans-unit id="s83cd32b685ccc9b7">
+        <source>Controls</source>
+        <target>操作方法</target>
+      </trans-unit>
+      <trans-unit id="s6144a4a2c984c772">
+        <source>Population</source>
+        <target>人口</target>
+      </trans-unit>
+      <trans-unit id="se24130f1123560a0">
+        <source>Speed</source>
+        <target>速度</target>
+      </trans-unit>
+      <trans-unit id="s7b564dc9f5db9ad8">
+        <source>Infection radius</source>
+        <target>感染範囲</target>
+      </trans-unit>
+      <trans-unit id="s71ffa36b183c46fd">
+        <source>Infection probability</source>
+        <target>感染確率</target>
+      </trans-unit>
+      <trans-unit id="s09943be8697420ce">
+        <source>Recovery duration</source>
+        <target>回復期間</target>
+      </trans-unit>
+      <trans-unit id="s6c42c02bb3a76cef">
+        <source>Reset simulation</source>
+        <target>シミュレーションをリセット</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

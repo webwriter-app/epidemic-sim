@@ -1,0 +1,62 @@
+<xliff xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd" xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file original="lit-localize-inputs" datatype="plaintext" source-language="en" target-language="id">
+    <body>
+      <trans-unit id="sb55ca4fcc0201a78">
+        <source>Epidemic simulation layout</source>
+        <target>Tata letak simulasi epidemi</target>
+      </trans-unit>
+      <trans-unit id="s7ede1c55e35ce9d6">
+        <source>Simulation</source>
+        <target>Simulasi</target>
+      </trans-unit>
+      <trans-unit id="s6eb1e58d961a30ab">
+        <source>Agent simulation canvas</source>
+        <target>Kanvas simulasi agen</target>
+      </trans-unit>
+      <trans-unit id="s33fc11842b7fede3">
+        <source>Agents move in this panel; colors represent susceptible, infected, and recovered.</source>
+        <target>Agen bergerak di panel ini; warna-warna tersebut mewakili kelompok yang rentan, terinfeksi, dan telah sembuh.</target>
+      </trans-unit>
+      <trans-unit id="s388e7d961027d025">
+        <source>SIR chart</source>
+        <target>Grafik SIR</target>
+      </trans-unit>
+      <trans-unit id="s1fde783f72a49313">
+        <source>SIR line chart canvas</source>
+        <target>Kanvas grafik garis SIR</target>
+      </trans-unit>
+      <trans-unit id="s61172c3c93cb5bde">
+        <source>Live counts for susceptible, infected, and recovered are plotted over time.</source>
+        <target>Jumlah kasus aktif, terinfeksi, dan sembuh ditampilkan dalam grafik berdasarkan waktu.</target>
+      </trans-unit>
+      <trans-unit id="s83cd32b685ccc9b7">
+        <source>Controls</source>
+        <target>Kontrol</target>
+      </trans-unit>
+      <trans-unit id="s6144a4a2c984c772">
+        <source>Population</source>
+        <target>Penduduk</target>
+      </trans-unit>
+      <trans-unit id="se24130f1123560a0">
+        <source>Speed</source>
+        <target>Kecepatan</target>
+      </trans-unit>
+      <trans-unit id="s7b564dc9f5db9ad8">
+        <source>Infection radius</source>
+        <target>Jangkauan penularan</target>
+      </trans-unit>
+      <trans-unit id="s71ffa36b183c46fd">
+        <source>Infection probability</source>
+        <target>Kemungkinan terinfeksi</target>
+      </trans-unit>
+      <trans-unit id="s09943be8697420ce">
+        <source>Recovery duration</source>
+        <target>Lamanya masa pemulihan</target>
+      </trans-unit>
+      <trans-unit id="s6c42c02bb3a76cef">
+        <source>Reset simulation</source>
+        <target>Atur ulang simulasi</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

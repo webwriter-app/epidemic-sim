@@ -1,0 +1,62 @@
+<xliff xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd" xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file original="lit-localize-inputs" datatype="plaintext" source-language="en" target-language="ko">
+    <body>
+      <trans-unit id="sb55ca4fcc0201a78">
+        <source>Epidemic simulation layout</source>
+        <target>전염병 시뮬레이션 구성</target>
+      </trans-unit>
+      <trans-unit id="s7ede1c55e35ce9d6">
+        <source>Simulation</source>
+        <target>시뮬레이션</target>
+      </trans-unit>
+      <trans-unit id="s6eb1e58d961a30ab">
+        <source>Agent simulation canvas</source>
+        <target>에이전트 시뮬레이션 캔버스</target>
+      </trans-unit>
+      <trans-unit id="s33fc11842b7fede3">
+        <source>Agents move in this panel; colors represent susceptible, infected, and recovered.</source>
+        <target>이 패널에서는 개체들이 이동하며, 색상은 감염 위험이 있는 개체, 감염된 개체, 회복된 개체를 나타냅니다.</target>
+      </trans-unit>
+      <trans-unit id="s388e7d961027d025">
+        <source>SIR chart</source>
+        <target>SIR 차트</target>
+      </trans-unit>
+      <trans-unit id="s1fde783f72a49313">
+        <source>SIR line chart canvas</source>
+        <target>SIR 선형 차트 캔버스</target>
+      </trans-unit>
+      <trans-unit id="s61172c3c93cb5bde">
+        <source>Live counts for susceptible, infected, and recovered are plotted over time.</source>
+        <target>감염 위험이 있는 사람, 감염자, 회복자의 실시간 수치를 시간 경과에 따라 그래프로 나타냈다.</target>
+      </trans-unit>
+      <trans-unit id="s83cd32b685ccc9b7">
+        <source>Controls</source>
+        <target>조작법</target>
+      </trans-unit>
+      <trans-unit id="s6144a4a2c984c772">
+        <source>Population</source>
+        <target>인구</target>
+      </trans-unit>
+      <trans-unit id="se24130f1123560a0">
+        <source>Speed</source>
+        <target>속도</target>
+      </trans-unit>
+      <trans-unit id="s7b564dc9f5db9ad8">
+        <source>Infection radius</source>
+        <target>감염 반경</target>
+      </trans-unit>
+      <trans-unit id="s71ffa36b183c46fd">
+        <source>Infection probability</source>
+        <target>감염 확률</target>
+      </trans-unit>
+      <trans-unit id="s09943be8697420ce">
+        <source>Recovery duration</source>
+        <target>회복 기간</target>
+      </trans-unit>
+      <trans-unit id="s6c42c02bb3a76cef">
+        <source>Reset simulation</source>
+        <target>시뮬레이션 초기화</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

@@ -1,0 +1,28 @@
+{
+    "name": "@webwriter/epidemic-sim",
+    "version": "0.0.1",
+    "keywords": [
+        "webwriter-widget"
+    ],
+    "license": "MIT",
+    "author": "Jason Iloppa <iloppajason@icloud.com>",
+    "scripts": {
+        "prepublishOnly": "npx @webwriter/build",
+        "dev": "npx @webwriter/build dev",
+        "localize": "lit-localize extract && npx @webwriter/build localize && lit-localize build"
+    },
+    "dependencies": {
+        "@lit/localize": "^0.12.2",
+        "@webwriter/lit": "^2",
+        "lit": "^3"
+    },
+    "devDependencies": {
+        "@lit/localize-tools": "^0.8"
+    },
+    "exports": {
+        "./widgets/webwriter-epidemic-sim.*": {
+            "source": "./widgets/webwriter-epidemic-sim.ts",
+            "default": "./dist/widgets/webwriter-epidemic-sim.*"
+        }
+    }
+}

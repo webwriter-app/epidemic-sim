@@ -1,0 +1,27 @@
+
+    // Do not modify this file by hand!
+    // Re-generate this file by running lit-localize
+
+    
+    
+
+    /* eslint-disable no-irregular-whitespace */
+    /* eslint-disable @typescript-eslint/no-explicit-any */
+
+    export const templates = {
+      's09943be8697420ce': `Duur van het herstel`,
+'s1fde783f72a49313': `SIR-lijngrafiekcanvas`,
+'s33fc11842b7fede3': `In dit paneel bewegen de agenten; de kleuren geven aan of ze vatbaar, besmet of hersteld zijn.`,
+'s388e7d961027d025': `SIR-grafiek`,
+'s61172c3c93cb5bde': `De actuele aantallen van vatbare, besmette en genezen personen worden in de tijd weergegeven.`,
+'s6144a4a2c984c772': `Bevolking`,
+'s6c42c02bb3a76cef': `Simulatie opnieuw starten`,
+'s6eb1e58d961a30ab': `Simulatieomgeving voor agenten`,
+'s71ffa36b183c46fd': `Kans op infectie`,
+'s7b564dc9f5db9ad8': `Besmettingsradius`,
+'s7ede1c55e35ce9d6': `Simulatie`,
+'s83cd32b685ccc9b7': `Bedieningselementen`,
+'sb55ca4fcc0201a78': `Opzet van een epidemiesimulatie`,
+'se24130f1123560a0': `Snelheid`,
+    };
+  
