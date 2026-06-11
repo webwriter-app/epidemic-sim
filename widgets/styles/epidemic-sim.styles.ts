@@ -3,6 +3,9 @@ import {css} from "lit"
 export const epidemicSimStyles = css`
   :host {
     display: block;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
     box-sizing: border-box;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     color: #1a1a1a;
@@ -17,34 +20,60 @@ export const epidemicSimStyles = css`
   .layout {
     display: grid;
     gap: 12px;
-    grid-template-columns: minmax(260px, 1fr) minmax(420px, 1.6fr);
-    grid-template-areas:
-      "chart simulation"
-      "controls simulation";
-    align-items: stretch;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto minmax(360px, 1fr);
+    height: 100%;
     min-width: 0;
+    min-height: 0;
   }
 
   .panel {
-    border: 1px solid #d6dce4;
-    background: #fff;
-    padding: 12px;
     display: flex;
     flex-direction: column;
     min-width: 0;
     min-height: 260px;
   }
 
+  .panel::part(base) {
+    border: 1px solid #d6dce4;
+    background: #fff;
+    min-height: inherit;
+  }
+
+  .panel::part(body) {
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    min-height: inherit;
+  }
+
   .panel--simulation {
-    grid-area: simulation;
+    min-height: 0;
+  }
+
+  .panel--simulation::part(body) {
+    flex: 1;
+    min-height: 0;
+  }
+
+  .panel--simulation canvas {
+    flex: 1;
+    min-height: 360px;
+    height: auto;
   }
 
   .panel--chart {
-    grid-area: chart;
+    align-self: start;
+    min-height: auto;
   }
 
-  .panel--controls {
-    grid-area: controls;
+  .panel--chart::part(base) {
+    min-height: auto;
+  }
+
+  .panel--chart::part(body) {
+    min-height: auto;
   }
 
   .panel p {
@@ -54,72 +83,89 @@ export const epidemicSimStyles = css`
     line-height: 1.4;
   }
 
-  canvas {
+  .chart-wrap {
+    position: relative;
     width: 100%;
     height: 220px;
+    min-height: 220px;
+    max-height: 220px;
+    flex: 0 0 auto;
+    border: 1px solid #d6dce4;
+    background: #fcfdff;
+  }
+
+  .chart-wrap--interactive {
+    cursor: zoom-in;
+  }
+
+  .chart-context-menu {
+    position: fixed;
+    z-index: 28;
+    background: #ffffff;
+    border: 1px solid #d6dce4;
+    border-radius: 8px;
+    box-shadow: 0 8px 20px rgba(15, 23, 42, 0.16);
+    padding: 6px;
+    min-width: 170px;
+  }
+
+  .chart-context-menu__item {
+    width: 100%;
+  }
+
+  .chart-context-menu__item::part(base) {
+    width: 100%;
+    justify-content: flex-start;
+    text-align: left;
+    color: #0f172a;
+    border-radius: 6px;
+    padding: 7px 8px;
+  }
+
+  .chart-context-menu__item::part(base):hover {
+    background: #f1f5f9;
+  }
+
+  .chart-wrap canvas {
+    display: block;
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  canvas {
+    width: 100%;
     border: 1px solid #d6dce4;
     background: #fcfdff;
   }
 
   .panel--simulation canvas {
     height: 360px;
+    cursor: grab;
   }
 
-  .status {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-    margin: 8px 0 0 0;
-    font-size: 0.9rem;
-    font-variant-numeric: tabular-nums;
+  .hotspot-toolbox__notice::part(base) {
+    font-size: 0.8rem;
+    font-weight: 500;
   }
 
-  .status-item {
-    padding: 2px 8px;
-    color: #fff;
-    font-weight: 600;
+  .hotspot-toolbox__token {
+    user-select: none;
+    cursor: grab;
+    width: max-content;
   }
 
-  .status-item--susceptible {
-    background: #2563eb;
+  .hotspot-toolbox__token::part(base) {
+    min-width: 34px;
+    min-height: 34px;
+    border-width: 2px;
+    border-color: #7c3aed;
+    color: #7c3aed;
+    font-weight: 700;
+    text-transform: uppercase;
   }
 
-  .status-item--infected {
-    background: #dc2626;
-  }
-
-  .status-item--recovered {
-    background: #16a34a;
-  }
-
-  .controls {
-    display: grid;
-    gap: 10px;
-    margin-top: 4px;
-  }
-
-  .control {
-    display: grid;
-    gap: 4px;
-  }
-
-  .control-head {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    gap: 8px;
-    font-size: 0.9rem;
-  }
-
-  .control-value {
-    color: #334155;
-    font-variant-numeric: tabular-nums;
-    font-size: 0.86rem;
-  }
-
-  input[type="range"] {
+  sl-range {
     width: 100%;
-    margin: 0;
   }
 
   .actions {
@@ -132,28 +178,302 @@ export const epidemicSimStyles = css`
 
   .simulation-actions {
     justify-content: flex-start;
+    flex-wrap: wrap;
   }
 
-  button {
-    border: none;
-    background: #f7fafc;
+  .hotspot-toolbox--map {
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .chart-overlay__fit-switch {
+    font-size: 0.92rem;
+  }
+
+  .chart-overlay__fit-switch::part(form-control) {
+    margin-bottom: 0;
+  }
+
+  .panel--simulation canvas.drop-active {
+    outline: 2px dashed #7c3aed;
+    outline-offset: -4px;
+    background: #f5f3ff;
+  }
+
+  .actions sl-button::part(base) {
+    min-width: 112px;
+  }
+
+  .hotspot-toolbox__token:active {
+    cursor: grabbing;
+  }
+
+  .chart-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.56);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    z-index: 30;
+  }
+
+  .chart-overlay__dialog {
+    width: min(1020px, 100%);
+    max-height: 100%;
+    overflow: auto;
+    border: 1px solid #d6dce4;
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 16px 40px rgba(15, 23, 42, 0.3);
+    padding: 14px;
+    display: grid;
+    gap: 12px;
+  }
+
+  .chart-overlay__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+  }
+
+  .chart-overlay__header h3 {
+    margin: 0;
+    font-size: 1.05rem;
+  }
+
+  .chart-overlay__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: flex-end;
+  }
+
+  .chart-overlay__controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .chart-overlay__chart-wrap {
+    position: relative;
+    width: 100%;
+    height: min(52vh, 420px);
+    min-height: 260px;
+    border: 1px solid #d6dce4;
+    background: #fcfdff;
+  }
+
+  .chart-overlay__chart-wrap canvas {
+    display: block;
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  .chart-overlay__insights {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 8px;
+  }
+
+  .chart-overlay__insight-item {
+    border: 1px solid #e2e8f0;
+    background: #f8fafc;
+    border-radius: 8px;
+    padding: 8px 10px;
+    display: grid;
+    gap: 2px;
+  }
+
+  .chart-overlay__insight-item:first-child {
+    grid-column: 1 / -1;
+    margin-bottom: 4px;
+  }
+
+  .chart-overlay__insight-item span {
+    font-size: 0.78rem;
+    color: #475569;
+  }
+
+  .chart-overlay__insight-item strong {
+    font-size: 0.94rem;
     color: #0f172a;
-    font: inherit;
-    padding: 6px 12px;
-    cursor: pointer;
+    font-variant-numeric: tabular-nums;
   }
 
-  button:hover {
-    background: #f0f5fa;
+  .snapshots-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.56);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    z-index: 30;
+  }
+
+  .snapshots-overlay__dialog {
+    width: min(1040px, 100%);
+    max-height: 100%;
+    overflow: auto;
+    border: 1px solid #d6dce4;
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 16px 40px rgba(15, 23, 42, 0.3);
+    padding: 14px;
+    display: grid;
+    gap: 12px;
+  }
+
+  .snapshots-overlay__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+  }
+
+  .snapshots-overlay__header h3 {
+    margin: 0;
+    font-size: 1.05rem;
+  }
+
+  .snapshots-overlay__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: flex-end;
+  }
+
+  .snapshots-overlay__empty {
+    border: 1px dashed #cbd5e1;
+    border-radius: 10px;
+    background: #f8fafc;
+    color: #334155;
+    padding: 12px;
+    font-size: 0.9rem;
+  }
+
+  .snapshots-overlay__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    align-content: start;
+  }
+
+  .snapshots-overlay__snapshot-card {
+    border: 1px solid #d6dce4;
+    border-radius: 10px;
+    padding: 10px;
+    display: grid;
+    gap: 8px;
+    background: #ffffff;
+  }
+
+  .snapshots-overlay__snapshot-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .snapshots-overlay__snapshot-title {
+    font-weight: 600;
+    color: #0f172a;
+  }
+
+  .snapshots-overlay__snapshot-time {
+    color: #475569;
+    font-size: 0.8rem;
+  }
+
+  .snapshots-overlay__snapshot-image {
+    width: 100%;
+    height: min(20vh, 190px);
+    min-height: 140px;
+    border: 1px solid #d6dce4;
+    border-radius: 8px;
+    object-fit: contain;
+    background: #f8fafc;
+  }
+
+  .snapshots-overlay__snapshot-details {
+    border-top: 1px solid #e2e8f0;
+    padding-top: 6px;
+  }
+
+  .snapshots-overlay__snapshot-details::part(base) {
+    border: none;
+    border-radius: 0;
+    padding: 0;
+  }
+
+  .snapshots-overlay__snapshot-details::part(header) {
+    padding: 0 0 6px 0;
+    color: #334155;
+    font-size: 0.82rem;
+  }
+
+  .snapshots-overlay__snapshot-details::part(content) {
+    padding: 0;
+  }
+
+  .snapshots-overlay__snapshot-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 6px 10px;
+    font-size: 0.82rem;
+    color: #334155;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .snapshots-overlay__snapshot-grid strong {
+    color: #0f172a;
+  }
+
+  .snapshots-overlay__snapshot-icon-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 6px;
+    padding-top: 2px;
+  }
+
+  .snapshots-overlay__icon-button {
+    width: 30px;
+    height: 30px;
+  }
+
+  .snapshots-overlay__icon-button::part(base) {
+    min-width: 30px;
+    min-height: 30px;
+    padding: 0;
+    border-radius: 6px;
+    border-color: #d6dce4;
+    color: #334155;
+    background: #ffffff;
+    font-size: 0.95rem;
+    line-height: 1;
+  }
+
+  .snapshots-overlay__icon-button::part(base):hover {
+    background: #f8fafc;
+  }
+
+  .snapshots-overlay__icon-button--danger {
+    color: #dc2626;
+  }
+
+  .snapshots-overlay__icon-button--danger::part(base) {
+    border-color: #fecaca;
   }
 
   @media (max-width: 600px) {
     .layout {
-      grid-template-columns: 1fr;
-      grid-template-areas:
-        "simulation"
-        "chart"
-        "controls";
+      grid-template-rows: auto minmax(280px, 1fr);
     }
 
     .panel {
@@ -162,6 +482,34 @@ export const epidemicSimStyles = css`
 
     .panel--simulation canvas {
       height: 280px;
+    }
+
+    .chart-overlay {
+      padding: 8px;
+    }
+
+    .chart-overlay__dialog {
+      padding: 10px;
+      border-radius: 8px;
+    }
+
+    .chart-overlay__chart-wrap {
+      height: min(48vh, 320px);
+      min-height: 220px;
+    }
+
+    .snapshots-overlay {
+      padding: 8px;
+    }
+
+    .snapshots-overlay__dialog {
+      padding: 10px;
+      border-radius: 8px;
+    }
+
+    .snapshots-overlay__snapshot-image {
+      height: min(18vh, 150px);
+      min-height: 120px;
     }
   }
 `

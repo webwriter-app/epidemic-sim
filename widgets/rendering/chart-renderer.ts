@@ -1,101 +1,147 @@
-interface ChartGeometry {
-  paddingLeft: number
-  paddingRight: number
-  paddingTop: number
-  paddingBottom: number
-}
+import {Chart} from "chart.js/auto"
 
-interface ChartSeries {
+export interface ChartSeries {
+  label: string
   values: number[]
   color: string
+  dash?: number[]
+  lineWidth?: number
 }
 
+const chartCache = new WeakMap<HTMLCanvasElement, Chart<"line", number[], string>>()
+
 export function drawChart(
-  ctx: CanvasRenderingContext2D,
   canvas: HTMLCanvasElement,
   population: number,
   series: ChartSeries[],
+  options?: {showLegend?: boolean; labels?: string[]; xAxisTitle?: string},
 ): void {
-  const width = canvas.width
-  const height = canvas.height
-  const geometry: ChartGeometry = {
-    paddingLeft: 38,
-    paddingRight: 12,
-    paddingTop: 14,
-    paddingBottom: 28,
-  }
+  const longestSeriesLength = getLongestSeriesLength(series)
+  const labels = options?.labels ?? Array.from({length: longestSeriesLength}, (_, index) => String(index))
+  const showLegend = options?.showLegend ?? true
 
-  const plotWidth = width - geometry.paddingLeft - geometry.paddingRight
-  const plotHeight = height - geometry.paddingTop - geometry.paddingBottom
-
-  ctx.clearRect(0, 0, width, height)
-  ctx.fillStyle = "#fcfdff"
-  ctx.fillRect(0, 0, width, height)
-
-  drawGrid(ctx, width, plotHeight, geometry)
-  drawAxes(ctx, width, height, geometry)
-
-  const maxY = Math.max(1, population)
-  for (let i = 0; i < series.length; i += 1) {
-    drawChartSeries(
-      ctx,
-      series[i].values,
-      series[i].color,
-      geometry.paddingLeft,
-      geometry.paddingTop,
-      plotWidth,
-      plotHeight,
-      maxY,
-    )
-  }
-}
-
-function drawGrid(ctx: CanvasRenderingContext2D, width: number, plotHeight: number, geometry: ChartGeometry): void {
-  ctx.strokeStyle = "#e2e8ef"
-  ctx.lineWidth = 1
-  for (let i = 0; i <= 4; i += 1) {
-    const y = geometry.paddingTop + (plotHeight * i) / 4
-    ctx.beginPath()
-    ctx.moveTo(geometry.paddingLeft, y)
-    ctx.lineTo(width - geometry.paddingRight, y)
-    ctx.stroke()
-  }
-}
-
-function drawAxes(ctx: CanvasRenderingContext2D, width: number, height: number, geometry: ChartGeometry): void {
-  ctx.strokeStyle = "#94a3b8"
-  ctx.beginPath()
-  ctx.moveTo(geometry.paddingLeft, geometry.paddingTop)
-  ctx.lineTo(geometry.paddingLeft, height - geometry.paddingBottom)
-  ctx.lineTo(width - geometry.paddingRight, height - geometry.paddingBottom)
-  ctx.stroke()
-}
-
-function drawChartSeries(
-  ctx: CanvasRenderingContext2D,
-  values: number[],
-  color: string,
-  left: number,
-  top: number,
-  width: number,
-  height: number,
-  maxY: number,
-): void {
-  if (values.length < 2) {
-    return
-  }
-  const stepX = values.length > 1 ? width / (values.length - 1) : width
-  ctx.strokeStyle = color
-  ctx.lineWidth = 2
-  ctx.beginPath()
-  for (let i = 0; i < values.length; i += 1) {
-    const x = left + i * stepX
-    const y = top + height - (values[i] / maxY) * height
-    if (i === 0) {
-      ctx.moveTo(x, y)
-    } else {
-      ctx.lineTo(x, y)
+  let chart = chartCache.get(canvas)
+  if (!chart) {
+    const parent = canvas.parentElement
+    chart = new Chart(canvas, {
+      type: "line",
+      data: {
+        labels,
+        datasets: [],
+      },
+      options: {
+        animation: false,
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          x: {
+            display: true,
+            grid: {
+              color: "#e2e8ef",
+            },
+            ticks: {
+              display: true,
+              autoSkip: true,
+              maxTicksLimit: 10,
+            },
+            title: {
+              display: true,
+              text: options?.xAxisTitle ?? "Time (days)",
+            },
+          },
+          y: {
+            min: 0,
+            max: Math.max(1, population),
+            grid: {
+              color: "#e2e8ef",
+            },
+            ticks: {
+              precision: 0,
+            },
+          },
+        },
+        plugins: {
+          legend: {
+            display: showLegend,
+            position: "top",
+          },
+          tooltip: {
+            mode: "index",
+            intersect: false,
+          },
+        },
+        interaction: {
+          mode: "nearest",
+          intersect: false,
+        },
+        elements: {
+          line: {
+            borderWidth: 2,
+            tension: 0.15,
+          },
+          point: {
+            radius: 0,
+            hitRadius: 6,
+            hoverRadius: 3,
+          },
+        },
+      },
+    })
+    chartCache.set(canvas, chart)
+    if (parent) {
+      chart.resize()
     }
   }
-  ctx.stroke()
+
+  chart.data.labels = labels
+  chart.data.datasets = series.map((entry) => ({
+    label: entry.label,
+    data: [...entry.values],
+    borderColor: entry.color,
+    backgroundColor: entry.color,
+    pointBackgroundColor: entry.color,
+    pointBorderColor: entry.color,
+    borderDash: entry.dash ?? [],
+    borderWidth: entry.lineWidth ?? 2,
+    fill: false,
+    spanGaps: true,
+  }))
+
+  const yScale = chart.options.scales?.y
+  if (yScale) {
+    yScale.max = Math.max(1, population)
+  }
+  if (chart.options.plugins?.legend) {
+    chart.options.plugins.legend.display = showLegend
+  }
+  const xScale = chart.options.scales?.x
+  if (xScale?.title) {
+    xScale.title.text = options?.xAxisTitle ?? "Time (days)"
+  }
+
+  chart.update("none")
+}
+
+export function destroyChart(canvas: HTMLCanvasElement | null): void {
+  if (!canvas) {
+    return
+  }
+  const chart = chartCache.get(canvas)
+  if (!chart) {
+    return
+  }
+  chart.destroy()
+  chartCache.delete(canvas)
+}
+
+export function resetChart(canvas: HTMLCanvasElement | null): void {
+  destroyChart(canvas)
+}
+
+function getLongestSeriesLength(series: ChartSeries[]): number {
+  let maxLength = 0
+  for (let i = 0; i < series.length; i += 1) {
+    maxLength = Math.max(maxLength, series[i].values.length)
+  }
+  return maxLength
 }

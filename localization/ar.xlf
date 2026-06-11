@@ -1,38 +1,6 @@
 <xliff xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd" xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file original="lit-localize-inputs" datatype="plaintext" source-language="en" target-language="ar">
     <body>
-      <trans-unit id="sb55ca4fcc0201a78">
-        <source>Epidemic simulation layout</source>
-        <target>مخطط محاكاة الوباء</target>
-      </trans-unit>
-      <trans-unit id="s7ede1c55e35ce9d6">
-        <source>Simulation</source>
-        <target>المحاكاة</target>
-      </trans-unit>
-      <trans-unit id="s6eb1e58d961a30ab">
-        <source>Agent simulation canvas</source>
-        <target>لوحة محاكاة الوكيل</target>
-      </trans-unit>
-      <trans-unit id="s33fc11842b7fede3">
-        <source>Agents move in this panel; colors represent susceptible, infected, and recovered.</source>
-        <target>تتحرك العوامل في هذه اللوحة؛ وتمثل الألوان الحالات المعرضة للإصابة، والمصابة، والمتعافية.</target>
-      </trans-unit>
-      <trans-unit id="s388e7d961027d025">
-        <source>SIR chart</source>
-        <target>مخطط SIR</target>
-      </trans-unit>
-      <trans-unit id="s1fde783f72a49313">
-        <source>SIR line chart canvas</source>
-        <target>لوحة الرسم البياني الخطي SIR</target>
-      </trans-unit>
-      <trans-unit id="s61172c3c93cb5bde">
-        <source>Live counts for susceptible, infected, and recovered are plotted over time.</source>
-        <target>يتم عرض الأعداد الحية للأشخاص المعرضين للإصابة والمصابين والمتعافين على مدار الوقت.</target>
-      </trans-unit>
-      <trans-unit id="s83cd32b685ccc9b7">
-        <source>Controls</source>
-        <target>عناصر التحكم</target>
-      </trans-unit>
       <trans-unit id="s6144a4a2c984c772">
         <source>Population</source>
         <target>السكان</target>
@@ -56,6 +24,222 @@
       <trans-unit id="s6c42c02bb3a76cef">
         <source>Reset simulation</source>
         <target>إعادة ضبط المحاكاة</target>
+      </trans-unit>
+      <trans-unit id="s35264f659ccd236e">
+        <source>Quarantine probability</source>
+        <target>احتمال الحجر الصحي</target>
+      </trans-unit>
+      <trans-unit id="s5712f84064913c57">
+        <source>Quarantine duration</source>
+        <target>مدة الحجر الصحي</target>
+      </trans-unit>
+      <trans-unit id="s77cc57dd46f7f5cc">
+        <source>Hotspot visit probability</source>
+        <target>احتمال زيارة نقطة الاتصال</target>
+      </trans-unit>
+      <trans-unit id="sce044315d3edcee3">
+        <source>Hotspot stay duration</source>
+        <target>مدة الإقامة في نقطة الاتصال</target>
+      </trans-unit>
+      <trans-unit id="s5bafee07187fb2ad">
+        <source>Hotspot size</source>
+        <target>حجم نقطة الاتصال</target>
+      </trans-unit>
+      <trans-unit id="sc522ce8abba9319e">
+        <source>Community leave probability</source>
+        <target>احتمال مغادرة المجتمع</target>
+      </trans-unit>
+      <trans-unit id="sbea80d4210f4af52">
+        <source>Susceptible</source>
+        <target>عرضة</target>
+      </trans-unit>
+      <trans-unit id="s9ac5fba6ad7337b9">
+        <source>Infected</source>
+        <target>مصاب</target>
+      </trans-unit>
+      <trans-unit id="s20c7305417726e5a">
+        <source>Recovered</source>
+        <target>تم استرداده</target>
+      </trans-unit>
+      <trans-unit id="s061cc20e3432dead">
+        <source>Pause</source>
+        <target>توقف مؤقت</target>
+      </trans-unit>
+      <trans-unit id="sae1c7f13b7c0c47f">
+        <source>Start</source>
+        <target>ابدأ</target>
+      </trans-unit>
+      <trans-unit id="sf18604f4e560329a">
+        <source>Snapshots</source>
+        <target>لقطات</target>
+      </trans-unit>
+      <trans-unit id="sa1cbd47c70068780">
+        <source>Hotspot max agents</source>
+        <target>الحد الأقصى لعدد وكلاء نقطة الاتصال</target>
+      </trans-unit>
+      <trans-unit id="sa7d4a2c8f4e43300">
+        <source>Placed hotspots</source>
+        <target>النقاط الساخنة الموضوعة</target>
+      </trans-unit>
+      <trans-unit id="sc932995c6f6478ff">
+        <source>Create snapshot</source>
+        <target>إنشاء لقطة</target>
+      </trans-unit>
+      <trans-unit id="sef191ab7b2c9f986">
+        <source>Frame</source>
+        <target>الإطار</target>
+      </trans-unit>
+      <trans-unit id="sdc673e73b5c13aea">
+        <source>Delete</source>
+        <target>حذف</target>
+      </trans-unit>
+      <trans-unit id="sce256a8918a7f18d">
+        <source>Snapshot</source>
+        <target>لمحة سريعة</target>
+      </trans-unit>
+      <trans-unit id="s59a4f0d3558717a0">
+        <source>Susceptible (fit)</source>
+        <target>قابل للإصابة (صحيح)</target>
+      </trans-unit>
+      <trans-unit id="s743b80c62863f363">
+        <source>Infected (fit)</source>
+        <target>مصاب (بصحة جيدة)</target>
+      </trans-unit>
+      <trans-unit id="sb039a0b193cd20f8">
+        <source>Recovered (fit)</source>
+        <target>تعافى (في صحة جيدة)</target>
+      </trans-unit>
+      <trans-unit id="sb53f7a197981b790">
+        <source>yes</source>
+        <target>نعم</target>
+      </trans-unit>
+      <trans-unit id="s08b35907b5589afa">
+        <source>no</source>
+        <target>لا</target>
+      </trans-unit>
+      <trans-unit id="sf62c2403c94966db">
+        <source>Current susceptible</source>
+        <target>معرض للإصابة حالياً</target>
+      </trans-unit>
+      <trans-unit id="sc336500050494646">
+        <source>Current infected</source>
+        <target>المصابون حالياً</target>
+      </trans-unit>
+      <trans-unit id="sb3b26f6f5b2035db">
+        <source>Current recovered</source>
+        <target>التيار المسترد</target>
+      </trans-unit>
+      <trans-unit id="s7be45f343cb15665">
+        <source>Final recovered share</source>
+        <target>النسبة النهائية المستردة</target>
+      </trans-unit>
+      <trans-unit id="sbe234bd424c5176e">
+        <source>Peak infected</source>
+        <target>ذروة الإصابات</target>
+      </trans-unit>
+      <trans-unit id="s6e526bbb8672e76a">
+        <source>R0 (approx)</source>
+        <target>R0 (تقريبًا)</target>
+      </trans-unit>
+      <trans-unit id="s8f6ded5587ad8969">
+        <source>Herd immunity threshold</source>
+        <target>عتبة مناعة القطيع</target>
+      </trans-unit>
+      <trans-unit id="saf64054c86023237">
+        <source>H</source>
+        <target>ح</target>
+      </trans-unit>
+      <trans-unit id="s5e8250fb85d64c23">
+        <source>Close</source>
+        <target>إغلاق</target>
+      </trans-unit>
+      <trans-unit id="sd8f1f39f65abba47">
+        <source>SIR chart snapshot</source>
+        <target>لمحة عن مخطط SIR</target>
+      </trans-unit>
+      <trans-unit id="s6602f94567c7c7a3">
+        <source>Expand details</source>
+        <target>عرض التفاصيل</target>
+      </trans-unit>
+      <trans-unit id="sf4cd19d7506d9e12">
+        <source>Time (days)</source>
+        <target>المدة (بالأيام)</target>
+      </trans-unit>
+      <trans-unit id="sd4755728c441b538">
+        <source>Elapsed time</source>
+        <target>الوقت المنقضي</target>
+      </trans-unit>
+      <trans-unit id="sc14daad34e9ee82f">
+        <source>Peak time</source>
+        <target>ساعات الذروة</target>
+      </trans-unit>
+      <trans-unit id="s48e186fb300e5464">
+        <source>Time</source>
+        <target>الوقت</target>
+      </trans-unit>
+      <trans-unit id="sc425e5671217eac0">
+        <source>Snapshots gallery</source>
+        <target>معرض الصور</target>
+      </trans-unit>
+      <trans-unit id="sc3ac225273c8316b">
+        <source>General</source>
+        <target>عام</target>
+      </trans-unit>
+      <trans-unit id="s355b21b89ce5d9c5">
+        <source>Details</source>
+        <target>التفاصيل</target>
+      </trans-unit>
+      <trans-unit id="s5ba7326ba78af02e">
+        <source>Model type</source>
+        <target>نوع الطراز</target>
+      </trans-unit>
+      <trans-unit id="s97e4c519fa4905f9">
+        <source>SIR</source>
+        <target>سيدي</target>
+      </trans-unit>
+      <trans-unit id="s759cf46d6eedafb8">
+        <source>Quarantine enabled</source>
+        <target>تم تمكين الحجر الصحي</target>
+      </trans-unit>
+      <trans-unit id="s406f21b75bf1de3c">
+        <source>Hotspots enabled</source>
+        <target>تم تمكين نقاط الاتصال</target>
+      </trans-unit>
+      <trans-unit id="sc240442075ddb92f">
+        <source>Communities enabled</source>
+        <target>المجتمعات التي تم تمكينها</target>
+      </trans-unit>
+      <trans-unit id="s6f54d7620146d1b1">
+        <source>Quarantine</source>
+        <target>الحجر الصحي</target>
+      </trans-unit>
+      <trans-unit id="sf3209a5af0f3631d">
+        <source>Hotspots</source>
+        <target>النقاط الساخنة</target>
+      </trans-unit>
+      <trans-unit id="s99adf8f78a414996">
+        <source>Communities</source>
+        <target>المجتمعات</target>
+      </trans-unit>
+      <trans-unit id="sfc12d40fe5fa5f7d">
+        <source>No snapshots yet.</source>
+        <target>لا توجد صور حتى الآن.</target>
+      </trans-unit>
+      <trans-unit id="s716a6024e3fe999c">
+        <source>Show</source>
+        <target>عرض</target>
+      </trans-unit>
+      <trans-unit id="s7cade6ea2b5ef848">
+        <source>Double-click to enlarge</source>
+        <target>انقر نقرًا مزدوجًا للتكبير</target>
+      </trans-unit>
+      <trans-unit id="sc94818fddfdfdbc6">
+        <source>SIR insights</source>
+        <target>رؤى SIR</target>
+      </trans-unit>
+      <trans-unit id="s9585687a08d93257">
+        <source>Show fit overlay</source>
+        <target>إظهار تراكب المقاس</target>
       </trans-unit>
     </body>
   </file>

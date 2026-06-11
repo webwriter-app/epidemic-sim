@@ -1,38 +1,6 @@
 <xliff xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd" xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file original="lit-localize-inputs" datatype="plaintext" source-language="en" target-language="ko">
     <body>
-      <trans-unit id="sb55ca4fcc0201a78">
-        <source>Epidemic simulation layout</source>
-        <target>전염병 시뮬레이션 구성</target>
-      </trans-unit>
-      <trans-unit id="s7ede1c55e35ce9d6">
-        <source>Simulation</source>
-        <target>시뮬레이션</target>
-      </trans-unit>
-      <trans-unit id="s6eb1e58d961a30ab">
-        <source>Agent simulation canvas</source>
-        <target>에이전트 시뮬레이션 캔버스</target>
-      </trans-unit>
-      <trans-unit id="s33fc11842b7fede3">
-        <source>Agents move in this panel; colors represent susceptible, infected, and recovered.</source>
-        <target>이 패널에서는 개체들이 이동하며, 색상은 감염 위험이 있는 개체, 감염된 개체, 회복된 개체를 나타냅니다.</target>
-      </trans-unit>
-      <trans-unit id="s388e7d961027d025">
-        <source>SIR chart</source>
-        <target>SIR 차트</target>
-      </trans-unit>
-      <trans-unit id="s1fde783f72a49313">
-        <source>SIR line chart canvas</source>
-        <target>SIR 선형 차트 캔버스</target>
-      </trans-unit>
-      <trans-unit id="s61172c3c93cb5bde">
-        <source>Live counts for susceptible, infected, and recovered are plotted over time.</source>
-        <target>감염 위험이 있는 사람, 감염자, 회복자의 실시간 수치를 시간 경과에 따라 그래프로 나타냈다.</target>
-      </trans-unit>
-      <trans-unit id="s83cd32b685ccc9b7">
-        <source>Controls</source>
-        <target>조작법</target>
-      </trans-unit>
       <trans-unit id="s6144a4a2c984c772">
         <source>Population</source>
         <target>인구</target>
@@ -56,6 +24,222 @@
       <trans-unit id="s6c42c02bb3a76cef">
         <source>Reset simulation</source>
         <target>시뮬레이션 초기화</target>
+      </trans-unit>
+      <trans-unit id="s35264f659ccd236e">
+        <source>Quarantine probability</source>
+        <target>격리 확률</target>
+      </trans-unit>
+      <trans-unit id="s5712f84064913c57">
+        <source>Quarantine duration</source>
+        <target>격리 기간</target>
+      </trans-unit>
+      <trans-unit id="s77cc57dd46f7f5cc">
+        <source>Hotspot visit probability</source>
+        <target>핫스팟 방문 확률</target>
+      </trans-unit>
+      <trans-unit id="sce044315d3edcee3">
+        <source>Hotspot stay duration</source>
+        <target>핫스팟 체류 시간</target>
+      </trans-unit>
+      <trans-unit id="s5bafee07187fb2ad">
+        <source>Hotspot size</source>
+        <target>핫스팟 크기</target>
+      </trans-unit>
+      <trans-unit id="sc522ce8abba9319e">
+        <source>Community leave probability</source>
+        <target>커뮤니티 이탈 확률</target>
+      </trans-unit>
+      <trans-unit id="sbea80d4210f4af52">
+        <source>Susceptible</source>
+        <target>취약한</target>
+      </trans-unit>
+      <trans-unit id="s9ac5fba6ad7337b9">
+        <source>Infected</source>
+        <target>감염된</target>
+      </trans-unit>
+      <trans-unit id="s20c7305417726e5a">
+        <source>Recovered</source>
+        <target>복구됨</target>
+      </trans-unit>
+      <trans-unit id="s061cc20e3432dead">
+        <source>Pause</source>
+        <target>일시 정지</target>
+      </trans-unit>
+      <trans-unit id="sae1c7f13b7c0c47f">
+        <source>Start</source>
+        <target>시작</target>
+      </trans-unit>
+      <trans-unit id="sf18604f4e560329a">
+        <source>Snapshots</source>
+        <target>스냅샷</target>
+      </trans-unit>
+      <trans-unit id="sa1cbd47c70068780">
+        <source>Hotspot max agents</source>
+        <target>핫스팟 최대 에이전트 수</target>
+      </trans-unit>
+      <trans-unit id="sa7d4a2c8f4e43300">
+        <source>Placed hotspots</source>
+        <target>설정된 핫스팟</target>
+      </trans-unit>
+      <trans-unit id="sc932995c6f6478ff">
+        <source>Create snapshot</source>
+        <target>스냅샷 생성</target>
+      </trans-unit>
+      <trans-unit id="sef191ab7b2c9f986">
+        <source>Frame</source>
+        <target>프레임</target>
+      </trans-unit>
+      <trans-unit id="sdc673e73b5c13aea">
+        <source>Delete</source>
+        <target>삭제</target>
+      </trans-unit>
+      <trans-unit id="sce256a8918a7f18d">
+        <source>Snapshot</source>
+        <target>스냅샷</target>
+      </trans-unit>
+      <trans-unit id="s59a4f0d3558717a0">
+        <source>Susceptible (fit)</source>
+        <target>감염되기 쉬운 (건강한)</target>
+      </trans-unit>
+      <trans-unit id="s743b80c62863f363">
+        <source>Infected (fit)</source>
+        <target>감염된 (건강한)</target>
+      </trans-unit>
+      <trans-unit id="sb039a0b193cd20f8">
+        <source>Recovered (fit)</source>
+        <target>회복됨 (건강함)</target>
+      </trans-unit>
+      <trans-unit id="sb53f7a197981b790">
+        <source>yes</source>
+        <target>네</target>
+      </trans-unit>
+      <trans-unit id="s08b35907b5589afa">
+        <source>no</source>
+        <target>아니요</target>
+      </trans-unit>
+      <trans-unit id="sf62c2403c94966db">
+        <source>Current susceptible</source>
+        <target>현재 감염 위험이 있는</target>
+      </trans-unit>
+      <trans-unit id="sc336500050494646">
+        <source>Current infected</source>
+        <target>현재 감염된</target>
+      </trans-unit>
+      <trans-unit id="sb3b26f6f5b2035db">
+        <source>Current recovered</source>
+        <target>현재 복구됨</target>
+      </trans-unit>
+      <trans-unit id="s7be45f343cb15665">
+        <source>Final recovered share</source>
+        <target>최종 회수 지분</target>
+      </trans-unit>
+      <trans-unit id="sbe234bd424c5176e">
+        <source>Peak infected</source>
+        <target>감염자 정점</target>
+      </trans-unit>
+      <trans-unit id="s6e526bbb8672e76a">
+        <source>R0 (approx)</source>
+        <target>R0 (대략)</target>
+      </trans-unit>
+      <trans-unit id="s8f6ded5587ad8969">
+        <source>Herd immunity threshold</source>
+        <target>집단 면역 임계치</target>
+      </trans-unit>
+      <trans-unit id="saf64054c86023237">
+        <source>H</source>
+        <target>H</target>
+      </trans-unit>
+      <trans-unit id="s5e8250fb85d64c23">
+        <source>Close</source>
+        <target>닫기</target>
+      </trans-unit>
+      <trans-unit id="sd8f1f39f65abba47">
+        <source>SIR chart snapshot</source>
+        <target>SIR 차트 요약</target>
+      </trans-unit>
+      <trans-unit id="s6602f94567c7c7a3">
+        <source>Expand details</source>
+        <target>자세히 보기</target>
+      </trans-unit>
+      <trans-unit id="sf4cd19d7506d9e12">
+        <source>Time (days)</source>
+        <target>기간 (일)</target>
+      </trans-unit>
+      <trans-unit id="sd4755728c441b538">
+        <source>Elapsed time</source>
+        <target>경과 시간</target>
+      </trans-unit>
+      <trans-unit id="sc14daad34e9ee82f">
+        <source>Peak time</source>
+        <target>피크 시간대</target>
+      </trans-unit>
+      <trans-unit id="s48e186fb300e5464">
+        <source>Time</source>
+        <target>시간</target>
+      </trans-unit>
+      <trans-unit id="sc425e5671217eac0">
+        <source>Snapshots gallery</source>
+        <target>스냅샷 갤러리</target>
+      </trans-unit>
+      <trans-unit id="sc3ac225273c8316b">
+        <source>General</source>
+        <target>일반</target>
+      </trans-unit>
+      <trans-unit id="s355b21b89ce5d9c5">
+        <source>Details</source>
+        <target>상세 정보</target>
+      </trans-unit>
+      <trans-unit id="s5ba7326ba78af02e">
+        <source>Model type</source>
+        <target>모델 유형</target>
+      </trans-unit>
+      <trans-unit id="s97e4c519fa4905f9">
+        <source>SIR</source>
+        <target>선생님</target>
+      </trans-unit>
+      <trans-unit id="s759cf46d6eedafb8">
+        <source>Quarantine enabled</source>
+        <target>격리 활성화됨</target>
+      </trans-unit>
+      <trans-unit id="s406f21b75bf1de3c">
+        <source>Hotspots enabled</source>
+        <target>핫스팟 활성화됨</target>
+      </trans-unit>
+      <trans-unit id="sc240442075ddb92f">
+        <source>Communities enabled</source>
+        <target>커뮤니티 활성화됨</target>
+      </trans-unit>
+      <trans-unit id="s6f54d7620146d1b1">
+        <source>Quarantine</source>
+        <target>격리</target>
+      </trans-unit>
+      <trans-unit id="sf3209a5af0f3631d">
+        <source>Hotspots</source>
+        <target>주요 명소</target>
+      </trans-unit>
+      <trans-unit id="s99adf8f78a414996">
+        <source>Communities</source>
+        <target>커뮤니티</target>
+      </trans-unit>
+      <trans-unit id="sfc12d40fe5fa5f7d">
+        <source>No snapshots yet.</source>
+        <target>아직 스냅샷이 없습니다.</target>
+      </trans-unit>
+      <trans-unit id="s716a6024e3fe999c">
+        <source>Show</source>
+        <target>보이기</target>
+      </trans-unit>
+      <trans-unit id="s7cade6ea2b5ef848">
+        <source>Double-click to enlarge</source>
+        <target>두 번 클릭하면 확대됩니다</target>
+      </trans-unit>
+      <trans-unit id="sc94818fddfdfdbc6">
+        <source>SIR insights</source>
+        <target>SIR 인사이트</target>
+      </trans-unit>
+      <trans-unit id="s9585687a08d93257">
+        <source>Show fit overlay</source>
+        <target>피팅 오버레이 표시</target>
       </trans-unit>
     </body>
   </file>

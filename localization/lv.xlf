@@ -1,38 +1,6 @@
 <xliff xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd" xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file original="lit-localize-inputs" datatype="plaintext" source-language="en" target-language="lv">
     <body>
-      <trans-unit id="sb55ca4fcc0201a78">
-        <source>Epidemic simulation layout</source>
-        <target>Epidēmijas simulācijas shēma</target>
-      </trans-unit>
-      <trans-unit id="s7ede1c55e35ce9d6">
-        <source>Simulation</source>
-        <target>Simulācija</target>
-      </trans-unit>
-      <trans-unit id="s6eb1e58d961a30ab">
-        <source>Agent simulation canvas</source>
-        <target>Aģenta simulācijas darba laukums</target>
-      </trans-unit>
-      <trans-unit id="s33fc11842b7fede3">
-        <source>Agents move in this panel; colors represent susceptible, infected, and recovered.</source>
-        <target>Šajā panelī tiek attēlota aģentu kustība; krāsas apzīmē uzņēmīgus, inficētus un izveseļojušos.</target>
-      </trans-unit>
-      <trans-unit id="s388e7d961027d025">
-        <source>SIR chart</source>
-        <target>SIR diagramma</target>
-      </trans-unit>
-      <trans-unit id="s1fde783f72a49313">
-        <source>SIR line chart canvas</source>
-        <target>SIR līniju diagrammas laukums</target>
-      </trans-unit>
-      <trans-unit id="s61172c3c93cb5bde">
-        <source>Live counts for susceptible, infected, and recovered are plotted over time.</source>
-        <target>Laika gaitā tiek attēloti reāllaika dati par uzņēmīgajiem, inficētajiem un izveseļojušajiem.</target>
-      </trans-unit>
-      <trans-unit id="s83cd32b685ccc9b7">
-        <source>Controls</source>
-        <target>Vadības elementi</target>
-      </trans-unit>
       <trans-unit id="s6144a4a2c984c772">
         <source>Population</source>
         <target>Iedzīvotāji</target>
@@ -56,6 +24,222 @@
       <trans-unit id="s6c42c02bb3a76cef">
         <source>Reset simulation</source>
         <target>Atjaunot simulāciju</target>
+      </trans-unit>
+      <trans-unit id="s35264f659ccd236e">
+        <source>Quarantine probability</source>
+        <target>Karantīnas varbūtība</target>
+      </trans-unit>
+      <trans-unit id="s5712f84064913c57">
+        <source>Quarantine duration</source>
+        <target>Karantīnas ilgums</target>
+      </trans-unit>
+      <trans-unit id="s77cc57dd46f7f5cc">
+        <source>Hotspot visit probability</source>
+        <target>Vieta, kurā ir liela apmeklētāju plūsma</target>
+      </trans-unit>
+      <trans-unit id="sce044315d3edcee3">
+        <source>Hotspot stay duration</source>
+        <target>Uzturēšanās ilgums karstajā punktā</target>
+      </trans-unit>
+      <trans-unit id="s5bafee07187fb2ad">
+        <source>Hotspot size</source>
+        <target>Piekļuves punkta izmērs</target>
+      </trans-unit>
+      <trans-unit id="sc522ce8abba9319e">
+        <source>Community leave probability</source>
+        <target>Kopienas atbrīvošanas varbūtība</target>
+      </trans-unit>
+      <trans-unit id="sbea80d4210f4af52">
+        <source>Susceptible</source>
+        <target>Uzņēmīgs</target>
+      </trans-unit>
+      <trans-unit id="s9ac5fba6ad7337b9">
+        <source>Infected</source>
+        <target>Inficēts</target>
+      </trans-unit>
+      <trans-unit id="s20c7305417726e5a">
+        <source>Recovered</source>
+        <target>Atgūts</target>
+      </trans-unit>
+      <trans-unit id="s061cc20e3432dead">
+        <source>Pause</source>
+        <target>Pauze</target>
+      </trans-unit>
+      <trans-unit id="sae1c7f13b7c0c47f">
+        <source>Start</source>
+        <target>Sākums</target>
+      </trans-unit>
+      <trans-unit id="sf18604f4e560329a">
+        <source>Snapshots</source>
+        <target>Momentu uzņēmumi</target>
+      </trans-unit>
+      <trans-unit id="sa1cbd47c70068780">
+        <source>Hotspot max agents</source>
+        <target>Maksimālais aģentu skaits karstpunktā</target>
+      </trans-unit>
+      <trans-unit id="sa7d4a2c8f4e43300">
+        <source>Placed hotspots</source>
+        <target>Ievietotie interaktīvie punkti</target>
+      </trans-unit>
+      <trans-unit id="sc932995c6f6478ff">
+        <source>Create snapshot</source>
+        <target>Izveidot momentuzņēmumu</target>
+      </trans-unit>
+      <trans-unit id="sef191ab7b2c9f986">
+        <source>Frame</source>
+        <target>Rāmis</target>
+      </trans-unit>
+      <trans-unit id="sdc673e73b5c13aea">
+        <source>Delete</source>
+        <target>Dzēst</target>
+      </trans-unit>
+      <trans-unit id="sce256a8918a7f18d">
+        <source>Snapshot</source>
+        <target>Pārskats</target>
+      </trans-unit>
+      <trans-unit id="s59a4f0d3558717a0">
+        <source>Susceptible (fit)</source>
+        <target>Piemērots</target>
+      </trans-unit>
+      <trans-unit id="s743b80c62863f363">
+        <source>Infected (fit)</source>
+        <target>Inficēts (vesels)</target>
+      </trans-unit>
+      <trans-unit id="sb039a0b193cd20f8">
+        <source>Recovered (fit)</source>
+        <target>Atguvies (vesels)</target>
+      </trans-unit>
+      <trans-unit id="sb53f7a197981b790">
+        <source>yes</source>
+        <target>jā</target>
+      </trans-unit>
+      <trans-unit id="s08b35907b5589afa">
+        <source>no</source>
+        <target>nē</target>
+      </trans-unit>
+      <trans-unit id="sf62c2403c94966db">
+        <source>Current susceptible</source>
+        <target>Pašreizējie uzņēmīgie</target>
+      </trans-unit>
+      <trans-unit id="sc336500050494646">
+        <source>Current infected</source>
+        <target>Pašreiz inficētie</target>
+      </trans-unit>
+      <trans-unit id="sb3b26f6f5b2035db">
+        <source>Current recovered</source>
+        <target>Pašreizējais atgūtais</target>
+      </trans-unit>
+      <trans-unit id="s7be45f343cb15665">
+        <source>Final recovered share</source>
+        <target>Galīgā atgūtā daļa</target>
+      </trans-unit>
+      <trans-unit id="sbe234bd424c5176e">
+        <source>Peak infected</source>
+        <target>Inficēto skaita maksimums</target>
+      </trans-unit>
+      <trans-unit id="s6e526bbb8672e76a">
+        <source>R0 (approx)</source>
+        <target>R0 (aptuveni)</target>
+      </trans-unit>
+      <trans-unit id="s8f6ded5587ad8969">
+        <source>Herd immunity threshold</source>
+        <target>Kopējās imunitātes slieksnis</target>
+      </trans-unit>
+      <trans-unit id="saf64054c86023237">
+        <source>H</source>
+        <target>H</target>
+      </trans-unit>
+      <trans-unit id="s5e8250fb85d64c23">
+        <source>Close</source>
+        <target>Aizvērt</target>
+      </trans-unit>
+      <trans-unit id="sd8f1f39f65abba47">
+        <source>SIR chart snapshot</source>
+        <target>SIR diagrammas momentuzņēmums</target>
+      </trans-unit>
+      <trans-unit id="s6602f94567c7c7a3">
+        <source>Expand details</source>
+        <target>Rādīt sīkāku informāciju</target>
+      </trans-unit>
+      <trans-unit id="sf4cd19d7506d9e12">
+        <source>Time (days)</source>
+        <target>Laiks (dienās)</target>
+      </trans-unit>
+      <trans-unit id="sd4755728c441b538">
+        <source>Elapsed time</source>
+        <target>Pagājušais laiks</target>
+      </trans-unit>
+      <trans-unit id="sc14daad34e9ee82f">
+        <source>Peak time</source>
+        <target>Pīķa laiks</target>
+      </trans-unit>
+      <trans-unit id="s48e186fb300e5464">
+        <source>Time</source>
+        <target>Laiks</target>
+      </trans-unit>
+      <trans-unit id="sc425e5671217eac0">
+        <source>Snapshots gallery</source>
+        <target>Fotoattēlu galerija</target>
+      </trans-unit>
+      <trans-unit id="sc3ac225273c8316b">
+        <source>General</source>
+        <target>Vispārīgi</target>
+      </trans-unit>
+      <trans-unit id="s355b21b89ce5d9c5">
+        <source>Details</source>
+        <target>Sīkāka informācija</target>
+      </trans-unit>
+      <trans-unit id="s5ba7326ba78af02e">
+        <source>Model type</source>
+        <target>Modeļa tips</target>
+      </trans-unit>
+      <trans-unit id="s97e4c519fa4905f9">
+        <source>SIR</source>
+        <target>SIR</target>
+      </trans-unit>
+      <trans-unit id="s759cf46d6eedafb8">
+        <source>Quarantine enabled</source>
+        <target>Karantīna ir ieslēgta</target>
+      </trans-unit>
+      <trans-unit id="s406f21b75bf1de3c">
+        <source>Hotspots enabled</source>
+        <target>Aktīvās zonas ir ieslēgtas</target>
+      </trans-unit>
+      <trans-unit id="sc240442075ddb92f">
+        <source>Communities enabled</source>
+        <target>Atbalstītās kopienas</target>
+      </trans-unit>
+      <trans-unit id="s6f54d7620146d1b1">
+        <source>Quarantine</source>
+        <target>Karantīna</target>
+      </trans-unit>
+      <trans-unit id="sf3209a5af0f3631d">
+        <source>Hotspots</source>
+        <target>Karstie punkti</target>
+      </trans-unit>
+      <trans-unit id="s99adf8f78a414996">
+        <source>Communities</source>
+        <target>Kopienas</target>
+      </trans-unit>
+      <trans-unit id="sfc12d40fe5fa5f7d">
+        <source>No snapshots yet.</source>
+        <target>Vēl nav neviena fotoattēla.</target>
+      </trans-unit>
+      <trans-unit id="s716a6024e3fe999c">
+        <source>Show</source>
+        <target>Rādīt</target>
+      </trans-unit>
+      <trans-unit id="s7cade6ea2b5ef848">
+        <source>Double-click to enlarge</source>
+        <target>Divkāršs klikšķis, lai palielinātu</target>
+      </trans-unit>
+      <trans-unit id="sc94818fddfdfdbc6">
+        <source>SIR insights</source>
+        <target>SIR atziņas</target>
+      </trans-unit>
+      <trans-unit id="s9585687a08d93257">
+        <source>Show fit overlay</source>
+        <target>Rādīt pielāgotu pārklājumu</target>
       </trans-unit>
     </body>
   </file>

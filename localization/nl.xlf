@@ -1,38 +1,6 @@
 <xliff xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd" xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file original="lit-localize-inputs" datatype="plaintext" source-language="en" target-language="nl">
     <body>
-      <trans-unit id="sb55ca4fcc0201a78">
-        <source>Epidemic simulation layout</source>
-        <target>Opzet van een epidemiesimulatie</target>
-      </trans-unit>
-      <trans-unit id="s7ede1c55e35ce9d6">
-        <source>Simulation</source>
-        <target>Simulatie</target>
-      </trans-unit>
-      <trans-unit id="s6eb1e58d961a30ab">
-        <source>Agent simulation canvas</source>
-        <target>Simulatieomgeving voor agenten</target>
-      </trans-unit>
-      <trans-unit id="s33fc11842b7fede3">
-        <source>Agents move in this panel; colors represent susceptible, infected, and recovered.</source>
-        <target>In dit paneel bewegen de agenten; de kleuren geven aan of ze vatbaar, besmet of hersteld zijn.</target>
-      </trans-unit>
-      <trans-unit id="s388e7d961027d025">
-        <source>SIR chart</source>
-        <target>SIR-grafiek</target>
-      </trans-unit>
-      <trans-unit id="s1fde783f72a49313">
-        <source>SIR line chart canvas</source>
-        <target>SIR-lijngrafiekcanvas</target>
-      </trans-unit>
-      <trans-unit id="s61172c3c93cb5bde">
-        <source>Live counts for susceptible, infected, and recovered are plotted over time.</source>
-        <target>De actuele aantallen van vatbare, besmette en genezen personen worden in de tijd weergegeven.</target>
-      </trans-unit>
-      <trans-unit id="s83cd32b685ccc9b7">
-        <source>Controls</source>
-        <target>Bedieningselementen</target>
-      </trans-unit>
       <trans-unit id="s6144a4a2c984c772">
         <source>Population</source>
         <target>Bevolking</target>
@@ -56,6 +24,222 @@
       <trans-unit id="s6c42c02bb3a76cef">
         <source>Reset simulation</source>
         <target>Simulatie opnieuw starten</target>
+      </trans-unit>
+      <trans-unit id="s35264f659ccd236e">
+        <source>Quarantine probability</source>
+        <target>Kans op quarantaine</target>
+      </trans-unit>
+      <trans-unit id="s5712f84064913c57">
+        <source>Quarantine duration</source>
+        <target>Duur van de quarantaine</target>
+      </trans-unit>
+      <trans-unit id="s77cc57dd46f7f5cc">
+        <source>Hotspot visit probability</source>
+        <target>Waarschijnlijkheid van een bezoek aan een hotspot</target>
+      </trans-unit>
+      <trans-unit id="sce044315d3edcee3">
+        <source>Hotspot stay duration</source>
+        <target>Verblijfsduur bij een hotspot</target>
+      </trans-unit>
+      <trans-unit id="s5bafee07187fb2ad">
+        <source>Hotspot size</source>
+        <target>Grootte van de hotspot</target>
+      </trans-unit>
+      <trans-unit id="sc522ce8abba9319e">
+        <source>Community leave probability</source>
+        <target>Waarschijnlijkheid van verlof om familiale redenen</target>
+      </trans-unit>
+      <trans-unit id="sbea80d4210f4af52">
+        <source>Susceptible</source>
+        <target>Gevoelig</target>
+      </trans-unit>
+      <trans-unit id="s9ac5fba6ad7337b9">
+        <source>Infected</source>
+        <target>Besmet</target>
+      </trans-unit>
+      <trans-unit id="s20c7305417726e5a">
+        <source>Recovered</source>
+        <target>Hersteld</target>
+      </trans-unit>
+      <trans-unit id="s061cc20e3432dead">
+        <source>Pause</source>
+        <target>Pauze</target>
+      </trans-unit>
+      <trans-unit id="sae1c7f13b7c0c47f">
+        <source>Start</source>
+        <target>Start</target>
+      </trans-unit>
+      <trans-unit id="sf18604f4e560329a">
+        <source>Snapshots</source>
+        <target>Momentopnames</target>
+      </trans-unit>
+      <trans-unit id="sa1cbd47c70068780">
+        <source>Hotspot max agents</source>
+        <target>Maximaal aantal agenten per hotspot</target>
+      </trans-unit>
+      <trans-unit id="sa7d4a2c8f4e43300">
+        <source>Placed hotspots</source>
+        <target>Geplaatste hotspots</target>
+      </trans-unit>
+      <trans-unit id="sc932995c6f6478ff">
+        <source>Create snapshot</source>
+        <target>Momentopname maken</target>
+      </trans-unit>
+      <trans-unit id="sef191ab7b2c9f986">
+        <source>Frame</source>
+        <target>Frame</target>
+      </trans-unit>
+      <trans-unit id="sdc673e73b5c13aea">
+        <source>Delete</source>
+        <target>Verwijderen</target>
+      </trans-unit>
+      <trans-unit id="sce256a8918a7f18d">
+        <source>Snapshot</source>
+        <target>Overzicht</target>
+      </trans-unit>
+      <trans-unit id="s59a4f0d3558717a0">
+        <source>Susceptible (fit)</source>
+        <target>Gevoelig (fit)</target>
+      </trans-unit>
+      <trans-unit id="s743b80c62863f363">
+        <source>Infected (fit)</source>
+        <target>Besmet (fit)</target>
+      </trans-unit>
+      <trans-unit id="sb039a0b193cd20f8">
+        <source>Recovered (fit)</source>
+        <target>Hersteld (fit)</target>
+      </trans-unit>
+      <trans-unit id="sb53f7a197981b790">
+        <source>yes</source>
+        <target>ja</target>
+      </trans-unit>
+      <trans-unit id="s08b35907b5589afa">
+        <source>no</source>
+        <target>nee</target>
+      </trans-unit>
+      <trans-unit id="sf62c2403c94966db">
+        <source>Current susceptible</source>
+        <target>Momenteel vatbaar</target>
+      </trans-unit>
+      <trans-unit id="sc336500050494646">
+        <source>Current infected</source>
+        <target>Momenteel besmet</target>
+      </trans-unit>
+      <trans-unit id="sb3b26f6f5b2035db">
+        <source>Current recovered</source>
+        <target>Stroom hersteld</target>
+      </trans-unit>
+      <trans-unit id="s7be45f343cb15665">
+        <source>Final recovered share</source>
+        <target>Uiteindelijk teruggewonnen aandeel</target>
+      </trans-unit>
+      <trans-unit id="sbe234bd424c5176e">
+        <source>Peak infected</source>
+        <target>Piek in het aantal besmettingen</target>
+      </trans-unit>
+      <trans-unit id="s6e526bbb8672e76a">
+        <source>R0 (approx)</source>
+        <target>R0 (ongeveer)</target>
+      </trans-unit>
+      <trans-unit id="s8f6ded5587ad8969">
+        <source>Herd immunity threshold</source>
+        <target>Drempelwaarde voor groepsimmuniteit</target>
+      </trans-unit>
+      <trans-unit id="saf64054c86023237">
+        <source>H</source>
+        <target>H</target>
+      </trans-unit>
+      <trans-unit id="s5e8250fb85d64c23">
+        <source>Close</source>
+        <target>Sluiten</target>
+      </trans-unit>
+      <trans-unit id="sd8f1f39f65abba47">
+        <source>SIR chart snapshot</source>
+        <target>Overzicht van de SIR-grafiek</target>
+      </trans-unit>
+      <trans-unit id="s6602f94567c7c7a3">
+        <source>Expand details</source>
+        <target>Meer informatie weergeven</target>
+      </trans-unit>
+      <trans-unit id="sf4cd19d7506d9e12">
+        <source>Time (days)</source>
+        <target>Tijd (dagen)</target>
+      </trans-unit>
+      <trans-unit id="sd4755728c441b538">
+        <source>Elapsed time</source>
+        <target>Verstreken tijd</target>
+      </trans-unit>
+      <trans-unit id="sc14daad34e9ee82f">
+        <source>Peak time</source>
+        <target>Spitsuur</target>
+      </trans-unit>
+      <trans-unit id="s48e186fb300e5464">
+        <source>Time</source>
+        <target>Tijd</target>
+      </trans-unit>
+      <trans-unit id="sc425e5671217eac0">
+        <source>Snapshots gallery</source>
+        <target>Galerij met momentopnames</target>
+      </trans-unit>
+      <trans-unit id="sc3ac225273c8316b">
+        <source>General</source>
+        <target>Algemeen</target>
+      </trans-unit>
+      <trans-unit id="s355b21b89ce5d9c5">
+        <source>Details</source>
+        <target>Details</target>
+      </trans-unit>
+      <trans-unit id="s5ba7326ba78af02e">
+        <source>Model type</source>
+        <target>Modeltype</target>
+      </trans-unit>
+      <trans-unit id="s97e4c519fa4905f9">
+        <source>SIR</source>
+        <target>SIR</target>
+      </trans-unit>
+      <trans-unit id="s759cf46d6eedafb8">
+        <source>Quarantine enabled</source>
+        <target>Quarantaine ingeschakeld</target>
+      </trans-unit>
+      <trans-unit id="s406f21b75bf1de3c">
+        <source>Hotspots enabled</source>
+        <target>Hotspots ingeschakeld</target>
+      </trans-unit>
+      <trans-unit id="sc240442075ddb92f">
+        <source>Communities enabled</source>
+        <target>Gemeenschappen ondersteund</target>
+      </trans-unit>
+      <trans-unit id="s6f54d7620146d1b1">
+        <source>Quarantine</source>
+        <target>Quarantaine</target>
+      </trans-unit>
+      <trans-unit id="sf3209a5af0f3631d">
+        <source>Hotspots</source>
+        <target>Hotspots</target>
+      </trans-unit>
+      <trans-unit id="s99adf8f78a414996">
+        <source>Communities</source>
+        <target>Gemeenschappen</target>
+      </trans-unit>
+      <trans-unit id="sfc12d40fe5fa5f7d">
+        <source>No snapshots yet.</source>
+        <target>Er zijn nog geen foto's.</target>
+      </trans-unit>
+      <trans-unit id="s716a6024e3fe999c">
+        <source>Show</source>
+        <target>Weergeven</target>
+      </trans-unit>
+      <trans-unit id="s7cade6ea2b5ef848">
+        <source>Double-click to enlarge</source>
+        <target>Dubbelklikken om te vergroten</target>
+      </trans-unit>
+      <trans-unit id="sc94818fddfdfdbc6">
+        <source>SIR insights</source>
+        <target>SIR-inzichten</target>
+      </trans-unit>
+      <trans-unit id="s9585687a08d93257">
+        <source>Show fit overlay</source>
+        <target>Overlay met pasvorm weergeven</target>
       </trans-unit>
     </body>
   </file>
