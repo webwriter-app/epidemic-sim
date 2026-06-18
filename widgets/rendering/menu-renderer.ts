@@ -1,6 +1,7 @@
 import {css, html} from "lit"
 import type {CSSResult, TemplateResult} from "lit"
 import {msg} from "@lit/localize"
+import type {EpidemicModelType} from "../simulation/epidemic-models"
 
 const FRAMES_PER_DAY = 24
 
@@ -108,9 +109,21 @@ export const sideMenuStyles: CSSResult = css`
   .side-menu sl-range {
     width: 100%;
   }
+
+  .side-menu sl-select {
+    width: 100%;
+  }
+
+  .side-menu sl-select::part(combobox) {
+    width: 100%;
+  }
 `
 
 export type MenuAllowFlags = {
+  allowModelTypeControl: boolean
+  allowIncubationDurationControl: boolean
+  allowImmunityDurationControl: boolean
+  allowMortalityProbabilityControl: boolean
   allowPopulationControl: boolean
   allowSpeedControl: boolean
   allowInfectionRadiusControl: boolean
@@ -132,7 +145,17 @@ export function hasVisibleMenuControls(flags: MenuAllowFlags): boolean {
   return Object.values(flags).some(Boolean)
 }
 
+type ModelTypeOption = {
+  value: EpidemicModelType
+  label: string
+}
+
 type RenderMenuOptions = MenuAllowFlags & {
+  modelType: EpidemicModelType
+  modelTypeOptions: ModelTypeOption[]
+  incubationDuration: number
+  immunityDuration: number
+  mortalityProbability: number
   population: number
   speed: number
   infectionRadius: number
@@ -149,6 +172,10 @@ type RenderMenuOptions = MenuAllowFlags & {
   hotspotSize: number
   communitiesEnabled: boolean
   communityLeaveProbability: number
+  onModelTypeChange: (event: Event) => void
+  onIncubationDurationInput: (event: Event) => void
+  onImmunityDurationInput: (event: Event) => void
+  onMortalityProbabilityInput: (event: Event) => void
   onPopulationInput: (event: Event) => void
   onSpeedInput: (event: Event) => void
   onInfectionRadiusInput: (event: Event) => void
@@ -164,6 +191,15 @@ type RenderMenuOptions = MenuAllowFlags & {
   onHotspotSizeInput: (event: Event) => void
   onToggleCommunities: (event: Event) => void
   onCommunityLeaveProbabilityInput: (event: Event) => void
+}
+
+function hasModelMenuControls(flags: MenuAllowFlags): boolean {
+  return (
+    flags.allowModelTypeControl ||
+    flags.allowIncubationDurationControl ||
+    flags.allowImmunityDurationControl ||
+    flags.allowMortalityProbabilityControl
+  )
 }
 
 function hasGeneralMenuControls(flags: MenuAllowFlags): boolean {
@@ -226,6 +262,93 @@ function renderMenuSection(
       </div>
       <div class="side-menu__controls">${controls}</div>
     </div>
+  `
+}
+
+function renderModelControls(options: RenderMenuOptions): TemplateResult {
+  return html`
+    ${
+      options.allowModelTypeControl
+        ? html`
+            <label class="side-menu__control">
+              <span class="side-menu__control-head">
+                <span>${msg("Model type")}</span>
+              </span>
+              <sl-select .value=${options.modelType} @sl-change=${options.onModelTypeChange}>
+                ${options.modelTypeOptions.map(
+                  (option) => html`<sl-option value=${option.value}>${option.label}</sl-option>`,
+                )}
+              </sl-select>
+            </label>
+          `
+        : null
+    }
+
+    ${
+      options.allowIncubationDurationControl && options.modelType === "seir"
+        ? html`
+            <label class="side-menu__control">
+              <span class="side-menu__control-head">
+                <span>${msg("Incubation duration")}</span>
+                <span class="side-menu__control-value"
+                  >${formatFrameCountAsDays(options.incubationDuration)}</span
+                >
+              </span>
+              <sl-range
+                min="30"
+                max="1200"
+                step="30"
+                .value=${String(options.incubationDuration)}
+                @sl-input=${options.onIncubationDurationInput}
+              ></sl-range>
+            </label>
+          `
+        : null
+    }
+
+    ${
+      options.allowImmunityDurationControl && options.modelType === "sirs"
+        ? html`
+            <label class="side-menu__control">
+              <span class="side-menu__control-head">
+                <span>${msg("Immunity duration")}</span>
+                <span class="side-menu__control-value"
+                  >${formatFrameCountAsDays(options.immunityDuration)}</span
+                >
+              </span>
+              <sl-range
+                min="120"
+                max="4800"
+                step="60"
+                .value=${String(options.immunityDuration)}
+                @sl-input=${options.onImmunityDurationInput}
+              ></sl-range>
+            </label>
+          `
+        : null
+    }
+
+    ${
+      options.allowMortalityProbabilityControl && options.modelType === "sird"
+        ? html`
+            <label class="side-menu__control">
+              <span class="side-menu__control-head">
+                <span>${msg("Mortality probability")}</span>
+                <span class="side-menu__control-value"
+                  >${Math.round(options.mortalityProbability * 100)}%</span
+                >
+              </span>
+              <sl-range
+                min="0.001"
+                max="0.5"
+                step="0.001"
+                .value=${String(options.mortalityProbability)}
+                @sl-input=${options.onMortalityProbabilityInput}
+              ></sl-range>
+            </label>
+          `
+        : null
+    }
   `
 }
 
@@ -526,6 +649,11 @@ function renderCommunitiesControls(options: RenderMenuOptions): TemplateResult {
 export function renderMenu(options: RenderMenuOptions): TemplateResult {
   return html`
     <aside class="side-menu">
+      ${
+        hasModelMenuControls(options)
+          ? renderMenuSection(msg("Model"), renderModelControls(options))
+          : null
+      }
       ${
         hasGeneralMenuControls(options)
           ? renderMenuSection(msg("General"), renderGeneralControls(options))

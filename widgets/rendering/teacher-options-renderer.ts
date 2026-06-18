@@ -143,6 +143,19 @@ export const teacherOptionsStyles: CSSResult = css`
     max-width: 100%;
     min-width: 0;
   }
+
+  .teacher-options sl-select {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  .teacher-options sl-select::part(combobox) {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
 `
 
 type RangeRow = {
@@ -174,7 +187,22 @@ type ShowRow = {
   onValueChange: (event: Event) => void
 }
 
-type TeacherOptionRow = RangeRow | BooleanRow | ShowRow
+type SelectOption = {
+  value: string
+  label: string
+}
+
+type SelectRow = {
+  kind: "select"
+  label: string
+  value: string
+  options: SelectOption[]
+  allow: boolean
+  onChange: (event: Event) => void
+  onAllowChange: (event: Event) => void
+}
+
+type TeacherOptionRow = RangeRow | BooleanRow | ShowRow | SelectRow
 
 type TeacherOptionsSection = {
   title: string
@@ -207,6 +235,19 @@ function renderRow(row: TeacherOptionRow): TemplateResult {
         <div class="teacher-options__boolean-value">
           <sl-switch ?checked=${row.value} @sl-change=${row.onValueChange}></sl-switch>
         </div>
+      </div>
+    `
+  }
+
+  if (row.kind === "select") {
+    return html`
+      <div class="teacher-options__row">
+        ${renderRowHead(row.label, row.allow, row.onAllowChange)}
+        <sl-select .value=${row.value} @sl-change=${row.onChange}>
+          ${row.options.map(
+            (option) => html`<sl-option value=${option.value}>${option.label}</sl-option>`,
+          )}
+        </sl-select>
       </div>
     `
   }

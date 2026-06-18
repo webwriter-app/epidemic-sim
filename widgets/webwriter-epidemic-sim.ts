@@ -9,6 +9,8 @@ import SlDetails from "@shoelace-style/shoelace/dist/components/details/details.
 import SlRange from "@shoelace-style/shoelace/dist/components/range/range.component.js"
 import SlSwitch from "@shoelace-style/shoelace/dist/components/switch/switch.component.js"
 import SlTag from "@shoelace-style/shoelace/dist/components/tag/tag.component.js"
+import SlSelect from "@shoelace-style/shoelace/dist/components/select/select.component.js"
+import SlOption from "@shoelace-style/shoelace/dist/components/option/option.component.js"
 import LOCALIZE from "../localization/generated"
 
 import {epidemicSimStyles} from "./styles/epidemic-sim.styles"
@@ -17,7 +19,14 @@ import {renderTeacherOptions, teacherOptionsStyles, type RenderTeacherOptionsInp
 import {destroyChart, drawChart, resetChart} from "./rendering/chart-renderer"
 import type {ChartSeries} from "./rendering/chart-renderer"
 import {drawSimulation as renderSimulation} from "./rendering/simulation-renderer"
-import {getSirCounts, initializeAgents, stepSimulation} from "./simulation/engine"
+import {getEpidemicCounts, initializeAgents, stepSimulation} from "./simulation/engine"
+import {
+  DEFAULT_MODEL_SPECIFIC_DEFAULTS,
+  getChartCompartments,
+  isEpidemicModelType,
+  type ChartCompartment,
+  type EpidemicModelType,
+} from "./simulation/epidemic-models"
 import {pushHistoryValue, resetHistory} from "./simulation/history"
 import type {
   Agent,
@@ -47,6 +56,16 @@ const numberAttributeConverter = {
   toAttribute: (value: number): string | null => (Number.isFinite(value) ? String(value) : null),
 }
 
+const modelTypeAttributeConverter = {
+  fromAttribute: (value: string | null): EpidemicModelType => {
+    if (value && isEpidemicModelType(value)) {
+      return value
+    }
+    return "sir"
+  },
+  toAttribute: (value: EpidemicModelType): string => value,
+}
+
 @customElement("webwriter-epidemic-sim")
 export class WebwriterEpidemicSim extends LitElementWw {
   localize = LOCALIZE
@@ -60,8 +79,39 @@ export class WebwriterEpidemicSim extends LitElementWw {
     "sl-range": SlRange,
     "sl-switch": SlSwitch,
     "sl-tag": SlTag,
+    "sl-select": SlSelect,
+    "sl-option": SlOption,
   }
   static styles = [epidemicSimStyles, sideMenuStyles, teacherOptionsStyles]
+
+  @property({
+    type: String,
+    attribute: "model-type",
+    reflect: true,
+    converter: modelTypeAttributeConverter,
+  })
+  accessor modelType: EpidemicModelType = "sir"
+
+  @property({type: Boolean, attribute: true, reflect: true, converter: booleanAttributeConverter})
+  accessor allowModelTypeControl = false
+
+  @property({type: Number, attribute: true, reflect: true, converter: numberAttributeConverter})
+  accessor incubationDuration = DEFAULT_MODEL_SPECIFIC_DEFAULTS.incubationDuration
+
+  @property({type: Boolean, attribute: true, reflect: true, converter: booleanAttributeConverter})
+  accessor allowIncubationDurationControl = false
+
+  @property({type: Number, attribute: true, reflect: true, converter: numberAttributeConverter})
+  accessor immunityDuration = DEFAULT_MODEL_SPECIFIC_DEFAULTS.immunityDuration
+
+  @property({type: Boolean, attribute: true, reflect: true, converter: booleanAttributeConverter})
+  accessor allowImmunityDurationControl = false
+
+  @property({type: Number, attribute: true, reflect: true, converter: numberAttributeConverter})
+  accessor mortalityProbability = DEFAULT_MODEL_SPECIFIC_DEFAULTS.mortalityProbability
+
+  @property({type: Boolean, attribute: true, reflect: true, converter: booleanAttributeConverter})
+  accessor allowMortalityProbabilityControl = false
 
   @property({type: Number, attribute: true, reflect: true, converter: numberAttributeConverter})
   accessor population = 240
@@ -155,6 +205,10 @@ export class WebwriterEpidemicSim extends LitElementWw {
 
   private get config(): SimulationConfig {
     return {
+      modelType: this.modelType,
+      incubationDuration: this.incubationDuration,
+      immunityDuration: this.immunityDuration,
+      mortalityProbability: this.mortalityProbability,
       population: this.population,
       speed: this.speed,
       infectionRadius: this.infectionRadius,
@@ -191,12 +245,16 @@ export class WebwriterEpidemicSim extends LitElementWw {
   private frameIndex = 0
   private agents: Agent[] = []
   private susceptibleCount = 0
+  private exposedCount = 0
   private infectedCount = 0
   private recoveredCount = 0
+  private deadCount = 0
   private readonly chartHistoryLimit = 2000
   private susceptibleHistory: number[] = []
+  private exposedHistory: number[] = []
   private infectedHistory: number[] = []
   private recoveredHistory: number[] = []
+  private deadHistory: number[] = []
   private epidemicEnded = false
   private hadInfection = false
   private userHotspots: Hotspot[] = []
@@ -220,6 +278,10 @@ export class WebwriterEpidemicSim extends LitElementWw {
   protected updated(changed: PropertyValues<this>): void {
     if (changed.has("population") && changed.get("population") !== undefined) {
       this.reseedPopulation()
+      return
+    }
+    if (changed.has("modelType") && changed.get("modelType") !== undefined) {
+      this.resetSimulation()
       return
     }
     if (
@@ -260,7 +322,7 @@ export class WebwriterEpidemicSim extends LitElementWw {
     resetChart(this.chartCanvas)
     this.resetChartHistory()
     this.initializeAgents(0)
-    this.updateSirCounts()
+    this.updateEpidemicCounts()
     this.drawChart()
     this.requestUpdateAndRedrawSimulationWhenPaused()
   }
@@ -299,6 +361,10 @@ export class WebwriterEpidemicSim extends LitElementWw {
 
   private getMenuAllowFlags() {
     return {
+      allowModelTypeControl: this.allowModelTypeControl,
+      allowIncubationDurationControl: this.allowIncubationDurationControl,
+      allowImmunityDurationControl: this.allowImmunityDurationControl,
+      allowMortalityProbabilityControl: this.allowMortalityProbabilityControl,
       allowPopulationControl: this.allowPopulationControl,
       allowSpeedControl: this.allowSpeedControl,
       allowInfectionRadiusControl: this.allowInfectionRadiusControl,
@@ -342,6 +408,31 @@ export class WebwriterEpidemicSim extends LitElementWw {
 
   private updateConfigFromRange<K extends keyof SimulationConfig>(event: Event, key: K): void {
     this.updateConfig(key, this.parseRangeInput(event) as SimulationConfig[K])
+  }
+
+  private updateModelType(event: Event): void {
+    const target = (event.currentTarget ?? event.target) as ({value?: string} & EventTarget) | null
+    const value = target?.value
+    if (!value || !isEpidemicModelType(value) || value === this.modelType) {
+      return
+    }
+    this.modelType = value
+  }
+
+  private hasActiveInfection(): boolean {
+    return this.infectedCount > 0 || this.exposedCount > 0
+  }
+
+  private updateIncubationDuration(event: Event): void {
+    this.updateConfigFromRange(event, "incubationDuration")
+  }
+
+  private updateImmunityDuration(event: Event): void {
+    this.updateConfigFromRange(event, "immunityDuration")
+  }
+
+  private updateMortalityProbability(event: Event): void {
+    this.updateConfigFromRange(event, "mortalityProbability")
   }
 
   private updatePopulation(event: Event): void {
@@ -416,7 +507,7 @@ export class WebwriterEpidemicSim extends LitElementWw {
     resetChart(this.chartCanvas)
     this.resetChartHistory()
     this.initializeAgents(this.frameIndex)
-    this.updateSirCounts()
+    this.updateEpidemicCounts()
     this.drawChart()
     this.redrawSimulationWhenPaused()
   }
@@ -464,7 +555,7 @@ export class WebwriterEpidemicSim extends LitElementWw {
     if (this.isRunning) {
       this.stopLoop()
     } else {
-      if (this.infectedCount === 0) {
+      if (!this.hasActiveInfection()) {
         this.restartSimulationPreservingHotspots()
       }
       this.startLoop()
@@ -528,11 +619,15 @@ export class WebwriterEpidemicSim extends LitElementWw {
       frameIndex: this.frameIndex,
       epidemicEnded: this.epidemicEnded,
       susceptibleCount: this.susceptibleCount,
+      exposedCount: this.exposedCount,
       infectedCount: this.infectedCount,
       recoveredCount: this.recoveredCount,
+      deadCount: this.deadCount,
       susceptibleHistory: [...this.susceptibleHistory],
+      exposedHistory: [...this.exposedHistory],
       infectedHistory: [...this.infectedHistory],
       recoveredHistory: [...this.recoveredHistory],
+      deadHistory: [...this.deadHistory],
       userHotspots: this.cloneHotspots(this.userHotspots),
     }
     this.snapshots = [snapshot, ...this.snapshots]
@@ -654,46 +749,60 @@ export class WebwriterEpidemicSim extends LitElementWw {
       this.config,
       areas,
     )
-    this.updateSirCounts()
-    if (this.infectedCount === 0 && this.isRunning && this.hadInfection) {
+    this.updateEpidemicCounts()
+    if (!this.hasActiveInfection() && this.isRunning && this.hadInfection && this.config.modelType !== "sirs") {
       this.stopLoop()
       this.drawChart()
       this.requestUpdate()
     }
   }
 
-  private updateSirCounts(): void {
-    const counts = getSirCounts(this.agents)
+  private updateEpidemicCounts(): void {
+    const counts = getEpidemicCounts(this.agents)
     this.susceptibleCount = counts.susceptible
+    this.exposedCount = counts.exposed
     this.infectedCount = counts.infected
     this.recoveredCount = counts.recovered
+    this.deadCount = counts.dead
     this.recordChartPoint()
   }
 
   private resetChartHistory(): void {
     this.susceptibleHistory = resetHistory()
+    this.exposedHistory = resetHistory()
     this.infectedHistory = resetHistory()
     this.recoveredHistory = resetHistory()
+    this.deadHistory = resetHistory()
   }
 
   private recordChartPoint(): void {
+    const activeInfection = this.hasActiveInfection()
+    if (activeInfection) {
+      this.hadInfection = true
+      if (this.config.modelType === "sirs") {
+        this.epidemicEnded = false
+      }
+    }
+
     if (this.epidemicEnded) {
       return
     }
-    if (this.infectedCount > 0) {
-      this.hadInfection = true
-    }
+
+    const waveEnded = this.hadInfection && !activeInfection
     const isFullDayCheckpoint = this.frameIndex % FRAMES_PER_DAY === 0
     if (!isFullDayCheckpoint) {
-      if (this.hadInfection && this.infectedCount === 0) {
+      if (waveEnded && this.config.modelType !== "sirs") {
         this.epidemicEnded = true
       }
       return
     }
+
     pushHistoryValue(this.susceptibleHistory, this.susceptibleCount, this.chartHistoryLimit)
+    pushHistoryValue(this.exposedHistory, this.exposedCount, this.chartHistoryLimit)
     pushHistoryValue(this.infectedHistory, this.infectedCount, this.chartHistoryLimit)
     pushHistoryValue(this.recoveredHistory, this.recoveredCount, this.chartHistoryLimit)
-    if (this.hadInfection && this.infectedCount === 0) {
+    pushHistoryValue(this.deadHistory, this.deadCount, this.chartHistoryLimit)
+    if (waveEnded && this.config.modelType !== "sirs") {
       this.epidemicEnded = true
     }
   }
@@ -733,12 +842,15 @@ export class WebwriterEpidemicSim extends LitElementWw {
   }
 
   private buildChartSeries(includeApproximation: boolean): ChartSeries[] {
-    const baseSeries: ChartSeries[] = [
-      {label: msg("Susceptible"), values: this.susceptibleHistory, color: "#2563eb"},
-      {label: msg("Infected"), values: this.infectedHistory, color: "#dc2626"},
-      {label: msg("Recovered"), values: this.recoveredHistory, color: "#16a34a"},
-    ]
-    if (!includeApproximation) {
+    const compartmentSeries: Record<ChartCompartment, ChartSeries> = {
+      susceptible: {label: msg("Susceptible"), values: this.susceptibleHistory, color: "#2563eb"},
+      exposed: {label: msg("Exposed"), values: this.exposedHistory, color: "#f59e0b"},
+      infected: {label: msg("Infected"), values: this.infectedHistory, color: "#dc2626"},
+      recovered: {label: msg("Recovered"), values: this.recoveredHistory, color: "#16a34a"},
+      dead: {label: msg("Dead"), values: this.deadHistory, color: "#64748b"},
+    }
+    const baseSeries = getChartCompartments(this.config.modelType).map((compartment) => compartmentSeries[compartment])
+    if (!includeApproximation || this.config.modelType !== "sir") {
       return baseSeries
     }
     return [...baseSeries, ...this.buildApproximationSeries()]
@@ -825,11 +937,15 @@ export class WebwriterEpidemicSim extends LitElementWw {
     peakFrame: number
     currentFrame: number
     currentSusceptible: number
+    currentExposed: number
     currentInfected: number
     currentRecovered: number
+    currentDead: number
     currentSusceptibleShare: number
+    currentExposedShare: number
     currentInfectedShare: number
     currentRecoveredShare: number
+    currentDeadShare: number
     finalRecoveredShare: number | null
     estimatedR0: number | null
     herdImmunityThreshold: number | null
@@ -845,11 +961,15 @@ export class WebwriterEpidemicSim extends LitElementWw {
     }
     const population = Math.max(1, this.config.population)
     const currentSusceptible = this.susceptibleCount
+    const currentExposed = this.exposedCount
     const currentInfected = this.infectedCount
     const currentRecovered = this.recoveredCount
+    const currentDead = this.deadCount
     const currentSusceptibleShare = currentSusceptible / population
+    const currentExposedShare = currentExposed / population
     const currentInfectedShare = currentInfected / population
     const currentRecoveredShare = currentRecovered / population
+    const currentDeadShare = currentDead / population
     const finalRecoveredShare = this.epidemicEnded ? currentRecoveredShare : null
     const estimatedR0 = this.estimateBasicReproductionNumber()
     const herdImmunityThreshold = estimatedR0 !== null && estimatedR0 > 1 ? 1 - 1 / estimatedR0 : null
@@ -858,11 +978,15 @@ export class WebwriterEpidemicSim extends LitElementWw {
       peakFrame,
       currentFrame: this.frameIndex,
       currentSusceptible,
+      currentExposed,
       currentInfected,
       currentRecovered,
+      currentDead,
       currentSusceptibleShare,
+      currentExposedShare,
       currentInfectedShare,
       currentRecoveredShare,
+      currentDeadShare,
       finalRecoveredShare,
       estimatedR0,
       herdImmunityThreshold,
@@ -884,6 +1008,19 @@ export class WebwriterEpidemicSim extends LitElementWw {
     return `${(frameCount / FRAMES_PER_DAY).toFixed(2)} d`
   }
 
+  private getInsightsOverlayTitle(): string {
+    if (this.config.modelType === "seir") {
+      return msg("SEIR insights")
+    }
+    if (this.config.modelType === "sirs") {
+      return msg("SIRS insights")
+    }
+    if (this.config.modelType === "sird") {
+      return msg("SIRD insights")
+    }
+    return msg("SIR insights")
+  }
+
   private renderChartOverlayInsights(): TemplateResult {
     const insights = this.computeChartInsights()
     const population = Math.max(1, this.config.population)
@@ -900,6 +1037,16 @@ export class WebwriterEpidemicSim extends LitElementWw {
           <span>${msg("Current susceptible")}</span>
           <strong>${Math.round(insights.currentSusceptible)} (${this.formatPercent(insights.currentSusceptibleShare)})</strong>
         </div>
+        ${
+          this.config.modelType === "seir"
+            ? html`
+                <div class="chart-overlay__insight-item">
+                  <span>${msg("Current exposed")}</span>
+                  <strong>${Math.round(insights.currentExposed)} (${this.formatPercent(insights.currentExposedShare)})</strong>
+                </div>
+              `
+            : null
+        }
         <div class="chart-overlay__insight-item">
           <span>${msg("Current infected")}</span>
           <strong>${Math.round(insights.currentInfected)} (${this.formatPercent(insights.currentInfectedShare)})</strong>
@@ -908,6 +1055,16 @@ export class WebwriterEpidemicSim extends LitElementWw {
           <span>${msg("Current recovered")}</span>
           <strong>${Math.round(insights.currentRecovered)} (${this.formatPercent(insights.currentRecoveredShare)})</strong>
         </div>
+        ${
+          this.config.modelType === "sird"
+            ? html`
+                <div class="chart-overlay__insight-item">
+                  <span>${msg("Current dead")}</span>
+                  <strong>${Math.round(insights.currentDead)} (${this.formatPercent(insights.currentDeadShare)})</strong>
+                </div>
+              `
+            : null
+        }
         <div class="chart-overlay__insight-item">
           <span>${msg("Final recovered share")}</span>
           <strong>
@@ -956,7 +1113,7 @@ export class WebwriterEpidemicSim extends LitElementWw {
         }
         <sl-details class="snapshots-overlay__snapshot-details" summary=${msg("Details")}>
           <div class="snapshots-overlay__snapshot-grid">
-            <span>${msg("Model type")}: <strong>${msg("SIR")}</strong></span>
+            <span>${msg("Model type")}: <strong>${this.getModelTypeLabel(snapshot.config.modelType)}</strong></span>
             <span>${msg("Population")}: <strong>${snapshot.config.population}</strong></span>
             <span>${msg("Speed")}: <strong>${snapshot.config.speed.toFixed(1)}</strong></span>
             <span
@@ -967,6 +1124,43 @@ export class WebwriterEpidemicSim extends LitElementWw {
             <span
               >${msg("Recovery duration")}: <strong>${this.formatFrameCountAsDays(snapshot.config.recoveryDuration)}</strong></span
             >
+            ${
+              snapshot.config.modelType === "seir"
+                ? html`<span
+                    >${msg("Incubation duration")}: <strong
+                      >${this.formatFrameCountAsDays(snapshot.config.incubationDuration)}</strong
+                    ></span
+                  >`
+                : null
+            }
+            ${
+              snapshot.config.modelType === "sirs"
+                ? html`<span
+                    >${msg("Immunity duration")}: <strong
+                      >${this.formatFrameCountAsDays(snapshot.config.immunityDuration)}</strong
+                    ></span
+                  >`
+                : null
+            }
+            ${
+              snapshot.config.modelType === "sird"
+                ? html`<span
+                    >${msg("Mortality probability")}: <strong
+                      >${Math.round(snapshot.config.mortalityProbability * 1000) / 10}%</strong
+                    ></span
+                  >`
+                : null
+            }
+            ${
+              snapshot.config.modelType === "seir"
+                ? html`<span>${msg("Exposed")}: <strong>${snapshot.exposedCount}</strong></span>`
+                : null
+            }
+            ${
+              snapshot.config.modelType === "sird"
+                ? html`<span>${msg("Dead")}: <strong>${snapshot.deadCount}</strong></span>`
+                : null
+            }
             <span
               >${msg("Quarantine enabled")}: <strong>${snapshot.config.quarantineEnabled ? msg("yes") : msg("no")}</strong></span
             >
@@ -1401,7 +1595,7 @@ export class WebwriterEpidemicSim extends LitElementWw {
     resetChart(this.chartCanvas)
     this.resetChartHistory()
     this.initializeAgents(0)
-    this.updateSirCounts()
+    this.updateEpidemicCounts()
     this.drawChart()
     this.requestUpdateAndRedrawSimulationWhenPaused()
   }
@@ -1525,8 +1719,81 @@ export class WebwriterEpidemicSim extends LitElementWw {
     }
   }
 
+  private getModelTypeOptions(): Array<{value: EpidemicModelType; label: string}> {
+    return [
+      {value: "sir", label: msg("SIR")},
+      {value: "sirs", label: msg("SIRS")},
+      {value: "seir", label: msg("SEIR")},
+      {value: "sird", label: msg("SIRD")},
+    ]
+  }
+
+  private getModelTypeLabel(modelType: EpidemicModelType): string {
+    const option = this.getModelTypeOptions().find((entry) => entry.value === modelType)
+    return option?.label ?? modelType.toUpperCase()
+  }
+
+  private getModelSpecificTeacherRows(): RenderTeacherOptionsInput["sections"][number]["rows"] {
+    if (this.modelType === "seir") {
+      return [
+        {
+          kind: "range",
+          label: msg("Incubation duration"),
+          value: this.incubationDuration,
+          min: 30,
+          max: 1200,
+          step: 30,
+          allow: this.allowIncubationDurationControl,
+          formatValue: (value) => this.formatFrameCountAsDays(value),
+          onInput: this.updateIncubationDuration,
+          onAllowChange: (event) => this.setAllowControl("allowIncubationDurationControl", event),
+        },
+      ]
+    }
+
+    if (this.modelType === "sirs") {
+      return [
+        {
+          kind: "range",
+          label: msg("Immunity duration"),
+          value: this.immunityDuration,
+          min: 120,
+          max: 4800,
+          step: 60,
+          allow: this.allowImmunityDurationControl,
+          formatValue: (value) => this.formatFrameCountAsDays(value),
+          onInput: this.updateImmunityDuration,
+          onAllowChange: (event) => this.setAllowControl("allowImmunityDurationControl", event),
+        },
+      ]
+    }
+
+    if (this.modelType === "sird") {
+      return [
+        {
+          kind: "range",
+          label: msg("Mortality probability"),
+          value: this.mortalityProbability,
+          min: 0.001,
+          max: 0.5,
+          step: 0.001,
+          allow: this.allowMortalityProbabilityControl,
+          formatValue: (value) => `${Math.round(value * 1000) / 10}%`,
+          onInput: this.updateMortalityProbability,
+          onAllowChange: (event) => this.setAllowControl("allowMortalityProbabilityControl", event),
+        },
+      ]
+    }
+
+    return []
+  }
+
   private setAllowControl(
     key:
+      | "allowModelTypeControl"
+      | "allowIncubationDurationControl"
+      | "allowImmunityDurationControl"
+      | "allowMortalityProbabilityControl"
       | "allowPopulationControl"
       | "allowSpeedControl"
       | "allowInfectionRadiusControl"
@@ -1550,6 +1817,22 @@ export class WebwriterEpidemicSim extends LitElementWw {
   private getTeacherOptionsInput(): RenderTeacherOptionsInput {
     return {
       sections: [
+        {
+          title: msg("Model"),
+          open: true,
+          rows: [
+            {
+              kind: "select",
+              label: msg("Model type"),
+              value: this.modelType,
+              options: this.getModelTypeOptions(),
+              allow: this.allowModelTypeControl,
+              onChange: this.updateModelType,
+              onAllowChange: (event) => this.setAllowControl("allowModelTypeControl", event),
+            },
+            ...this.getModelSpecificTeacherRows(),
+          ],
+        },
         {
           title: msg("General"),
           open: true,
@@ -1821,6 +2104,11 @@ export class WebwriterEpidemicSim extends LitElementWw {
           this.hasVisibleMenuControls
             ? renderMenu({
                 ...this.getMenuAllowFlags(),
+                modelType: this.config.modelType,
+                modelTypeOptions: this.getModelTypeOptions(),
+                incubationDuration: this.config.incubationDuration,
+                immunityDuration: this.config.immunityDuration,
+                mortalityProbability: this.config.mortalityProbability,
                 population: this.config.population,
                 speed: this.config.speed,
                 infectionRadius: this.config.infectionRadius,
@@ -1837,6 +2125,10 @@ export class WebwriterEpidemicSim extends LitElementWw {
                 hotspotSize: this.config.hotspotSize,
                 communitiesEnabled: this.config.communitiesEnabled,
                 communityLeaveProbability: this.config.communityLeaveProbability,
+                onModelTypeChange: this.updateModelType,
+                onIncubationDurationInput: this.updateIncubationDuration,
+                onImmunityDurationInput: this.updateImmunityDuration,
+                onMortalityProbabilityInput: this.updateMortalityProbability,
                 onPopulationInput: this.updatePopulation,
                 onSpeedInput: this.updateSpeed,
                 onInfectionRadiusInput: this.updateInfectionRadius,
@@ -1864,21 +2156,27 @@ export class WebwriterEpidemicSim extends LitElementWw {
                 <section class="chart-overlay" @click=${this.onChartOverlayBackdropClick}>
                   <article class="chart-overlay__dialog" role="dialog" aria-modal="true">
                     <header class="chart-overlay__header">
-                      <h3>${msg("SIR insights")}</h3>
+                      <h3>${this.getInsightsOverlayTitle()}</h3>
                       <div class="chart-overlay__actions">
                         <sl-button size="small" @click=${this.createSnapshot}>${msg("Create snapshot")}</sl-button>
                         <sl-button size="small" @click=${this.closeChartOverlay}>${msg("Close")}</sl-button>
                       </div>
                     </header>
-                    <div class="chart-overlay__controls">
-                      <sl-switch
-                        class="chart-overlay__fit-switch"
-                        ?checked=${this.showApproximateFitOverlay}
-                        @sl-change=${this.updateApproximateFitOverlay}
-                      >
-                        ${msg("Show fit overlay")}
-                      </sl-switch>
-                    </div>
+                    ${
+                      this.config.modelType === "sir"
+                        ? html`
+                            <div class="chart-overlay__controls">
+                              <sl-switch
+                                class="chart-overlay__fit-switch"
+                                ?checked=${this.showApproximateFitOverlay}
+                                @sl-change=${this.updateApproximateFitOverlay}
+                              >
+                                ${msg("Show fit overlay")}
+                              </sl-switch>
+                            </div>
+                          `
+                        : null
+                    }
                     <div class="chart-overlay__chart-wrap">
                       <canvas id="chart-canvas-enlarged"></canvas>
                     </div>

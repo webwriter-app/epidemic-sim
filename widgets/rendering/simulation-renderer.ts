@@ -1,11 +1,13 @@
-import type {Agent, SimulationAreas} from "../simulation/types"
+import type {Agent, AgentState, SimulationAreas} from "../simulation/types"
 
 const AGENT_RADIUS = 3
-const AGENT_COLORS = {
+const AGENT_COLORS: Record<AgentState, string> = {
   susceptible: "#2563eb",
+  exposed: "#f59e0b",
   infected: "#dc2626",
   recovered: "#16a34a",
-} as const
+  dead: "#64748b",
+}
 
 export function drawSimulation(
   ctx: CanvasRenderingContext2D,

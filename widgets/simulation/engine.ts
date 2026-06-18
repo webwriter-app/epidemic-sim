@@ -1,4 +1,4 @@
-import type {Agent, CommunityCell, Hotspot, Rect, SimulationAreas, SimulationConfig, SirCounts} from "./types"
+import type {Agent, CommunityCell, Hotspot, Rect, SimulationAreas, SimulationConfig, EpidemicCounts} from "./types"
 
 export function initializeAgents(
   config: SimulationConfig,
@@ -20,7 +20,7 @@ export function initializeAgents(
       vx: Math.cos(angle) * config.speed * speedScale,
       vy: Math.sin(angle) * config.speed * speedScale,
       state: infected ? "infected" : "susceptible",
-      infectedAt: infected ? infectedAtFrame : -1,
+      stateEnteredAt: infected ? infectedAtFrame : -1,
       zone: "main",
       transition: "none",
       targetX: spawn.x,
@@ -48,23 +48,66 @@ export function stepSimulation(
   return nextFrame
 }
 
-export function getSirCounts(agents: Agent[]): SirCounts {
+export function getEpidemicCounts(agents: Agent[]): EpidemicCounts {
   let susceptible = 0
+  let exposed = 0
   let infected = 0
   let recovered = 0
+  let dead = 0
 
   for (let i = 0; i < agents.length; i += 1) {
     const state = agents[i].state
     if (state === "susceptible") {
       susceptible += 1
+    } else if (state === "exposed") {
+      exposed += 1
     } else if (state === "infected") {
       infected += 1
-    } else {
+    } else if (state === "recovered") {
       recovered += 1
+    } else {
+      dead += 1
     }
   }
 
-  return {susceptible, infected, recovered}
+  return {susceptible, exposed, infected, recovered, dead}
+}
+
+function updateAgentStates(agents: Agent[], frameIndex: number, config: SimulationConfig): void {
+  for (let i = 0; i < agents.length; i += 1) {
+    const agent = agents[i]
+    if (agent.state === "dead") {
+      continue
+    }
+
+    if (config.modelType === "seir" && agent.state === "exposed") {
+      if (agent.stateEnteredAt >= 0 && frameIndex - agent.stateEnteredAt >= config.incubationDuration) {
+        agent.state = "infected"
+        agent.stateEnteredAt = frameIndex
+      }
+      continue
+    }
+
+    if (agent.state === "infected" && agent.stateEnteredAt >= 0) {
+      if (frameIndex - agent.stateEnteredAt < config.recoveryDuration) {
+        continue
+      }
+      if (config.modelType === "sird" && Math.random() < config.mortalityProbability) {
+        agent.state = "dead"
+      } else {
+        agent.state = "recovered"
+      }
+      agent.stateEnteredAt = frameIndex
+      continue
+    }
+
+    if (config.modelType === "sirs" && agent.state === "recovered") {
+      if (agent.stateEnteredAt >= 0 && frameIndex - agent.stateEnteredAt >= config.immunityDuration) {
+        agent.state = "susceptible"
+        agent.stateEnteredAt = -1
+      }
+    }
+  }
 }
 
 function moveAgents(
@@ -73,18 +116,19 @@ function moveAgents(
   areas: SimulationAreas,
   frameIndex: number,
 ): void {
+  updateAgentStates(agents, frameIndex, config)
   const hotspotMaxAgents = Math.max(1, Math.floor(config.hotspotMaxAgents))
   for (let i = 0; i < agents.length; i += 1) {
     const agent = agents[i]
+    if (agent.state === "dead") {
+      continue
+    }
     if (!config.communitiesEnabled && agent.communityId !== -1) {
       agent.communityId = -1
       agent.pendingCommunityId = -1
     }
     if (config.communitiesEnabled && agent.zone === "main" && agent.communityId === -1) {
       agent.communityId = findCommunityIdForPoint(agent.x, agent.y, areas.communities)
-    }
-    if (agent.state === "infected" && frameIndex - agent.infectedAt >= config.recoveryDuration) {
-      agent.state = "recovered"
     }
 
     if (!config.quarantineEnabled && agent.transition === "toQuarantine") {
@@ -279,6 +323,7 @@ function spreadInfection(
 ): void {
   const radiusSq = config.infectionRadius * config.infectionRadius
   const maxNewInfectionsPerSource = 2
+  const useExposedState = config.modelType === "seir"
 
   for (let i = 0; i < agents.length; i += 1) {
     const source = agents[i]
@@ -309,8 +354,12 @@ function spreadInfection(
       const proximityFactor = 1 - distSq / Math.max(1, radiusSq)
       const transmissionChance = config.infectionProbability * Math.max(0.15, proximityFactor)
       if (Math.random() < transmissionChance) {
-        target.state = "infected"
-        target.infectedAt = frameIndex
+        if (useExposedState) {
+          target.state = "exposed"
+        } else {
+          target.state = "infected"
+        }
+        target.stateEnteredAt = frameIndex
         infectionsFromSource += 1
         if (config.quarantineEnabled && areas.quarantine && Math.random() < config.quarantineProbability) {
           beginTransitionToQuarantine(target, areas.quarantine, frameIndex + config.quarantineDuration)

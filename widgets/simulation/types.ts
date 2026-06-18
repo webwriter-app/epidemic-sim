@@ -1,4 +1,6 @@
-export type AgentState = "susceptible" | "infected" | "recovered"
+import type {EpidemicModelType} from "./epidemic-models"
+
+export type AgentState = "susceptible" | "exposed" | "infected" | "recovered" | "dead"
 export type AgentZone = "main" | "quarantine"
 export type AgentTransition = "none" | "toQuarantine" | "toMain" | "toHotspot" | "toCommunity"
 
@@ -33,7 +35,7 @@ export interface Agent {
   vx: number
   vy: number
   state: AgentState
-  infectedAt: number
+  stateEnteredAt: number
   zone: AgentZone
   transition: AgentTransition
   targetX: number
@@ -46,6 +48,10 @@ export interface Agent {
 }
 
 export interface SimulationConfig {
+  modelType: EpidemicModelType
+  incubationDuration: number
+  immunityDuration: number
+  mortalityProbability: number
   population: number
   speed: number
   infectionRadius: number
@@ -64,10 +70,12 @@ export interface SimulationConfig {
   communityLeaveProbability: number
 }
 
-export interface SirCounts {
+export interface EpidemicCounts {
   susceptible: number
+  exposed: number
   infected: number
   recovered: number
+  dead: number
 }
 
 export interface SimulationSnapshot {
@@ -80,10 +88,14 @@ export interface SimulationSnapshot {
   frameIndex: number
   epidemicEnded: boolean
   susceptibleCount: number
+  exposedCount: number
   infectedCount: number
   recoveredCount: number
+  deadCount: number
   susceptibleHistory: number[]
+  exposedHistory: number[]
   infectedHistory: number[]
   recoveredHistory: number[]
+  deadHistory: number[]
   userHotspots: Hotspot[]
 }
