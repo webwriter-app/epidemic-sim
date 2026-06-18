@@ -1,6 +1,6 @@
-export type EpidemicModelType = "sir" | "sirs" | "seir" | "sird"
+export type EpidemicModelType = "sir" | "sirs" | "seir" | "sird" | "seird"
 
-export const EPIDEMIC_MODEL_TYPES: readonly EpidemicModelType[] = ["sir", "sirs", "seir", "sird"] as const
+export const EPIDEMIC_MODEL_TYPES: readonly EpidemicModelType[] = ["sir", "sirs", "seir", "sird", "seird"] as const
 
 export type ChartCompartment = "susceptible" | "exposed" | "infected" | "recovered" | "dead"
 
@@ -14,6 +14,9 @@ export function getChartCompartments(modelType: EpidemicModelType): ChartCompart
   }
   if (modelType === "sird") {
     return ["susceptible", "infected", "recovered", "dead"]
+  }
+  if (modelType === "seird") {
+    return ["susceptible", "exposed", "infected", "recovered", "dead"]
   }
   return ["susceptible", "infected", "recovered"]
 }

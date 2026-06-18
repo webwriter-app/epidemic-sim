@@ -1012,6 +1012,9 @@ export class WebwriterEpidemicSim extends LitElementWw {
     if (this.config.modelType === "seir") {
       return msg("SEIR insights")
     }
+    if (this.config.modelType === "seird") {
+      return msg("SEIRD insights")
+    }
     if (this.config.modelType === "sirs") {
       return msg("SIRS insights")
     }
@@ -1038,7 +1041,7 @@ export class WebwriterEpidemicSim extends LitElementWw {
           <strong>${Math.round(insights.currentSusceptible)} (${this.formatPercent(insights.currentSusceptibleShare)})</strong>
         </div>
         ${
-          this.config.modelType === "seir"
+          this.config.modelType === "seir" || this.config.modelType === "seird"
             ? html`
                 <div class="chart-overlay__insight-item">
                   <span>${msg("Current exposed")}</span>
@@ -1056,7 +1059,7 @@ export class WebwriterEpidemicSim extends LitElementWw {
           <strong>${Math.round(insights.currentRecovered)} (${this.formatPercent(insights.currentRecoveredShare)})</strong>
         </div>
         ${
-          this.config.modelType === "sird"
+          this.config.modelType === "sird" || this.config.modelType === "seird"
             ? html`
                 <div class="chart-overlay__insight-item">
                   <span>${msg("Current dead")}</span>
@@ -1125,7 +1128,7 @@ export class WebwriterEpidemicSim extends LitElementWw {
               >${msg("Recovery duration")}: <strong>${this.formatFrameCountAsDays(snapshot.config.recoveryDuration)}</strong></span
             >
             ${
-              snapshot.config.modelType === "seir"
+              snapshot.config.modelType === "seir" || snapshot.config.modelType === "seird"
                 ? html`<span
                     >${msg("Incubation duration")}: <strong
                       >${this.formatFrameCountAsDays(snapshot.config.incubationDuration)}</strong
@@ -1143,7 +1146,7 @@ export class WebwriterEpidemicSim extends LitElementWw {
                 : null
             }
             ${
-              snapshot.config.modelType === "sird"
+              snapshot.config.modelType === "sird" || snapshot.config.modelType === "seird"
                 ? html`<span
                     >${msg("Mortality probability")}: <strong
                       >${Math.round(snapshot.config.mortalityProbability * 1000) / 10}%</strong
@@ -1152,12 +1155,12 @@ export class WebwriterEpidemicSim extends LitElementWw {
                 : null
             }
             ${
-              snapshot.config.modelType === "seir"
+              snapshot.config.modelType === "seir" || snapshot.config.modelType === "seird"
                 ? html`<span>${msg("Exposed")}: <strong>${snapshot.exposedCount}</strong></span>`
                 : null
             }
             ${
-              snapshot.config.modelType === "sird"
+              snapshot.config.modelType === "sird" || snapshot.config.modelType === "seird"
                 ? html`<span>${msg("Dead")}: <strong>${snapshot.deadCount}</strong></span>`
                 : null
             }
@@ -1725,6 +1728,7 @@ export class WebwriterEpidemicSim extends LitElementWw {
       {value: "sirs", label: msg("SIRS")},
       {value: "seir", label: msg("SEIR")},
       {value: "sird", label: msg("SIRD")},
+      {value: "seird", label: msg("SEIRD")},
     ]
   }
 
@@ -1770,6 +1774,35 @@ export class WebwriterEpidemicSim extends LitElementWw {
 
     if (this.modelType === "sird") {
       return [
+        {
+          kind: "range",
+          label: msg("Mortality probability"),
+          value: this.mortalityProbability,
+          min: 0.001,
+          max: 0.5,
+          step: 0.001,
+          allow: this.allowMortalityProbabilityControl,
+          formatValue: (value) => `${Math.round(value * 1000) / 10}%`,
+          onInput: this.updateMortalityProbability,
+          onAllowChange: (event) => this.setAllowControl("allowMortalityProbabilityControl", event),
+        },
+      ]
+    }
+
+    if (this.modelType === "seird") {
+      return [
+        {
+          kind: "range",
+          label: msg("Incubation duration"),
+          value: this.incubationDuration,
+          min: 30,
+          max: 1200,
+          step: 30,
+          allow: this.allowIncubationDurationControl,
+          formatValue: (value) => this.formatFrameCountAsDays(value),
+          onInput: this.updateIncubationDuration,
+          onAllowChange: (event) => this.setAllowControl("allowIncubationDurationControl", event),
+        },
         {
           kind: "range",
           label: msg("Mortality probability"),

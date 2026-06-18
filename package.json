@@ -25,6 +25,7 @@
         "./widgets/webwriter-epidemic-sim.*": {
             "source": "./widgets/webwriter-epidemic-sim.ts",
             "default": "./dist/widgets/webwriter-epidemic-sim.*"
-        }
+        },
+        "./snippets/corona-verlauf.html": "./snippets/corona-verlauf.html"
     }
 }

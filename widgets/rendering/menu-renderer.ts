@@ -285,7 +285,8 @@ function renderModelControls(options: RenderMenuOptions): TemplateResult {
     }
 
     ${
-      options.allowIncubationDurationControl && options.modelType === "seir"
+      options.allowIncubationDurationControl &&
+      (options.modelType === "seir" || options.modelType === "seird")
         ? html`
             <label class="side-menu__control">
               <span class="side-menu__control-head">
@@ -329,7 +330,8 @@ function renderModelControls(options: RenderMenuOptions): TemplateResult {
     }
 
     ${
-      options.allowMortalityProbabilityControl && options.modelType === "sird"
+      options.allowMortalityProbabilityControl &&
+      (options.modelType === "sird" || options.modelType === "seird")
         ? html`
             <label class="side-menu__control">
               <span class="side-menu__control-head">

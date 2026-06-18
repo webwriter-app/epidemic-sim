@@ -1,0 +1,46 @@
+<!--
+  COVID-19 SEIRD-Simulation (kalibriert auf RKI-Kennwerte)
+
+  Quellen:
+  - RKI, Epidemiologischer Steckbrief zu SARS-CoV-2 und COVID-19:
+    https://www.rki.de/DE/Themen/Infektionskrankheiten/Infektionskrankheiten-A-Z/C/COVID-19-Pandemie/Steckbrief.html
+  - RKI-Steckbrief (archivierte Fassung mit Kennwert-Tabelle):
+    https://archive.ph/zzwCQ
+  - RKI, Modellierung von Beispielszenarien der SARS-CoV-2-Epidemie 2020 in Deutschland:
+    https://edoc.rki.de/bitstream/handle/176904/6547.2/Modellierung_Beispielszenarien_Deutschland.pdf
+  - Levin et al. 2020, Infection fatality rate (IFR), Eur J Epidemiol:
+    https://doi.org/10.1007/s10654-020-00698-1
+
+  Übernommene Kennwerte (Abruf: 2026-06-18):
+  - R0 (Median): 2,8–3,8
+  - Inkubationszeit (Median): 5 Tage (RKI: 5–6 Tage)
+  - Infektiöse Phase: 10 Tage (~1–2 Tage vor bis ~8 Tage nach Symptombeginn)
+  - Infektionssterblichkeit (IFR): ~1 % (stark altersabhängig)
+
+  Simulationsparameter (1 Tag = 24 Frames):
+  - incubationduration=120 (5 Tage)
+  - recoveryduration=240 (10 Tage)
+  - mortalityprobability=0.01 (~1 % IFR)
+
+
+  Basis-Szenario (ohne Maßnahmen): R0 ≈ 2,8–3,8.
+-->
+<webwriter-epidemic-sim
+  model-type="seird"
+  incubationduration="120"
+  recoveryduration="240"
+  mortalityprobability="0.01"
+  population="800"
+  speed="1.6"
+  infectionradius="12"
+  infectionprobability="0.07"
+  quarantineprobability="0.7"
+  quarantineduration="240"
+  allowquarantineenabledcontrol
+  allowquarantineprobabilitycontrol
+  allowquarantinedurationcontrol
+  allowspeedcontrol
+  allowinfectionprobabilitycontrol
+  allowhotspotsenabledcontrol
+  allowcommunitiesenabledcontrol
+></webwriter-epidemic-sim>

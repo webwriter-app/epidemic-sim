@@ -80,7 +80,7 @@ function updateAgentStates(agents: Agent[], frameIndex: number, config: Simulati
       continue
     }
 
-    if (config.modelType === "seir" && agent.state === "exposed") {
+    if ((config.modelType === "seir" || config.modelType === "seird") && agent.state === "exposed") {
       if (agent.stateEnteredAt >= 0 && frameIndex - agent.stateEnteredAt >= config.incubationDuration) {
         agent.state = "infected"
         agent.stateEnteredAt = frameIndex
@@ -92,7 +92,10 @@ function updateAgentStates(agents: Agent[], frameIndex: number, config: Simulati
       if (frameIndex - agent.stateEnteredAt < config.recoveryDuration) {
         continue
       }
-      if (config.modelType === "sird" && Math.random() < config.mortalityProbability) {
+      if (
+        (config.modelType === "sird" || config.modelType === "seird") &&
+        Math.random() < config.mortalityProbability
+      ) {
         agent.state = "dead"
       } else {
         agent.state = "recovered"
@@ -323,7 +326,7 @@ function spreadInfection(
 ): void {
   const radiusSq = config.infectionRadius * config.infectionRadius
   const maxNewInfectionsPerSource = 2
-  const useExposedState = config.modelType === "seir"
+  const useExposedState = config.modelType === "seir" || config.modelType === "seird"
 
   for (let i = 0; i < agents.length; i += 1) {
     const source = agents[i]
