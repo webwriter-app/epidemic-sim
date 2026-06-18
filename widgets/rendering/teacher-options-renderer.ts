@@ -2,6 +2,10 @@ import {css, html} from "lit"
 import type {CSSResult, TemplateResult} from "lit"
 
 export const teacherOptionsStyles: CSSResult = css`
+  :host(:not([contenteditable="true"]):not([contenteditable=""])) .author-only {
+    display: none;
+  }
+
   :host {
     display: block;
     width: 100%;

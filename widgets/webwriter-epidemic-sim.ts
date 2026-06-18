@@ -11,6 +11,7 @@ import SlSwitch from "@shoelace-style/shoelace/dist/components/switch/switch.com
 import SlTag from "@shoelace-style/shoelace/dist/components/tag/tag.component.js"
 import SlSelect from "@shoelace-style/shoelace/dist/components/select/select.component.js"
 import SlOption from "@shoelace-style/shoelace/dist/components/option/option.component.js"
+import shoelaceLightStyles from "@shoelace-style/shoelace/dist/themes/light.styles.js"
 import LOCALIZE from "../localization/generated"
 
 import {epidemicSimStyles} from "./styles/epidemic-sim.styles"
@@ -82,7 +83,7 @@ export class WebwriterEpidemicSim extends LitElementWw {
     "sl-select": SlSelect,
     "sl-option": SlOption,
   }
-  static styles = [epidemicSimStyles, sideMenuStyles, teacherOptionsStyles]
+  static styles = [shoelaceLightStyles, epidemicSimStyles, sideMenuStyles, teacherOptionsStyles]
 
   @property({
     type: String,
@@ -2057,7 +2058,7 @@ export class WebwriterEpidemicSim extends LitElementWw {
 
   render() {
     return html`
-      <div part="options" class="teacher-options-shell">
+      <div part="options" class="teacher-options-shell author-only">
         ${renderTeacherOptions(this.getTeacherOptionsInput())}
       </div>
       <section class="widget-shell ${this.hasVisibleMenuControls ? "has-menu" : ""}">
