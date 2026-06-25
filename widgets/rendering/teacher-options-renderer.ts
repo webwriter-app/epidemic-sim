@@ -52,6 +52,19 @@ export const teacherOptionsStyles: CSSResult = css`
     font-weight: 600;
     font-size: 0.9rem;
     white-space: normal;
+    align-items: center;
+    line-height: 1;
+  }
+
+  .teacher-options sl-details::part(summary) {
+    align-items: center;
+    line-height: 1;
+    min-height: 0;
+  }
+
+  .teacher-options sl-details::part(summary-icon) {
+    align-self: center;
+    line-height: 0;
   }
 
   .teacher-options sl-details::part(content) {
@@ -74,14 +87,43 @@ export const teacherOptionsStyles: CSSResult = css`
   }
 
   .teacher-options__summary-enable {
-    flex-shrink: 0;
-  }
-
-  .teacher-options__summary-enable sl-switch::part(base),
-  .teacher-options__boolean-value sl-switch::part(base),
-  .teacher-options__visibility sl-switch::part(base) {
     --width: 36px;
     --height: 20px;
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    align-self: center;
+    margin: 0;
+  }
+
+  .teacher-options__summary-enable::part(base) {
+    margin: 0;
+    line-height: 0;
+  }
+
+  .teacher-options__summary-enable::part(label) {
+    display: none;
+    margin: 0;
+  }
+
+  .teacher-options__boolean-value sl-switch,
+  .teacher-options__visibility {
+    --width: 36px;
+    --height: 20px;
+    display: inline-flex;
+    align-items: center;
+    margin: 0;
+  }
+
+  .teacher-options__boolean-value sl-switch::part(label),
+  .teacher-options__visibility::part(label) {
+    display: none;
+    margin: 0;
+  }
+
+  .teacher-options__boolean-value {
+    display: flex;
+    align-items: center;
   }
 
   .teacher-options__rows {

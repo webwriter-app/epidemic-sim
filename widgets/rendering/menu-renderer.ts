@@ -58,12 +58,23 @@ export const sideMenuStyles: CSSResult = css`
   }
 
   .side-menu__title-switch {
+    --width: 36px;
+    --height: 20px;
     flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    align-self: center;
+    margin: 0;
   }
 
   .side-menu__title-switch::part(base) {
-    --width: 36px;
-    --height: 20px;
+    margin: 0;
+    line-height: 0;
+  }
+
+  .side-menu__title-switch::part(label) {
+    display: none;
+    margin: 0;
   }
 
   .side-menu__section {
