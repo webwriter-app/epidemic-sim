@@ -177,8 +177,36 @@ export const epidemicSimStyles = css`
   }
 
   .simulation-actions {
-    justify-content: flex-start;
+    justify-content: center;
     flex-wrap: wrap;
+    gap: 14px;
+    width: 100%;
+    padding-top: 10px;
+    padding-bottom: 4px;
+  }
+
+  .simulation-actions__icon-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    border: 1px solid #d6dce4;
+    border-radius: 50%;
+    color: #334155;
+    background: #ffffff;
+    cursor: pointer;
+    line-height: 1;
+  }
+
+  .simulation-actions__icon-button:hover {
+    background: #f8fafc;
+  }
+
+  .simulation-actions__icon-button:focus-visible {
+    outline: 2px solid #7c3aed;
+    outline-offset: 2px;
   }
 
   .hotspot-toolbox--map {
@@ -203,7 +231,7 @@ export const epidemicSimStyles = css`
     background: #f5f3ff;
   }
 
-  .actions sl-button::part(base) {
+  .actions sl-button:not(.simulation-actions__icon-button)::part(base) {
     min-width: 112px;
   }
 
@@ -277,6 +305,11 @@ export const epidemicSimStyles = css`
 
   .chart-overlay__insights {
     display: grid;
+    gap: 8px;
+  }
+
+  .chart-overlay__insights-row {
+    display: grid;
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     gap: 8px;
   }
@@ -288,11 +321,6 @@ export const epidemicSimStyles = css`
     padding: 8px 10px;
     display: grid;
     gap: 2px;
-  }
-
-  .chart-overlay__insight-item:first-child {
-    grid-column: 1 / -1;
-    margin-bottom: 4px;
   }
 
   .chart-overlay__insight-item span {
@@ -377,8 +405,14 @@ export const epidemicSimStyles = css`
   .snapshots-overlay__snapshot-head {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     gap: 8px;
+  }
+
+  .snapshots-overlay__snapshot-meta {
+    display: grid;
+    gap: 2px;
+    min-width: 0;
   }
 
   .snapshots-overlay__snapshot-title {
@@ -389,6 +423,31 @@ export const epidemicSimStyles = css`
   .snapshots-overlay__snapshot-time {
     color: #475569;
     font-size: 0.8rem;
+  }
+
+  .snapshots-overlay__delete-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    border: 1px solid #fecaca;
+    border-radius: 6px;
+    color: #dc2626;
+    background: #ffffff;
+    cursor: pointer;
+    line-height: 1;
+  }
+
+  .snapshots-overlay__delete-button:hover {
+    background: #fef2f2;
+  }
+
+  .snapshots-overlay__delete-button:focus-visible {
+    outline: 2px solid #dc2626;
+    outline-offset: 2px;
   }
 
   .snapshots-overlay__snapshot-image {
@@ -433,42 +492,6 @@ export const epidemicSimStyles = css`
 
   .snapshots-overlay__snapshot-grid strong {
     color: #0f172a;
-  }
-
-  .snapshots-overlay__snapshot-icon-actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 6px;
-    padding-top: 2px;
-  }
-
-  .snapshots-overlay__icon-button {
-    width: 30px;
-    height: 30px;
-  }
-
-  .snapshots-overlay__icon-button::part(base) {
-    min-width: 30px;
-    min-height: 30px;
-    padding: 0;
-    border-radius: 6px;
-    border-color: #d6dce4;
-    color: #334155;
-    background: #ffffff;
-    font-size: 0.95rem;
-    line-height: 1;
-  }
-
-  .snapshots-overlay__icon-button::part(base):hover {
-    background: #f8fafc;
-  }
-
-  .snapshots-overlay__icon-button--danger {
-    color: #dc2626;
-  }
-
-  .snapshots-overlay__icon-button--danger::part(base) {
-    border-color: #fecaca;
   }
 
   @media (max-width: 600px) {

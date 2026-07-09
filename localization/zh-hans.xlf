@@ -157,10 +157,6 @@
         <source>SIR chart snapshot</source>
         <target>SIR图表快照</target>
       </trans-unit>
-      <trans-unit id="s6602f94567c7c7a3">
-        <source>Expand details</source>
-        <target>展开详情</target>
-      </trans-unit>
       <trans-unit id="sf4cd19d7506d9e12">
         <source>Time (days)</source>
         <target>时间（天）</target>
@@ -240,6 +236,74 @@
       <trans-unit id="s9585687a08d93257">
         <source>Show fit overlay</source>
         <target>显示合身度叠加层</target>
+      </trans-unit>
+      <trans-unit id="s5aa43edcf11f09af">
+        <source>Incubation duration</source>
+        <target>潜伏期</target>
+      </trans-unit>
+      <trans-unit id="s941a41d587a259fd">
+        <source>Immunity duration</source>
+        <target>免疫持续时间</target>
+      </trans-unit>
+      <trans-unit id="s9ddf0979f55228fd">
+        <source>Mortality probability</source>
+        <target>死亡概率</target>
+      </trans-unit>
+      <trans-unit id="s5da52af9b083c29a">
+        <source>Model</source>
+        <target>模型</target>
+      </trans-unit>
+      <trans-unit id="s7379168642ff77b3">
+        <source>Exposed</source>
+        <target>暴露</target>
+      </trans-unit>
+      <trans-unit id="sd049237343c44e47">
+        <source>Dead</source>
+        <target>死亡</target>
+      </trans-unit>
+      <trans-unit id="s00ae53430e6c31cb">
+        <source>SEIR insights</source>
+        <target>SEIR模型分析</target>
+      </trans-unit>
+      <trans-unit id="s2e7ece256ba72b3b">
+        <source>SEIRD insights</source>
+        <target>SEIRD 分析</target>
+      </trans-unit>
+      <trans-unit id="s45b0974d18b97957">
+        <source>SIRS insights</source>
+        <target>SIRS 洞察</target>
+      </trans-unit>
+      <trans-unit id="s65aa7dfb7792b528">
+        <source>SIRD insights</source>
+        <target>SIRD 洞察</target>
+      </trans-unit>
+      <trans-unit id="s4f1a78fbc7a2da7a">
+        <source>Current exposed</source>
+        <target>当前暴露</target>
+      </trans-unit>
+      <trans-unit id="s5fef8fa88777bdec">
+        <source>Current dead</source>
+        <target>当前已停用</target>
+      </trans-unit>
+      <trans-unit id="s62c095244a149fde">
+        <source>SIRS</source>
+        <target>SIRS</target>
+      </trans-unit>
+      <trans-unit id="s4215a8243823eda2">
+        <source>SEIR</source>
+        <target>SEIR</target>
+      </trans-unit>
+      <trans-unit id="s62c0a8244a14c027">
+        <source>SIRD</source>
+        <target>SIRD</target>
+      </trans-unit>
+      <trans-unit id="s6eba9b8b650d3dd2">
+        <source>SEIRD</source>
+        <target>SEIRD</target>
+      </trans-unit>
+      <trans-unit id="s7a3c4c7e8b923c76">
+        <source>Drag this hotspot into the simulation map.</source>
+        <target>将此热点拖动到模拟地图上。</target>
       </trans-unit>
     </body>
   </file>

@@ -157,10 +157,6 @@
         <source>SIR chart snapshot</source>
         <target>Знімок діаграми SIR</target>
       </trans-unit>
-      <trans-unit id="s6602f94567c7c7a3">
-        <source>Expand details</source>
-        <target>Розгорнути детальну інформацію</target>
-      </trans-unit>
       <trans-unit id="sf4cd19d7506d9e12">
         <source>Time (days)</source>
         <target>Час (днів)</target>
@@ -240,6 +236,74 @@
       <trans-unit id="s9585687a08d93257">
         <source>Show fit overlay</source>
         <target>Показати накладку з підбором розміру</target>
+      </trans-unit>
+      <trans-unit id="s5aa43edcf11f09af">
+        <source>Incubation duration</source>
+        <target>Тривалість інкубаційного періоду</target>
+      </trans-unit>
+      <trans-unit id="s941a41d587a259fd">
+        <source>Immunity duration</source>
+        <target>Тривалість імунітету</target>
+      </trans-unit>
+      <trans-unit id="s9ddf0979f55228fd">
+        <source>Mortality probability</source>
+        <target>Імовірність смертності</target>
+      </trans-unit>
+      <trans-unit id="s5da52af9b083c29a">
+        <source>Model</source>
+        <target>Модель</target>
+      </trans-unit>
+      <trans-unit id="s7379168642ff77b3">
+        <source>Exposed</source>
+        <target>Особи, що зазнали впливу</target>
+      </trans-unit>
+      <trans-unit id="sd049237343c44e47">
+        <source>Dead</source>
+        <target>Померлі</target>
+      </trans-unit>
+      <trans-unit id="s00ae53430e6c31cb">
+        <source>SEIR insights</source>
+        <target>Висновки на основі моделі SEIR</target>
+      </trans-unit>
+      <trans-unit id="s2e7ece256ba72b3b">
+        <source>SEIRD insights</source>
+        <target>Висновки за моделлю SEIRD</target>
+      </trans-unit>
+      <trans-unit id="s45b0974d18b97957">
+        <source>SIRS insights</source>
+        <target>Аналіз SIRS</target>
+      </trans-unit>
+      <trans-unit id="s65aa7dfb7792b528">
+        <source>SIRD insights</source>
+        <target>Аналітика SIRD</target>
+      </trans-unit>
+      <trans-unit id="s4f1a78fbc7a2da7a">
+        <source>Current exposed</source>
+        <target>Поточні відкриті позиції</target>
+      </trans-unit>
+      <trans-unit id="s5fef8fa88777bdec">
+        <source>Current dead</source>
+        <target>Поточні неактивні</target>
+      </trans-unit>
+      <trans-unit id="s62c095244a149fde">
+        <source>SIRS</source>
+        <target>SIRS</target>
+      </trans-unit>
+      <trans-unit id="s4215a8243823eda2">
+        <source>SEIR</source>
+        <target>SEIR</target>
+      </trans-unit>
+      <trans-unit id="s62c0a8244a14c027">
+        <source>SIRD</source>
+        <target>SIRD</target>
+      </trans-unit>
+      <trans-unit id="s6eba9b8b650d3dd2">
+        <source>SEIRD</source>
+        <target>SEIRD</target>
+      </trans-unit>
+      <trans-unit id="s7a3c4c7e8b923c76">
+        <source>Drag this hotspot into the simulation map.</source>
+        <target>Перетягніть цю активну точку на карту симуляції.</target>
       </trans-unit>
     </body>
   </file>

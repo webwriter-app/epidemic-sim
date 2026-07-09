@@ -1,4 +1,24 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.1" srcLang="en" trgLang="ar">
-
+<file id="./snippets/corona-verlauf.html" original="./snippets/corona-verlauf.html">
+<unit id="Flatten the Curve: COVID-19 im SEIRD-Modell#1"><segment><source>Flatten the Curve: COVID-19 im SEIRD-Modell</source><target></target></segment></unit>
+<unit id="Dieses Szenario bildet vereinfacht die Ausbreitung von COVID-19 in der frühen Phase der Pandemie (2020) ab.
+    Verwendet wird ein SEIRD-Modell (Susceptible, Exposed, Infected, Recovered, Dead), das zentrale epidemiologische
+    Prozesse wie Inkubationszeit, Infektionsdauer und Krankheitsverläufe berücksichtigt.#1"><segment><source>Dieses Szenario bildet vereinfacht die Ausbreitung von COVID-19 in der frühen Phase der Pandemie (2020) ab.
+    Verwendet wird ein SEIRD-Modell (Susceptible, Exposed, Infected, Recovered, Dead), das zentrale epidemiologische
+    Prozesse wie Inkubationszeit, Infektionsdauer und Krankheitsverläufe berücksichtigt.</source><target></target></segment></unit>
+<unit id="Ziel ist es, durch geeignete Maßnahmen die Infektionsdynamik zu verlangsamen ("Flatten the Curve"), sodass
+    möglichst wenige Personen gleichzeitig erkranken. Untersuchen Sie, welche Eingriffe wirksam sind, welche kaum
+    Wirkung zeigen und welche Nebenwirkungen bzw. Zielkonflikte dabei entstehen.#1"><segment><source>Ziel ist es, durch geeignete Maßnahmen die Infektionsdynamik zu verlangsamen ("Flatten the Curve"), sodass
+    möglichst wenige Personen gleichzeitig erkranken. Untersuchen Sie, welche Eingriffe wirksam sind, welche kaum
+    Wirkung zeigen und welche Nebenwirkungen bzw. Zielkonflikte dabei entstehen.</source><target></target></segment></unit>
+<unit id="Aufgabenstellung#1"><segment><source>Aufgabenstellung</source><target></target></segment></unit>
+<unit id="Führen Sie ein Basisszenario ohne Maßnahmen und anschließend Interventionsszenarien mit
+    unterschiedlichen Maßnahmen durch (z. B. Quarantäne und Kontaktreduktion über geringere Mobilität). Vergleichen Sie die Verläufe und
+    begründen Sie, welche Maßnahmen die Infektionszahlen wirksam senken, welche wenig oder keine Wirkung zeigen und
+    welche Folgen sich daraus ergeben.#1"><segment><source>Führen Sie ein Basisszenario ohne Maßnahmen und anschließend Interventionsszenarien mit
+    unterschiedlichen Maßnahmen durch (z. B. Quarantäne und Kontaktreduktion über geringere Mobilität). Vergleichen Sie die Verläufe und
+    begründen Sie, welche Maßnahmen die Infektionszahlen wirksam senken, welche wenig oder keine Wirkung zeigen und
+    welche Folgen sich daraus ergeben.</source><target></target></segment></unit>
+</file>
 </xliff>

@@ -16,6 +16,13 @@ import LOCALIZE from "../localization/generated"
 
 import {epidemicSimStyles} from "./styles/epidemic-sim.styles"
 import {hasVisibleMenuControls, renderMenu, sideMenuStyles} from "./rendering/menu-renderer"
+import {
+  renderDeleteIcon,
+  renderPauseIcon,
+  renderPlayIcon,
+  renderResetIcon,
+  renderSnapshotsIcon,
+} from "./rendering/simulation-action-icons"
 import {renderTeacherOptions, teacherOptionsStyles, type RenderTeacherOptionsInput} from "./rendering/teacher-options-renderer"
 import {destroyChart, drawChart, resetChart} from "./rendering/chart-renderer"
 import type {ChartSeries} from "./rendering/chart-renderer"
@@ -1033,63 +1040,69 @@ export class WebwriterEpidemicSim extends LitElementWw {
       insights.herdImmunityThreshold === null ? "–" : this.formatPercent(insights.herdImmunityThreshold)
     return html`
       <div class="chart-overlay__insights">
-        <div class="chart-overlay__insight-item">
-          <span>${msg("Elapsed time")}</span>
-          <strong>${this.formatFrameCountAsDays(insights.currentFrame)}</strong>
+        <div class="chart-overlay__insights-row">
+          <div class="chart-overlay__insight-item">
+            <span>${msg("Elapsed time")}</span>
+            <strong>${this.formatFrameCountAsDays(insights.currentFrame)}</strong>
+          </div>
+          <div class="chart-overlay__insight-item">
+            <span>${msg("R0 (approx)")}</span>
+            <strong>${this.formatApprox(insights.estimatedR0)}</strong>
+          </div>
+          <div class="chart-overlay__insight-item">
+            <span>${msg("Herd immunity threshold")}</span>
+            <strong>${herdThresholdLabel}</strong>
+          </div>
         </div>
-        <div class="chart-overlay__insight-item">
-          <span>${msg("Current susceptible")}</span>
-          <strong>${Math.round(insights.currentSusceptible)} (${this.formatPercent(insights.currentSusceptibleShare)})</strong>
+        <div class="chart-overlay__insights-row">
+          <div class="chart-overlay__insight-item">
+            <span>${msg("Current susceptible")}</span>
+            <strong>${Math.round(insights.currentSusceptible)} (${this.formatPercent(insights.currentSusceptibleShare)})</strong>
+          </div>
+          ${
+            this.config.modelType === "seir" || this.config.modelType === "seird"
+              ? html`
+                  <div class="chart-overlay__insight-item">
+                    <span>${msg("Current exposed")}</span>
+                    <strong>${Math.round(insights.currentExposed)} (${this.formatPercent(insights.currentExposedShare)})</strong>
+                  </div>
+                `
+              : null
+          }
+          <div class="chart-overlay__insight-item">
+            <span>${msg("Current infected")}</span>
+            <strong>${Math.round(insights.currentInfected)} (${this.formatPercent(insights.currentInfectedShare)})</strong>
+          </div>
+          <div class="chart-overlay__insight-item">
+            <span>${msg("Current recovered")}</span>
+            <strong>${Math.round(insights.currentRecovered)} (${this.formatPercent(insights.currentRecoveredShare)})</strong>
+          </div>
+          ${
+            this.config.modelType === "sird" || this.config.modelType === "seird"
+              ? html`
+                  <div class="chart-overlay__insight-item">
+                    <span>${msg("Current dead")}</span>
+                    <strong>${Math.round(insights.currentDead)} (${this.formatPercent(insights.currentDeadShare)})</strong>
+                  </div>
+                `
+              : null
+          }
         </div>
-        ${
-          this.config.modelType === "seir" || this.config.modelType === "seird"
-            ? html`
-                <div class="chart-overlay__insight-item">
-                  <span>${msg("Current exposed")}</span>
-                  <strong>${Math.round(insights.currentExposed)} (${this.formatPercent(insights.currentExposedShare)})</strong>
-                </div>
-              `
-            : null
-        }
-        <div class="chart-overlay__insight-item">
-          <span>${msg("Current infected")}</span>
-          <strong>${Math.round(insights.currentInfected)} (${this.formatPercent(insights.currentInfectedShare)})</strong>
-        </div>
-        <div class="chart-overlay__insight-item">
-          <span>${msg("Current recovered")}</span>
-          <strong>${Math.round(insights.currentRecovered)} (${this.formatPercent(insights.currentRecoveredShare)})</strong>
-        </div>
-        ${
-          this.config.modelType === "sird" || this.config.modelType === "seird"
-            ? html`
-                <div class="chart-overlay__insight-item">
-                  <span>${msg("Current dead")}</span>
-                  <strong>${Math.round(insights.currentDead)} (${this.formatPercent(insights.currentDeadShare)})</strong>
-                </div>
-              `
-            : null
-        }
-        <div class="chart-overlay__insight-item">
-          <span>${msg("Final recovered share")}</span>
-          <strong>
-            ${insights.finalRecoveredShare === null ? "–" : this.formatPercent(insights.finalRecoveredShare)}
-          </strong>
-        </div>
-        <div class="chart-overlay__insight-item">
-          <span>${msg("Peak infected")}</span>
-          <strong>${Math.round(insights.peakInfected)} (${this.formatPercent(peakShare)})</strong>
-        </div>
-        <div class="chart-overlay__insight-item">
-          <span>${msg("Peak time")}</span>
-          <strong>${this.formatFrameCountAsDays(insights.peakFrame)}</strong>
-        </div>
-        <div class="chart-overlay__insight-item">
-          <span>${msg("R0 (approx)")}</span>
-          <strong>${this.formatApprox(insights.estimatedR0)}</strong>
-        </div>
-        <div class="chart-overlay__insight-item">
-          <span>${msg("Herd immunity threshold")}</span>
-          <strong>${herdThresholdLabel}</strong>
+        <div class="chart-overlay__insights-row">
+          <div class="chart-overlay__insight-item">
+            <span>${msg("Final recovered share")}</span>
+            <strong>
+              ${insights.finalRecoveredShare === null ? "–" : this.formatPercent(insights.finalRecoveredShare)}
+            </strong>
+          </div>
+          <div class="chart-overlay__insight-item">
+            <span>${msg("Peak infected")}</span>
+            <strong>${Math.round(insights.peakInfected)} (${this.formatPercent(peakShare)})</strong>
+          </div>
+          <div class="chart-overlay__insight-item">
+            <span>${msg("Peak time")}</span>
+            <strong>${this.formatFrameCountAsDays(insights.peakFrame)}</strong>
+          </div>
         </div>
       </div>
     `
@@ -1099,11 +1112,22 @@ export class WebwriterEpidemicSim extends LitElementWw {
     return html`
       <article class="snapshots-overlay__snapshot-card">
         <div class="snapshots-overlay__snapshot-head">
-          <span class="snapshots-overlay__snapshot-title">${snapshot.label}</span>
-          <span class="snapshots-overlay__snapshot-time"
-            >${msg("Time")} ${this.formatFrameCountAsDays(snapshot.frameIndex)} ·
-            ${new Date(snapshot.createdAt).toLocaleTimeString([], {hour: "2-digit", minute: "2-digit", second: "2-digit"})}</span
+          <div class="snapshots-overlay__snapshot-meta">
+            <span class="snapshots-overlay__snapshot-title">${snapshot.label}</span>
+            <span class="snapshots-overlay__snapshot-time"
+              >${msg("Time")} ${this.formatFrameCountAsDays(snapshot.frameIndex)} ·
+              ${new Date(snapshot.createdAt).toLocaleTimeString([], {hour: "2-digit", minute: "2-digit", second: "2-digit"})}</span
+            >
+          </div>
+          <button
+            type="button"
+            class="snapshots-overlay__delete-button"
+            title=${msg("Delete")}
+            aria-label=${msg("Delete")}
+            @click=${() => this.deleteSnapshot(snapshot.id)}
           >
+            ${renderDeleteIcon()}
+          </button>
         </div>
         ${
           snapshot.chartImageJpeg
@@ -1178,29 +1202,6 @@ export class WebwriterEpidemicSim extends LitElementWw {
             <span>${msg("Frame")}: <strong>${snapshot.frameIndex}</strong></span>
           </div>
         </sl-details>
-        <div class="snapshots-overlay__snapshot-icon-actions">
-          <sl-button
-            class="snapshots-overlay__icon-button"
-            aria-label=${msg("Expand details")}
-            @click=${(event: Event) => {
-              const card = (event.currentTarget as HTMLElement).closest(".snapshots-overlay__snapshot-card")
-              const details = card?.querySelector<SlDetails>(".snapshots-overlay__snapshot-details")
-              if (details) {
-                details.open = !details.open
-              }
-            }}
-          >
-            ▾
-          </sl-button>
-          <sl-button
-            class="snapshots-overlay__icon-button snapshots-overlay__icon-button--danger"
-            aria-label=${msg("Delete")}
-            variant="danger"
-            @click=${() => this.deleteSnapshot(snapshot.id)}
-          >
-            X
-          </sl-button>
-        </div>
       </article>
     `
   }
@@ -2124,11 +2125,33 @@ export class WebwriterEpidemicSim extends LitElementWw {
                   : null
               }
               <div class="actions simulation-actions">
-                <sl-button @click=${this.toggleSimulation}>
-                  ${this.isRunning ? msg("Pause") : msg("Start")}
-                </sl-button>
-                <sl-button @click=${this.resetSimulation}>${msg("Reset simulation")}</sl-button>
-                <sl-button @click=${this.openSnapshotsOverlay}>${msg("Snapshots")}</sl-button>
+                <button
+                  type="button"
+                  class="simulation-actions__icon-button"
+                  title=${this.isRunning ? msg("Pause") : msg("Start")}
+                  aria-label=${this.isRunning ? msg("Pause") : msg("Start")}
+                  @click=${this.toggleSimulation}
+                >
+                  ${this.isRunning ? renderPauseIcon() : renderPlayIcon()}
+                </button>
+                <button
+                  type="button"
+                  class="simulation-actions__icon-button"
+                  title=${msg("Reset simulation")}
+                  aria-label=${msg("Reset simulation")}
+                  @click=${this.resetSimulation}
+                >
+                  ${renderResetIcon()}
+                </button>
+                <button
+                  type="button"
+                  class="simulation-actions__icon-button"
+                  title=${msg("Snapshots")}
+                  aria-label=${msg("Snapshots")}
+                  @click=${this.openSnapshotsOverlay}
+                >
+                  ${renderSnapshotsIcon()}
+                </button>
               </div>
             </sl-card>
           </section>
