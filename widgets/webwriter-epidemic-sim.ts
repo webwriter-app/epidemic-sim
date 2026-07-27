@@ -1,7 +1,7 @@
 import {html} from "lit"
 import type {PropertyValues, TemplateResult} from "lit"
 import {LitElementWw} from "@webwriter/lit"
-import {customElement, property} from "lit/decorators.js"
+import {customElement, property, state} from "lit/decorators.js"
 import {msg} from "@lit/localize"
 import SlButton from "@shoelace-style/shoelace/dist/components/button/button.component.js"
 import SlCard from "@shoelace-style/shoelace/dist/components/card/card.component.js"
@@ -29,7 +29,10 @@ import {buildSimulationConfig} from "./config/build-simulation-config"
 import {buildStudentMenuInput} from "./config/build-student-menu-input"
 import {buildTeacherOptionsInput} from "./config/build-teacher-options-input"
 import {buildMenuAllowFlags, type WidgetConfigValues} from "./config/menu-allow-flags"
-import type {AllowControlKey} from "./config/widget-schema"
+import {CONFIG_SCHEMA, getRangeLimits, type AllowControlKey} from "./config/widget-schema"
+import {AnimationLoopController} from "./controllers/animation-loop-controller"
+import {CanvasHostController} from "./controllers/canvas-host-controller"
+import {HotspotPointerController} from "./controllers/hotspot-pointer-controller"
 import {
   buildSimulationAreas,
   getDefaultHotspotSize,
@@ -43,18 +46,12 @@ import {
   formatFrameCountAsDays,
   formatPercent,
 } from "./analytics/chart-insights"
-import {AnimationLoop} from "./utils/animation-loop"
 import {
   clampHotspotPosition,
-  clampHotspotRect,
   getCanvasPoint,
 } from "./utils/canvas-coordinates"
 import {
-  findHotspotById,
   findTopmostHotspotAtPoint,
-  getHotspotCornerAtPoint,
-  getOppositeCornerPoint,
-  getResizedHotspotRect,
 } from "./utils/hotspot-interaction"
 import {renderTeacherOptions, teacherOptionsStyles} from "./rendering/teacher-options-renderer"
 import {destroyChart, drawChart, resetChart} from "./rendering/chart-renderer"
@@ -62,7 +59,6 @@ import type {ChartSeries} from "./rendering/chart-renderer"
 import {drawSimulation} from "./rendering/simulation-renderer"
 import {getEpidemicCounts, initializeAgents, stepSimulation} from "./simulation/engine"
 import {
-  DEFAULT_MODEL_SPECIFIC_DEFAULTS,
   getChartCompartments,
   isEpidemicModelType,
   type ChartCompartment,
@@ -77,6 +73,8 @@ const FRAMES_PER_DAY = 24
 export class WebwriterEpidemicSim extends LitElementWw {
   localize = LOCALIZE
 
+  // Author controls use part="options" (renderTeacherOptions). Keep static options
+  // empty so WebWriter does not also render auto-generated WIDGET_OPTIONS fields.
   static options = {}
 
   static scopedElements = {
@@ -97,115 +95,115 @@ export class WebwriterEpidemicSim extends LitElementWw {
     reflect: true,
     converter: modelTypeAttributeConverter,
   })
-  accessor modelType: EpidemicModelType = "sir"
+  accessor modelType: EpidemicModelType = CONFIG_SCHEMA.modelType.defaultValue
 
   @property({type: Boolean, attribute: true, reflect: true, converter: booleanAttributeConverter})
   accessor allowModelTypeControl = false
 
   @property({type: Number, attribute: true, reflect: true, converter: numberAttributeConverter})
-  accessor incubationDuration = DEFAULT_MODEL_SPECIFIC_DEFAULTS.incubationDuration
+  accessor incubationDuration = CONFIG_SCHEMA.incubationDuration.defaultValue
 
   @property({type: Boolean, attribute: true, reflect: true, converter: booleanAttributeConverter})
   accessor allowIncubationDurationControl = false
 
   @property({type: Number, attribute: true, reflect: true, converter: numberAttributeConverter})
-  accessor immunityDuration = DEFAULT_MODEL_SPECIFIC_DEFAULTS.immunityDuration
+  accessor immunityDuration = CONFIG_SCHEMA.immunityDuration.defaultValue
 
   @property({type: Boolean, attribute: true, reflect: true, converter: booleanAttributeConverter})
   accessor allowImmunityDurationControl = false
 
   @property({type: Number, attribute: true, reflect: true, converter: numberAttributeConverter})
-  accessor mortalityProbability = DEFAULT_MODEL_SPECIFIC_DEFAULTS.mortalityProbability
+  accessor mortalityProbability = CONFIG_SCHEMA.mortalityProbability.defaultValue
 
   @property({type: Boolean, attribute: true, reflect: true, converter: booleanAttributeConverter})
   accessor allowMortalityProbabilityControl = false
 
   @property({type: Number, attribute: true, reflect: true, converter: numberAttributeConverter})
-  accessor population = 240
+  accessor population = CONFIG_SCHEMA.population.defaultValue
 
   @property({type: Boolean, attribute: true, reflect: true, converter: booleanAttributeConverter})
   accessor allowPopulationControl = false
 
   @property({type: Number, attribute: true, reflect: true, converter: numberAttributeConverter})
-  accessor speed = 1.6
+  accessor speed = CONFIG_SCHEMA.speed.defaultValue
 
   @property({type: Boolean, attribute: true, reflect: true, converter: booleanAttributeConverter})
   accessor allowSpeedControl = false
 
   @property({type: Number, attribute: true, reflect: true, converter: numberAttributeConverter})
-  accessor infectionRadius = 10
+  accessor infectionRadius = CONFIG_SCHEMA.infectionRadius.defaultValue
 
   @property({type: Boolean, attribute: true, reflect: true, converter: booleanAttributeConverter})
   accessor allowInfectionRadiusControl = false
 
   @property({type: Number, attribute: true, reflect: true, converter: numberAttributeConverter})
-  accessor infectionProbability = 0.2
+  accessor infectionProbability = CONFIG_SCHEMA.infectionProbability.defaultValue
 
   @property({type: Boolean, attribute: true, reflect: true, converter: booleanAttributeConverter})
   accessor allowInfectionProbabilityControl = false
 
   @property({type: Number, attribute: true, reflect: true, converter: numberAttributeConverter})
-  accessor recoveryDuration = 600
+  accessor recoveryDuration = CONFIG_SCHEMA.recoveryDuration.defaultValue
 
   @property({type: Boolean, attribute: true, reflect: true, converter: booleanAttributeConverter})
   accessor allowRecoveryDurationControl = false
 
   @property({type: Boolean, attribute: true, reflect: true, converter: booleanAttributeConverter})
-  accessor quarantineEnabled = false
+  accessor quarantineEnabled = CONFIG_SCHEMA.quarantineEnabled.defaultValue
 
   @property({type: Boolean, attribute: true, reflect: true, converter: booleanAttributeConverter})
   accessor allowQuarantineEnabledControl = false
 
   @property({type: Number, attribute: true, reflect: true, converter: numberAttributeConverter})
-  accessor quarantineProbability = 0.7
+  accessor quarantineProbability = CONFIG_SCHEMA.quarantineProbability.defaultValue
 
   @property({type: Boolean, attribute: true, reflect: true, converter: booleanAttributeConverter})
   accessor allowQuarantineProbabilityControl = false
 
   @property({type: Number, attribute: true, reflect: true, converter: numberAttributeConverter})
-  accessor quarantineDuration = 450
+  accessor quarantineDuration = CONFIG_SCHEMA.quarantineDuration.defaultValue
 
   @property({type: Boolean, attribute: true, reflect: true, converter: booleanAttributeConverter})
   accessor allowQuarantineDurationControl = false
 
   @property({type: Boolean, attribute: true, reflect: true, converter: booleanAttributeConverter})
-  accessor hotspotsEnabled = false
+  accessor hotspotsEnabled = CONFIG_SCHEMA.hotspotsEnabled.defaultValue
 
   @property({type: Boolean, attribute: true, reflect: true, converter: booleanAttributeConverter})
   accessor allowHotspotsEnabledControl = false
 
   @property({type: Number, attribute: true, reflect: true, converter: numberAttributeConverter})
-  accessor hotspotVisitProbability = 0.004
+  accessor hotspotVisitProbability = CONFIG_SCHEMA.hotspotVisitProbability.defaultValue
 
   @property({type: Boolean, attribute: true, reflect: true, converter: booleanAttributeConverter})
   accessor allowHotspotVisitProbabilityControl = false
 
   @property({type: Number, attribute: true, reflect: true, converter: numberAttributeConverter})
-  accessor hotspotStayDuration = 240
+  accessor hotspotStayDuration = CONFIG_SCHEMA.hotspotStayDuration.defaultValue
 
   @property({type: Boolean, attribute: true, reflect: true, converter: booleanAttributeConverter})
   accessor allowHotspotStayDurationControl = false
 
   @property({type: Number, attribute: true, reflect: true, converter: numberAttributeConverter})
-  accessor hotspotMaxAgents = 30
+  accessor hotspotMaxAgents = CONFIG_SCHEMA.hotspotMaxAgents.defaultValue
 
   @property({type: Boolean, attribute: true, reflect: true, converter: booleanAttributeConverter})
   accessor allowHotspotMaxAgentsControl = false
 
   @property({type: Number, attribute: true, reflect: true, converter: numberAttributeConverter})
-  accessor hotspotSize = 56
+  accessor hotspotSize = CONFIG_SCHEMA.hotspotSize.defaultValue
 
   @property({type: Boolean, attribute: true, reflect: true, converter: booleanAttributeConverter})
   accessor allowHotspotSizeControl = false
 
   @property({type: Boolean, attribute: true, reflect: true, converter: booleanAttributeConverter})
-  accessor communitiesEnabled = false
+  accessor communitiesEnabled = CONFIG_SCHEMA.communitiesEnabled.defaultValue
 
   @property({type: Boolean, attribute: true, reflect: true, converter: booleanAttributeConverter})
   accessor allowCommunitiesEnabledControl = false
 
   @property({type: Number, attribute: true, reflect: true, converter: numberAttributeConverter})
-  accessor communityLeaveProbability = 0.0004
+  accessor communityLeaveProbability = CONFIG_SCHEMA.communityLeaveProbability.defaultValue
 
   @property({type: Boolean, attribute: true, reflect: true, converter: booleanAttributeConverter})
   accessor allowCommunityLeaveProbabilityControl = false
@@ -218,15 +216,31 @@ export class WebwriterEpidemicSim extends LitElementWw {
   private simulationCtx: CanvasRenderingContext2D | null = null
   private chartCanvas: HTMLCanvasElement | null = null
   private enlargedChartCanvas: HTMLCanvasElement | null = null
-  private animationLoop = new AnimationLoop()
-  private isRunning = false
-  private chartOverlayOpen = false
-  private snapshotsOverlayOpen = false
-  private showApproximateFitOverlay = false
-  private snapshots: SimulationSnapshot[] = []
+  private readonly canvasHost = new CanvasHostController(this)
+  private readonly hotspotPointer = new HotspotPointerController(this, {
+    getCanvas: () => this.simulationCanvas,
+    getAreas: () => this.getSimulationAreas(),
+    updateHotspotRect: (hotspotId, rect) => this.updateUserHotspotRect(hotspotId, rect),
+  })
+  private readonly animationLoop = new AnimationLoopController(this, () => {
+    if (!this.isRunning) {
+      return false
+    }
+    this.stepSimulation()
+    this.drawSimulation()
+    if (this.isRunning) {
+      this.drawChart()
+    }
+    return this.isRunning
+  })
+  @state() accessor isRunning = false
+  @state() accessor chartOverlayOpen = false
+  @state() accessor snapshotsOverlayOpen = false
+  @state() accessor showApproximateFitOverlay = false
+  @state() accessor snapshots: SimulationSnapshot[] = []
   private nextSnapshotId = 1
-  private chartContextMenuOpen = false
-  private chartContextMenuPosition = {x: 0, y: 0}
+  @state() accessor chartContextMenuOpen = false
+  @state() accessor chartContextMenuPosition = {x: 0, y: 0}
 
   private frameIndex = 0
   private agents: Agent[] = []
@@ -245,13 +259,8 @@ export class WebwriterEpidemicSim extends LitElementWw {
   private hadInfection = false
   private userHotspots: Hotspot[] = []
   private nextHotspotId = 0
-  private draggingHotspotId: number | null = null
-  private resizingHotspotId: number | null = null
-  private resizingCorner: "nw" | "ne" | "sw" | "se" | null = null
-  private hotspotResizeAnchor = {x: 0, y: 0}
-  private hotspotDragOffset = {x: 0, y: 0}
-  private canvasDropActive = false
-  private isCreatingHotspotDrag = false
+  @state() accessor canvasDropActive = false
+  @state() accessor isCreatingHotspotDrag = false
 
   connectedCallback(): void {
     super.connectedCallback()
@@ -262,6 +271,15 @@ export class WebwriterEpidemicSim extends LitElementWw {
   }
 
   protected updated(changed: PropertyValues<this>): void {
+    if (changed.has("chartOverlayOpen")) {
+      if (this.chartOverlayOpen) {
+        this.enlargedChartCanvas = this.canvasHost.queryCanvas("#chart-canvas-enlarged")
+        this.drawChart()
+      } else if (changed.get("chartOverlayOpen")) {
+        destroyChart(this.enlargedChartCanvas)
+        this.enlargedChartCanvas = null
+      }
+    }
     if (changed.has("population") && changed.get("population") !== undefined) {
       this.reseedPopulation()
       return
@@ -283,7 +301,7 @@ export class WebwriterEpidemicSim extends LitElementWw {
 
   disconnectedCallback(): void {
     this.stopLoop()
-    this.onWindowPointerUp()
+    this.hotspotPointer.clear()
     destroyChart(this.chartCanvas)
     destroyChart(this.enlargedChartCanvas)
     window.removeEventListener("keydown", this.onWindowKeyDown)
@@ -291,15 +309,15 @@ export class WebwriterEpidemicSim extends LitElementWw {
   }
 
   firstUpdated(): void {
-    this.simulationCanvas = this.shadowRoot?.querySelector<HTMLCanvasElement>("#simulation-canvas") ?? null
-    this.simulationCtx = this.simulationCanvas?.getContext("2d") ?? null
-    this.chartCanvas = this.shadowRoot?.querySelector<HTMLCanvasElement>("#chart-canvas") ?? null
+    this.simulationCanvas = this.canvasHost.queryCanvas("#simulation-canvas")
+    this.simulationCtx = this.canvasHost.queryContext("#simulation-canvas")
+    this.chartCanvas = this.canvasHost.queryCanvas("#chart-canvas")
     this.resetSimulation()
     this.startLoop()
   }
 
   private resetSimulation = (): void => {
-    this.onWindowPointerUp()
+    this.hotspotPointer.clear()
     this.frameIndex = 0
     this.canvasDropActive = false
     this.isCreatingHotspotDrag = false
@@ -342,7 +360,7 @@ export class WebwriterEpidemicSim extends LitElementWw {
   }
 
   private get hasVisibleMenuControls(): boolean {
-    return hasVisibleMenuControls(this.getMenuAllowFlags())
+    return hasVisibleMenuControls(this.getMenuAllowFlags(), this.modelType)
   }
 
   private getMenuAllowFlags() {
@@ -445,7 +463,12 @@ export class WebwriterEpidemicSim extends LitElementWw {
   }
 
   private updatePopulation(event: Event): void {
-    const nextPopulation = this.clamp(Math.round(this.parseRangeInput(event) / 10) * 10, 50, 800)
+    const range = getRangeLimits("population")
+    const nextPopulation = this.clamp(
+      Math.round(this.parseRangeInput(event) / range.step) * range.step,
+      range.min,
+      range.max,
+    )
     if (nextPopulation === this.population) {
       return
     }
@@ -493,12 +516,14 @@ export class WebwriterEpidemicSim extends LitElementWw {
   }
 
   private updateHotspotMaxAgents(event: Event): void {
-    const maxAgents = this.clamp(Math.round(this.parseRangeInput(event)), 1, 120)
+    const range = getRangeLimits("hotspotMaxAgents")
+    const maxAgents = this.clamp(Math.round(this.parseRangeInput(event)), range.min, range.max)
     this.updateConfig("hotspotMaxAgents", maxAgents)
   }
 
   private updateHotspotSize(event: Event): void {
-    const size = this.clamp(Math.round(this.parseRangeInput(event)), 24, 110)
+    const range = getRangeLimits("hotspotSize")
+    const size = this.clamp(Math.round(this.parseRangeInput(event)), range.min, range.max)
     this.updateConfig("hotspotSize", size)
   }
 
@@ -522,32 +547,17 @@ export class WebwriterEpidemicSim extends LitElementWw {
   }
 
   private startLoop(): void {
-    if (this.animationLoop.running) {
+    if (this.isRunning) {
       return
     }
     this.isRunning = true
-    this.animationLoop.start(() => {
-      if (!this.isRunning) {
-        return false
-      }
-      this.stepSimulation()
-      this.drawSimulation()
-      if (this.isRunning) {
-        this.drawChart()
-        if (this.chartOverlayOpen) {
-          this.requestUpdate()
-        }
-      }
-      return this.isRunning
-    })
-    this.requestUpdate()
+    this.animationLoop.start()
   }
 
   private stopLoop(): void {
-    this.animationLoop.stop()
     if (this.isRunning) {
       this.isRunning = false
-      this.requestUpdate()
+      this.animationLoop.stop()
     }
   }
 
@@ -560,7 +570,6 @@ export class WebwriterEpidemicSim extends LitElementWw {
       }
       this.startLoop()
     }
-    this.requestUpdate()
   }
 
   private onMainContentClick = (): void => {
@@ -632,12 +641,10 @@ export class WebwriterEpidemicSim extends LitElementWw {
     }
     this.snapshots = [snapshot, ...this.snapshots]
     this.closeChartContextMenu()
-    this.requestUpdate()
   }
 
   private deleteSnapshot = (snapshotId: string): void => {
     this.snapshots = this.snapshots.filter((snapshot) => snapshot.id !== snapshotId)
-    this.requestUpdate()
   }
 
   private onWindowKeyDown = (event: KeyboardEvent): void => {
@@ -665,9 +672,8 @@ export class WebwriterEpidemicSim extends LitElementWw {
     this.closeSnapshotsOverlay()
     this.chartOverlayOpen = true
     this.closeChartContextMenu()
-    this.requestUpdate()
     await this.updateComplete
-    this.enlargedChartCanvas = this.shadowRoot?.querySelector<HTMLCanvasElement>("#chart-canvas-enlarged") ?? null
+    this.enlargedChartCanvas = this.canvasHost.queryCanvas("#chart-canvas-enlarged")
     this.drawChart()
   }
 
@@ -678,7 +684,6 @@ export class WebwriterEpidemicSim extends LitElementWw {
     this.chartOverlayOpen = false
     destroyChart(this.enlargedChartCanvas)
     this.enlargedChartCanvas = null
-    this.requestUpdate()
   }
 
   private openSnapshotsOverlay = (): void => {
@@ -688,7 +693,6 @@ export class WebwriterEpidemicSim extends LitElementWw {
     this.closeChartOverlay()
     this.closeChartContextMenu()
     this.snapshotsOverlayOpen = true
-    this.requestUpdate()
   }
 
   private closeSnapshotsOverlay = (): void => {
@@ -696,7 +700,6 @@ export class WebwriterEpidemicSim extends LitElementWw {
       return
     }
     this.snapshotsOverlayOpen = false
-    this.requestUpdate()
   }
 
   private onSnapshotsOverlayBackdropClick = (event: MouseEvent): void => {
@@ -722,7 +725,6 @@ export class WebwriterEpidemicSim extends LitElementWw {
     event.stopPropagation()
     this.chartContextMenuPosition = {x: event.clientX, y: event.clientY}
     this.chartContextMenuOpen = true
-    this.requestUpdate()
   }
 
   private closeChartContextMenu = (): void => {
@@ -730,7 +732,6 @@ export class WebwriterEpidemicSim extends LitElementWw {
       return
     }
     this.chartContextMenuOpen = false
-    this.requestUpdate()
   }
 
   private updateApproximateFitOverlay = (event: Event): void => {
@@ -753,7 +754,6 @@ export class WebwriterEpidemicSim extends LitElementWw {
     if (!this.hasActiveInfection() && this.isRunning && this.hadInfection && this.config.modelType !== "sirs") {
       this.stopLoop()
       this.drawChart()
-      this.requestUpdate()
     }
   }
 
@@ -826,6 +826,13 @@ export class WebwriterEpidemicSim extends LitElementWw {
         labels: compactLabels,
         xAxisTitle,
       })
+    }
+    if (this.chartOverlayOpen) {
+      const enlargedCanvas =
+        this.enlargedChartCanvas ?? this.canvasHost.queryCanvas("#chart-canvas-enlarged")
+      if (enlargedCanvas) {
+        this.enlargedChartCanvas = enlargedCanvas
+      }
     }
     if (this.chartOverlayOpen && this.enlargedChartCanvas) {
       const enlargedSeries = this.buildChartSeries(this.showApproximateFitOverlay)
@@ -989,7 +996,6 @@ export class WebwriterEpidemicSim extends LitElementWw {
       return
     }
     this.canvasDropActive = false
-    this.requestUpdate()
   }
 
   private onCanvasDragOver = (event: DragEvent): void => {
@@ -1000,7 +1006,6 @@ export class WebwriterEpidemicSim extends LitElementWw {
     event.dataTransfer.dropEffect = "copy"
     if (!this.canvasDropActive) {
       this.canvasDropActive = true
-      this.requestUpdate()
     }
   }
 
@@ -1009,7 +1014,6 @@ export class WebwriterEpidemicSim extends LitElementWw {
       return
     }
     this.canvasDropActive = false
-    this.requestUpdate()
   }
 
   private onCanvasDrop = (event: DragEvent): void => {
@@ -1018,14 +1022,12 @@ export class WebwriterEpidemicSim extends LitElementWw {
     const wasCreatingHotspotDrag = this.isCreatingHotspotDrag
     this.isCreatingHotspotDrag = false
     if (!this.simulationCanvas || !event.dataTransfer) {
-      this.requestUpdate()
       return
     }
     const hotspotMime = event.dataTransfer.getData("application/x-epidemic-hotspot")
     const textMime = event.dataTransfer.getData("text/plain")
     const isHotspotDrop = wasCreatingHotspotDrag || hotspotMime === "new-hotspot" || textMime === "new-hotspot"
     if (!isHotspotDrop) {
-      this.requestUpdate()
       return
     }
     if (!this.config.hotspotsEnabled) {
@@ -1033,7 +1035,6 @@ export class WebwriterEpidemicSim extends LitElementWw {
     }
     const point = this.toCanvasPoint(event.clientX, event.clientY)
     if (!point) {
-      this.requestUpdate()
       return
     }
     this.addHotspotAtPoint(point.x, point.y)
@@ -1043,46 +1044,8 @@ export class WebwriterEpidemicSim extends LitElementWw {
     if (!this.config.hotspotsEnabled) {
       return
     }
-    const point = this.toCanvasPoint(event.clientX, event.clientY)
-    if (!point) {
-      return
-    }
     const areas = this.getSimulationAreas()
-    for (let i = areas.hotspots.length - 1; i >= 0; i -= 1) {
-      const hotspot = areas.hotspots[i]
-      const rect = hotspot.rect
-      const corner = getHotspotCornerAtPoint(point.x, point.y, rect)
-      if (corner) {
-        const anchor = getOppositeCornerPoint(rect, corner)
-        this.resizingHotspotId = hotspot.id
-        this.resizingCorner = corner
-        this.hotspotResizeAnchor = anchor
-        window.addEventListener("pointermove", this.onWindowPointerMove)
-        window.addEventListener("pointerup", this.onWindowPointerUp)
-        if (this.simulationCanvas) {
-          this.simulationCanvas.style.cursor = corner === "nw" || corner === "se" ? "nwse-resize" : "nesw-resize"
-        }
-        event.preventDefault()
-        return
-      }
-      const inside =
-        point.x >= rect.x &&
-        point.x <= rect.x + rect.width &&
-        point.y >= rect.y &&
-        point.y <= rect.y + rect.height
-      if (!inside) {
-        continue
-      }
-      this.draggingHotspotId = hotspot.id
-      this.hotspotDragOffset = {x: point.x - rect.x, y: point.y - rect.y}
-      window.addEventListener("pointermove", this.onWindowPointerMove)
-      window.addEventListener("pointerup", this.onWindowPointerUp)
-      if (this.simulationCanvas) {
-        this.simulationCanvas.style.cursor = "grabbing"
-      }
-      event.preventDefault()
-      return
-    }
+    this.hotspotPointer.handlePointerDown(event, areas.hotspots)
   }
 
   private onCanvasContextMenu = (event: MouseEvent): void => {
@@ -1100,53 +1063,6 @@ export class WebwriterEpidemicSim extends LitElementWw {
     }
     event.preventDefault()
     this.removeHotspot(hotspot.id)
-  }
-
-  private onWindowPointerMove = (event: PointerEvent): void => {
-    if (this.draggingHotspotId === null && this.resizingHotspotId === null) {
-      return
-    }
-    const point = this.toCanvasPoint(event.clientX, event.clientY, true)
-    if (!point) {
-      return
-    }
-    const areas = this.getSimulationAreas()
-    if (this.draggingHotspotId !== null) {
-      const hotspot = findHotspotById(areas.hotspots, this.draggingHotspotId)
-      if (!hotspot) {
-        return
-      }
-      const nextX = point.x - this.hotspotDragOffset.x
-      const nextY = point.y - this.hotspotDragOffset.y
-      const clamped = clampHotspotPosition(nextX, nextY, hotspot.rect.width, areas.main)
-      this.updateUserHotspotRect(this.draggingHotspotId, {
-        x: clamped.x,
-        y: clamped.y,
-        width: hotspot.rect.width,
-        height: hotspot.rect.height,
-      })
-      return
-    }
-    if (this.resizingHotspotId === null || !this.resizingCorner) {
-      return
-    }
-    const resizedRect = getResizedHotspotRect(point.x, point.y, this.hotspotResizeAnchor, this.resizingCorner)
-    const clampedRect = clampHotspotRect(resizedRect, areas.main)
-    this.updateUserHotspotRect(this.resizingHotspotId, clampedRect)
-  }
-
-  private onWindowPointerUp = (): void => {
-    if (this.draggingHotspotId === null && this.resizingHotspotId === null) {
-      return
-    }
-    this.draggingHotspotId = null
-    this.resizingHotspotId = null
-    this.resizingCorner = null
-    window.removeEventListener("pointermove", this.onWindowPointerMove)
-    window.removeEventListener("pointerup", this.onWindowPointerUp)
-    if (this.simulationCanvas) {
-      this.simulationCanvas.style.cursor = ""
-    }
   }
 
   private toCanvasPoint(clientX: number, clientY: number, clampToCanvas = false): {x: number; y: number} | null {
@@ -1205,8 +1121,8 @@ export class WebwriterEpidemicSim extends LitElementWw {
     if (!hasHotspot) {
       return
     }
-    if (this.draggingHotspotId === hotspotId || this.resizingHotspotId === hotspotId) {
-      this.onWindowPointerUp()
+    if (this.hotspotPointer.isDragging(hotspotId)) {
+      this.hotspotPointer.clear()
     }
     this.userHotspots = this.userHotspots.filter((hotspot) => hotspot.id !== hotspotId)
     this.requestUpdateAndRedrawSimulationWhenPaused()

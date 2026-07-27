@@ -25,7 +25,7 @@ export {hasVisibleMenuControls}
 export function renderMenu(options: RenderMenuOptions): TemplateResult {
   return html`
     <aside class="side-menu">
-      ${hasModelMenuControls(options) ? renderMenuSection(msg("Model"), renderModelControls(options)) : null}
+      ${hasModelMenuControls(options, options.modelType) ? renderMenuSection(msg("Model"), renderModelControls(options)) : null}
       ${hasGeneralMenuControls(options) ? renderMenuSection(msg("General"), renderGeneralControls(options)) : null}
       ${
         hasQuarantineMenuControls(options)

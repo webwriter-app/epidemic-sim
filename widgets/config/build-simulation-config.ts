@@ -1,4 +1,5 @@
 import type {SimulationConfig} from "../simulation/types"
+import {HOTSPOT_COUNT} from "./widget-schema"
 import type {WidgetConfigValues} from "./menu-allow-flags"
 
 export function buildSimulationConfig(options: WidgetConfigValues): SimulationConfig {
@@ -16,7 +17,7 @@ export function buildSimulationConfig(options: WidgetConfigValues): SimulationCo
     quarantineProbability: options.quarantineProbability,
     quarantineDuration: options.quarantineDuration,
     hotspotsEnabled: options.hotspotsEnabled,
-    hotspotCount: 3,
+    hotspotCount: HOTSPOT_COUNT,
     hotspotVisitProbability: options.hotspotVisitProbability,
     hotspotStayDuration: options.hotspotStayDuration,
     hotspotMaxAgents: options.hotspotMaxAgents,

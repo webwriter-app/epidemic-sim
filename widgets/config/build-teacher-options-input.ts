@@ -1,5 +1,6 @@
 import {msg} from "@lit/localize"
-import type {AllowControlKey} from "./widget-schema"
+import type {AllowControlKey, ConfigSchemaKey} from "./widget-schema"
+import {getRangeLimits} from "./widget-schema"
 import type {RenderTeacherOptionsInput} from "../rendering/teacher-options-renderer"
 import type {EpidemicModelType} from "../simulation/epidemic-models"
 
@@ -66,65 +67,90 @@ export type TeacherOptionsContext = {
   onAllowChange: (key: AllowControlKey, event: Event) => void
 }
 
+function rangeRow(
+  key: ConfigSchemaKey,
+  label: string,
+  value: number,
+  allow: boolean,
+  onInput: (event: Event) => void,
+  onAllowChange: (event: Event) => void,
+  formatValue?: (value: number) => string,
+) {
+  const limits = getRangeLimits(key)
+  return {
+    kind: "range" as const,
+    label,
+    value,
+    min: limits.min,
+    max: limits.max,
+    step: limits.step,
+    allow,
+    formatValue,
+    onInput,
+    onAllowChange,
+  }
+}
+
 function getModelSpecificRows(ctx: TeacherOptionsContext): RenderTeacherOptionsInput["sections"][number]["rows"] {
   if (ctx.modelType === "seir") {
-    return [{
-      kind: "range",
-      label: msg("Incubation duration"),
-      value: ctx.incubationDuration,
-      min: 30, max: 1200, step: 30,
-      allow: ctx.allowIncubationDurationControl,
-      formatValue: ctx.formatDays,
-      onInput: ctx.onIncubationDurationInput,
-      onAllowChange: (e) => ctx.onAllowChange("allowIncubationDurationControl", e),
-    }]
+    return [
+      rangeRow(
+        "incubationDuration",
+        msg("Incubation duration"),
+        ctx.incubationDuration,
+        ctx.allowIncubationDurationControl,
+        ctx.onIncubationDurationInput,
+        (e) => ctx.onAllowChange("allowIncubationDurationControl", e),
+        ctx.formatDays,
+      ),
+    ]
   }
   if (ctx.modelType === "sirs") {
-    return [{
-      kind: "range",
-      label: msg("Immunity duration"),
-      value: ctx.immunityDuration,
-      min: 120, max: 4800, step: 60,
-      allow: ctx.allowImmunityDurationControl,
-      formatValue: ctx.formatDays,
-      onInput: ctx.onImmunityDurationInput,
-      onAllowChange: (e) => ctx.onAllowChange("allowImmunityDurationControl", e),
-    }]
+    return [
+      rangeRow(
+        "immunityDuration",
+        msg("Immunity duration"),
+        ctx.immunityDuration,
+        ctx.allowImmunityDurationControl,
+        ctx.onImmunityDurationInput,
+        (e) => ctx.onAllowChange("allowImmunityDurationControl", e),
+        ctx.formatDays,
+      ),
+    ]
   }
   if (ctx.modelType === "sird") {
-    return [{
-      kind: "range",
-      label: msg("Mortality probability"),
-      value: ctx.mortalityProbability,
-      min: 0.001, max: 0.5, step: 0.001,
-      allow: ctx.allowMortalityProbabilityControl,
-      formatValue: (v) => `${Math.round(v * 1000) / 10}%`,
-      onInput: ctx.onMortalityProbabilityInput,
-      onAllowChange: (e) => ctx.onAllowChange("allowMortalityProbabilityControl", e),
-    }]
+    return [
+      rangeRow(
+        "mortalityProbability",
+        msg("Mortality probability"),
+        ctx.mortalityProbability,
+        ctx.allowMortalityProbabilityControl,
+        ctx.onMortalityProbabilityInput,
+        (e) => ctx.onAllowChange("allowMortalityProbabilityControl", e),
+        (v) => `${Math.round(v * 1000) / 10}%`,
+      ),
+    ]
   }
   if (ctx.modelType === "seird") {
     return [
-      {
-        kind: "range",
-        label: msg("Incubation duration"),
-        value: ctx.incubationDuration,
-        min: 30, max: 1200, step: 30,
-        allow: ctx.allowIncubationDurationControl,
-        formatValue: ctx.formatDays,
-        onInput: ctx.onIncubationDurationInput,
-        onAllowChange: (e) => ctx.onAllowChange("allowIncubationDurationControl", e),
-      },
-      {
-        kind: "range",
-        label: msg("Mortality probability"),
-        value: ctx.mortalityProbability,
-        min: 0.001, max: 0.5, step: 0.001,
-        allow: ctx.allowMortalityProbabilityControl,
-        formatValue: (v) => `${Math.round(v * 1000) / 10}%`,
-        onInput: ctx.onMortalityProbabilityInput,
-        onAllowChange: (e) => ctx.onAllowChange("allowMortalityProbabilityControl", e),
-      },
+      rangeRow(
+        "incubationDuration",
+        msg("Incubation duration"),
+        ctx.incubationDuration,
+        ctx.allowIncubationDurationControl,
+        ctx.onIncubationDurationInput,
+        (e) => ctx.onAllowChange("allowIncubationDurationControl", e),
+        ctx.formatDays,
+      ),
+      rangeRow(
+        "mortalityProbability",
+        msg("Mortality probability"),
+        ctx.mortalityProbability,
+        ctx.allowMortalityProbabilityControl,
+        ctx.onMortalityProbabilityInput,
+        (e) => ctx.onAllowChange("allowMortalityProbabilityControl", e),
+        (v) => `${Math.round(v * 1000) / 10}%`,
+      ),
     ]
   }
   return []
@@ -153,11 +179,11 @@ export function buildTeacherOptionsInput(ctx: TeacherOptionsContext): RenderTeac
         title: msg("General"),
         open: true,
         rows: [
-          {kind: "range", label: msg("Population"), value: ctx.population, min: 50, max: 800, step: 10, allow: ctx.allowPopulationControl, onInput: ctx.onPopulationInput, onAllowChange: (e) => ctx.onAllowChange("allowPopulationControl", e)},
-          {kind: "range", label: msg("Speed"), value: ctx.speed, min: 0.2, max: 4, step: 0.1, allow: ctx.allowSpeedControl, formatValue: (v) => v.toFixed(1), onInput: ctx.onSpeedInput, onAllowChange: (e) => ctx.onAllowChange("allowSpeedControl", e)},
-          {kind: "range", label: msg("Infection radius"), value: ctx.infectionRadius, min: 4, max: 40, step: 1, allow: ctx.allowInfectionRadiusControl, onInput: ctx.onInfectionRadiusInput, onAllowChange: (e) => ctx.onAllowChange("allowInfectionRadiusControl", e)},
-          {kind: "range", label: msg("Infection probability"), value: ctx.infectionProbability, min: 0.01, max: 1, step: 0.01, allow: ctx.allowInfectionProbabilityControl, formatValue: (v) => `${Math.round(v * 100)}%`, onInput: ctx.onInfectionProbabilityInput, onAllowChange: (e) => ctx.onAllowChange("allowInfectionProbabilityControl", e)},
-          {kind: "range", label: msg("Recovery duration"), value: ctx.recoveryDuration, min: 60, max: 2400, step: 30, allow: ctx.allowRecoveryDurationControl, formatValue: ctx.formatDays, onInput: ctx.onRecoveryDurationInput, onAllowChange: (e) => ctx.onAllowChange("allowRecoveryDurationControl", e)},
+          rangeRow("population", msg("Population"), ctx.population, ctx.allowPopulationControl, ctx.onPopulationInput, (e) => ctx.onAllowChange("allowPopulationControl", e)),
+          rangeRow("speed", msg("Speed"), ctx.speed, ctx.allowSpeedControl, ctx.onSpeedInput, (e) => ctx.onAllowChange("allowSpeedControl", e), (v) => v.toFixed(1)),
+          rangeRow("infectionRadius", msg("Infection radius"), ctx.infectionRadius, ctx.allowInfectionRadiusControl, ctx.onInfectionRadiusInput, (e) => ctx.onAllowChange("allowInfectionRadiusControl", e)),
+          rangeRow("infectionProbability", msg("Infection probability"), ctx.infectionProbability, ctx.allowInfectionProbabilityControl, ctx.onInfectionProbabilityInput, (e) => ctx.onAllowChange("allowInfectionProbabilityControl", e), (v) => `${Math.round(v * 100)}%`),
+          rangeRow("recoveryDuration", msg("Recovery duration"), ctx.recoveryDuration, ctx.allowRecoveryDurationControl, ctx.onRecoveryDurationInput, (e) => ctx.onAllowChange("allowRecoveryDurationControl", e), ctx.formatDays),
         ],
       },
       {
@@ -166,8 +192,8 @@ export function buildTeacherOptionsInput(ctx: TeacherOptionsContext): RenderTeac
         onEnabledChange: ctx.onQuarantineEnabled,
         rows: [
           {kind: "show", label: msg("Show"), value: ctx.allowQuarantineEnabledControl, onValueChange: (e) => ctx.onAllowChange("allowQuarantineEnabledControl", e)},
-          {kind: "range", label: msg("Quarantine probability"), value: ctx.quarantineProbability, min: 0.01, max: 1, step: 0.01, allow: ctx.allowQuarantineProbabilityControl, formatValue: (v) => `${Math.round(v * 100)}%`, onInput: ctx.onQuarantineProbabilityInput, onAllowChange: (e) => ctx.onAllowChange("allowQuarantineProbabilityControl", e)},
-          {kind: "range", label: msg("Quarantine duration"), value: ctx.quarantineDuration, min: 30, max: 2400, step: 30, allow: ctx.allowQuarantineDurationControl, formatValue: ctx.formatDays, onInput: ctx.onQuarantineDurationInput, onAllowChange: (e) => ctx.onAllowChange("allowQuarantineDurationControl", e)},
+          rangeRow("quarantineProbability", msg("Quarantine probability"), ctx.quarantineProbability, ctx.allowQuarantineProbabilityControl, ctx.onQuarantineProbabilityInput, (e) => ctx.onAllowChange("allowQuarantineProbabilityControl", e), (v) => `${Math.round(v * 100)}%`),
+          rangeRow("quarantineDuration", msg("Quarantine duration"), ctx.quarantineDuration, ctx.allowQuarantineDurationControl, ctx.onQuarantineDurationInput, (e) => ctx.onAllowChange("allowQuarantineDurationControl", e), ctx.formatDays),
         ],
       },
       {
@@ -176,10 +202,10 @@ export function buildTeacherOptionsInput(ctx: TeacherOptionsContext): RenderTeac
         onEnabledChange: ctx.onHotspotsEnabled,
         rows: [
           {kind: "show", label: msg("Show"), value: ctx.allowHotspotsEnabledControl, onValueChange: (e) => ctx.onAllowChange("allowHotspotsEnabledControl", e)},
-          {kind: "range", label: msg("Hotspot visit probability"), value: ctx.hotspotVisitProbability, min: 0.001, max: 0.04, step: 0.001, allow: ctx.allowHotspotVisitProbabilityControl, formatValue: (v) => `${Math.round(v * 1000) / 10}%`, onInput: ctx.onHotspotVisitProbabilityInput, onAllowChange: (e) => ctx.onAllowChange("allowHotspotVisitProbabilityControl", e)},
-          {kind: "range", label: msg("Hotspot stay duration"), value: ctx.hotspotStayDuration, min: 30, max: 1800, step: 30, allow: ctx.allowHotspotStayDurationControl, formatValue: ctx.formatDays, onInput: ctx.onHotspotStayDurationInput, onAllowChange: (e) => ctx.onAllowChange("allowHotspotStayDurationControl", e)},
-          {kind: "range", label: msg("Hotspot max agents"), value: ctx.hotspotMaxAgents, min: 1, max: 120, step: 1, allow: ctx.allowHotspotMaxAgentsControl, onInput: ctx.onHotspotMaxAgentsInput, onAllowChange: (e) => ctx.onAllowChange("allowHotspotMaxAgentsControl", e)},
-          {kind: "range", label: msg("Hotspot size"), value: ctx.hotspotSize, min: 24, max: 110, step: 2, allow: ctx.allowHotspotSizeControl, onInput: ctx.onHotspotSizeInput, onAllowChange: (e) => ctx.onAllowChange("allowHotspotSizeControl", e)},
+          rangeRow("hotspotVisitProbability", msg("Hotspot visit probability"), ctx.hotspotVisitProbability, ctx.allowHotspotVisitProbabilityControl, ctx.onHotspotVisitProbabilityInput, (e) => ctx.onAllowChange("allowHotspotVisitProbabilityControl", e), (v) => `${Math.round(v * 1000) / 10}%`),
+          rangeRow("hotspotStayDuration", msg("Hotspot stay duration"), ctx.hotspotStayDuration, ctx.allowHotspotStayDurationControl, ctx.onHotspotStayDurationInput, (e) => ctx.onAllowChange("allowHotspotStayDurationControl", e), ctx.formatDays),
+          rangeRow("hotspotMaxAgents", msg("Hotspot max agents"), ctx.hotspotMaxAgents, ctx.allowHotspotMaxAgentsControl, ctx.onHotspotMaxAgentsInput, (e) => ctx.onAllowChange("allowHotspotMaxAgentsControl", e)),
+          rangeRow("hotspotSize", msg("Hotspot size"), ctx.hotspotSize, ctx.allowHotspotSizeControl, ctx.onHotspotSizeInput, (e) => ctx.onAllowChange("allowHotspotSizeControl", e)),
         ],
       },
       {
@@ -188,7 +214,7 @@ export function buildTeacherOptionsInput(ctx: TeacherOptionsContext): RenderTeac
         onEnabledChange: ctx.onCommunitiesEnabled,
         rows: [
           {kind: "show", label: msg("Show"), value: ctx.allowCommunitiesEnabledControl, onValueChange: (e) => ctx.onAllowChange("allowCommunitiesEnabledControl", e)},
-          {kind: "range", label: msg("Community leave probability"), value: ctx.communityLeaveProbability, min: 0.0001, max: 0.01, step: 0.0001, allow: ctx.allowCommunityLeaveProbabilityControl, formatValue: (v) => `${Math.round(v * 1000) / 10}%`, onInput: ctx.onCommunityLeaveProbabilityInput, onAllowChange: (e) => ctx.onAllowChange("allowCommunityLeaveProbabilityControl", e)},
+          rangeRow("communityLeaveProbability", msg("Community leave probability"), ctx.communityLeaveProbability, ctx.allowCommunityLeaveProbabilityControl, ctx.onCommunityLeaveProbabilityInput, (e) => ctx.onAllowChange("allowCommunityLeaveProbabilityControl", e), (v) => `${Math.round(v * 1000) / 10}%`),
         ],
       },
     ],

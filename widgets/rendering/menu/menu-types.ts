@@ -22,8 +22,17 @@ export type MenuAllowFlags = {
   allowCommunityLeaveProbabilityControl: boolean
 }
 
-export function hasVisibleMenuControls(flags: MenuAllowFlags): boolean {
-  return Object.values(flags).some(Boolean)
+export function hasVisibleMenuControls(
+  flags: MenuAllowFlags,
+  modelType: EpidemicModelType = "sir",
+): boolean {
+  return (
+    hasModelMenuControls(flags, modelType) ||
+    hasGeneralMenuControls(flags) ||
+    hasQuarantineMenuControls(flags) ||
+    hasHotspotsMenuControls(flags) ||
+    hasCommunitiesMenuControls(flags)
+  )
 }
 
 type ModelTypeOption = {
@@ -74,12 +83,12 @@ export type RenderMenuOptions = MenuAllowFlags & {
   onCommunityLeaveProbabilityInput: (event: Event) => void
 }
 
-export function hasModelMenuControls(flags: MenuAllowFlags): boolean {
+export function hasModelMenuControls(flags: MenuAllowFlags, modelType: EpidemicModelType): boolean {
   return (
     flags.allowModelTypeControl ||
-    flags.allowIncubationDurationControl ||
-    flags.allowImmunityDurationControl ||
-    flags.allowMortalityProbabilityControl
+    (flags.allowIncubationDurationControl && (modelType === "seir" || modelType === "seird")) ||
+    (flags.allowImmunityDurationControl && modelType === "sirs") ||
+    (flags.allowMortalityProbabilityControl && (modelType === "sird" || modelType === "seird"))
   )
 }
 

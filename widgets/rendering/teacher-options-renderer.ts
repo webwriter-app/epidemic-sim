@@ -64,7 +64,15 @@ function renderRowHead(label: string, allow: boolean, onAllowChange: (event: Eve
   return html`
     <div class="teacher-options__row-head">
       <div class="teacher-options__label">${label}</div>
-      <sl-switch class="teacher-options__visibility" ?checked=${allow} @sl-change=${onAllowChange}></sl-switch>
+      <sl-switch
+        class="teacher-options__visibility"
+        ?checked=${allow}
+        @click=${(event: Event) => event.stopPropagation()}
+        @sl-change=${(event: Event) => {
+          event.stopPropagation()
+          onAllowChange(event)
+        }}
+      ></sl-switch>
     </div>
   `
 }

@@ -19,7 +19,8 @@
         "lit": "^3"
     },
     "devDependencies": {
-        "@lit/localize-tools": "^0.8"
+        "@lit/localize-tools": "^0.8",
+        "typescript": "^5.8.3"
     },
     "exports": {
         "./widgets/webwriter-epidemic-sim.*": {
@@ -27,5 +28,12 @@
             "default": "./dist/widgets/webwriter-epidemic-sim.*"
         },
         "./snippets/corona-verlauf.html": "./snippets/corona-verlauf.html"
+    },
+    "editingConfig": {
+        "./widgets/webwriter-epidemic-sim.*": {
+            "parts": {
+                "options": {}
+            }
+        }
     }
 }

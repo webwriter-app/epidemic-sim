@@ -1,8 +1,11 @@
 import {html} from "lit"
 import type {TemplateResult} from "lit"
 import {msg} from "@lit/localize"
+import {MENU_RANGE_LIMITS} from "../../config/widget-schema"
 import {formatFrameCountAsDays} from "./format-days"
 import type {RenderMenuOptions} from "./menu-types"
+
+const R = MENU_RANGE_LIMITS
 
 export function renderGeneralControls(options: RenderMenuOptions): TemplateResult {
   return html`
@@ -14,7 +17,7 @@ export function renderGeneralControls(options: RenderMenuOptions): TemplateResul
                 <span>${msg("Population")}</span>
                 <span class="side-menu__control-value">${options.population}</span>
               </span>
-              <sl-range min="50" max="800" step="10" .value=${String(options.population)} @sl-input=${options.onPopulationInput}></sl-range>
+              <sl-range min=${String(R.population.min)} max=${String(R.population.max)} step=${String(R.population.step)} .value=${String(options.population)} @sl-input=${options.onPopulationInput}></sl-range>
             </label>
           `
         : null
@@ -27,7 +30,7 @@ export function renderGeneralControls(options: RenderMenuOptions): TemplateResul
                 <span>${msg("Speed")}</span>
                 <span class="side-menu__control-value">${options.speed.toFixed(1)}</span>
               </span>
-              <sl-range min="0.2" max="4" step="0.1" .value=${String(options.speed)} @sl-input=${options.onSpeedInput}></sl-range>
+              <sl-range min=${String(R.speed.min)} max=${String(R.speed.max)} step=${String(R.speed.step)} .value=${String(options.speed)} @sl-input=${options.onSpeedInput}></sl-range>
             </label>
           `
         : null
@@ -40,7 +43,7 @@ export function renderGeneralControls(options: RenderMenuOptions): TemplateResul
                 <span>${msg("Infection radius")}</span>
                 <span class="side-menu__control-value">${options.infectionRadius}</span>
               </span>
-              <sl-range min="4" max="40" step="1" .value=${String(options.infectionRadius)} @sl-input=${options.onInfectionRadiusInput}></sl-range>
+              <sl-range min=${String(R.infectionRadius.min)} max=${String(R.infectionRadius.max)} step=${String(R.infectionRadius.step)} .value=${String(options.infectionRadius)} @sl-input=${options.onInfectionRadiusInput}></sl-range>
             </label>
           `
         : null
@@ -53,7 +56,7 @@ export function renderGeneralControls(options: RenderMenuOptions): TemplateResul
                 <span>${msg("Infection probability")}</span>
                 <span class="side-menu__control-value">${Math.round(options.infectionProbability * 100)}%</span>
               </span>
-              <sl-range min="0.01" max="1" step="0.01" .value=${String(options.infectionProbability)} @sl-input=${options.onInfectionProbabilityInput}></sl-range>
+              <sl-range min=${String(R.infectionProbability.min)} max=${String(R.infectionProbability.max)} step=${String(R.infectionProbability.step)} .value=${String(options.infectionProbability)} @sl-input=${options.onInfectionProbabilityInput}></sl-range>
             </label>
           `
         : null
@@ -66,7 +69,7 @@ export function renderGeneralControls(options: RenderMenuOptions): TemplateResul
                 <span>${msg("Recovery duration")}</span>
                 <span class="side-menu__control-value">${formatFrameCountAsDays(options.recoveryDuration)}</span>
               </span>
-              <sl-range min="60" max="2400" step="30" .value=${String(options.recoveryDuration)} @sl-input=${options.onRecoveryDurationInput}></sl-range>
+              <sl-range min=${String(R.recoveryDuration.min)} max=${String(R.recoveryDuration.max)} step=${String(R.recoveryDuration.step)} .value=${String(options.recoveryDuration)} @sl-input=${options.onRecoveryDurationInput}></sl-range>
             </label>
           `
         : null

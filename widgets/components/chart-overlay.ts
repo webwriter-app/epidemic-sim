@@ -21,7 +21,7 @@ export function renderChartOverlay(input: ChartOverlayInput): TemplateResult | n
   }
   return html`
     <section class="chart-overlay" @click=${input.onBackdropClick}>
-      <article class="chart-overlay__dialog" role="dialog" aria-modal="true">
+      <article class="chart-overlay__dialog" role="dialog" aria-modal="true" @click=${(event: Event) => event.stopPropagation()}>
         <header class="chart-overlay__header">
           <h3>${input.title}</h3>
           <div class="chart-overlay__actions">
