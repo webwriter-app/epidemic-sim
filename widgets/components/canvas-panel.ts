@@ -2,6 +2,7 @@ import {html} from "lit"
 import type {TemplateResult} from "lit"
 import {msg} from "@lit/localize"
 import {renderPauseIcon, renderPlayIcon, renderResetIcon, renderSnapshotsIcon} from "../rendering/action-icons"
+import {SIMULATION_CANVAS_HEIGHT, SIMULATION_CANVAS_WIDTH} from "../simulation/canvas-dimensions"
 
 type CanvasPanelInput = {
   canvasDropActive: boolean
@@ -25,8 +26,8 @@ export function renderCanvasPanel(input: CanvasPanelInput): TemplateResult {
     <sl-card class="panel panel--simulation">
       <canvas
         id="simulation-canvas"
-        width="600"
-        height="360"
+        width=${SIMULATION_CANVAS_WIDTH}
+        height=${SIMULATION_CANVAS_HEIGHT}
         class=${input.canvasDropActive ? "drop-active" : ""}
         @dragover=${input.onCanvasDragOver}
         @dragleave=${input.onCanvasDragLeave}

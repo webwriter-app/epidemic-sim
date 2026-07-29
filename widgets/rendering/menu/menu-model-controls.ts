@@ -2,7 +2,7 @@ import {html} from "lit"
 import type {TemplateResult} from "lit"
 import {msg} from "@lit/localize"
 import {MENU_RANGE_LIMITS} from "../../config/widget-schema"
-import {formatFrameCountAsDays} from "./format-days"
+import {formatFrameCountAsDays} from "../../simulation/time"
 import type {RenderMenuOptions} from "./menu-types"
 
 const R = MENU_RANGE_LIMITS

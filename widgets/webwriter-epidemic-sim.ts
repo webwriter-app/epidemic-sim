@@ -13,7 +13,7 @@ import SlOption from "@shoelace-style/shoelace/dist/components/option/option.com
 import shoelaceLightStyles from "@shoelace-style/shoelace/dist/themes/light.styles.js"
 import LOCALIZE from "../localization/generated"
 
-import {formatApprox, formatFrameCountAsDays} from "./analytics/chart-insights"
+import {formatApprox} from "./analytics/chart-insights"
 import {renderWidgetLayout} from "./components/widget-layout"
 import {
   booleanAttributeConverter,
@@ -29,7 +29,7 @@ import {AnimationLoopController} from "./controllers/animation-loop-controller"
 import {CanvasHostController} from "./controllers/canvas-host-controller"
 import {HotspotEditingController} from "./controllers/hotspot-editing-controller"
 import {HotspotPointerController} from "./controllers/hotspot-pointer-controller"
-import {ChartRuntime} from "./orchestration/chart-runtime"
+import {ChartRuntime, type ChartRuntimeCounts} from "./orchestration/chart-runtime"
 import {captureChartSnapshotImage, SnapshotService} from "./orchestration/snapshot-service"
 import {hasVisibleMenuControls, sideMenuStyles} from "./rendering/menu-renderer"
 import {destroyChart, resetChart} from "./rendering/chart-renderer"
@@ -37,11 +37,11 @@ import {drawSimulation} from "./rendering/simulation-renderer"
 import {teacherOptionsStyles} from "./rendering/teacher-options-renderer"
 import {getEpidemicCounts, initializeAgents, stepSimulation} from "./simulation/engine"
 import {isEpidemicModelType, type EpidemicModelType} from "./simulation/epidemic-models"
-import type {Agent, SimulationConfig, SimulationSnapshot} from "./simulation/types"
+import {formatFrameCountAsDays} from "./simulation/time"
+import type {Agent, SimulationConfig} from "./simulation/types"
 import {epidemicSimStyles} from "./styles/epidemic-sim.styles"
 import {findTopmostHotspotAtPoint} from "./utils/hotspot-interaction"
 import {getCanvasPoint} from "./utils/canvas-coordinates"
-import {parseRangeInput, parseSwitch} from "./utils/form-events"
 
 @customElement("webwriter-epidemic-sim")
 export class WebwriterEpidemicSim extends LitElementWw {
@@ -200,7 +200,7 @@ export class WebwriterEpidemicSim extends LitElementWw {
       this.hotspotsEnabled = true
     },
     onHotspotsChanged: () => this.requestUpdateAndRedrawSimulationWhenPaused(),
-    onRestartPreservingHotspots: () => this.restartSimulationPreservingHotspots(),
+    onRestartPreservingHotspots: () => this.restartSimulation(),
     isPointerDragging: (hotspotId) => this.hotspotPointer.isDragging(hotspotId),
     clearPointer: () => this.hotspotPointer.clear(),
   })
@@ -225,7 +225,6 @@ export class WebwriterEpidemicSim extends LitElementWw {
   @state() accessor chartOverlayOpen = false
   @state() accessor snapshotsOverlayOpen = false
   @state() accessor showApproximateFitOverlay = false
-  @state() accessor snapshots: SimulationSnapshot[] = []
   @state() accessor chartContextMenuOpen = false
   @state() accessor chartContextMenuPosition = {x: 0, y: 0}
 
@@ -292,15 +291,33 @@ export class WebwriterEpidemicSim extends LitElementWw {
   }
 
   private resetSimulation = (): void => {
-    this.hotspotPointer.clear()
+    this.restartSimulation({clearPointer: true, resetInteractionFlags: true})
+  }
+
+  private restartSimulation(options?: {clearPointer?: boolean; resetInteractionFlags?: boolean}): void {
+    if (options?.clearPointer) {
+      this.hotspotPointer.clear()
+    }
+    if (options?.resetInteractionFlags) {
+      this.hotspotEditing.resetInteractionFlags()
+    }
     this.frameIndex = 0
-    this.hotspotEditing.resetInteractionFlags()
     this.chartRuntime.reset()
     resetChart(this.chartCanvas)
     this.initializeAgents(0)
     this.updateEpidemicCounts()
     this.drawChart()
     this.requestUpdateAndRedrawSimulationWhenPaused()
+  }
+
+  private parseRangeInput(event: Event): number {
+    const target = (event.currentTarget ?? event.target) as ({value?: string | number} & EventTarget) | null
+    return target?.value !== undefined ? Number(target.value) : 0
+  }
+
+  private parseSwitch(event: Event): boolean {
+    const target = (event.currentTarget ?? event.target) as ({checked?: boolean} & EventTarget) | null
+    return target?.checked ?? false
   }
 
   private initializeAgents(infectedAtFrame: number): void {
@@ -391,7 +408,7 @@ export class WebwriterEpidemicSim extends LitElementWw {
   }
 
   private updateConfigFromRange<K extends keyof SimulationConfig>(event: Event, key: K): void {
-    this.updateConfig(key, parseRangeInput(event) as SimulationConfig[K])
+    this.updateConfig(key, this.parseRangeInput(event) as SimulationConfig[K])
   }
 
   private updateModelType = (event: Event): void => {
@@ -407,7 +424,7 @@ export class WebwriterEpidemicSim extends LitElementWw {
     return this.infectedCount > 0 || this.exposedCount > 0
   }
 
-  private getCounts() {
+  private getCounts(): ChartRuntimeCounts {
     return {
       susceptible: this.susceptibleCount,
       exposed: this.exposedCount,
@@ -425,7 +442,7 @@ export class WebwriterEpidemicSim extends LitElementWw {
     onPopulationInput: (event: Event) => {
       const range = getRangeLimits("population")
       const nextPopulation = this.clamp(
-        Math.round(parseRangeInput(event) / range.step) * range.step,
+        Math.round(this.parseRangeInput(event) / range.step) * range.step,
         range.min,
         range.max,
       )
@@ -438,23 +455,23 @@ export class WebwriterEpidemicSim extends LitElementWw {
     onInfectionRadiusInput: (event: Event) => this.updateConfigFromRange(event, "infectionRadius"),
     onInfectionProbabilityInput: (event: Event) => this.updateConfigFromRange(event, "infectionProbability"),
     onRecoveryDurationInput: (event: Event) => this.updateConfigFromRange(event, "recoveryDuration"),
-    onQuarantineEnabled: (event: Event) => this.updateConfig("quarantineEnabled", parseSwitch(event)),
+    onQuarantineEnabled: (event: Event) => this.updateConfig("quarantineEnabled", this.parseSwitch(event)),
     onQuarantineProbabilityInput: (event: Event) => this.updateConfigFromRange(event, "quarantineProbability"),
     onQuarantineDurationInput: (event: Event) => this.updateConfigFromRange(event, "quarantineDuration"),
-    onHotspotsEnabled: (event: Event) => this.updateConfig("hotspotsEnabled", parseSwitch(event)),
+    onHotspotsEnabled: (event: Event) => this.updateConfig("hotspotsEnabled", this.parseSwitch(event)),
     onHotspotVisitProbabilityInput: (event: Event) => this.updateConfigFromRange(event, "hotspotVisitProbability"),
     onHotspotStayDurationInput: (event: Event) => this.updateConfigFromRange(event, "hotspotStayDuration"),
     onHotspotMaxAgentsInput: (event: Event) => {
       const range = getRangeLimits("hotspotMaxAgents")
-      const maxAgents = this.clamp(Math.round(parseRangeInput(event)), range.min, range.max)
+      const maxAgents = this.clamp(Math.round(this.parseRangeInput(event)), range.min, range.max)
       this.updateConfig("hotspotMaxAgents", maxAgents)
     },
     onHotspotSizeInput: (event: Event) => {
       const range = getRangeLimits("hotspotSize")
-      const size = this.clamp(Math.round(parseRangeInput(event)), range.min, range.max)
+      const size = this.clamp(Math.round(this.parseRangeInput(event)), range.min, range.max)
       this.updateConfig("hotspotSize", size)
     },
-    onCommunitiesEnabled: (event: Event) => this.updateConfig("communitiesEnabled", parseSwitch(event)),
+    onCommunitiesEnabled: (event: Event) => this.updateConfig("communitiesEnabled", this.parseSwitch(event)),
     onCommunityLeaveProbabilityInput: (event: Event) =>
       this.updateConfigFromRange(event, "communityLeaveProbability"),
   }
@@ -488,7 +505,7 @@ export class WebwriterEpidemicSim extends LitElementWw {
       this.stopLoop()
     } else {
       if (!this.hasActiveInfection()) {
-        this.restartSimulationPreservingHotspots()
+        this.restartSimulation()
       }
       this.startLoop()
     }
@@ -527,13 +544,13 @@ export class WebwriterEpidemicSim extends LitElementWw {
         buildDayLabels: (series) => this.chartRuntime.buildDayLabels(series),
       }),
     })
-    this.snapshots = this.snapshotService.snapshots
+    this.requestUpdate()
     this.closeChartContextMenu()
   }
 
   private deleteSnapshot = (snapshotId: string): void => {
     this.snapshotService.delete(snapshotId)
-    this.snapshots = this.snapshotService.snapshots
+    this.requestUpdate()
   }
 
   private onWindowKeyDown = (event: KeyboardEvent): void => {
@@ -562,8 +579,6 @@ export class WebwriterEpidemicSim extends LitElementWw {
     this.chartOverlayOpen = true
     this.closeChartContextMenu()
     await this.updateComplete
-    this.enlargedChartCanvas = this.canvasHost.queryCanvas("#chart-canvas-enlarged")
-    this.drawChart()
   }
 
   private closeChartOverlay = (): void => {
@@ -571,8 +586,6 @@ export class WebwriterEpidemicSim extends LitElementWw {
       return
     }
     this.chartOverlayOpen = false
-    destroyChart(this.enlargedChartCanvas)
-    this.enlargedChartCanvas = null
   }
 
   private openSnapshotsOverlay = (): void => {
@@ -624,7 +637,7 @@ export class WebwriterEpidemicSim extends LitElementWw {
   }
 
   private updateApproximateFitOverlay = (event: Event): void => {
-    this.showApproximateFitOverlay = parseSwitch(event)
+    this.showApproximateFitOverlay = this.parseSwitch(event)
     this.drawChart()
   }
 
@@ -706,16 +719,6 @@ export class WebwriterEpidemicSim extends LitElementWw {
     this.hotspotEditing.removeHotspot(hotspot.id)
   }
 
-  private restartSimulationPreservingHotspots(): void {
-    this.frameIndex = 0
-    this.chartRuntime.reset()
-    resetChart(this.chartCanvas)
-    this.initializeAgents(0)
-    this.updateEpidemicCounts()
-    this.drawChart()
-    this.requestUpdateAndRedrawSimulationWhenPaused()
-  }
-
   private getModelTypeOptions(): Array<{value: EpidemicModelType; label: string}> {
     return [
       {value: "sir", label: msg("SIR")},
@@ -732,7 +735,7 @@ export class WebwriterEpidemicSim extends LitElementWw {
   }
 
   private setAllowControl = (key: AllowControlKey, event: Event): void => {
-    this[key] = parseSwitch(event)
+    this[key] = this.parseSwitch(event)
   }
 
   private getTeacherOptionsContext() {
@@ -742,30 +745,6 @@ export class WebwriterEpidemicSim extends LitElementWw {
       formatDays: formatFrameCountAsDays,
       ...this.configHandlers,
       onAllowChange: this.setAllowControl,
-    }
-  }
-
-  private getStudentMenuHandlers() {
-    return {
-      onModelTypeChange: this.configHandlers.onModelTypeChange,
-      onIncubationDurationInput: this.configHandlers.onIncubationDurationInput,
-      onImmunityDurationInput: this.configHandlers.onImmunityDurationInput,
-      onMortalityProbabilityInput: this.configHandlers.onMortalityProbabilityInput,
-      onPopulationInput: this.configHandlers.onPopulationInput,
-      onSpeedInput: this.configHandlers.onSpeedInput,
-      onInfectionRadiusInput: this.configHandlers.onInfectionRadiusInput,
-      onInfectionProbabilityInput: this.configHandlers.onInfectionProbabilityInput,
-      onRecoveryDurationInput: this.configHandlers.onRecoveryDurationInput,
-      onToggleQuarantine: this.configHandlers.onQuarantineEnabled,
-      onQuarantineProbabilityInput: this.configHandlers.onQuarantineProbabilityInput,
-      onQuarantineDurationInput: this.configHandlers.onQuarantineDurationInput,
-      onToggleHotspots: this.configHandlers.onHotspotsEnabled,
-      onHotspotVisitProbabilityInput: this.configHandlers.onHotspotVisitProbabilityInput,
-      onHotspotStayDurationInput: this.configHandlers.onHotspotStayDurationInput,
-      onHotspotMaxAgentsInput: this.configHandlers.onHotspotMaxAgentsInput,
-      onHotspotSizeInput: this.configHandlers.onHotspotSizeInput,
-      onToggleCommunities: this.configHandlers.onCommunitiesEnabled,
-      onCommunityLeaveProbabilityInput: this.configHandlers.onCommunityLeaveProbabilityInput,
     }
   }
 
@@ -798,11 +777,11 @@ export class WebwriterEpidemicSim extends LitElementWw {
             this.getWidgetConfigValues(),
             this.hotspotEditing.userHotspots.length,
             this.getModelTypeOptions(),
-            this.getStudentMenuHandlers(),
+            this.configHandlers,
           )
         : null,
       snapshotsOverlayOpen: this.snapshotsOverlayOpen,
-      snapshots: this.snapshots,
+      snapshots: this.snapshotService.snapshots,
       onSnapshotsBackdropClick: this.onSnapshotsOverlayBackdropClick,
       onCloseSnapshots: this.closeSnapshotsOverlay,
       getModelTypeLabel: this.getModelTypeLabel,

@@ -5,16 +5,14 @@ import {
   computeChartInsights,
   estimateBasicReproductionNumber,
   formatApprox,
-  formatFrameCountAsDays,
   formatPercent,
 } from "../analytics/chart-insights"
 import {drawChart} from "../rendering/chart-renderer"
 import type {ChartSeries} from "../rendering/chart-renderer"
 import {getChartCompartments, type ChartCompartment, type EpidemicModelType} from "../simulation/epidemic-models"
 import {pushHistoryValue, resetHistory} from "../simulation/history"
+import {FRAMES_PER_DAY, formatFrameCountAsDays} from "../simulation/time"
 import type {SimulationConfig} from "../simulation/types"
-
-const FRAMES_PER_DAY = 24
 
 export type ChartRuntimeCounts = {
   susceptible: number

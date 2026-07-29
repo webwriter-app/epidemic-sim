@@ -13,15 +13,15 @@ type MenuHandlers = Pick<
   | "onInfectionRadiusInput"
   | "onInfectionProbabilityInput"
   | "onRecoveryDurationInput"
-  | "onToggleQuarantine"
+  | "onQuarantineEnabled"
   | "onQuarantineProbabilityInput"
   | "onQuarantineDurationInput"
-  | "onToggleHotspots"
+  | "onHotspotsEnabled"
   | "onHotspotVisitProbabilityInput"
   | "onHotspotStayDurationInput"
   | "onHotspotMaxAgentsInput"
   | "onHotspotSizeInput"
-  | "onToggleCommunities"
+  | "onCommunitiesEnabled"
   | "onCommunityLeaveProbabilityInput"
 >
 

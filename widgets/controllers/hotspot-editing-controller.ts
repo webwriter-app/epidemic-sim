@@ -5,6 +5,7 @@ import {
   resolveHotspotCommunityId,
 } from "../geometry/simulation-areas"
 import type {Hotspot, Rect, SimulationAreas, SimulationConfig} from "../simulation/types"
+import {SIMULATION_CANVAS_HEIGHT, SIMULATION_CANVAS_WIDTH} from "../simulation/canvas-dimensions"
 import {clampHotspotPosition, getCanvasPoint} from "../utils/canvas-coordinates"
 
 export type HotspotEditingCallbacks = {
@@ -40,8 +41,8 @@ export class HotspotEditingController implements ReactiveController {
     const canvas = this.callbacks.getCanvas()
     if (!canvas) {
       return buildSimulationAreas({
-        canvasWidth: 600,
-        canvasHeight: 360,
+        canvasWidth: SIMULATION_CANVAS_WIDTH,
+        canvasHeight: SIMULATION_CANVAS_HEIGHT,
         config,
         userHotspots: this.userHotspots,
       })

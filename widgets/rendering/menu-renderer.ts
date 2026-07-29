@@ -33,7 +33,7 @@ export function renderMenu(options: RenderMenuOptions): TemplateResult {
               msg("Quarantine"),
               renderQuarantineControls(options),
               options.allowQuarantineEnabledControl
-                ? {checked: options.quarantineEnabled, onChange: options.onToggleQuarantine}
+                ? {checked: options.quarantineEnabled, onChange: options.onQuarantineEnabled}
                 : undefined,
             )
           : null
@@ -44,7 +44,7 @@ export function renderMenu(options: RenderMenuOptions): TemplateResult {
               msg("Hotspots"),
               renderHotspotsControls(options),
               options.allowHotspotsEnabledControl
-                ? {checked: options.hotspotsEnabled, onChange: options.onToggleHotspots}
+                ? {checked: options.hotspotsEnabled, onChange: options.onHotspotsEnabled}
                 : undefined,
             )
           : null
@@ -55,7 +55,7 @@ export function renderMenu(options: RenderMenuOptions): TemplateResult {
               msg("Communities"),
               renderCommunitiesControls(options),
               options.allowCommunitiesEnabledControl
-                ? {checked: options.communitiesEnabled, onChange: options.onToggleCommunities}
+                ? {checked: options.communitiesEnabled, onChange: options.onCommunitiesEnabled}
                 : undefined,
             )
           : null

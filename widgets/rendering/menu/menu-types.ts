@@ -71,15 +71,15 @@ export type RenderMenuOptions = MenuAllowFlags & {
   onInfectionRadiusInput: (event: Event) => void
   onInfectionProbabilityInput: (event: Event) => void
   onRecoveryDurationInput: (event: Event) => void
-  onToggleQuarantine: (event: Event) => void
+  onQuarantineEnabled: (event: Event) => void
   onQuarantineProbabilityInput: (event: Event) => void
   onQuarantineDurationInput: (event: Event) => void
-  onToggleHotspots: (event: Event) => void
+  onHotspotsEnabled: (event: Event) => void
   onHotspotVisitProbabilityInput: (event: Event) => void
   onHotspotStayDurationInput: (event: Event) => void
   onHotspotMaxAgentsInput: (event: Event) => void
   onHotspotSizeInput: (event: Event) => void
-  onToggleCommunities: (event: Event) => void
+  onCommunitiesEnabled: (event: Event) => void
   onCommunityLeaveProbabilityInput: (event: Event) => void
 }
 
