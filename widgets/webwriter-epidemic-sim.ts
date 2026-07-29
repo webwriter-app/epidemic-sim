@@ -424,6 +424,16 @@ export class WebwriterEpidemicSim extends LitElementWw {
     return this.infectedCount > 0 || this.exposedCount > 0
   }
 
+  private isEpidemicWaveFinished(): boolean {
+    if (this.hasActiveInfection()) {
+      return false
+    }
+    if (this.config.modelType === "sirs") {
+      return this.recoveredCount === 0
+    }
+    return true
+  }
+
   private getCounts(): ChartRuntimeCounts {
     return {
       susceptible: this.susceptibleCount,
@@ -504,7 +514,7 @@ export class WebwriterEpidemicSim extends LitElementWw {
     if (this.isRunning) {
       this.stopLoop()
     } else {
-      if (!this.hasActiveInfection()) {
+      if (this.isEpidemicWaveFinished()) {
         this.restartSimulation()
       }
       this.startLoop()
@@ -652,7 +662,7 @@ export class WebwriterEpidemicSim extends LitElementWw {
       this.hotspotEditing.getAreas(this.config),
     )
     this.updateEpidemicCounts()
-    if (!this.hasActiveInfection() && this.isRunning && this.chartRuntime.hadInfection && this.config.modelType !== "sirs") {
+    if (this.isEpidemicWaveFinished() && this.isRunning && this.chartRuntime.hadInfection) {
       this.stopLoop()
       this.drawChart()
     }
@@ -665,7 +675,12 @@ export class WebwriterEpidemicSim extends LitElementWw {
     this.infectedCount = counts.infected
     this.recoveredCount = counts.recovered
     this.deadCount = counts.dead
-    this.chartRuntime.recordPoint(this.frameIndex, this.getCounts(), this.config.modelType, this.hasActiveInfection())
+    this.chartRuntime.recordPoint(
+      this.frameIndex,
+      this.getCounts(),
+      this.hasActiveInfection(),
+      this.isEpidemicWaveFinished(),
+    )
   }
 
   private drawSimulation(): void {

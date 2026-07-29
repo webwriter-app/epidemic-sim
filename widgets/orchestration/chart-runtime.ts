@@ -45,24 +45,21 @@ export class ChartRuntime {
   recordPoint(
     frameIndex: number,
     counts: ChartRuntimeCounts,
-    modelType: EpidemicModelType,
     hasActiveInfection: boolean,
+    waveFinished: boolean,
   ): void {
     if (hasActiveInfection) {
       this.hadInfection = true
-      if (modelType === "sirs") {
-        this.epidemicEnded = false
-      }
     }
 
     if (this.epidemicEnded) {
       return
     }
 
-    const waveEnded = this.hadInfection && !hasActiveInfection
+    const waveEnded = this.hadInfection && waveFinished
     const isFullDayCheckpoint = frameIndex % FRAMES_PER_DAY === 0
     if (!isFullDayCheckpoint) {
-      if (waveEnded && modelType !== "sirs") {
+      if (waveEnded) {
         this.epidemicEnded = true
       }
       return
@@ -73,7 +70,7 @@ export class ChartRuntime {
     pushHistoryValue(this.infectedHistory, counts.infected, this.historyLimit)
     pushHistoryValue(this.recoveredHistory, counts.recovered, this.historyLimit)
     pushHistoryValue(this.deadHistory, counts.dead, this.historyLimit)
-    if (waveEnded && modelType !== "sirs") {
+    if (waveEnded) {
       this.epidemicEnded = true
     }
   }
