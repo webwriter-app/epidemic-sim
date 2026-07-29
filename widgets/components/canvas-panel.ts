@@ -24,17 +24,30 @@ type CanvasPanelInput = {
 export function renderCanvasPanel(input: CanvasPanelInput): TemplateResult {
   return html`
     <sl-card class="panel panel--simulation">
-      <canvas
-        id="simulation-canvas"
-        width=${SIMULATION_CANVAS_WIDTH}
-        height=${SIMULATION_CANVAS_HEIGHT}
-        class=${input.canvasDropActive ? "drop-active" : ""}
-        @dragover=${input.onCanvasDragOver}
-        @dragleave=${input.onCanvasDragLeave}
-        @drop=${input.onCanvasDrop}
-        @pointerdown=${input.onCanvasPointerDown}
-        @contextmenu=${input.onCanvasContextMenu}
-      ></canvas>
+      <div class="simulation-stage">
+        <canvas
+          id="simulation-canvas"
+          width=${SIMULATION_CANVAS_WIDTH}
+          height=${SIMULATION_CANVAS_HEIGHT}
+          class=${input.canvasDropActive ? "drop-active" : ""}
+          @dragover=${input.onCanvasDragOver}
+          @dragleave=${input.onCanvasDragLeave}
+          @drop=${input.onCanvasDrop}
+          @pointerdown=${input.onCanvasPointerDown}
+          @contextmenu=${input.onCanvasContextMenu}
+        ></canvas>
+        <div class="actions simulation-actions">
+          <button type="button" class="simulation-actions__icon-button" title=${input.isRunning ? msg("Pause") : msg("Start")} aria-label=${input.isRunning ? msg("Pause") : msg("Start")} @click=${input.onToggleSimulation}>
+            ${input.isRunning ? renderPauseIcon() : renderPlayIcon()}
+          </button>
+          <button type="button" class="simulation-actions__icon-button" title=${msg("Reset simulation")} aria-label=${msg("Reset simulation")} @click=${input.onResetSimulation}>
+            ${renderResetIcon()}
+          </button>
+          <button type="button" class="simulation-actions__icon-button" title=${msg("Snapshots")} aria-label=${msg("Snapshots")} @click=${input.onOpenSnapshots}>
+            ${renderSnapshotsIcon()}
+          </button>
+        </div>
+      </div>
       ${input.hotspotsEnabled && input.showHotspotToolbox
         ? html`
             <div class="hotspot-toolbox--map">
@@ -45,17 +58,6 @@ export function renderCanvasPanel(input: CanvasPanelInput): TemplateResult {
             </div>
           `
         : null}
-      <div class="actions simulation-actions">
-        <button type="button" class="simulation-actions__icon-button" title=${input.isRunning ? msg("Pause") : msg("Start")} aria-label=${input.isRunning ? msg("Pause") : msg("Start")} @click=${input.onToggleSimulation}>
-          ${input.isRunning ? renderPauseIcon() : renderPlayIcon()}
-        </button>
-        <button type="button" class="simulation-actions__icon-button" title=${msg("Reset simulation")} aria-label=${msg("Reset simulation")} @click=${input.onResetSimulation}>
-          ${renderResetIcon()}
-        </button>
-        <button type="button" class="simulation-actions__icon-button" title=${msg("Snapshots")} aria-label=${msg("Snapshots")} @click=${input.onOpenSnapshots}>
-          ${renderSnapshotsIcon()}
-        </button>
-      </div>
     </sl-card>
   `
 }

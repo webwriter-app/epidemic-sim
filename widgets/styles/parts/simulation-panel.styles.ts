@@ -2,7 +2,20 @@ import {css} from "lit"
 
 export const simulationPanelStyles = css`
   canvas { width: 100%; border: 1px solid #d6dce4; background: #fcfdff; }
-  .panel--simulation canvas { height: 360px; cursor: grab; }
+  .simulation-stage {
+    position: relative;
+    flex: 1;
+    min-height: 360px;
+    display: flex;
+    flex-direction: column;
+  }
+  .panel--simulation canvas {
+    flex: 1;
+    min-height: 360px;
+    height: auto;
+    cursor: grab;
+    display: block;
+  }
   .panel--simulation canvas.drop-active {
     outline: 2px dashed #7c3aed;
     outline-offset: -4px;
@@ -20,17 +33,30 @@ export const simulationPanelStyles = css`
     text-transform: uppercase;
   }
   .hotspot-toolbox__token:active { cursor: grabbing; }
-  .hotspot-toolbox--map { margin-top: 8px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .hotspot-toolbox--map {
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
   sl-range { width: 100%; }
-  .actions { margin-top: auto; display: flex; justify-content: flex-end; gap: 8px; padding-top: 6px; }
+  .actions { display: flex; justify-content: flex-end; gap: 8px; }
   .simulation-actions {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 10px;
+    z-index: 1;
     justify-content: center;
     flex-wrap: wrap;
     gap: 14px;
     width: 100%;
-    padding-top: 10px;
-    padding-bottom: 4px;
+    margin: 0;
+    padding: 0;
+    pointer-events: none;
   }
+  .simulation-actions > * { pointer-events: auto; }
   .simulation-actions__icon-button {
     display: inline-flex;
     align-items: center;
@@ -41,11 +67,12 @@ export const simulationPanelStyles = css`
     border: 1px solid #d6dce4;
     border-radius: 50%;
     color: #334155;
-    background: #ffffff;
+    background: rgba(255, 255, 255, 0.92);
+    box-shadow: 0 1px 4px rgba(15, 23, 42, 0.12);
     cursor: pointer;
     line-height: 1;
   }
-  .simulation-actions__icon-button:hover { background: #f8fafc; }
+  .simulation-actions__icon-button:hover { background: #ffffff; }
   .simulation-actions__icon-button:focus-visible { outline: 2px solid #7c3aed; outline-offset: 2px; }
   .actions sl-button:not(.simulation-actions__icon-button)::part(base) { min-width: 112px; }
 `
