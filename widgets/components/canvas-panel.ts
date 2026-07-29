@@ -14,6 +14,7 @@ type CanvasPanelInput = {
   onCanvasDrop: (event: DragEvent) => void
   onCanvasPointerDown: (event: PointerEvent) => void
   onCanvasContextMenu: (event: MouseEvent) => void
+  onCanvasDoubleClick: () => void
   onHotspotTokenDragStart: (event: DragEvent) => void
   onHotspotTokenDragEnd: () => void
   onToggleSimulation: () => void
@@ -24,7 +25,7 @@ type CanvasPanelInput = {
 export function renderCanvasPanel(input: CanvasPanelInput): TemplateResult {
   return html`
     <sl-card class="panel panel--simulation">
-      <div class="simulation-stage">
+      <div class="simulation-stage" title=${msg("Double-click to enlarge")}>
         <canvas
           id="simulation-canvas"
           width=${SIMULATION_CANVAS_WIDTH}
@@ -35,6 +36,7 @@ export function renderCanvasPanel(input: CanvasPanelInput): TemplateResult {
           @drop=${input.onCanvasDrop}
           @pointerdown=${input.onCanvasPointerDown}
           @contextmenu=${input.onCanvasContextMenu}
+          @dblclick=${input.onCanvasDoubleClick}
         ></canvas>
         <div class="actions simulation-actions">
           <button type="button" class="simulation-actions__icon-button" title=${input.isRunning ? msg("Pause") : msg("Start")} aria-label=${input.isRunning ? msg("Pause") : msg("Start")} @click=${input.onToggleSimulation}>

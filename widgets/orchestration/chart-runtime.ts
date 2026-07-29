@@ -1,7 +1,6 @@
 import {msg} from "@lit/localize"
 import type {ChartInsightData} from "../components/chart-insights-view"
 import {
-  buildApproximationSeries,
   computeChartInsights,
   estimateBasicReproductionNumber,
   formatApprox,
@@ -84,7 +83,7 @@ export class ChartRuntime {
     return Array.from({length}, (_, dayIndex) => String(dayIndex))
   }
 
-  buildSeries(config: SimulationConfig, includeApproximation: boolean): ChartSeries[] {
+  buildSeries(config: SimulationConfig): ChartSeries[] {
     const compartmentSeries: Record<ChartCompartment, ChartSeries> = {
       susceptible: {label: msg("Susceptible"), values: this.susceptibleHistory, color: "#2563eb"},
       exposed: {label: msg("Exposed"), values: this.exposedHistory, color: "#f59e0b"},
@@ -92,30 +91,7 @@ export class ChartRuntime {
       recovered: {label: msg("Recovered"), values: this.recoveredHistory, color: "#16a34a"},
       dead: {label: msg("Dead"), values: this.deadHistory, color: "#64748b"},
     }
-    const baseSeries = getChartCompartments(config.modelType).map((compartment) => compartmentSeries[compartment])
-    if (!includeApproximation || config.modelType !== "sir") {
-      return baseSeries
-    }
-    return [...baseSeries, ...this.buildApproximationSeries(config)]
-  }
-
-  private buildApproximationSeries(config: SimulationConfig): ChartSeries[] {
-    const fit = buildApproximationSeries({
-      infectedHistory: this.infectedHistory,
-      susceptibleHistory: this.susceptibleHistory,
-      recoveredHistory: this.recoveredHistory,
-      population: config.population,
-      recoveryDuration: config.recoveryDuration,
-      estimatedR0: this.estimateR0(config.recoveryDuration),
-    })
-    if (!fit) {
-      return []
-    }
-    return [
-      {label: msg("Susceptible (fit)"), values: fit.susceptible, color: "#60a5fa", dash: [6, 4], lineWidth: 1.5},
-      {label: msg("Infected (fit)"), values: fit.infected, color: "#f87171", dash: [6, 4], lineWidth: 1.5},
-      {label: msg("Recovered (fit)"), values: fit.recovered, color: "#4ade80", dash: [6, 4], lineWidth: 1.5},
-    ]
+    return getChartCompartments(config.modelType).map((compartment) => compartmentSeries[compartment])
   }
 
   draw(
@@ -123,18 +99,17 @@ export class ChartRuntime {
     compactCanvas: HTMLCanvasElement | null,
     enlargedCanvas: HTMLCanvasElement | null,
     chartOverlayOpen: boolean,
-    showApproximateFitOverlay: boolean,
   ): void {
     const xAxisTitle = msg("Time (days)")
     if (compactCanvas) {
-      const compactSeries = this.buildSeries(config, false)
+      const compactSeries = this.buildSeries(config)
       drawChart(compactCanvas, config.population, compactSeries, {
         labels: this.buildDayLabels(compactSeries),
         xAxisTitle,
       })
     }
     if (chartOverlayOpen && enlargedCanvas) {
-      const enlargedSeries = this.buildSeries(config, showApproximateFitOverlay)
+      const enlargedSeries = this.buildSeries(config)
       drawChart(enlargedCanvas, config.population, enlargedSeries, {
         labels: this.buildDayLabels(enlargedSeries),
         xAxisTitle,

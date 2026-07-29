@@ -117,38 +117,3 @@ export function computeChartInsights(input: {
     herdImmunityThreshold,
   }
 }
-
-export function buildApproximationSeries(input: {
-  infectedHistory: number[]
-  susceptibleHistory: number[]
-  recoveredHistory: number[]
-  population: number
-  recoveryDuration: number
-  estimatedR0: number | null
-}): {susceptible: number[]; infected: number[]; recovered: number[]} | null {
-  const length = input.infectedHistory.length
-  if (length < 2 || input.estimatedR0 === null || input.estimatedR0 <= 0) {
-    return null
-  }
-  const population = Math.max(1, input.population)
-  const gamma = FRAMES_PER_DAY / Math.max(1, input.recoveryDuration)
-  const beta = input.estimatedR0 * gamma
-  let susceptible = input.susceptibleHistory[0] ?? population
-  let infected = input.infectedHistory[0] ?? 0
-  let recovered = input.recoveredHistory[0] ?? 0
-  const susceptibleFit = [susceptible]
-  const infectedFit = [infected]
-  const recoveredFit = [recovered]
-  const clamp = (value: number, min: number, max: number) => Math.max(min, Math.min(max, value))
-  for (let i = 1; i < length; i += 1) {
-    const newInfections = beta * susceptible * infected / population
-    const newRecoveries = gamma * infected
-    susceptible = clamp(susceptible - newInfections, 0, population)
-    infected = clamp(infected + newInfections - newRecoveries, 0, population)
-    recovered = clamp(population - susceptible - infected, 0, population)
-    susceptibleFit.push(susceptible)
-    infectedFit.push(infected)
-    recoveredFit.push(recovered)
-  }
-  return {susceptible: susceptibleFit, infected: infectedFit, recovered: recoveredFit}
-}

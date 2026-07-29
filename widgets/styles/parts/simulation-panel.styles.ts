@@ -13,7 +13,7 @@ export const simulationPanelStyles = css`
     flex: 1;
     min-height: 360px;
     height: auto;
-    cursor: grab;
+    cursor: zoom-in;
     display: block;
   }
   .panel--simulation canvas.drop-active {

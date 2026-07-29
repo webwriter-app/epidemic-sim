@@ -15,6 +15,7 @@ import LOCALIZE from "../localization/generated"
 
 import {formatApprox} from "./analytics/chart-insights"
 import {renderWidgetLayout} from "./components/widget-layout"
+import type {InsightsOverlayView} from "./components/chart-overlay"
 import {
   booleanAttributeConverter,
   modelTypeAttributeConverter,
@@ -190,6 +191,8 @@ export class WebwriterEpidemicSim extends LitElementWw {
   private simulationCtx: CanvasRenderingContext2D | null = null
   private chartCanvas: HTMLCanvasElement | null = null
   private enlargedChartCanvas: HTMLCanvasElement | null = null
+  private enlargedSimulationCanvas: HTMLCanvasElement | null = null
+  private enlargedSimulationCtx: CanvasRenderingContext2D | null = null
   private readonly canvasHost = new CanvasHostController(this)
   private readonly chartRuntime = new ChartRuntime()
   private readonly snapshotService = new SnapshotService()
@@ -218,13 +221,16 @@ export class WebwriterEpidemicSim extends LitElementWw {
     if (this.isRunning) {
       this.drawChart()
     }
+    if (this.chartOverlayOpen) {
+      this.requestUpdate()
+    }
     return this.isRunning
   })
 
   @state() accessor isRunning = false
   @state() accessor chartOverlayOpen = false
+  @state() accessor insightsView: InsightsOverlayView = "model"
   @state() accessor snapshotsOverlayOpen = false
-  @state() accessor showApproximateFitOverlay = false
   @state() accessor chartContextMenuOpen = false
   @state() accessor chartContextMenuPosition = {x: 0, y: 0}
 
@@ -245,13 +251,19 @@ export class WebwriterEpidemicSim extends LitElementWw {
   }
 
   protected updated(changed: PropertyValues<this>): void {
-    if (changed.has("chartOverlayOpen")) {
+    if (changed.has("chartOverlayOpen") || changed.has("insightsView")) {
       if (this.chartOverlayOpen) {
-        this.enlargedChartCanvas = this.canvasHost.queryCanvas("#chart-canvas-enlarged")
-        this.drawChart()
-      } else if (changed.get("chartOverlayOpen")) {
+        this.resolveEnlargedOverlayCanvases()
+        if (this.insightsView === "model") {
+          this.drawChart()
+        } else {
+          this.drawSimulation()
+        }
+      } else if (changed.has("chartOverlayOpen") && changed.get("chartOverlayOpen")) {
         destroyChart(this.enlargedChartCanvas)
         this.enlargedChartCanvas = null
+        this.enlargedSimulationCanvas = null
+        this.enlargedSimulationCtx = null
       }
     }
     if (changed.has("population") && changed.get("population") !== undefined) {
@@ -278,6 +290,8 @@ export class WebwriterEpidemicSim extends LitElementWw {
     this.hotspotPointer.clear()
     destroyChart(this.chartCanvas)
     destroyChart(this.enlargedChartCanvas)
+    this.enlargedSimulationCanvas = null
+    this.enlargedSimulationCtx = null
     window.removeEventListener("keydown", this.onWindowKeyDown)
     super.disconnectedCallback()
   }
@@ -545,12 +559,11 @@ export class WebwriterEpidemicSim extends LitElementWw {
       userHotspots: this.hotspotEditing.userHotspots,
       estimatedR0: this.chartRuntime.estimateR0(this.config.recoveryDuration),
       chartImageJpeg: captureChartSnapshotImage({
-        chartOverlayOpen: this.chartOverlayOpen,
+        chartOverlayOpen: this.chartOverlayOpen && this.insightsView === "model",
         enlargedChartCanvas: this.enlargedChartCanvas,
         chartCanvas: this.chartCanvas,
-        showApproximateFitOverlay: this.showApproximateFitOverlay,
         population: this.config.population,
-        buildSeries: (includeApproximation) => this.chartRuntime.buildSeries(this.config, includeApproximation),
+        buildSeries: () => this.chartRuntime.buildSeries(this.config),
         buildDayLabels: (series) => this.chartRuntime.buildDayLabels(series),
       }),
     })
@@ -581,14 +594,18 @@ export class WebwriterEpidemicSim extends LitElementWw {
     this.closeChartOverlay()
   }
 
-  private openChartOverlay = async (): Promise<void> => {
-    if (this.chartOverlayOpen) {
-      return
-    }
+  private openInsightsOverlay = async (view: InsightsOverlayView): Promise<void> => {
     this.closeSnapshotsOverlay()
+    this.insightsView = view
     this.chartOverlayOpen = true
     this.closeChartContextMenu()
     await this.updateComplete
+    this.resolveEnlargedOverlayCanvases()
+    if (view === "model") {
+      this.drawChart()
+    } else {
+      this.drawSimulation()
+    }
   }
 
   private closeChartOverlay = (): void => {
@@ -596,6 +613,39 @@ export class WebwriterEpidemicSim extends LitElementWw {
       return
     }
     this.chartOverlayOpen = false
+    destroyChart(this.enlargedChartCanvas)
+    this.enlargedChartCanvas = null
+    this.enlargedSimulationCanvas = null
+    this.enlargedSimulationCtx = null
+  }
+
+  private onInsightsViewChange = (view: InsightsOverlayView): void => {
+    if (this.insightsView === view) {
+      return
+    }
+    if (this.insightsView === "model") {
+      destroyChart(this.enlargedChartCanvas)
+      this.enlargedChartCanvas = null
+    } else {
+      this.enlargedSimulationCanvas = null
+      this.enlargedSimulationCtx = null
+    }
+    this.insightsView = view
+  }
+
+  private resolveEnlargedOverlayCanvases(): void {
+    if (!this.chartOverlayOpen) {
+      return
+    }
+    if (this.insightsView === "model") {
+      this.enlargedChartCanvas = this.canvasHost.queryCanvas("#chart-canvas-enlarged")
+      this.enlargedSimulationCanvas = null
+      this.enlargedSimulationCtx = null
+      return
+    }
+    this.enlargedSimulationCanvas = this.canvasHost.queryCanvas("#simulation-canvas-enlarged")
+    this.enlargedSimulationCtx = this.enlargedSimulationCanvas?.getContext("2d") ?? null
+    this.enlargedChartCanvas = null
   }
 
   private openSnapshotsOverlay = (): void => {
@@ -629,7 +679,11 @@ export class WebwriterEpidemicSim extends LitElementWw {
   }
 
   private onChartPanelDoubleClick = (): void => {
-    void this.openChartOverlay()
+    void this.openInsightsOverlay("model")
+  }
+
+  private onSimulationPanelDoubleClick = (): void => {
+    void this.openInsightsOverlay("simulation")
   }
 
   private onChartContextMenu = (event: MouseEvent): void => {
@@ -644,11 +698,6 @@ export class WebwriterEpidemicSim extends LitElementWw {
       return
     }
     this.chartContextMenuOpen = false
-  }
-
-  private updateApproximateFitOverlay = (event: Event): void => {
-    this.showApproximateFitOverlay = this.parseSwitch(event)
-    this.drawChart()
   }
 
   private stepSimulation(): void {
@@ -684,16 +733,25 @@ export class WebwriterEpidemicSim extends LitElementWw {
   }
 
   private drawSimulation(): void {
+    const areas = this.hotspotEditing.getAreas(this.config)
     const ctx = this.simulationCtx
     const canvas = this.simulationCanvas
-    if (!ctx || !canvas) {
-      return
+    if (ctx && canvas) {
+      drawSimulation(ctx, canvas, this.agents, areas)
     }
-    drawSimulation(ctx, canvas, this.agents, this.hotspotEditing.getAreas(this.config))
+    if (
+      this.chartOverlayOpen &&
+      this.insightsView === "simulation" &&
+      this.enlargedSimulationCtx &&
+      this.enlargedSimulationCanvas
+    ) {
+      drawSimulation(this.enlargedSimulationCtx, this.enlargedSimulationCanvas, this.agents, areas)
+    }
   }
 
   private drawChart(): void {
-    if (this.chartOverlayOpen) {
+    const modelOverlayOpen = this.chartOverlayOpen && this.insightsView === "model"
+    if (modelOverlayOpen) {
       const enlargedCanvas =
         this.enlargedChartCanvas ?? this.canvasHost.queryCanvas("#chart-canvas-enlarged")
       if (enlargedCanvas) {
@@ -704,8 +762,7 @@ export class WebwriterEpidemicSim extends LitElementWw {
       this.config,
       this.chartCanvas,
       this.enlargedChartCanvas,
-      this.chartOverlayOpen,
-      this.showApproximateFitOverlay,
+      modelOverlayOpen,
     )
   }
 
@@ -749,6 +806,10 @@ export class WebwriterEpidemicSim extends LitElementWw {
     return option?.label ?? modelType.toUpperCase()
   }
 
+  private getModelTabLabel(): string {
+    return `${this.getModelTypeLabel(this.modelType)}-${msg("Model")}`
+  }
+
   private setAllowControl = (key: AllowControlKey, event: Event): void => {
     this[key] = this.parseSwitch(event)
   }
@@ -771,6 +832,7 @@ export class WebwriterEpidemicSim extends LitElementWw {
       chartContextMenuPosition: this.chartContextMenuPosition,
       onMainContentClick: this.onMainContentClick,
       onChartPanelDoubleClick: this.onChartPanelDoubleClick,
+      onSimulationPanelDoubleClick: this.onSimulationPanelDoubleClick,
       onChartContextMenu: this.onChartContextMenu,
       onCreateSnapshot: this.createSnapshot,
       canvasDropActive: this.hotspotEditing.canvasDropActive,
@@ -805,12 +867,12 @@ export class WebwriterEpidemicSim extends LitElementWw {
       onDeleteSnapshot: this.deleteSnapshot,
       chartOverlayOpen: this.chartOverlayOpen,
       chartOverlayTitle: this.chartRuntime.getInsightsOverlayTitle(this.config.modelType),
-      showFitToggle: this.config.modelType === "sir",
-      showApproximateFitOverlay: this.showApproximateFitOverlay,
+      insightsView: this.insightsView,
+      modelTabLabel: this.getModelTabLabel(),
       chartInsights: this.chartRuntime.buildInsightViewData(this.frameIndex, this.getCounts(), this.config),
+      onInsightsViewChange: this.onInsightsViewChange,
       onChartBackdropClick: this.onChartOverlayBackdropClick,
       onCloseChartOverlay: this.closeChartOverlay,
-      onApproximateFitChange: this.updateApproximateFitOverlay,
     })
   }
 }

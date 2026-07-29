@@ -2,7 +2,7 @@ import {html} from "lit"
 import type {TemplateResult} from "lit"
 import {msg} from "@lit/localize"
 import {renderCanvasPanel} from "./canvas-panel"
-import {renderChartOverlay} from "./chart-overlay"
+import {renderChartOverlay, type InsightsOverlayView} from "./chart-overlay"
 import type {ChartInsightData} from "./chart-insights-view"
 import {renderSnapshotsOverlay} from "./snapshots-overlay"
 import {renderMenu} from "../rendering/menu-renderer"
@@ -19,6 +19,7 @@ export type WidgetLayoutInput = {
   chartContextMenuPosition: {x: number; y: number}
   onMainContentClick: () => void
   onChartPanelDoubleClick: () => void
+  onSimulationPanelDoubleClick: () => void
   onChartContextMenu: (event: MouseEvent) => void
   onCreateSnapshot: () => void
   canvasDropActive: boolean
@@ -46,12 +47,12 @@ export type WidgetLayoutInput = {
   onDeleteSnapshot: (snapshotId: string) => void
   chartOverlayOpen: boolean
   chartOverlayTitle: string
-  showFitToggle: boolean
-  showApproximateFitOverlay: boolean
+  insightsView: InsightsOverlayView
+  modelTabLabel: string
   chartInsights: ChartInsightData
+  onInsightsViewChange: (view: InsightsOverlayView) => void
   onChartBackdropClick: (event: MouseEvent) => void
   onCloseChartOverlay: () => void
-  onApproximateFitChange: (event: Event) => void
 }
 
 export function renderWidgetLayout(input: WidgetLayoutInput): TemplateResult {
@@ -98,6 +99,7 @@ export function renderWidgetLayout(input: WidgetLayoutInput): TemplateResult {
             onCanvasDrop: input.onCanvasDrop,
             onCanvasPointerDown: input.onCanvasPointerDown,
             onCanvasContextMenu: input.onCanvasContextMenu,
+            onCanvasDoubleClick: input.onSimulationPanelDoubleClick,
             onHotspotTokenDragStart: input.onHotspotTokenDragStart,
             onHotspotTokenDragEnd: input.onHotspotTokenDragEnd,
             onToggleSimulation: input.onToggleSimulation,
@@ -126,13 +128,13 @@ export function renderWidgetLayout(input: WidgetLayoutInput): TemplateResult {
       ${renderChartOverlay({
         open: input.chartOverlayOpen,
         title: input.chartOverlayTitle,
-        showFitToggle: input.showFitToggle,
-        showApproximateFitOverlay: input.showApproximateFitOverlay,
+        view: input.insightsView,
+        modelTabLabel: input.modelTabLabel,
         insights: input.chartInsights,
+        onViewChange: input.onInsightsViewChange,
         onBackdropClick: input.onChartBackdropClick,
         onCreateSnapshot: input.onCreateSnapshot,
         onClose: input.onCloseChartOverlay,
-        onApproximateFitChange: input.onApproximateFitChange,
       })}
     </section>
   `

@@ -7,9 +7,8 @@ export type SnapshotCaptureContext = {
   chartOverlayOpen: boolean
   enlargedChartCanvas: HTMLCanvasElement | null
   chartCanvas: HTMLCanvasElement | null
-  showApproximateFitOverlay: boolean
   population: number
-  buildSeries: (includeApproximation: boolean) => ChartSeries[]
+  buildSeries: () => ChartSeries[]
   buildDayLabels: (series: ChartSeries[]) => string[]
 }
 
@@ -44,8 +43,7 @@ export function captureChartSnapshotImage(ctx: SnapshotCaptureContext): string |
   if (!sourceCanvas) {
     return null
   }
-  const includeApproximation = sourceCanvas === ctx.enlargedChartCanvas && ctx.showApproximateFitOverlay
-  const series = ctx.buildSeries(includeApproximation)
+  const series = ctx.buildSeries()
   const labels = ctx.buildDayLabels(series)
   const xAxisTitle = msg("Time (days)")
   try {
