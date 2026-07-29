@@ -1,7 +1,6 @@
-import {html} from "lit"
-import type {PropertyValues, TemplateResult} from "lit"
 import {LitElementWw} from "@webwriter/lit"
 import {customElement, property, state} from "lit/decorators.js"
+import type {PropertyValues} from "lit"
 import {msg} from "@lit/localize"
 import SlButton from "@shoelace-style/shoelace/dist/components/button/button.component.js"
 import SlCard from "@shoelace-style/shoelace/dist/components/card/card.component.js"
@@ -14,12 +13,8 @@ import SlOption from "@shoelace-style/shoelace/dist/components/option/option.com
 import shoelaceLightStyles from "@shoelace-style/shoelace/dist/themes/light.styles.js"
 import LOCALIZE from "../localization/generated"
 
-import {epidemicSimStyles} from "./styles/epidemic-sim.styles"
-import {hasVisibleMenuControls, renderMenu, sideMenuStyles} from "./rendering/menu-renderer"
-import {renderCanvasPanel} from "./components/canvas-panel"
-import {renderChartOverlay} from "./components/chart-overlay"
-import {type ChartInsightData} from "./components/chart-insights-view"
-import {renderSnapshotsOverlay} from "./components/snapshots-overlay"
+import {formatApprox, formatFrameCountAsDays} from "./analytics/chart-insights"
+import {renderWidgetLayout} from "./components/widget-layout"
 import {
   booleanAttributeConverter,
   modelTypeAttributeConverter,
@@ -32,42 +27,21 @@ import {buildMenuAllowFlags, type WidgetConfigValues} from "./config/menu-allow-
 import {CONFIG_SCHEMA, getRangeLimits, type AllowControlKey} from "./config/widget-schema"
 import {AnimationLoopController} from "./controllers/animation-loop-controller"
 import {CanvasHostController} from "./controllers/canvas-host-controller"
+import {HotspotEditingController} from "./controllers/hotspot-editing-controller"
 import {HotspotPointerController} from "./controllers/hotspot-pointer-controller"
-import {
-  buildSimulationAreas,
-  getDefaultHotspotSize,
-  resolveHotspotCommunityId,
-} from "./geometry/simulation-areas"
-import {
-  buildApproximationSeries,
-  computeChartInsights,
-  estimateBasicReproductionNumber,
-  formatApprox,
-  formatFrameCountAsDays,
-  formatPercent,
-} from "./analytics/chart-insights"
-import {
-  clampHotspotPosition,
-  getCanvasPoint,
-} from "./utils/canvas-coordinates"
-import {
-  findTopmostHotspotAtPoint,
-} from "./utils/hotspot-interaction"
-import {renderTeacherOptions, teacherOptionsStyles} from "./rendering/teacher-options-renderer"
-import {destroyChart, drawChart, resetChart} from "./rendering/chart-renderer"
-import type {ChartSeries} from "./rendering/chart-renderer"
+import {ChartRuntime} from "./orchestration/chart-runtime"
+import {captureChartSnapshotImage, SnapshotService} from "./orchestration/snapshot-service"
+import {hasVisibleMenuControls, sideMenuStyles} from "./rendering/menu-renderer"
+import {destroyChart, resetChart} from "./rendering/chart-renderer"
 import {drawSimulation} from "./rendering/simulation-renderer"
+import {teacherOptionsStyles} from "./rendering/teacher-options-renderer"
 import {getEpidemicCounts, initializeAgents, stepSimulation} from "./simulation/engine"
-import {
-  getChartCompartments,
-  isEpidemicModelType,
-  type ChartCompartment,
-  type EpidemicModelType,
-} from "./simulation/epidemic-models"
-import {pushHistoryValue, resetHistory} from "./simulation/history"
-import type {Agent, Hotspot, Rect, SimulationConfig, SimulationSnapshot} from "./simulation/types"
-
-const FRAMES_PER_DAY = 24
+import {isEpidemicModelType, type EpidemicModelType} from "./simulation/epidemic-models"
+import type {Agent, SimulationConfig, SimulationSnapshot} from "./simulation/types"
+import {epidemicSimStyles} from "./styles/epidemic-sim.styles"
+import {findTopmostHotspotAtPoint} from "./utils/hotspot-interaction"
+import {getCanvasPoint} from "./utils/canvas-coordinates"
+import {parseRangeInput, parseSwitch} from "./utils/form-events"
 
 @customElement("webwriter-epidemic-sim")
 export class WebwriterEpidemicSim extends LitElementWw {
@@ -217,10 +191,23 @@ export class WebwriterEpidemicSim extends LitElementWw {
   private chartCanvas: HTMLCanvasElement | null = null
   private enlargedChartCanvas: HTMLCanvasElement | null = null
   private readonly canvasHost = new CanvasHostController(this)
+  private readonly chartRuntime = new ChartRuntime()
+  private readonly snapshotService = new SnapshotService()
+  private readonly hotspotEditing = new HotspotEditingController(this, {
+    getCanvas: () => this.simulationCanvas,
+    getConfig: () => this.config,
+    enableHotspots: () => {
+      this.hotspotsEnabled = true
+    },
+    onHotspotsChanged: () => this.requestUpdateAndRedrawSimulationWhenPaused(),
+    onRestartPreservingHotspots: () => this.restartSimulationPreservingHotspots(),
+    isPointerDragging: (hotspotId) => this.hotspotPointer.isDragging(hotspotId),
+    clearPointer: () => this.hotspotPointer.clear(),
+  })
   private readonly hotspotPointer = new HotspotPointerController(this, {
     getCanvas: () => this.simulationCanvas,
-    getAreas: () => this.getSimulationAreas(),
-    updateHotspotRect: (hotspotId, rect) => this.updateUserHotspotRect(hotspotId, rect),
+    getAreas: () => this.hotspotEditing.getAreas(this.config),
+    updateHotspotRect: (hotspotId, rect) => this.hotspotEditing.updateHotspotRect(hotspotId, rect),
   })
   private readonly animationLoop = new AnimationLoopController(this, () => {
     if (!this.isRunning) {
@@ -233,12 +220,12 @@ export class WebwriterEpidemicSim extends LitElementWw {
     }
     return this.isRunning
   })
+
   @state() accessor isRunning = false
   @state() accessor chartOverlayOpen = false
   @state() accessor snapshotsOverlayOpen = false
   @state() accessor showApproximateFitOverlay = false
   @state() accessor snapshots: SimulationSnapshot[] = []
-  private nextSnapshotId = 1
   @state() accessor chartContextMenuOpen = false
   @state() accessor chartContextMenuPosition = {x: 0, y: 0}
 
@@ -249,18 +236,6 @@ export class WebwriterEpidemicSim extends LitElementWw {
   private infectedCount = 0
   private recoveredCount = 0
   private deadCount = 0
-  private readonly chartHistoryLimit = 2000
-  private susceptibleHistory: number[] = []
-  private exposedHistory: number[] = []
-  private infectedHistory: number[] = []
-  private recoveredHistory: number[] = []
-  private deadHistory: number[] = []
-  private epidemicEnded = false
-  private hadInfection = false
-  private userHotspots: Hotspot[] = []
-  private nextHotspotId = 0
-  @state() accessor canvasDropActive = false
-  @state() accessor isCreatingHotspotDrag = false
 
   connectedCallback(): void {
     super.connectedCallback()
@@ -319,12 +294,9 @@ export class WebwriterEpidemicSim extends LitElementWw {
   private resetSimulation = (): void => {
     this.hotspotPointer.clear()
     this.frameIndex = 0
-    this.canvasDropActive = false
-    this.isCreatingHotspotDrag = false
-    this.epidemicEnded = false
-    this.hadInfection = false
+    this.hotspotEditing.resetInteractionFlags()
+    this.chartRuntime.reset()
     resetChart(this.chartCanvas)
-    this.resetChartHistory()
     this.initializeAgents(0)
     this.updateEpidemicCounts()
     this.drawChart()
@@ -337,22 +309,7 @@ export class WebwriterEpidemicSim extends LitElementWw {
       this.agents = []
       return
     }
-    const areas = this.getSimulationAreas()
-    this.agents = initializeAgents(
-      this.config,
-      areas,
-      infectedAtFrame,
-    )
-  }
-
-  private parseRangeInput(event: Event): number {
-    const target = (event.currentTarget ?? event.target) as ({value?: string | number} & EventTarget) | null
-    return target?.value !== undefined ? Number(target.value) : 0
-  }
-
-  private parseSwitch(event: Event): boolean {
-    const target = (event.currentTarget ?? event.target) as ({checked?: boolean} & EventTarget) | null
-    return target?.checked ?? false
+    this.agents = initializeAgents(this.config, this.hotspotEditing.getAreas(this.config), infectedAtFrame)
   }
 
   private get isEditMode(): boolean {
@@ -434,10 +391,10 @@ export class WebwriterEpidemicSim extends LitElementWw {
   }
 
   private updateConfigFromRange<K extends keyof SimulationConfig>(event: Event, key: K): void {
-    this.updateConfig(key, this.parseRangeInput(event) as SimulationConfig[K])
+    this.updateConfig(key, parseRangeInput(event) as SimulationConfig[K])
   }
 
-  private updateModelType(event: Event): void {
+  private updateModelType = (event: Event): void => {
     const target = (event.currentTarget ?? event.target) as ({value?: string} & EventTarget) | null
     const value = target?.value
     if (!value || !isEpidemicModelType(value) || value === this.modelType) {
@@ -450,96 +407,61 @@ export class WebwriterEpidemicSim extends LitElementWw {
     return this.infectedCount > 0 || this.exposedCount > 0
   }
 
-  private updateIncubationDuration(event: Event): void {
-    this.updateConfigFromRange(event, "incubationDuration")
-  }
-
-  private updateImmunityDuration(event: Event): void {
-    this.updateConfigFromRange(event, "immunityDuration")
-  }
-
-  private updateMortalityProbability(event: Event): void {
-    this.updateConfigFromRange(event, "mortalityProbability")
-  }
-
-  private updatePopulation(event: Event): void {
-    const range = getRangeLimits("population")
-    const nextPopulation = this.clamp(
-      Math.round(this.parseRangeInput(event) / range.step) * range.step,
-      range.min,
-      range.max,
-    )
-    if (nextPopulation === this.population) {
-      return
+  private getCounts() {
+    return {
+      susceptible: this.susceptibleCount,
+      exposed: this.exposedCount,
+      infected: this.infectedCount,
+      recovered: this.recoveredCount,
+      dead: this.deadCount,
     }
-    this.population = nextPopulation
   }
 
-  private updateSpeed(event: Event): void {
-    this.updateConfigFromRange(event, "speed")
-  }
-
-  private updateInfectionRadius(event: Event): void {
-    this.updateConfigFromRange(event, "infectionRadius")
-  }
-
-  private updateInfectionProbability(event: Event): void {
-    this.updateConfigFromRange(event, "infectionProbability")
-  }
-
-  private updateRecoveryDuration(event: Event): void {
-    this.updateConfigFromRange(event, "recoveryDuration")
-  }
-
-  private updateQuarantineEnabled(event: Event): void {
-    this.updateConfig("quarantineEnabled", this.parseSwitch(event))
-  }
-
-  private updateQuarantineProbability(event: Event): void {
-    this.updateConfigFromRange(event, "quarantineProbability")
-  }
-
-  private updateQuarantineDuration(event: Event): void {
-    this.updateConfigFromRange(event, "quarantineDuration")
-  }
-
-  private updateHotspotsEnabled(event: Event): void {
-    this.updateConfig("hotspotsEnabled", this.parseSwitch(event))
-  }
-
-  private updateHotspotVisitProbability(event: Event): void {
-    this.updateConfigFromRange(event, "hotspotVisitProbability")
-  }
-
-  private updateHotspotStayDuration(event: Event): void {
-    this.updateConfigFromRange(event, "hotspotStayDuration")
-  }
-
-  private updateHotspotMaxAgents(event: Event): void {
-    const range = getRangeLimits("hotspotMaxAgents")
-    const maxAgents = this.clamp(Math.round(this.parseRangeInput(event)), range.min, range.max)
-    this.updateConfig("hotspotMaxAgents", maxAgents)
-  }
-
-  private updateHotspotSize(event: Event): void {
-    const range = getRangeLimits("hotspotSize")
-    const size = this.clamp(Math.round(this.parseRangeInput(event)), range.min, range.max)
-    this.updateConfig("hotspotSize", size)
-  }
-
-  private updateCommunitiesEnabled(event: Event): void {
-    this.updateConfig("communitiesEnabled", this.parseSwitch(event))
-  }
-
-  private updateCommunityLeaveProbability(event: Event): void {
-    this.updateConfigFromRange(event, "communityLeaveProbability")
+  private readonly configHandlers = {
+    onModelTypeChange: this.updateModelType,
+    onIncubationDurationInput: (event: Event) => this.updateConfigFromRange(event, "incubationDuration"),
+    onImmunityDurationInput: (event: Event) => this.updateConfigFromRange(event, "immunityDuration"),
+    onMortalityProbabilityInput: (event: Event) => this.updateConfigFromRange(event, "mortalityProbability"),
+    onPopulationInput: (event: Event) => {
+      const range = getRangeLimits("population")
+      const nextPopulation = this.clamp(
+        Math.round(parseRangeInput(event) / range.step) * range.step,
+        range.min,
+        range.max,
+      )
+      if (nextPopulation === this.population) {
+        return
+      }
+      this.population = nextPopulation
+    },
+    onSpeedInput: (event: Event) => this.updateConfigFromRange(event, "speed"),
+    onInfectionRadiusInput: (event: Event) => this.updateConfigFromRange(event, "infectionRadius"),
+    onInfectionProbabilityInput: (event: Event) => this.updateConfigFromRange(event, "infectionProbability"),
+    onRecoveryDurationInput: (event: Event) => this.updateConfigFromRange(event, "recoveryDuration"),
+    onQuarantineEnabled: (event: Event) => this.updateConfig("quarantineEnabled", parseSwitch(event)),
+    onQuarantineProbabilityInput: (event: Event) => this.updateConfigFromRange(event, "quarantineProbability"),
+    onQuarantineDurationInput: (event: Event) => this.updateConfigFromRange(event, "quarantineDuration"),
+    onHotspotsEnabled: (event: Event) => this.updateConfig("hotspotsEnabled", parseSwitch(event)),
+    onHotspotVisitProbabilityInput: (event: Event) => this.updateConfigFromRange(event, "hotspotVisitProbability"),
+    onHotspotStayDurationInput: (event: Event) => this.updateConfigFromRange(event, "hotspotStayDuration"),
+    onHotspotMaxAgentsInput: (event: Event) => {
+      const range = getRangeLimits("hotspotMaxAgents")
+      const maxAgents = this.clamp(Math.round(parseRangeInput(event)), range.min, range.max)
+      this.updateConfig("hotspotMaxAgents", maxAgents)
+    },
+    onHotspotSizeInput: (event: Event) => {
+      const range = getRangeLimits("hotspotSize")
+      const size = this.clamp(Math.round(parseRangeInput(event)), range.min, range.max)
+      this.updateConfig("hotspotSize", size)
+    },
+    onCommunitiesEnabled: (event: Event) => this.updateConfig("communitiesEnabled", parseSwitch(event)),
+    onCommunityLeaveProbabilityInput: (event: Event) =>
+      this.updateConfigFromRange(event, "communityLeaveProbability"),
   }
 
   private reseedPopulation(): void {
-    this.epidemicEnded = false
-    this.hadInfection = false
     resetChart(this.chartCanvas)
-    this.resetChartHistory()
+    this.chartRuntime.reset()
     this.initializeAgents(this.frameIndex)
     this.updateEpidemicCounts()
     this.drawChart()
@@ -576,75 +498,42 @@ export class WebwriterEpidemicSim extends LitElementWw {
     this.closeChartContextMenu()
   }
 
-  private cloneHotspots(hotspots: Hotspot[]): Hotspot[] {
-    return hotspots.map((hotspot) => ({
-      ...hotspot,
-      rect: {...hotspot.rect},
-    }))
-  }
-
-  private captureChartSnapshotImage(): string | null {
-    const sourceCanvas = this.chartOverlayOpen && this.enlargedChartCanvas ? this.enlargedChartCanvas : this.chartCanvas
-    if (!sourceCanvas) {
-      return null
-    }
-    const includeApproximation = sourceCanvas === this.enlargedChartCanvas && this.showApproximateFitOverlay
-    const series = this.buildChartSeries(includeApproximation)
-    const labels = this.buildChartDayLabels(series)
-    const xAxisTitle = msg("Time (days)")
-    try {
-      drawChart(sourceCanvas, this.config.population, series, {showLegend: false, labels, xAxisTitle})
-      const exportCanvas = document.createElement("canvas")
-      exportCanvas.width = sourceCanvas.width
-      exportCanvas.height = sourceCanvas.height
-      const exportContext = exportCanvas.getContext("2d")
-      if (!exportContext) {
-        drawChart(sourceCanvas, this.config.population, series, {showLegend: true, labels, xAxisTitle})
-        return null
-      }
-      exportContext.fillStyle = "#ffffff"
-      exportContext.fillRect(0, 0, exportCanvas.width, exportCanvas.height)
-      exportContext.drawImage(sourceCanvas, 0, 0)
-      const jpeg = exportCanvas.toDataURL("image/jpeg", 0.9)
-      drawChart(sourceCanvas, this.config.population, series, {showLegend: true, labels, xAxisTitle})
-      return jpeg
-    } catch {
-      drawChart(sourceCanvas, this.config.population, series, {showLegend: true, labels, xAxisTitle})
-      return null
-    }
-  }
-
   private createSnapshot = (): void => {
-    const snapshotId = `snapshot-${this.nextSnapshotId}`
-    this.nextSnapshotId += 1
     this.drawChart()
-    const snapshot: SimulationSnapshot = {
-      id: snapshotId,
-      label: `${msg("Snapshot")} ${this.nextSnapshotId - 1}`,
-      createdAt: Date.now(),
-      chartImageJpeg: this.captureChartSnapshotImage(),
-      estimatedR0: this.estimateBasicReproductionNumber(),
-      config: {...this.config},
+    const counts = this.getCounts()
+    this.snapshotService.create({
+      config: this.config,
       frameIndex: this.frameIndex,
-      epidemicEnded: this.epidemicEnded,
-      susceptibleCount: this.susceptibleCount,
-      exposedCount: this.exposedCount,
-      infectedCount: this.infectedCount,
-      recoveredCount: this.recoveredCount,
-      deadCount: this.deadCount,
-      susceptibleHistory: [...this.susceptibleHistory],
-      exposedHistory: [...this.exposedHistory],
-      infectedHistory: [...this.infectedHistory],
-      recoveredHistory: [...this.recoveredHistory],
-      deadHistory: [...this.deadHistory],
-      userHotspots: this.cloneHotspots(this.userHotspots),
-    }
-    this.snapshots = [snapshot, ...this.snapshots]
+      epidemicEnded: this.chartRuntime.epidemicEnded,
+      susceptibleCount: counts.susceptible,
+      exposedCount: counts.exposed,
+      infectedCount: counts.infected,
+      recoveredCount: counts.recovered,
+      deadCount: counts.dead,
+      susceptibleHistory: [...this.chartRuntime.susceptibleHistory],
+      exposedHistory: [...this.chartRuntime.exposedHistory],
+      infectedHistory: [...this.chartRuntime.infectedHistory],
+      recoveredHistory: [...this.chartRuntime.recoveredHistory],
+      deadHistory: [...this.chartRuntime.deadHistory],
+      userHotspots: this.hotspotEditing.userHotspots,
+      estimatedR0: this.chartRuntime.estimateR0(this.config.recoveryDuration),
+      chartImageJpeg: captureChartSnapshotImage({
+        chartOverlayOpen: this.chartOverlayOpen,
+        enlargedChartCanvas: this.enlargedChartCanvas,
+        chartCanvas: this.chartCanvas,
+        showApproximateFitOverlay: this.showApproximateFitOverlay,
+        population: this.config.population,
+        buildSeries: (includeApproximation) => this.chartRuntime.buildSeries(this.config, includeApproximation),
+        buildDayLabels: (series) => this.chartRuntime.buildDayLabels(series),
+      }),
+    })
+    this.snapshots = this.snapshotService.snapshots
     this.closeChartContextMenu()
   }
 
   private deleteSnapshot = (snapshotId: string): void => {
-    this.snapshots = this.snapshots.filter((snapshot) => snapshot.id !== snapshotId)
+    this.snapshotService.delete(snapshotId)
+    this.snapshots = this.snapshotService.snapshots
   }
 
   private onWindowKeyDown = (event: KeyboardEvent): void => {
@@ -735,7 +624,7 @@ export class WebwriterEpidemicSim extends LitElementWw {
   }
 
   private updateApproximateFitOverlay = (event: Event): void => {
-    this.showApproximateFitOverlay = this.parseSwitch(event)
+    this.showApproximateFitOverlay = parseSwitch(event)
     this.drawChart()
   }
 
@@ -743,15 +632,14 @@ export class WebwriterEpidemicSim extends LitElementWw {
     if (!this.simulationCanvas || this.agents.length === 0) {
       return
     }
-    const areas = this.getSimulationAreas()
     this.frameIndex = stepSimulation(
       this.agents,
       this.frameIndex,
       this.config,
-      areas,
+      this.hotspotEditing.getAreas(this.config),
     )
     this.updateEpidemicCounts()
-    if (!this.hasActiveInfection() && this.isRunning && this.hadInfection && this.config.modelType !== "sirs") {
+    if (!this.hasActiveInfection() && this.isRunning && this.chartRuntime.hadInfection && this.config.modelType !== "sirs") {
       this.stopLoop()
       this.drawChart()
     }
@@ -764,47 +652,7 @@ export class WebwriterEpidemicSim extends LitElementWw {
     this.infectedCount = counts.infected
     this.recoveredCount = counts.recovered
     this.deadCount = counts.dead
-    this.recordChartPoint()
-  }
-
-  private resetChartHistory(): void {
-    this.susceptibleHistory = resetHistory()
-    this.exposedHistory = resetHistory()
-    this.infectedHistory = resetHistory()
-    this.recoveredHistory = resetHistory()
-    this.deadHistory = resetHistory()
-  }
-
-  private recordChartPoint(): void {
-    const activeInfection = this.hasActiveInfection()
-    if (activeInfection) {
-      this.hadInfection = true
-      if (this.config.modelType === "sirs") {
-        this.epidemicEnded = false
-      }
-    }
-
-    if (this.epidemicEnded) {
-      return
-    }
-
-    const waveEnded = this.hadInfection && !activeInfection
-    const isFullDayCheckpoint = this.frameIndex % FRAMES_PER_DAY === 0
-    if (!isFullDayCheckpoint) {
-      if (waveEnded && this.config.modelType !== "sirs") {
-        this.epidemicEnded = true
-      }
-      return
-    }
-
-    pushHistoryValue(this.susceptibleHistory, this.susceptibleCount, this.chartHistoryLimit)
-    pushHistoryValue(this.exposedHistory, this.exposedCount, this.chartHistoryLimit)
-    pushHistoryValue(this.infectedHistory, this.infectedCount, this.chartHistoryLimit)
-    pushHistoryValue(this.recoveredHistory, this.recoveredCount, this.chartHistoryLimit)
-    pushHistoryValue(this.deadHistory, this.deadCount, this.chartHistoryLimit)
-    if (waveEnded && this.config.modelType !== "sirs") {
-      this.epidemicEnded = true
-    }
+    this.chartRuntime.recordPoint(this.frameIndex, this.getCounts(), this.config.modelType, this.hasActiveInfection())
   }
 
   private drawSimulation(): void {
@@ -813,20 +661,10 @@ export class WebwriterEpidemicSim extends LitElementWw {
     if (!ctx || !canvas) {
       return
     }
-    drawSimulation(ctx, canvas, this.agents, this.getSimulationAreas())
+    drawSimulation(ctx, canvas, this.agents, this.hotspotEditing.getAreas(this.config))
   }
 
   private drawChart(): void {
-    const compactCanvas = this.chartCanvas
-    const compactSeries = this.buildChartSeries(false)
-    const compactLabels = this.buildChartDayLabels(compactSeries)
-    const xAxisTitle = msg("Time (days)")
-    if (compactCanvas) {
-      drawChart(compactCanvas, this.config.population, compactSeries, {
-        labels: compactLabels,
-        xAxisTitle,
-      })
-    }
     if (this.chartOverlayOpen) {
       const enlargedCanvas =
         this.enlargedChartCanvas ?? this.canvasHost.queryCanvas("#chart-canvas-enlarged")
@@ -834,217 +672,20 @@ export class WebwriterEpidemicSim extends LitElementWw {
         this.enlargedChartCanvas = enlargedCanvas
       }
     }
-    if (this.chartOverlayOpen && this.enlargedChartCanvas) {
-      const enlargedSeries = this.buildChartSeries(this.showApproximateFitOverlay)
-      drawChart(this.enlargedChartCanvas, this.config.population, enlargedSeries, {
-        labels: this.buildChartDayLabels(enlargedSeries),
-        xAxisTitle,
-      })
-    }
-  }
-
-  private buildChartDayLabels(series: ChartSeries[]): string[] {
-    const length = series.reduce((maxLength, entry) => Math.max(maxLength, entry.values.length), 0)
-    return Array.from({length}, (_, dayIndex) => String(dayIndex))
-  }
-
-  private buildChartSeries(includeApproximation: boolean): ChartSeries[] {
-    const compartmentSeries: Record<ChartCompartment, ChartSeries> = {
-      susceptible: {label: msg("Susceptible"), values: this.susceptibleHistory, color: "#2563eb"},
-      exposed: {label: msg("Exposed"), values: this.exposedHistory, color: "#f59e0b"},
-      infected: {label: msg("Infected"), values: this.infectedHistory, color: "#dc2626"},
-      recovered: {label: msg("Recovered"), values: this.recoveredHistory, color: "#16a34a"},
-      dead: {label: msg("Dead"), values: this.deadHistory, color: "#64748b"},
-    }
-    const baseSeries = getChartCompartments(this.config.modelType).map((compartment) => compartmentSeries[compartment])
-    if (!includeApproximation || this.config.modelType !== "sir") {
-      return baseSeries
-    }
-    return [...baseSeries, ...this.buildApproximationSeries()]
-  }
-
-  private buildApproximationSeries(): ChartSeries[] {
-    const fit = buildApproximationSeries({
-      infectedHistory: this.infectedHistory,
-      susceptibleHistory: this.susceptibleHistory,
-      recoveredHistory: this.recoveredHistory,
-      population: this.config.population,
-      recoveryDuration: this.config.recoveryDuration,
-      estimatedR0: this.estimateBasicReproductionNumber(),
-    })
-    if (!fit) {
-      return []
-    }
-    return [
-      {label: msg("Susceptible (fit)"), values: fit.susceptible, color: "#60a5fa", dash: [6, 4], lineWidth: 1.5},
-      {label: msg("Infected (fit)"), values: fit.infected, color: "#f87171", dash: [6, 4], lineWidth: 1.5},
-      {label: msg("Recovered (fit)"), values: fit.recovered, color: "#4ade80", dash: [6, 4], lineWidth: 1.5},
-    ]
-  }
-
-  private estimateBasicReproductionNumber(): number | null {
-    return estimateBasicReproductionNumber(this.infectedHistory, this.config.recoveryDuration)
-  }
-
-  private computeChartInsights() {
-    return computeChartInsights({
-      infectedHistory: this.infectedHistory,
-      frameIndex: this.frameIndex,
-      population: this.config.population,
-      recoveryDuration: this.config.recoveryDuration,
-      epidemicEnded: this.epidemicEnded,
-      susceptibleCount: this.susceptibleCount,
-      exposedCount: this.exposedCount,
-      infectedCount: this.infectedCount,
-      recoveredCount: this.recoveredCount,
-      deadCount: this.deadCount,
-    })
-  }
-
-  private getInsightsOverlayTitle(): string {
-    if (this.config.modelType === "seir") {
-      return msg("SEIR insights")
-    }
-    if (this.config.modelType === "seird") {
-      return msg("SEIRD insights")
-    }
-    if (this.config.modelType === "sirs") {
-      return msg("SIRS insights")
-    }
-    if (this.config.modelType === "sird") {
-      return msg("SIRD insights")
-    }
-    return msg("SIR insights")
-  }
-
-  private buildChartInsightViewData(): ChartInsightData {
-    const insights = this.computeChartInsights()
-    const population = Math.max(1, this.config.population)
-    const peakShare = insights.peakInfected / population
-    const herdThresholdLabel =
-      insights.herdImmunityThreshold === null ? "–" : formatPercent(insights.herdImmunityThreshold)
-    return {
-      elapsedTime: formatFrameCountAsDays(insights.currentFrame),
-      estimatedR0: formatApprox(insights.estimatedR0),
-      herdImmunityThreshold: herdThresholdLabel,
-      currentSusceptible: `${Math.round(insights.currentSusceptible)} (${formatPercent(insights.currentSusceptibleShare)})`,
-      currentExposed:
-        this.config.modelType === "seir" || this.config.modelType === "seird"
-          ? `${Math.round(insights.currentExposed)} (${formatPercent(insights.currentExposedShare)})`
-          : undefined,
-      currentInfected: `${Math.round(insights.currentInfected)} (${formatPercent(insights.currentInfectedShare)})`,
-      currentRecovered: `${Math.round(insights.currentRecovered)} (${formatPercent(insights.currentRecoveredShare)})`,
-      currentDead:
-        this.config.modelType === "sird" || this.config.modelType === "seird"
-          ? `${Math.round(insights.currentDead)} (${formatPercent(insights.currentDeadShare)})`
-          : undefined,
-      finalRecoveredShare: insights.finalRecoveredShare === null ? "–" : formatPercent(insights.finalRecoveredShare),
-      peakInfected: `${Math.round(insights.peakInfected)} (${formatPercent(peakShare)})`,
-      peakTime: formatFrameCountAsDays(insights.peakFrame),
-    }
-  }
-
-  private renderSnapshotsOverlay(): TemplateResult | null {
-    return renderSnapshotsOverlay({
-      open: this.snapshotsOverlayOpen,
-      snapshots: this.snapshots,
-      onBackdropClick: this.onSnapshotsOverlayBackdropClick,
-      onCreateSnapshot: this.createSnapshot,
-      onClose: this.closeSnapshotsOverlay,
-      context: {
-        modelTypeLabel: this.getModelTypeLabel.bind(this),
-        formatDays: formatFrameCountAsDays,
-        formatApprox,
-        onDelete: this.deleteSnapshot.bind(this),
-      },
-    })
-  }
-
-  private getSimulationAreas() {
-    const canvas = this.simulationCanvas
-    if (!canvas) {
-      return buildSimulationAreas({
-        canvasWidth: 600,
-        canvasHeight: 360,
-        config: this.config,
-        userHotspots: this.userHotspots,
-      })
-    }
-    return buildSimulationAreas({
-      canvasWidth: canvas.width,
-      canvasHeight: canvas.height,
-      config: this.config,
-      userHotspots: this.userHotspots,
-    })
-  }
-
-
-
-  private onHotspotTokenDragStart = (event: DragEvent): void => {
-    if (!event.dataTransfer) {
-      return
-    }
-    this.isCreatingHotspotDrag = true
-    event.dataTransfer.effectAllowed = "copy"
-    event.dataTransfer.setData("application/x-epidemic-hotspot", "new-hotspot")
-    event.dataTransfer.setData("text/plain", "new-hotspot")
-  }
-
-  private onHotspotTokenDragEnd = (): void => {
-    this.isCreatingHotspotDrag = false
-    if (!this.canvasDropActive) {
-      return
-    }
-    this.canvasDropActive = false
-  }
-
-  private onCanvasDragOver = (event: DragEvent): void => {
-    if (!this.isCreatingHotspotDrag || !event.dataTransfer) {
-      return
-    }
-    event.preventDefault()
-    event.dataTransfer.dropEffect = "copy"
-    if (!this.canvasDropActive) {
-      this.canvasDropActive = true
-    }
-  }
-
-  private onCanvasDragLeave = (): void => {
-    if (!this.canvasDropActive) {
-      return
-    }
-    this.canvasDropActive = false
-  }
-
-  private onCanvasDrop = (event: DragEvent): void => {
-    event.preventDefault()
-    this.canvasDropActive = false
-    const wasCreatingHotspotDrag = this.isCreatingHotspotDrag
-    this.isCreatingHotspotDrag = false
-    if (!this.simulationCanvas || !event.dataTransfer) {
-      return
-    }
-    const hotspotMime = event.dataTransfer.getData("application/x-epidemic-hotspot")
-    const textMime = event.dataTransfer.getData("text/plain")
-    const isHotspotDrop = wasCreatingHotspotDrag || hotspotMime === "new-hotspot" || textMime === "new-hotspot"
-    if (!isHotspotDrop) {
-      return
-    }
-    if (!this.config.hotspotsEnabled) {
-      this.hotspotsEnabled = true
-    }
-    const point = this.toCanvasPoint(event.clientX, event.clientY)
-    if (!point) {
-      return
-    }
-    this.addHotspotAtPoint(point.x, point.y)
+    this.chartRuntime.draw(
+      this.config,
+      this.chartCanvas,
+      this.enlargedChartCanvas,
+      this.chartOverlayOpen,
+      this.showApproximateFitOverlay,
+    )
   }
 
   private onCanvasPointerDown = (event: PointerEvent): void => {
     if (!this.config.hotspotsEnabled) {
       return
     }
-    const areas = this.getSimulationAreas()
+    const areas = this.hotspotEditing.getAreas(this.config)
     this.hotspotPointer.handlePointerDown(event, areas.hotspots)
   }
 
@@ -1052,86 +693,28 @@ export class WebwriterEpidemicSim extends LitElementWw {
     if (!this.config.hotspotsEnabled) {
       return
     }
-    const point = this.toCanvasPoint(event.clientX, event.clientY)
+    const point = getCanvasPoint(this.simulationCanvas, event.clientX, event.clientY)
     if (!point) {
       return
     }
-    const areas = this.getSimulationAreas()
+    const areas = this.hotspotEditing.getAreas(this.config)
     const hotspot = findTopmostHotspotAtPoint(point.x, point.y, areas.hotspots)
     if (!hotspot) {
       return
     }
     event.preventDefault()
-    this.removeHotspot(hotspot.id)
-  }
-
-  private toCanvasPoint(clientX: number, clientY: number, clampToCanvas = false): {x: number; y: number} | null {
-    return getCanvasPoint(this.simulationCanvas, clientX, clientY, clampToCanvas)
-  }
-
-  private addHotspotAtPoint(x: number, y: number): void {
-    const areas = this.getSimulationAreas()
-    const size = getDefaultHotspotSize(areas.main, this.config.hotspotSize)
-    const clamped = clampHotspotPosition(x - size * 0.5, y - size * 0.5, size, areas.main)
-    const hotspot: Hotspot = {
-      id: this.nextHotspotId,
-      communityId: resolveHotspotCommunityId(
-        clamped.x,
-        clamped.y,
-        size,
-        size,
-        areas.communities,
-        this.config.communitiesEnabled,
-      ),
-      rect: {x: clamped.x, y: clamped.y, width: size, height: size},
-    }
-    this.nextHotspotId += 1
-    this.userHotspots = [...this.userHotspots, hotspot]
-    this.restartSimulationPreservingHotspots()
+    this.hotspotEditing.removeHotspot(hotspot.id)
   }
 
   private restartSimulationPreservingHotspots(): void {
     this.frameIndex = 0
-    this.epidemicEnded = false
-    this.hadInfection = false
+    this.chartRuntime.reset()
     resetChart(this.chartCanvas)
-    this.resetChartHistory()
     this.initializeAgents(0)
     this.updateEpidemicCounts()
     this.drawChart()
     this.requestUpdateAndRedrawSimulationWhenPaused()
   }
-
-  private updateUserHotspotRect(hotspotId: number, rect: Rect): void {
-    let updated = false
-    this.userHotspots = this.userHotspots.map((hotspot) => {
-      if (hotspot.id !== hotspotId) {
-        return hotspot
-      }
-      updated = true
-      return {...hotspot, rect}
-    })
-    if (updated) {
-      this.requestUpdateAndRedrawSimulationWhenPaused()
-    }
-  }
-
-  private removeHotspot(hotspotId: number): void {
-    const hasHotspot = this.userHotspots.some((hotspot) => hotspot.id === hotspotId)
-    if (!hasHotspot) {
-      return
-    }
-    if (this.hotspotPointer.isDragging(hotspotId)) {
-      this.hotspotPointer.clear()
-    }
-    this.userHotspots = this.userHotspots.filter((hotspot) => hotspot.id !== hotspotId)
-    this.requestUpdateAndRedrawSimulationWhenPaused()
-  }
-
-
-
-
-
 
   private getModelTypeOptions(): Array<{value: EpidemicModelType; label: string}> {
     return [
@@ -1143,175 +726,97 @@ export class WebwriterEpidemicSim extends LitElementWw {
     ]
   }
 
-  private getModelTypeLabel(modelType: EpidemicModelType): string {
+  private getModelTypeLabel = (modelType: EpidemicModelType): string => {
     const option = this.getModelTypeOptions().find((entry) => entry.value === modelType)
     return option?.label ?? modelType.toUpperCase()
   }
 
-  private setAllowControl(key: AllowControlKey, event: Event): void {
-    this[key] = this.parseSwitch(event)
+  private setAllowControl = (key: AllowControlKey, event: Event): void => {
+    this[key] = parseSwitch(event)
   }
 
   private getTeacherOptionsContext() {
     return {
-      modelType: this.modelType,
+      ...this.getWidgetConfigValues(),
       modelTypeOptions: this.getModelTypeOptions(),
-      incubationDuration: this.incubationDuration,
-      immunityDuration: this.immunityDuration,
-      mortalityProbability: this.mortalityProbability,
-      population: this.population,
-      speed: this.speed,
-      infectionRadius: this.infectionRadius,
-      infectionProbability: this.infectionProbability,
-      recoveryDuration: this.recoveryDuration,
-      quarantineEnabled: this.quarantineEnabled,
-      quarantineProbability: this.quarantineProbability,
-      quarantineDuration: this.quarantineDuration,
-      hotspotsEnabled: this.hotspotsEnabled,
-      hotspotVisitProbability: this.hotspotVisitProbability,
-      hotspotStayDuration: this.hotspotStayDuration,
-      hotspotMaxAgents: this.hotspotMaxAgents,
-      hotspotSize: this.hotspotSize,
-      communitiesEnabled: this.communitiesEnabled,
-      communityLeaveProbability: this.communityLeaveProbability,
-      allowModelTypeControl: this.allowModelTypeControl,
-      allowIncubationDurationControl: this.allowIncubationDurationControl,
-      allowImmunityDurationControl: this.allowImmunityDurationControl,
-      allowMortalityProbabilityControl: this.allowMortalityProbabilityControl,
-      allowPopulationControl: this.allowPopulationControl,
-      allowSpeedControl: this.allowSpeedControl,
-      allowInfectionRadiusControl: this.allowInfectionRadiusControl,
-      allowInfectionProbabilityControl: this.allowInfectionProbabilityControl,
-      allowRecoveryDurationControl: this.allowRecoveryDurationControl,
-      allowQuarantineEnabledControl: this.allowQuarantineEnabledControl,
-      allowQuarantineProbabilityControl: this.allowQuarantineProbabilityControl,
-      allowQuarantineDurationControl: this.allowQuarantineDurationControl,
-      allowHotspotsEnabledControl: this.allowHotspotsEnabledControl,
-      allowHotspotVisitProbabilityControl: this.allowHotspotVisitProbabilityControl,
-      allowHotspotStayDurationControl: this.allowHotspotStayDurationControl,
-      allowHotspotMaxAgentsControl: this.allowHotspotMaxAgentsControl,
-      allowHotspotSizeControl: this.allowHotspotSizeControl,
-      allowCommunitiesEnabledControl: this.allowCommunitiesEnabledControl,
-      allowCommunityLeaveProbabilityControl: this.allowCommunityLeaveProbabilityControl,
       formatDays: formatFrameCountAsDays,
-      onModelTypeChange: this.updateModelType,
-      onIncubationDurationInput: this.updateIncubationDuration,
-      onImmunityDurationInput: this.updateImmunityDuration,
-      onMortalityProbabilityInput: this.updateMortalityProbability,
-      onPopulationInput: this.updatePopulation,
-      onSpeedInput: this.updateSpeed,
-      onInfectionRadiusInput: this.updateInfectionRadius,
-      onInfectionProbabilityInput: this.updateInfectionProbability,
-      onRecoveryDurationInput: this.updateRecoveryDuration,
-      onQuarantineEnabled: this.updateQuarantineEnabled,
-      onQuarantineProbabilityInput: this.updateQuarantineProbability,
-      onQuarantineDurationInput: this.updateQuarantineDuration,
-      onHotspotsEnabled: this.updateHotspotsEnabled,
-      onHotspotVisitProbabilityInput: this.updateHotspotVisitProbability,
-      onHotspotStayDurationInput: this.updateHotspotStayDuration,
-      onHotspotMaxAgentsInput: this.updateHotspotMaxAgents,
-      onHotspotSizeInput: this.updateHotspotSize,
-      onCommunitiesEnabled: this.updateCommunitiesEnabled,
-      onCommunityLeaveProbabilityInput: this.updateCommunityLeaveProbability,
-      onAllowChange: this.setAllowControl.bind(this),
+      ...this.configHandlers,
+      onAllowChange: this.setAllowControl,
+    }
+  }
+
+  private getStudentMenuHandlers() {
+    return {
+      onModelTypeChange: this.configHandlers.onModelTypeChange,
+      onIncubationDurationInput: this.configHandlers.onIncubationDurationInput,
+      onImmunityDurationInput: this.configHandlers.onImmunityDurationInput,
+      onMortalityProbabilityInput: this.configHandlers.onMortalityProbabilityInput,
+      onPopulationInput: this.configHandlers.onPopulationInput,
+      onSpeedInput: this.configHandlers.onSpeedInput,
+      onInfectionRadiusInput: this.configHandlers.onInfectionRadiusInput,
+      onInfectionProbabilityInput: this.configHandlers.onInfectionProbabilityInput,
+      onRecoveryDurationInput: this.configHandlers.onRecoveryDurationInput,
+      onToggleQuarantine: this.configHandlers.onQuarantineEnabled,
+      onQuarantineProbabilityInput: this.configHandlers.onQuarantineProbabilityInput,
+      onQuarantineDurationInput: this.configHandlers.onQuarantineDurationInput,
+      onToggleHotspots: this.configHandlers.onHotspotsEnabled,
+      onHotspotVisitProbabilityInput: this.configHandlers.onHotspotVisitProbabilityInput,
+      onHotspotStayDurationInput: this.configHandlers.onHotspotStayDurationInput,
+      onHotspotMaxAgentsInput: this.configHandlers.onHotspotMaxAgentsInput,
+      onHotspotSizeInput: this.configHandlers.onHotspotSizeInput,
+      onToggleCommunities: this.configHandlers.onCommunitiesEnabled,
+      onCommunityLeaveProbabilityInput: this.configHandlers.onCommunityLeaveProbabilityInput,
     }
   }
 
   render() {
-    return html`
-      <div part="options" class="teacher-options-shell author-only">
-        ${renderTeacherOptions(buildTeacherOptionsInput(this.getTeacherOptionsContext()))}
-      </div>
-      <section class="widget-shell ${this.hasVisibleMenuControls ? "has-menu" : ""}">
-        <section class="main-content" @click=${this.onMainContentClick}>
-          <section class="layout">
-            <sl-card class="panel panel--chart">
-              <div
-                class="chart-wrap chart-wrap--interactive"
-                @dblclick=${this.onChartPanelDoubleClick}
-                @contextmenu=${this.onChartContextMenu}
-                title=${msg("Double-click to enlarge")}
-              >
-                <canvas id="chart-canvas"></canvas>
-              </div>
-            </sl-card>
-            ${
-              this.chartContextMenuOpen
-                ? html`
-                    <div
-                      class="chart-context-menu"
-                      style=${`left: ${this.chartContextMenuPosition.x}px; top: ${this.chartContextMenuPosition.y}px;`}
-                      @click=${(event: Event) => event.stopPropagation()}
-                    >
-                      <sl-button class="chart-context-menu__item" variant="text" size="small" @click=${this.createSnapshot}>
-                        ${msg("Create snapshot")}
-                      </sl-button>
-                    </div>
-                  `
-                : null
-            }
-
-            ${renderCanvasPanel({
-              canvasDropActive: this.canvasDropActive,
-              hotspotsEnabled: this.hotspotsEnabled,
-              showHotspotToolbox: this.isEditMode || this.allowHotspotsEnabledControl,
-              isRunning: this.isRunning,
-              onCanvasDragOver: this.onCanvasDragOver,
-              onCanvasDragLeave: this.onCanvasDragLeave,
-              onCanvasDrop: this.onCanvasDrop,
-              onCanvasPointerDown: this.onCanvasPointerDown,
-              onCanvasContextMenu: this.onCanvasContextMenu,
-              onHotspotTokenDragStart: this.onHotspotTokenDragStart,
-              onHotspotTokenDragEnd: this.onHotspotTokenDragEnd,
-              onToggleSimulation: this.toggleSimulation,
-              onResetSimulation: this.resetSimulation,
-              onOpenSnapshots: this.openSnapshotsOverlay,
-            })}
-          </section>
-        </section>
-
-        ${
-          this.hasVisibleMenuControls
-            ? renderMenu(
-                buildStudentMenuInput(this.getWidgetConfigValues(), this.userHotspots.length, this.getModelTypeOptions(), {
-                  onModelTypeChange: this.updateModelType,
-                  onIncubationDurationInput: this.updateIncubationDuration,
-                  onImmunityDurationInput: this.updateImmunityDuration,
-                  onMortalityProbabilityInput: this.updateMortalityProbability,
-                  onPopulationInput: this.updatePopulation,
-                  onSpeedInput: this.updateSpeed,
-                  onInfectionRadiusInput: this.updateInfectionRadius,
-                  onInfectionProbabilityInput: this.updateInfectionProbability,
-                  onRecoveryDurationInput: this.updateRecoveryDuration,
-                  onToggleQuarantine: this.updateQuarantineEnabled,
-                  onQuarantineProbabilityInput: this.updateQuarantineProbability,
-                  onQuarantineDurationInput: this.updateQuarantineDuration,
-                  onToggleHotspots: this.updateHotspotsEnabled,
-                  onHotspotVisitProbabilityInput: this.updateHotspotVisitProbability,
-                  onHotspotStayDurationInput: this.updateHotspotStayDuration,
-                  onHotspotMaxAgentsInput: this.updateHotspotMaxAgents,
-                  onHotspotSizeInput: this.updateHotspotSize,
-                  onToggleCommunities: this.updateCommunitiesEnabled,
-                  onCommunityLeaveProbabilityInput: this.updateCommunityLeaveProbability,
-                }),
-              )
-            : null
-        }
-
-        ${this.renderSnapshotsOverlay()}
-
-        ${renderChartOverlay({
-          open: this.chartOverlayOpen,
-          title: this.getInsightsOverlayTitle(),
-          showFitToggle: this.config.modelType === "sir",
-          showApproximateFitOverlay: this.showApproximateFitOverlay,
-          insights: this.buildChartInsightViewData(),
-          onBackdropClick: this.onChartOverlayBackdropClick,
-          onCreateSnapshot: this.createSnapshot,
-          onClose: this.closeChartOverlay,
-          onApproximateFitChange: this.updateApproximateFitOverlay,
-        })}
-      </section>
-    `
+    return renderWidgetLayout({
+      hasVisibleMenuControls: this.hasVisibleMenuControls,
+      teacherOptions: buildTeacherOptionsInput(this.getTeacherOptionsContext()),
+      chartContextMenuOpen: this.chartContextMenuOpen,
+      chartContextMenuPosition: this.chartContextMenuPosition,
+      onMainContentClick: this.onMainContentClick,
+      onChartPanelDoubleClick: this.onChartPanelDoubleClick,
+      onChartContextMenu: this.onChartContextMenu,
+      onCreateSnapshot: this.createSnapshot,
+      canvasDropActive: this.hotspotEditing.canvasDropActive,
+      hotspotsEnabled: this.hotspotsEnabled,
+      showHotspotToolbox: this.isEditMode || this.allowHotspotsEnabledControl,
+      isRunning: this.isRunning,
+      onCanvasDragOver: this.hotspotEditing.onCanvasDragOver,
+      onCanvasDragLeave: this.hotspotEditing.onCanvasDragLeave,
+      onCanvasDrop: this.hotspotEditing.onCanvasDrop,
+      onCanvasPointerDown: this.onCanvasPointerDown,
+      onCanvasContextMenu: this.onCanvasContextMenu,
+      onHotspotTokenDragStart: this.hotspotEditing.onTokenDragStart,
+      onHotspotTokenDragEnd: this.hotspotEditing.onTokenDragEnd,
+      onToggleSimulation: this.toggleSimulation,
+      onResetSimulation: this.resetSimulation,
+      onOpenSnapshots: this.openSnapshotsOverlay,
+      studentMenu: this.hasVisibleMenuControls
+        ? buildStudentMenuInput(
+            this.getWidgetConfigValues(),
+            this.hotspotEditing.userHotspots.length,
+            this.getModelTypeOptions(),
+            this.getStudentMenuHandlers(),
+          )
+        : null,
+      snapshotsOverlayOpen: this.snapshotsOverlayOpen,
+      snapshots: this.snapshots,
+      onSnapshotsBackdropClick: this.onSnapshotsOverlayBackdropClick,
+      onCloseSnapshots: this.closeSnapshotsOverlay,
+      getModelTypeLabel: this.getModelTypeLabel,
+      formatDays: formatFrameCountAsDays,
+      formatApprox,
+      onDeleteSnapshot: this.deleteSnapshot,
+      chartOverlayOpen: this.chartOverlayOpen,
+      chartOverlayTitle: this.chartRuntime.getInsightsOverlayTitle(this.config.modelType),
+      showFitToggle: this.config.modelType === "sir",
+      showApproximateFitOverlay: this.showApproximateFitOverlay,
+      chartInsights: this.chartRuntime.buildInsightViewData(this.frameIndex, this.getCounts(), this.config),
+      onChartBackdropClick: this.onChartOverlayBackdropClick,
+      onCloseChartOverlay: this.closeChartOverlay,
+      onApproximateFitChange: this.updateApproximateFitOverlay,
+    })
   }
 }
