@@ -8,8 +8,6 @@ export interface ChartSeries {
   lineWidth?: number
 }
 
-const chartCache = new WeakMap<HTMLCanvasElement, Chart<"line", number[], string>>()
-
 export function drawChart(
   canvas: HTMLCanvasElement,
   population: number,
@@ -20,7 +18,7 @@ export function drawChart(
   const labels = options?.labels ?? Array.from({length: longestSeriesLength}, (_, index) => String(index))
   const showLegend = options?.showLegend ?? true
 
-  let chart = chartCache.get(canvas)
+  let chart = Chart.getChart(canvas) as Chart<"line", number[], string> | undefined
   if (!chart) {
     const parent = canvas.parentElement
     chart = new Chart(canvas, {
@@ -30,7 +28,6 @@ export function drawChart(
         datasets: [],
       },
       options: {
-        animation: false,
         responsive: true,
         maintainAspectRatio: false,
         scales: {
@@ -87,7 +84,6 @@ export function drawChart(
         },
       },
     })
-    chartCache.set(canvas, chart)
     if (parent) {
       chart.resize()
     }
@@ -126,12 +122,7 @@ export function destroyChart(canvas: HTMLCanvasElement | null): void {
   if (!canvas) {
     return
   }
-  const chart = chartCache.get(canvas)
-  if (!chart) {
-    return
-  }
-  chart.destroy()
-  chartCache.delete(canvas)
+  Chart.getChart(canvas)?.destroy()
 }
 
 export function resetChart(canvas: HTMLCanvasElement | null): void {

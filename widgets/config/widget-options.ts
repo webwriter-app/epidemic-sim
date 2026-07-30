@@ -41,16 +41,16 @@ export const WIDGET_OPTIONS: OptionMap = {
     de: "Schüler dürfen ändern: Modelltyp",
   }),
   incubationDuration: rangeOption("incubationDuration", model, {
-    en: "Incubation duration (frames)",
-    de: "Inkubationsdauer (Frames)",
+    en: "Incubation duration (days)",
+    de: "Inkubationsdauer (Tage)",
   }),
   allowIncubationDurationControl: booleanOption(model, {
     en: "Students can change: incubation duration",
     de: "Schüler dürfen ändern: Inkubationsdauer",
   }),
   immunityDuration: rangeOption("immunityDuration", model, {
-    en: "Immunity duration (frames)",
-    de: "Immunitätsdauer (Frames)",
+    en: "Immunity duration (days)",
+    de: "Immunitätsdauer (Tage)",
   }),
   allowImmunityDurationControl: booleanOption(model, {
     en: "Students can change: immunity duration",
@@ -91,8 +91,8 @@ export const WIDGET_OPTIONS: OptionMap = {
     de: "Schüler dürfen ändern: Infektionswahrscheinlichkeit",
   }),
   recoveryDuration: rangeOption("recoveryDuration", general, {
-    en: "Recovery duration (frames)",
-    de: "Genesungsdauer (Frames)",
+    en: "Recovery duration (days)",
+    de: "Genesungsdauer (Tage)",
   }),
   allowRecoveryDurationControl: booleanOption(general, {
     en: "Students can change: recovery duration",
@@ -112,8 +112,8 @@ export const WIDGET_OPTIONS: OptionMap = {
     de: "Schüler dürfen ändern: Quarantänewahrscheinlichkeit",
   }),
   quarantineDuration: rangeOption("quarantineDuration", specific, {
-    en: "Quarantine duration (frames)",
-    de: "Quarantänedauer (Frames)",
+    en: "Quarantine duration (days)",
+    de: "Quarantänedauer (Tage)",
   }),
   allowQuarantineDurationControl: booleanOption(specific, {
     en: "Students can change: quarantine duration",
@@ -133,8 +133,8 @@ export const WIDGET_OPTIONS: OptionMap = {
     de: "Schüler dürfen ändern: Hotspot-Besuchswahrscheinlichkeit",
   }),
   hotspotStayDuration: rangeOption("hotspotStayDuration", specific, {
-    en: "Hotspot stay duration (frames)",
-    de: "Hotspot-Aufenthaltsdauer (Frames)",
+    en: "Hotspot stay duration (days)",
+    de: "Hotspot-Aufenthaltsdauer (Tage)",
   }),
   allowHotspotStayDurationControl: booleanOption(specific, {
     en: "Students can change: hotspot stay duration",

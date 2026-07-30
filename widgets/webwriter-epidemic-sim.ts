@@ -48,10 +48,6 @@ import {getCanvasPoint} from "./utils/canvas-coordinates"
 export class WebwriterEpidemicSim extends LitElementWw {
   localize = LOCALIZE
 
-  // Author controls use part="options" (renderTeacherOptions). Keep static options
-  // empty so WebWriter does not also render auto-generated WIDGET_OPTIONS fields.
-  static options = {}
-
   static scopedElements = {
     "sl-button": SlButton,
     "sl-card": SlCard,
