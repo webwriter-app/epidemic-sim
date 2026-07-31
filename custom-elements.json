@@ -1,0 +1,92 @@
+{
+  "schemaVersion": "1.0.0",
+  "readme": "README.md",
+  "modules": [
+    {
+      "kind": "javascript-module",
+      "path": "widgets/webwriter-epidemic-sim.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "Interactive agent-based epidemic simulation widget for SIR/SIRS/SEIR/SIRD/SEIRD models with chart insights, quarantine, hotspots, and communities.",
+          "name": "WebwriterEpidemicSim",
+          "tagName": "webwriter-epidemic-sim",
+          "customElement": true,
+          "attributes": [
+            {"name": "model-type", "type": {"text": "string"}, "default": "\"sir\"", "description": "Epidemic model type."},
+            {"name": "incubation-duration", "type": {"text": "number"}, "description": "Incubation duration in frames."},
+            {"name": "immunity-duration", "type": {"text": "number"}, "description": "Immunity duration in frames."},
+            {"name": "mortality-probability", "type": {"text": "number"}, "description": "Probability of death while infected."},
+            {"name": "population", "type": {"text": "number"}, "description": "Number of agents."},
+            {"name": "speed", "type": {"text": "number"}, "description": "Agent movement speed."},
+            {"name": "infection-radius", "type": {"text": "number"}, "description": "Infection contact radius."},
+            {"name": "infection-probability", "type": {"text": "number"}, "description": "Per-contact infection probability."},
+            {"name": "recovery-duration", "type": {"text": "number"}, "description": "Recovery duration in frames."},
+            {"name": "quarantine-enabled", "type": {"text": "boolean"}, "description": "Enable quarantine zone."},
+            {"name": "quarantine-probability", "type": {"text": "number"}},
+            {"name": "quarantine-duration", "type": {"text": "number"}},
+            {"name": "hotspots-enabled", "type": {"text": "boolean"}, "description": "Enable hotspot areas."},
+            {"name": "hotspot-visit-probability", "type": {"text": "number"}},
+            {"name": "hotspot-stay-duration", "type": {"text": "number"}},
+            {"name": "hotspot-max-agents", "type": {"text": "number"}},
+            {"name": "hotspot-size", "type": {"text": "number"}},
+            {"name": "communities-enabled", "type": {"text": "boolean"}},
+            {"name": "community-leave-probability", "type": {"text": "number"}},
+            {"name": "allow-model-type-control", "type": {"text": "boolean"}, "description": "Allow learners to change model type."},
+            {"name": "allow-incubation-duration-control", "type": {"text": "boolean"}},
+            {"name": "allow-immunity-duration-control", "type": {"text": "boolean"}},
+            {"name": "allow-mortality-probability-control", "type": {"text": "boolean"}},
+            {"name": "allow-population-control", "type": {"text": "boolean"}},
+            {"name": "allow-speed-control", "type": {"text": "boolean"}},
+            {"name": "allow-infection-radius-control", "type": {"text": "boolean"}},
+            {"name": "allow-infection-probability-control", "type": {"text": "boolean"}},
+            {"name": "allow-recovery-duration-control", "type": {"text": "boolean"}},
+            {"name": "allow-quarantine-enabled-control", "type": {"text": "boolean"}},
+            {"name": "allow-quarantine-probability-control", "type": {"text": "boolean"}},
+            {"name": "allow-quarantine-duration-control", "type": {"text": "boolean"}},
+            {"name": "allow-hotspots-enabled-control", "type": {"text": "boolean"}},
+            {"name": "allow-hotspot-visit-probability-control", "type": {"text": "boolean"}},
+            {"name": "allow-hotspot-stay-duration-control", "type": {"text": "boolean"}},
+            {"name": "allow-hotspot-max-agents-control", "type": {"text": "boolean"}},
+            {"name": "allow-hotspot-size-control", "type": {"text": "boolean"}},
+            {"name": "allow-communities-enabled-control", "type": {"text": "boolean"}},
+            {"name": "allow-community-leave-probability-control", "type": {"text": "boolean"}},
+            {"name": "widget-state", "type": {"text": "string"}, "description": "JSON blob for hotspots and snapshots (persisted across save/reload)."},
+            {"name": "contenteditable", "type": {"text": "string"}, "description": "WebWriter editing mode."},
+            {"name": "lang", "type": {"text": "string"}, "description": "Localization language."}
+          ],
+          "members": [],
+          "cssParts": [
+            {
+              "name": "options",
+              "description": "Author-only configuration panel shown in the WebWriter options toolbox."
+            }
+          ],
+          "slots": [],
+          "superclass": {
+            "name": "LitElementWw",
+            "package": "@webwriter/lit"
+          }
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "WebwriterEpidemicSim",
+          "declaration": {
+            "name": "WebwriterEpidemicSim",
+            "module": "widgets/webwriter-epidemic-sim.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "webwriter-epidemic-sim",
+          "declaration": {
+            "name": "WebwriterEpidemicSim",
+            "module": "widgets/webwriter-epidemic-sim.ts"
+          }
+        }
+      ]
+    }
+  ]
+}

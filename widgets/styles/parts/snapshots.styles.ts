@@ -63,7 +63,6 @@ export const snapshotsStyles = css`
     line-height: 1;
   }
   .snapshots-overlay__delete-button:hover { background: #fef2f2; }
-  .snapshots-overlay__delete-button:focus-visible { outline: 2px solid #dc2626; outline-offset: 2px; }
   .snapshots-overlay__snapshot-image {
     width: 100%;
     height: min(20vh, 190px);

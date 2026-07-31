@@ -77,7 +77,6 @@ export const chartStyles = css`
     color: #5b21b6;
     font-weight: 600;
   }
-  .chart-overlay__tab:focus-visible { outline: 2px solid #7c3aed; outline-offset: 2px; }
   .chart-overlay__actions { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; }
   .chart-overlay__chart-wrap,
   .chart-overlay__simulation-wrap {

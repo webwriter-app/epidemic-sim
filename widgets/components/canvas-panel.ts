@@ -39,7 +39,7 @@ export function renderCanvasPanel(input: CanvasPanelInput): TemplateResult {
           @dblclick=${input.onCanvasDoubleClick}
         ></canvas>
         <div class="actions simulation-actions">
-          <button type="button" class="simulation-actions__icon-button" title=${input.isRunning ? msg("Pause") : msg("Start")} aria-label=${input.isRunning ? msg("Pause") : msg("Start")} @click=${input.onToggleSimulation}>
+          <button type="button" class="simulation-actions__icon-button simulation-actions__icon-button--play-pause" title=${input.isRunning ? msg("Pause") : msg("Start")} aria-label=${input.isRunning ? msg("Pause") : msg("Start")} @click=${input.onToggleSimulation}>
             ${input.isRunning ? renderPauseIcon() : renderPlayIcon()}
           </button>
           <button type="button" class="simulation-actions__icon-button" title=${msg("Reset simulation")} aria-label=${msg("Reset simulation")} @click=${input.onResetSimulation}>

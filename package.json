@@ -1,39 +1,85 @@
 {
-    "name": "@webwriter/epidemic-sim",
-    "version": "0.0.1",
-    "keywords": [
-        "webwriter-widget"
-    ],
-    "license": "MIT",
-    "author": "Jason Iloppa <iloppajason@icloud.com>",
-    "scripts": {
-        "prepublishOnly": "npx @webwriter/build",
-        "dev": "npx @webwriter/build dev",
-        "localize": "lit-localize extract && npx @webwriter/build localize && lit-localize build"
+  "name": "@webwriter/epidemic-sim",
+  "version": "0.0.1",
+  "description": "Interactive agent-based epidemic simulation (SIR/SIRS/SEIR/SIRD/SEIRD) for WebWriter explorables, with charts, quarantine, hotspots, and communities.",
+  "keywords": [
+    "webwriter-widget",
+    "simulation",
+    "epidemic",
+    "education",
+    "explorable",
+    "sir",
+    "seir"
+  ],
+  "license": "MIT",
+  "author": "Jason Iloppa <iloppajason@icloud.com>",
+  "scripts": {
+    "prepublishOnly": "npx @webwriter/build",
+    "dev": "npx @webwriter/build dev",
+    "localize": "lit-localize extract && npx @webwriter/build localize && lit-localize build"
+  },
+  "dependencies": {
+    "@lit/localize": "^0.12.2",
+    "@shoelace-style/shoelace": "^2.20.1",
+    "@webwriter/lit": "^2",
+    "chart.js": "^4.5.1",
+    "lit": "^3"
+  },
+  "devDependencies": {
+    "@lit/localize-tools": "^0.8",
+    "@types/chai": "^5.2.3",
+    "@types/mocha": "^10.0.10",
+    "@webwriter/build": "^1.12.0",
+    "chai": "^6.2.2",
+    "mocha": "^11.7.6",
+    "typescript": "^5.8.3"
+  },
+  "customElements": "custom-elements.json",
+  "exports": {
+    "./widgets/webwriter-epidemic-sim.*": {
+      "source": "./widgets/webwriter-epidemic-sim.ts",
+      "default": "./dist/widgets/webwriter-epidemic-sim.*"
     },
-    "dependencies": {
-        "@lit/localize": "^0.12.2",
-        "@shoelace-style/shoelace": "^2.20.1",
-        "@webwriter/lit": "^2",
-        "chart.js": "^4.5.1",
-        "lit": "^3"
+    "./snippets/corona-verlauf.html": "./snippets/corona-verlauf.html",
+    "./tests/functionality.*": {
+      "source": "./tests/functionality.test.ts",
+      "default": "./dist/tests/functionality.*"
     },
-    "devDependencies": {
-        "@lit/localize-tools": "^0.8",
-        "typescript": "^5.8.3"
+    "./icon": "./assets/icon.svg",
+    "./custom-elements.json": "./custom-elements.json"
+  },
+  "editingConfig": {
+    ".": {
+      "label": {
+        "_": "Epidemic Simulation",
+        "en": "Epidemic Simulation",
+        "de": "Epidemie-Simulation"
+      },
+      "description": {
+        "_": "Interactive agent-based epidemic models with charts and interventions.",
+        "en": "Interactive agent-based epidemic models with charts and interventions.",
+        "de": "Interaktive agentenbasierte Epidemie-Modelle mit Diagrammen und Maßnahmen."
+      }
     },
-    "exports": {
-        "./widgets/webwriter-epidemic-sim.*": {
-            "source": "./widgets/webwriter-epidemic-sim.ts",
-            "default": "./dist/widgets/webwriter-epidemic-sim.*"
-        },
-        "./snippets/corona-verlauf.html": "./snippets/corona-verlauf.html"
+    "./widgets/webwriter-epidemic-sim.*": {
+      "label": {
+        "_": "Epidemic Simulation",
+        "en": "Epidemic Simulation",
+        "de": "Epidemie-Simulation"
+      },
+      "group": "flow interactive widget",
+      "isolating": true,
+      "content": "script*",
+      "parts": {
+        "options": {}
+      }
     },
-    "editingConfig": {
-        "./widgets/webwriter-epidemic-sim.*": {
-            "parts": {
-                "options": {}
-            }
-        }
+    "./snippets/corona-verlauf.html": {
+      "label": {
+        "_": "Flatten the Curve (COVID-19 SEIRD)",
+        "en": "Flatten the Curve (COVID-19 SEIRD)",
+        "de": "Flatten the Curve (COVID-19 SEIRD)"
+      }
     }
+  }
 }

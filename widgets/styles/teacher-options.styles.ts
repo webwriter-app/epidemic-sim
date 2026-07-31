@@ -3,6 +3,14 @@ import type {CSSResult} from "lit"
 
 export const teacherOptionsStyles: CSSResult = css`
   :host(:not([contenteditable="true"]):not([contenteditable=""])) .author-only { display: none; }
+  :host(.ww-beforeprint) .author-only,
+  :host(.ww-beforeprint) .teacher-options-shell,
+  :host(.ww-printable) .author-only,
+  :host(.ww-printable) .teacher-options-shell { display: none !important; }
+  @media print {
+    .author-only,
+    .teacher-options-shell { display: none !important; }
+  }
   :host { display: block; width: 100%; max-width: 100%; min-width: 0; }
   .teacher-options-shell { display: block; width: 100%; max-width: 100%; min-width: 0; box-sizing: border-box; }
   .teacher-options { display: grid; gap: 8px; width: 100%; max-width: 100%; min-width: 0; box-sizing: border-box; font-size: 0.88rem; }

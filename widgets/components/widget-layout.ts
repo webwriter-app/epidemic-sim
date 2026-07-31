@@ -14,6 +14,7 @@ import type {EpidemicModelType} from "../simulation/epidemic-models"
 
 export type WidgetLayoutInput = {
   hasVisibleMenuControls: boolean
+  showTeacherOptions: boolean
   teacherOptions: RenderTeacherOptionsInput
   chartContextMenuOpen: boolean
   chartContextMenuPosition: {x: number; y: number}
@@ -57,10 +58,17 @@ export type WidgetLayoutInput = {
 
 export function renderWidgetLayout(input: WidgetLayoutInput): TemplateResult {
   return html`
-    <div part="options" class="teacher-options-shell author-only">
-      ${renderTeacherOptions(input.teacherOptions)}
-    </div>
+    ${
+      input.showTeacherOptions
+        ? html`
+            <div part="options" class="teacher-options-shell author-only">
+              ${renderTeacherOptions(input.teacherOptions)}
+            </div>
+          `
+        : null
+    }
     <section class="widget-shell ${input.hasVisibleMenuControls ? "has-menu" : ""}">
+      <p class="print-hint">${msg("Printed snapshot of the epidemic simulation. Author options and interactive controls are omitted.")}</p>
       <section class="main-content" @click=${input.onMainContentClick}>
         <section class="layout">
           <sl-card class="panel panel--chart">

@@ -16,6 +16,7 @@ export type HotspotEditingCallbacks = {
   onRestartPreservingHotspots: () => void
   isPointerDragging: (hotspotId: number) => boolean
   clearPointer: () => void
+  persistHotspots: () => void
 }
 
 export class HotspotEditingController implements ReactiveController {
@@ -30,6 +31,25 @@ export class HotspotEditingController implements ReactiveController {
     this.host = host
     this.callbacks = callbacks
     host.addController(this)
+  }
+
+  hydrate(hotspots: Hotspot[], nextHotspotId: number): void {
+    this.userHotspots = hotspots.map((hotspot) => ({
+      ...hotspot,
+      rect: {...hotspot.rect},
+    }))
+    this.nextHotspotId = nextHotspotId
+  }
+
+  getPersistedSnapshot(): {hotspots: Hotspot[]; nextHotspotId: number} {
+    return {
+      hotspots: this.userHotspots,
+      nextHotspotId: this.nextHotspotId,
+    }
+  }
+
+  private persist(): void {
+    this.callbacks.persistHotspots()
   }
 
   resetInteractionFlags(): void {
@@ -142,6 +162,7 @@ export class HotspotEditingController implements ReactiveController {
     }
     this.nextHotspotId += 1
     this.userHotspots = [...this.userHotspots, hotspot]
+    this.persist()
     this.callbacks.onRestartPreservingHotspots()
   }
 
@@ -155,6 +176,7 @@ export class HotspotEditingController implements ReactiveController {
       return {...hotspot, rect}
     })
     if (updated) {
+      this.persist()
       this.callbacks.onHotspotsChanged()
     }
   }
@@ -168,6 +190,7 @@ export class HotspotEditingController implements ReactiveController {
       this.callbacks.clearPointer()
     }
     this.userHotspots = this.userHotspots.filter((hotspot) => hotspot.id !== hotspotId)
+    this.persist()
     this.callbacks.onHotspotsChanged()
   }
 

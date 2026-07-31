@@ -20,4 +20,95 @@ export const sideMenuStyles: CSSResult = css`
   .side-menu sl-range { width: 100%; }
   .side-menu sl-select { width: 100%; }
   .side-menu sl-select::part(combobox) { width: 100%; }
+
+  :host(.ww-beforeprint) .widget-shell.has-menu,
+  :host(.ww-printable) .widget-shell.has-menu {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 220px;
+    grid-template-rows: auto auto;
+    column-gap: 8px;
+    align-items: start;
+    overflow: visible;
+    --side-menu-width: 220px;
+  }
+  :host(.ww-beforeprint) .widget-shell.has-menu .print-hint,
+  :host(.ww-printable) .widget-shell.has-menu .print-hint {
+    grid-column: 1 / -1;
+  }
+  :host(.ww-beforeprint) .widget-shell.has-menu .main-content,
+  :host(.ww-printable) .widget-shell.has-menu .main-content {
+    padding-right: 0;
+    grid-column: 1;
+    height: auto;
+  }
+  :host(.ww-beforeprint) .side-menu,
+  :host(.ww-printable) .side-menu {
+    position: static;
+    width: auto;
+    height: auto;
+    max-height: none;
+    overflow: visible;
+    box-shadow: none;
+    padding: 6px 8px;
+    font-size: 0.75rem;
+    grid-column: 2;
+    grid-row: 2;
+  }
+  :host(.ww-beforeprint) .side-menu__title,
+  :host(.ww-printable) .side-menu__title {
+    font-size: 0.85rem;
+  }
+  :host(.ww-beforeprint) .side-menu__section,
+  :host(.ww-printable) .side-menu__section {
+    gap: 4px;
+    padding-top: 6px;
+    margin-top: 6px;
+  }
+  :host(.ww-beforeprint) .side-menu__control-head,
+  :host(.ww-printable) .side-menu__control-head {
+    font-size: 0.72rem;
+  }
+
+  @media print {
+    .widget-shell.has-menu {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 220px;
+      grid-template-rows: auto auto;
+      column-gap: 8px;
+      align-items: start;
+      overflow: visible;
+      --side-menu-width: 220px;
+    }
+    .widget-shell.has-menu .print-hint {
+      grid-column: 1 / -1;
+    }
+    .widget-shell.has-menu .main-content {
+      padding-right: 0;
+      grid-column: 1;
+      height: auto;
+    }
+    .side-menu {
+      position: static;
+      width: auto;
+      height: auto;
+      max-height: none;
+      overflow: visible;
+      box-shadow: none;
+      padding: 6px 8px;
+      font-size: 0.75rem;
+      grid-column: 2;
+      grid-row: 2;
+    }
+    .side-menu__title {
+      font-size: 0.85rem;
+    }
+    .side-menu__section {
+      gap: 4px;
+      padding-top: 6px;
+      margin-top: 6px;
+    }
+    .side-menu__control-head {
+      font-size: 0.72rem;
+    }
+  }
 `

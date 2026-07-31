@@ -72,6 +72,28 @@ export class SnapshotService {
   private nextSnapshotId = 1
   snapshots: SimulationSnapshot[] = []
 
+  hydrate(snapshots: SimulationSnapshot[], nextSnapshotId: number): void {
+    this.snapshots = snapshots.map((snapshot) => ({
+      ...snapshot,
+      config: {...snapshot.config},
+      susceptibleHistory: [...snapshot.susceptibleHistory],
+      exposedHistory: [...snapshot.exposedHistory],
+      infectedHistory: [...snapshot.infectedHistory],
+      recoveredHistory: [...snapshot.recoveredHistory],
+      deadHistory: [...snapshot.deadHistory],
+      userHotspots: cloneHotspots(snapshot.userHotspots),
+      chartImageJpeg: snapshot.chartImageJpeg ?? null,
+    }))
+    this.nextSnapshotId = nextSnapshotId
+  }
+
+  getPersistedMeta(): {snapshots: SimulationSnapshot[]; nextSnapshotId: number} {
+    return {
+      snapshots: this.snapshots,
+      nextSnapshotId: this.nextSnapshotId,
+    }
+  }
+
   create(input: SnapshotCreateInput): SimulationSnapshot {
     const snapshotId = `snapshot-${this.nextSnapshotId}`
     this.nextSnapshotId += 1

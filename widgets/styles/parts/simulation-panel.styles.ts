@@ -73,6 +73,5 @@ export const simulationPanelStyles = css`
     line-height: 1;
   }
   .simulation-actions__icon-button:hover { background: #ffffff; }
-  .simulation-actions__icon-button:focus-visible { outline: 2px solid #7c3aed; outline-offset: 2px; }
   .actions sl-button:not(.simulation-actions__icon-button)::part(base) { min-width: 112px; }
 `

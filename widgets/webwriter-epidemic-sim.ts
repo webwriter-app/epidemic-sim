@@ -31,6 +31,13 @@ import {CanvasHostController} from "./controllers/canvas-host-controller"
 import {HotspotEditingController} from "./controllers/hotspot-editing-controller"
 import {HotspotPointerController} from "./controllers/hotspot-pointer-controller"
 import {ChartRuntime, type ChartRuntimeCounts} from "./orchestration/chart-runtime"
+import {
+  readPersistedState,
+  writePersistedState,
+  STATE_ATTRIBUTE,
+  parsePersistedState,
+  encodePersistedState,
+} from "./orchestration/persisted-state"
 import {captureChartSnapshotImage, SnapshotService} from "./orchestration/snapshot-service"
 import {hasVisibleMenuControls, sideMenuStyles} from "./rendering/menu-renderer"
 import {destroyChart, resetChart} from "./rendering/chart-renderer"
@@ -68,116 +75,289 @@ export class WebwriterEpidemicSim extends LitElementWw {
   })
   accessor modelType: EpidemicModelType = CONFIG_SCHEMA.modelType.defaultValue
 
-  @property({type: Boolean, attribute: true, reflect: true, converter: booleanAttributeConverter})
+  @property({
+    type: Boolean,
+    attribute: "allow-model-type-control",
+    reflect: true,
+    converter: booleanAttributeConverter,
+  })
   accessor allowModelTypeControl = false
 
-  @property({type: Number, attribute: true, reflect: true, converter: numberAttributeConverter})
+  @property({
+    type: Number,
+    attribute: "incubation-duration",
+    reflect: true,
+    converter: numberAttributeConverter,
+  })
   accessor incubationDuration = CONFIG_SCHEMA.incubationDuration.defaultValue
 
-  @property({type: Boolean, attribute: true, reflect: true, converter: booleanAttributeConverter})
+  @property({
+    type: Boolean,
+    attribute: "allow-incubation-duration-control",
+    reflect: true,
+    converter: booleanAttributeConverter,
+  })
   accessor allowIncubationDurationControl = false
 
-  @property({type: Number, attribute: true, reflect: true, converter: numberAttributeConverter})
+  @property({
+    type: Number,
+    attribute: "immunity-duration",
+    reflect: true,
+    converter: numberAttributeConverter,
+  })
   accessor immunityDuration = CONFIG_SCHEMA.immunityDuration.defaultValue
 
-  @property({type: Boolean, attribute: true, reflect: true, converter: booleanAttributeConverter})
+  @property({
+    type: Boolean,
+    attribute: "allow-immunity-duration-control",
+    reflect: true,
+    converter: booleanAttributeConverter,
+  })
   accessor allowImmunityDurationControl = false
 
-  @property({type: Number, attribute: true, reflect: true, converter: numberAttributeConverter})
+  @property({
+    type: Number,
+    attribute: "mortality-probability",
+    reflect: true,
+    converter: numberAttributeConverter,
+  })
   accessor mortalityProbability = CONFIG_SCHEMA.mortalityProbability.defaultValue
 
-  @property({type: Boolean, attribute: true, reflect: true, converter: booleanAttributeConverter})
+  @property({
+    type: Boolean,
+    attribute: "allow-mortality-probability-control",
+    reflect: true,
+    converter: booleanAttributeConverter,
+  })
   accessor allowMortalityProbabilityControl = false
 
-  @property({type: Number, attribute: true, reflect: true, converter: numberAttributeConverter})
+  @property({type: Number, attribute: "population", reflect: true, converter: numberAttributeConverter})
   accessor population = CONFIG_SCHEMA.population.defaultValue
 
-  @property({type: Boolean, attribute: true, reflect: true, converter: booleanAttributeConverter})
+  @property({
+    type: Boolean,
+    attribute: "allow-population-control",
+    reflect: true,
+    converter: booleanAttributeConverter,
+  })
   accessor allowPopulationControl = false
 
-  @property({type: Number, attribute: true, reflect: true, converter: numberAttributeConverter})
+  @property({type: Number, attribute: "speed", reflect: true, converter: numberAttributeConverter})
   accessor speed = CONFIG_SCHEMA.speed.defaultValue
 
-  @property({type: Boolean, attribute: true, reflect: true, converter: booleanAttributeConverter})
+  @property({
+    type: Boolean,
+    attribute: "allow-speed-control",
+    reflect: true,
+    converter: booleanAttributeConverter,
+  })
   accessor allowSpeedControl = false
 
-  @property({type: Number, attribute: true, reflect: true, converter: numberAttributeConverter})
+  @property({
+    type: Number,
+    attribute: "infection-radius",
+    reflect: true,
+    converter: numberAttributeConverter,
+  })
   accessor infectionRadius = CONFIG_SCHEMA.infectionRadius.defaultValue
 
-  @property({type: Boolean, attribute: true, reflect: true, converter: booleanAttributeConverter})
+  @property({
+    type: Boolean,
+    attribute: "allow-infection-radius-control",
+    reflect: true,
+    converter: booleanAttributeConverter,
+  })
   accessor allowInfectionRadiusControl = false
 
-  @property({type: Number, attribute: true, reflect: true, converter: numberAttributeConverter})
+  @property({
+    type: Number,
+    attribute: "infection-probability",
+    reflect: true,
+    converter: numberAttributeConverter,
+  })
   accessor infectionProbability = CONFIG_SCHEMA.infectionProbability.defaultValue
 
-  @property({type: Boolean, attribute: true, reflect: true, converter: booleanAttributeConverter})
+  @property({
+    type: Boolean,
+    attribute: "allow-infection-probability-control",
+    reflect: true,
+    converter: booleanAttributeConverter,
+  })
   accessor allowInfectionProbabilityControl = false
 
-  @property({type: Number, attribute: true, reflect: true, converter: numberAttributeConverter})
+  @property({
+    type: Number,
+    attribute: "recovery-duration",
+    reflect: true,
+    converter: numberAttributeConverter,
+  })
   accessor recoveryDuration = CONFIG_SCHEMA.recoveryDuration.defaultValue
 
-  @property({type: Boolean, attribute: true, reflect: true, converter: booleanAttributeConverter})
+  @property({
+    type: Boolean,
+    attribute: "allow-recovery-duration-control",
+    reflect: true,
+    converter: booleanAttributeConverter,
+  })
   accessor allowRecoveryDurationControl = false
 
-  @property({type: Boolean, attribute: true, reflect: true, converter: booleanAttributeConverter})
+  @property({
+    type: Boolean,
+    attribute: "quarantine-enabled",
+    reflect: true,
+    converter: booleanAttributeConverter,
+  })
   accessor quarantineEnabled = CONFIG_SCHEMA.quarantineEnabled.defaultValue
 
-  @property({type: Boolean, attribute: true, reflect: true, converter: booleanAttributeConverter})
+  @property({
+    type: Boolean,
+    attribute: "allow-quarantine-enabled-control",
+    reflect: true,
+    converter: booleanAttributeConverter,
+  })
   accessor allowQuarantineEnabledControl = false
 
-  @property({type: Number, attribute: true, reflect: true, converter: numberAttributeConverter})
+  @property({
+    type: Number,
+    attribute: "quarantine-probability",
+    reflect: true,
+    converter: numberAttributeConverter,
+  })
   accessor quarantineProbability = CONFIG_SCHEMA.quarantineProbability.defaultValue
 
-  @property({type: Boolean, attribute: true, reflect: true, converter: booleanAttributeConverter})
+  @property({
+    type: Boolean,
+    attribute: "allow-quarantine-probability-control",
+    reflect: true,
+    converter: booleanAttributeConverter,
+  })
   accessor allowQuarantineProbabilityControl = false
 
-  @property({type: Number, attribute: true, reflect: true, converter: numberAttributeConverter})
+  @property({
+    type: Number,
+    attribute: "quarantine-duration",
+    reflect: true,
+    converter: numberAttributeConverter,
+  })
   accessor quarantineDuration = CONFIG_SCHEMA.quarantineDuration.defaultValue
 
-  @property({type: Boolean, attribute: true, reflect: true, converter: booleanAttributeConverter})
+  @property({
+    type: Boolean,
+    attribute: "allow-quarantine-duration-control",
+    reflect: true,
+    converter: booleanAttributeConverter,
+  })
   accessor allowQuarantineDurationControl = false
 
-  @property({type: Boolean, attribute: true, reflect: true, converter: booleanAttributeConverter})
+  @property({
+    type: Boolean,
+    attribute: "hotspots-enabled",
+    reflect: true,
+    converter: booleanAttributeConverter,
+  })
   accessor hotspotsEnabled = CONFIG_SCHEMA.hotspotsEnabled.defaultValue
 
-  @property({type: Boolean, attribute: true, reflect: true, converter: booleanAttributeConverter})
+  @property({
+    type: Boolean,
+    attribute: "allow-hotspots-enabled-control",
+    reflect: true,
+    converter: booleanAttributeConverter,
+  })
   accessor allowHotspotsEnabledControl = false
 
-  @property({type: Number, attribute: true, reflect: true, converter: numberAttributeConverter})
+  @property({
+    type: Number,
+    attribute: "hotspot-visit-probability",
+    reflect: true,
+    converter: numberAttributeConverter,
+  })
   accessor hotspotVisitProbability = CONFIG_SCHEMA.hotspotVisitProbability.defaultValue
 
-  @property({type: Boolean, attribute: true, reflect: true, converter: booleanAttributeConverter})
+  @property({
+    type: Boolean,
+    attribute: "allow-hotspot-visit-probability-control",
+    reflect: true,
+    converter: booleanAttributeConverter,
+  })
   accessor allowHotspotVisitProbabilityControl = false
 
-  @property({type: Number, attribute: true, reflect: true, converter: numberAttributeConverter})
+  @property({
+    type: Number,
+    attribute: "hotspot-stay-duration",
+    reflect: true,
+    converter: numberAttributeConverter,
+  })
   accessor hotspotStayDuration = CONFIG_SCHEMA.hotspotStayDuration.defaultValue
 
-  @property({type: Boolean, attribute: true, reflect: true, converter: booleanAttributeConverter})
+  @property({
+    type: Boolean,
+    attribute: "allow-hotspot-stay-duration-control",
+    reflect: true,
+    converter: booleanAttributeConverter,
+  })
   accessor allowHotspotStayDurationControl = false
 
-  @property({type: Number, attribute: true, reflect: true, converter: numberAttributeConverter})
+  @property({
+    type: Number,
+    attribute: "hotspot-max-agents",
+    reflect: true,
+    converter: numberAttributeConverter,
+  })
   accessor hotspotMaxAgents = CONFIG_SCHEMA.hotspotMaxAgents.defaultValue
 
-  @property({type: Boolean, attribute: true, reflect: true, converter: booleanAttributeConverter})
+  @property({
+    type: Boolean,
+    attribute: "allow-hotspot-max-agents-control",
+    reflect: true,
+    converter: booleanAttributeConverter,
+  })
   accessor allowHotspotMaxAgentsControl = false
 
-  @property({type: Number, attribute: true, reflect: true, converter: numberAttributeConverter})
+  @property({type: Number, attribute: "hotspot-size", reflect: true, converter: numberAttributeConverter})
   accessor hotspotSize = CONFIG_SCHEMA.hotspotSize.defaultValue
 
-  @property({type: Boolean, attribute: true, reflect: true, converter: booleanAttributeConverter})
+  @property({
+    type: Boolean,
+    attribute: "allow-hotspot-size-control",
+    reflect: true,
+    converter: booleanAttributeConverter,
+  })
   accessor allowHotspotSizeControl = false
 
-  @property({type: Boolean, attribute: true, reflect: true, converter: booleanAttributeConverter})
+  @property({
+    type: Boolean,
+    attribute: "communities-enabled",
+    reflect: true,
+    converter: booleanAttributeConverter,
+  })
   accessor communitiesEnabled = CONFIG_SCHEMA.communitiesEnabled.defaultValue
 
-  @property({type: Boolean, attribute: true, reflect: true, converter: booleanAttributeConverter})
+  @property({
+    type: Boolean,
+    attribute: "allow-communities-enabled-control",
+    reflect: true,
+    converter: booleanAttributeConverter,
+  })
   accessor allowCommunitiesEnabledControl = false
 
-  @property({type: Number, attribute: true, reflect: true, converter: numberAttributeConverter})
+  @property({
+    type: Number,
+    attribute: "community-leave-probability",
+    reflect: true,
+    converter: numberAttributeConverter,
+  })
   accessor communityLeaveProbability = CONFIG_SCHEMA.communityLeaveProbability.defaultValue
 
-  @property({type: Boolean, attribute: true, reflect: true, converter: booleanAttributeConverter})
+  @property({
+    type: Boolean,
+    attribute: "allow-community-leave-probability-control",
+    reflect: true,
+    converter: booleanAttributeConverter,
+  })
   accessor allowCommunityLeaveProbabilityControl = false
+
+  @property({attribute: STATE_ATTRIBUTE, reflect: true})
+  accessor widgetState = ""
 
   private get config(): SimulationConfig {
     return buildSimulationConfig(this.getWidgetConfigValues())
@@ -198,17 +378,33 @@ export class WebwriterEpidemicSim extends LitElementWw {
     enableHotspots: () => {
       this.hotspotsEnabled = true
     },
-    onHotspotsChanged: () => this.requestUpdateAndRedrawSimulationWhenPaused(),
-    onRestartPreservingHotspots: () => this.restartSimulation(),
+    onHotspotsChanged: () => {
+      this.schedulePersistWidgetState()
+      this.requestUpdateAndRedrawSimulationWhenPaused()
+    },
+    onRestartPreservingHotspots: () => {
+      this.schedulePersistWidgetState()
+      this.restartSimulation()
+    },
     isPointerDragging: (hotspotId) => this.hotspotPointer.isDragging(hotspotId),
     clearPointer: () => this.hotspotPointer.clear(),
+    persistHotspots: () => {
+      this.schedulePersistWidgetState()
+    },
   })
   private readonly hotspotPointer = new HotspotPointerController(this, {
     getCanvas: () => this.simulationCanvas,
     getAreas: () => this.hotspotEditing.getAreas(this.config),
     updateHotspotRect: (hotspotId, rect) => this.hotspotEditing.updateHotspotRect(hotspotId, rect),
   })
+  private persistStateTimer: number | null = null
+  private applyingPersistedState = false
+  private lastWrittenWidgetState = ""
   private readonly animationLoop = new AnimationLoopController(this, () => {
+    if (this.classList.contains("ww-beforeprint")) {
+      this.stopLoop()
+      return false
+    }
     if (!this.isRunning) {
       return false
     }
@@ -229,6 +425,7 @@ export class WebwriterEpidemicSim extends LitElementWw {
   @state() accessor snapshotsOverlayOpen = false
   @state() accessor chartContextMenuOpen = false
   @state() accessor chartContextMenuPosition = {x: 0, y: 0}
+  @state() accessor isPrintPreparing = false
 
   private frameIndex = 0
   private agents: Agent[] = []
@@ -237,16 +434,33 @@ export class WebwriterEpidemicSim extends LitElementWw {
   private infectedCount = 0
   private recoveredCount = 0
   private deadCount = 0
+  private printClassObserver: MutationObserver | null = null
 
   connectedCallback(): void {
     super.connectedCallback()
     window.addEventListener("keydown", this.onWindowKeyDown)
+    this.printClassObserver = new MutationObserver(() => {
+      const next =
+        this.classList.contains("ww-beforeprint") || this.classList.contains("ww-printable")
+      if (next !== this.isPrintPreparing) {
+        this.isPrintPreparing = next
+      }
+    })
+    this.printClassObserver.observe(this, {attributes: true, attributeFilter: ["class"]})
+    this.isPrintPreparing =
+      this.classList.contains("ww-beforeprint") || this.classList.contains("ww-printable")
     if (this.simulationCanvas) {
       this.startLoop()
     }
   }
 
   protected updated(changed: PropertyValues<this>): void {
+    if (changed.has("widgetState")) {
+      if (this.widgetState !== this.lastWrittenWidgetState) {
+        this.lastWrittenWidgetState = this.widgetState
+        this.applyPersistedState(parsePersistedState(this.widgetState), {restartSimulation: true})
+      }
+    }
     if (changed.has("chartOverlayOpen") || changed.has("insightsView")) {
       if (this.chartOverlayOpen) {
         this.resolveEnlargedOverlayCanvases()
@@ -282,6 +496,13 @@ export class WebwriterEpidemicSim extends LitElementWw {
   }
 
   disconnectedCallback(): void {
+    this.printClassObserver?.disconnect()
+    this.printClassObserver = null
+    if (this.persistStateTimer !== null) {
+      window.clearTimeout(this.persistStateTimer)
+      this.persistStateTimer = null
+      this.flushPersistWidgetState()
+    }
     this.stopLoop()
     this.hotspotPointer.clear()
     destroyChart(this.chartCanvas)
@@ -296,8 +517,68 @@ export class WebwriterEpidemicSim extends LitElementWw {
     this.simulationCanvas = this.canvasHost.queryCanvas("#simulation-canvas")
     this.simulationCtx = this.canvasHost.queryContext("#simulation-canvas")
     this.chartCanvas = this.canvasHost.queryCanvas("#chart-canvas")
+    this.applyPersistedState(readPersistedState(this), {restartSimulation: false})
     this.resetSimulation()
     this.startLoop()
+  }
+
+  private schedulePersistWidgetState(): void {
+    if (this.persistStateTimer !== null) {
+      window.clearTimeout(this.persistStateTimer)
+    }
+    this.persistStateTimer = window.setTimeout(() => {
+      this.persistStateTimer = null
+      this.flushPersistWidgetState()
+    }, 120)
+  }
+
+  private flushPersistWidgetState(): void {
+    if (this.applyingPersistedState) {
+      return
+    }
+    const hotspotMeta = this.hotspotEditing.getPersistedSnapshot()
+    const snapshotMeta = this.snapshotService.getPersistedMeta()
+    const state = {
+      version: 1 as const,
+      hotspots: hotspotMeta.hotspots,
+      nextHotspotId: hotspotMeta.nextHotspotId,
+      snapshots: snapshotMeta.snapshots,
+      nextSnapshotId: snapshotMeta.nextSnapshotId,
+    }
+    const encoded = encodePersistedState(state)
+    this.applyingPersistedState = true
+    try {
+      this.lastWrittenWidgetState = encoded
+      if (this.widgetState !== encoded) {
+        this.widgetState = encoded
+      }
+      writePersistedState(this, state)
+    } finally {
+      this.applyingPersistedState = false
+    }
+  }
+
+  private applyPersistedState(
+    persisted: ReturnType<typeof readPersistedState>,
+    options: {restartSimulation: boolean},
+  ): void {
+    if (!persisted || this.applyingPersistedState) {
+      return
+    }
+    this.applyingPersistedState = true
+    try {
+      this.hotspotEditing.hydrate(persisted.hotspots, persisted.nextHotspotId)
+      this.snapshotService.hydrate(
+        persisted.snapshots.map((snapshot) => ({...snapshot, chartImageJpeg: snapshot.chartImageJpeg ?? null})),
+        persisted.nextSnapshotId,
+      )
+      if (options.restartSimulation && this.simulationCanvas) {
+        this.restartSimulation({clearPointer: true})
+      }
+      this.requestUpdate()
+    } finally {
+      this.applyingPersistedState = false
+    }
   }
 
   private resetSimulation = (): void => {
@@ -563,12 +844,14 @@ export class WebwriterEpidemicSim extends LitElementWw {
         buildDayLabels: (series) => this.chartRuntime.buildDayLabels(series),
       }),
     })
+    this.flushPersistWidgetState()
     this.requestUpdate()
     this.closeChartContextMenu()
   }
 
   private deleteSnapshot = (snapshotId: string): void => {
     this.snapshotService.delete(snapshotId)
+    this.flushPersistWidgetState()
     this.requestUpdate()
   }
 
@@ -823,6 +1106,7 @@ export class WebwriterEpidemicSim extends LitElementWw {
   render() {
     return renderWidgetLayout({
       hasVisibleMenuControls: this.hasVisibleMenuControls,
+      showTeacherOptions: !this.isPrintPreparing,
       teacherOptions: buildTeacherOptionsInput(this.getTeacherOptionsContext()),
       chartContextMenuOpen: this.chartContextMenuOpen,
       chartContextMenuPosition: this.chartContextMenuPosition,
