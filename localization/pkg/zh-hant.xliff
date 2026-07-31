@@ -1,6 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.1" srcLang="en" trgLang="zh-Hant">
 <file id="." original=".">
-<unit id="description"><segment><source>undefined</source><target>未定義</target></segment></unit>
+<unit id="description"><segment><source>Interactive agent-based epidemic models with charts and interventions.</source><target>具備圖表與干預措施的互動式代理模型。</target></segment></unit>
+<unit id="label"><segment><source>Epidemic Simulation</source><target>疫情模擬</target></segment></unit>
+</file>
+<file id="./widgets/webwriter-epidemic-sim.*" original="./widgets/webwriter-epidemic-sim.*">
+<unit id="label"><segment><source>Epidemic Simulation</source><target>疫情模擬</target></segment></unit>
+</file>
+<file id="./snippets/corona-verlauf.html" original="./snippets/corona-verlauf.html">
+<unit id="label"><segment><source>Flatten the Curve (COVID-19 SEIRD)</source><target>壓平疫情曲線（COVID-19 SEIRD）</target></segment></unit>
 </file>
 </xliff>

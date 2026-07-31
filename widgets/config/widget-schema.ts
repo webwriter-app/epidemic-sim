@@ -55,7 +55,7 @@ export const CONFIG_SCHEMA = {
   quarantineProbability: {kind: "range", min: 0.01, max: 1, step: 0.01, defaultValue: 0.7} as RangeSchema,
   quarantineDuration: {kind: "range", min: 30, max: 2400, step: 30, defaultValue: 450} as RangeSchema,
   hotspotsEnabled: {kind: "toggle", defaultValue: false} as ToggleSchema,
-  hotspotVisitProbability: {kind: "range", min: 0.001, max: 0.04, step: 0.001, defaultValue: 0.004} as RangeSchema,
+  hotspotVisitProbability: {kind: "range", min: 0.001, max: 0.2, step: 0.001, defaultValue: 0.02} as RangeSchema,
   hotspotStayDuration: {kind: "range", min: 30, max: 1800, step: 30, defaultValue: 240} as RangeSchema,
   hotspotMaxAgents: {kind: "range", min: 1, max: 120, step: 1, defaultValue: 30} as RangeSchema,
   hotspotSize: {kind: "range", min: 24, max: 110, step: 2, defaultValue: 56} as RangeSchema,

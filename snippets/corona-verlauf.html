@@ -19,9 +19,9 @@
   - incubationduration=120 (5 Tage)
   - recoveryduration=240 (10 Tage)
   - mortalityprobability=0.01 (~1 % IFR)
+  - infectionradius=11, infectionprobability=0.06, speed=1.6, population=800
 
-
-  Basis-Szenario (ohne Maßnahmen): R0 ≈ 2,8–3,8.
+  Basis-Szenario (ohne Maßnahmen): R0 ≈ 3,0–3,2
 -->
 <section>
   <h2>Flatten the Curve: COVID-19 im SEIRD-Modell</h2>
@@ -50,10 +50,12 @@
   mortality-probability="0.01"
   population="800"
   speed="1.6"
-  infection-radius="12"
-  infection-probability="0.07"
+  infection-radius="11"
+  infection-probability="0.06"
   quarantine-probability="0.7"
   quarantine-duration="240"
+  allow-speed-control
+  allow-infection-probability-control
   allow-quarantine-enabled-control
   allow-quarantine-probability-control
   allow-quarantine-duration-control

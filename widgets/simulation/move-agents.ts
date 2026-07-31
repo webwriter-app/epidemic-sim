@@ -89,6 +89,7 @@ export function moveAgents(
     }
 
     const zoneBounds = getAgentMovementBounds(agent, areas)
-    moveInsideBounds(agent, config.speed, zoneBounds)
+    const zoneSpeed = agent.zone === "quarantine" ? config.speed * 0.4 : config.speed
+    moveInsideBounds(agent, zoneSpeed, zoneBounds)
   }
 }

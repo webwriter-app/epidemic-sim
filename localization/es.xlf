@@ -97,26 +97,6 @@
         <source>Snapshot</source>
         <target>Resumen</target>
       </trans-unit>
-      <trans-unit id="s59a4f0d3558717a0">
-        <source>Susceptible (fit)</source>
-        <target>Susceptible (en forma)</target>
-      </trans-unit>
-      <trans-unit id="s743b80c62863f363">
-        <source>Infected (fit)</source>
-        <target>Contagiado (en forma)</target>
-      </trans-unit>
-      <trans-unit id="sb039a0b193cd20f8">
-        <source>Recovered (fit)</source>
-        <target>Recuperado (en forma)</target>
-      </trans-unit>
-      <trans-unit id="sb53f7a197981b790">
-        <source>yes</source>
-        <target>sí</target>
-      </trans-unit>
-      <trans-unit id="s08b35907b5589afa">
-        <source>no</source>
-        <target>no</target>
-      </trans-unit>
       <trans-unit id="sf62c2403c94966db">
         <source>Current susceptible</source>
         <target>Susceptible actualmente</target>
@@ -193,18 +173,6 @@
         <source>SIR</source>
         <target>Señor</target>
       </trans-unit>
-      <trans-unit id="s759cf46d6eedafb8">
-        <source>Quarantine enabled</source>
-        <target>Cuarentena activada</target>
-      </trans-unit>
-      <trans-unit id="s406f21b75bf1de3c">
-        <source>Hotspots enabled</source>
-        <target>Puntos de acceso activados</target>
-      </trans-unit>
-      <trans-unit id="sc240442075ddb92f">
-        <source>Communities enabled</source>
-        <target>Comunidades habilitadas</target>
-      </trans-unit>
       <trans-unit id="s6f54d7620146d1b1">
         <source>Quarantine</source>
         <target>Cuarentena</target>
@@ -232,10 +200,6 @@
       <trans-unit id="sc94818fddfdfdbc6">
         <source>SIR insights</source>
         <target>Perspectivas de SIR</target>
-      </trans-unit>
-      <trans-unit id="s9585687a08d93257">
-        <source>Show fit overlay</source>
-        <target>Mostrar superposición de ajuste</target>
       </trans-unit>
       <trans-unit id="s5aa43edcf11f09af">
         <source>Incubation duration</source>
@@ -304,6 +268,14 @@
       <trans-unit id="s7a3c4c7e8b923c76">
         <source>Drag this hotspot into the simulation map.</source>
         <target>Arrastra este punto de interés al mapa de simulación.</target>
+      </trans-unit>
+      <trans-unit id="s7ede1c55e35ce9d6">
+        <source>Simulation</source>
+        <target>Simulación</target>
+      </trans-unit>
+      <trans-unit id="s5dd25778c99327a8">
+        <source>Printed snapshot of the epidemic simulation. Author options and interactive controls are omitted.</source>
+        <target>Captura de pantalla impresa de la simulación de la epidemia. Se han omitido las opciones del autor y los controles interactivos.</target>
       </trans-unit>
     </body>
   </file>

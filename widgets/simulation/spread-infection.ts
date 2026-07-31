@@ -96,30 +96,7 @@ function collectNeighborIndices(
   return candidates
 }
 
-/** Brute-force neighbor search; used for parity tests only. */
-export function spreadInfectionBruteForce(
-  agents: Agent[],
-  frameIndex: number,
-  config: SimulationConfig,
-  areas: SimulationAreas,
-): void {
-  const ctx = createSpreadContext(frameIndex, config, areas)
-  for (let sourceIndex = 0; sourceIndex < agents.length; sourceIndex += 1) {
-    const source = agents[sourceIndex]
-    if (source.state !== "infected" || source.transition !== "none") {
-      continue
-    }
-    let infectionsFromSource = 0
-    for (let targetIndex = 0; targetIndex < agents.length; targetIndex += 1) {
-      if (infectionsFromSource >= ctx.maxNewInfectionsPerSource) {
-        break
-      }
-      if (tryInfectTarget(source, agents[targetIndex], ctx)) {
-        infectionsFromSource += 1
-      }
-    }
-  }
-}
+
 
 export function spreadInfection(
   agents: Agent[],

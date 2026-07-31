@@ -97,26 +97,6 @@
         <source>Snapshot</source>
         <target>Pregled</target>
       </trans-unit>
-      <trans-unit id="s59a4f0d3558717a0">
-        <source>Susceptible (fit)</source>
-        <target>Primeren (primeren)</target>
-      </trans-unit>
-      <trans-unit id="s743b80c62863f363">
-        <source>Infected (fit)</source>
-        <target>Okuženi (fit)</target>
-      </trans-unit>
-      <trans-unit id="sb039a0b193cd20f8">
-        <source>Recovered (fit)</source>
-        <target>Okreval (v formi)</target>
-      </trans-unit>
-      <trans-unit id="sb53f7a197981b790">
-        <source>yes</source>
-        <target>da</target>
-      </trans-unit>
-      <trans-unit id="s08b35907b5589afa">
-        <source>no</source>
-        <target>ne</target>
-      </trans-unit>
       <trans-unit id="sf62c2403c94966db">
         <source>Current susceptible</source>
         <target>Trenutno dovzetni</target>
@@ -193,18 +173,6 @@
         <source>SIR</source>
         <target>GOSPOD</target>
       </trans-unit>
-      <trans-unit id="s759cf46d6eedafb8">
-        <source>Quarantine enabled</source>
-        <target>Karantena je omogočena</target>
-      </trans-unit>
-      <trans-unit id="s406f21b75bf1de3c">
-        <source>Hotspots enabled</source>
-        <target>Omrežne točke so omogočene</target>
-      </trans-unit>
-      <trans-unit id="sc240442075ddb92f">
-        <source>Communities enabled</source>
-        <target>Omogočene skupnosti</target>
-      </trans-unit>
       <trans-unit id="s6f54d7620146d1b1">
         <source>Quarantine</source>
         <target>Karantena</target>
@@ -232,10 +200,6 @@
       <trans-unit id="sc94818fddfdfdbc6">
         <source>SIR insights</source>
         <target>SIR-ovi vpogledi</target>
-      </trans-unit>
-      <trans-unit id="s9585687a08d93257">
-        <source>Show fit overlay</source>
-        <target>Prikaži prekrivni sloj za prileganje</target>
       </trans-unit>
       <trans-unit id="s5aa43edcf11f09af">
         <source>Incubation duration</source>
@@ -304,6 +268,14 @@
       <trans-unit id="s7a3c4c7e8b923c76">
         <source>Drag this hotspot into the simulation map.</source>
         <target>Povlecite to aktivno točko na simulacijski zemljevid.</target>
+      </trans-unit>
+      <trans-unit id="s7ede1c55e35ce9d6">
+        <source>Simulation</source>
+        <target>Simulacija</target>
+      </trans-unit>
+      <trans-unit id="s5dd25778c99327a8">
+        <source>Printed snapshot of the epidemic simulation. Author options and interactive controls are omitted.</source>
+        <target>Natisnjen posnetek simulacije epidemije. Možnosti avtorja in interaktivni elementi so izpuščeni.</target>
       </trans-unit>
     </body>
   </file>

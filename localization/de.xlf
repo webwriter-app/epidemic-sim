@@ -51,7 +51,7 @@
       </trans-unit>
       <trans-unit id="sbea80d4210f4af52">
         <source>Susceptible</source>
-        <target>anfällig</target>
+        <target>Anfällig</target>
       </trans-unit>
       <trans-unit id="s9ac5fba6ad7337b9">
         <source>Infected</source>
@@ -59,7 +59,7 @@
       </trans-unit>
       <trans-unit id="s20c7305417726e5a">
         <source>Recovered</source>
-        <target>Wiederhergestellt</target>
+        <target>Genesen</target>
       </trans-unit>
       <trans-unit id="s061cc20e3432dead">
         <source>Pause</source>
@@ -71,11 +71,11 @@
       </trans-unit>
       <trans-unit id="sf18604f4e560329a">
         <source>Snapshots</source>
-        <target>Momentaufnahmen</target>
+        <target>Snapshots</target>
       </trans-unit>
       <trans-unit id="sa1cbd47c70068780">
         <source>Hotspot max agents</source>
-        <target>Maximale Anzahl an Hotspot-Agenten</target>
+        <target>Maximale Anzahl an Agenten in Hotspots</target>
       </trans-unit>
       <trans-unit id="sa7d4a2c8f4e43300">
         <source>Placed hotspots</source>
@@ -97,26 +97,6 @@
         <source>Snapshot</source>
         <target>Momentaufnahme</target>
       </trans-unit>
-      <trans-unit id="s59a4f0d3558717a0">
-        <source>Susceptible (fit)</source>
-        <target>Anfällig (fit)</target>
-      </trans-unit>
-      <trans-unit id="s743b80c62863f363">
-        <source>Infected (fit)</source>
-        <target>Infiziert (fit)</target>
-      </trans-unit>
-      <trans-unit id="sb039a0b193cd20f8">
-        <source>Recovered (fit)</source>
-        <target>Wiederhergestellt (fit)</target>
-      </trans-unit>
-      <trans-unit id="sb53f7a197981b790">
-        <source>yes</source>
-        <target>ja</target>
-      </trans-unit>
-      <trans-unit id="s08b35907b5589afa">
-        <source>no</source>
-        <target>nein</target>
-      </trans-unit>
       <trans-unit id="sf62c2403c94966db">
         <source>Current susceptible</source>
         <target>Derzeit anfällig</target>
@@ -127,11 +107,11 @@
       </trans-unit>
       <trans-unit id="sb3b26f6f5b2035db">
         <source>Current recovered</source>
-        <target>Strom wiederhergestellt</target>
+        <target>Derzeit genesen</target>
       </trans-unit>
       <trans-unit id="s7be45f343cb15665">
         <source>Final recovered share</source>
-        <target>Endgültiger Rückgewinnungsanteil</target>
+        <target>Endgültiger Genesungsanteil</target>
       </trans-unit>
       <trans-unit id="sbe234bd424c5176e">
         <source>Peak infected</source>
@@ -139,7 +119,7 @@
       </trans-unit>
       <trans-unit id="s6e526bbb8672e76a">
         <source>R0 (approx)</source>
-        <target>R0 (ca.)</target>
+        <target>R0 (approx.)</target>
       </trans-unit>
       <trans-unit id="s8f6ded5587ad8969">
         <source>Herd immunity threshold</source>
@@ -155,7 +135,7 @@
       </trans-unit>
       <trans-unit id="sd8f1f39f65abba47">
         <source>SIR chart snapshot</source>
-        <target>SIR-Diagramm-Übersicht</target>
+        <target>SIR-Diagramm-Snapshot</target>
       </trans-unit>
       <trans-unit id="sf4cd19d7506d9e12">
         <source>Time (days)</source>
@@ -167,7 +147,7 @@
       </trans-unit>
       <trans-unit id="sc14daad34e9ee82f">
         <source>Peak time</source>
-        <target>Stoßzeit</target>
+        <target>Peak Zeit</target>
       </trans-unit>
       <trans-unit id="s48e186fb300e5464">
         <source>Time</source>
@@ -175,7 +155,7 @@
       </trans-unit>
       <trans-unit id="sc425e5671217eac0">
         <source>Snapshots gallery</source>
-        <target>Galerie mit Momentaufnahmen</target>
+        <target>Snapshot-Galerie</target>
       </trans-unit>
       <trans-unit id="sc3ac225273c8316b">
         <source>General</source>
@@ -192,18 +172,6 @@
       <trans-unit id="s97e4c519fa4905f9">
         <source>SIR</source>
         <target>SIR</target>
-      </trans-unit>
-      <trans-unit id="s759cf46d6eedafb8">
-        <source>Quarantine enabled</source>
-        <target>Quarantäne aktiviert</target>
-      </trans-unit>
-      <trans-unit id="s406f21b75bf1de3c">
-        <source>Hotspots enabled</source>
-        <target>Hotspots aktiviert</target>
-      </trans-unit>
-      <trans-unit id="sc240442075ddb92f">
-        <source>Communities enabled</source>
-        <target>Aktivierte Communities</target>
       </trans-unit>
       <trans-unit id="s6f54d7620146d1b1">
         <source>Quarantine</source>
@@ -233,10 +201,6 @@
         <source>SIR insights</source>
         <target>SIR-Einblicke</target>
       </trans-unit>
-      <trans-unit id="s9585687a08d93257">
-        <source>Show fit overlay</source>
-        <target>Passform-Overlay anzeigen</target>
-      </trans-unit>
       <trans-unit id="s5aa43edcf11f09af">
         <source>Incubation duration</source>
         <target>Inkubationsdauer</target>
@@ -255,11 +219,11 @@
       </trans-unit>
       <trans-unit id="s7379168642ff77b3">
         <source>Exposed</source>
-        <target>Exponierte</target>
+        <target>Inkubationszeit</target>
       </trans-unit>
       <trans-unit id="sd049237343c44e47">
         <source>Dead</source>
-        <target>Gestorbene</target>
+        <target>Gestorben</target>
       </trans-unit>
       <trans-unit id="s00ae53430e6c31cb">
         <source>SEIR insights</source>
@@ -279,7 +243,7 @@
       </trans-unit>
       <trans-unit id="s4f1a78fbc7a2da7a">
         <source>Current exposed</source>
-        <target>Aktuell freigelegt</target>
+        <target>Aktuell anfällig</target>
       </trans-unit>
       <trans-unit id="s5fef8fa88777bdec">
         <source>Current dead</source>
@@ -304,6 +268,14 @@
       <trans-unit id="s7a3c4c7e8b923c76">
         <source>Drag this hotspot into the simulation map.</source>
         <target>Ziehen Sie diesen Hotspot in die Simulationskarte.</target>
+      </trans-unit>
+      <trans-unit id="s7ede1c55e35ce9d6">
+        <source>Simulation</source>
+        <target>Simulation</target>
+      </trans-unit>
+      <trans-unit id="s5dd25778c99327a8">
+        <source>Printed snapshot of the epidemic simulation. Author options and interactive controls are omitted.</source>
+        <target>Ausdruck einer Momentaufnahme der Epidemiesimulation. Die Optionen für den Autor und die interaktiven Steuerelemente wurden weggelassen.</target>
       </trans-unit>
     </body>
   </file>

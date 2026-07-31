@@ -97,26 +97,6 @@
         <source>Snapshot</source>
         <target>Στιγμιότυπο</target>
       </trans-unit>
-      <trans-unit id="s59a4f0d3558717a0">
-        <source>Susceptible (fit)</source>
-        <target>Ευπαθής (υγιής)</target>
-      </trans-unit>
-      <trans-unit id="s743b80c62863f363">
-        <source>Infected (fit)</source>
-        <target>Μολυσμένος (σε καλή φυσική κατάσταση)</target>
-      </trans-unit>
-      <trans-unit id="sb039a0b193cd20f8">
-        <source>Recovered (fit)</source>
-        <target>Αναρρώσει (σε καλή φυσική κατάσταση)</target>
-      </trans-unit>
-      <trans-unit id="sb53f7a197981b790">
-        <source>yes</source>
-        <target>ναι</target>
-      </trans-unit>
-      <trans-unit id="s08b35907b5589afa">
-        <source>no</source>
-        <target>όχι</target>
-      </trans-unit>
       <trans-unit id="sf62c2403c94966db">
         <source>Current susceptible</source>
         <target>Ευαίσθητοι επί του παρόντος</target>
@@ -193,18 +173,6 @@
         <source>SIR</source>
         <target>Κύριε</target>
       </trans-unit>
-      <trans-unit id="s759cf46d6eedafb8">
-        <source>Quarantine enabled</source>
-        <target>Ενεργοποιημένη η καραντίνα</target>
-      </trans-unit>
-      <trans-unit id="s406f21b75bf1de3c">
-        <source>Hotspots enabled</source>
-        <target>Ενεργοποιημένα σημεία πρόσβασης</target>
-      </trans-unit>
-      <trans-unit id="sc240442075ddb92f">
-        <source>Communities enabled</source>
-        <target>Ενεργοποιημένες κοινότητες</target>
-      </trans-unit>
       <trans-unit id="s6f54d7620146d1b1">
         <source>Quarantine</source>
         <target>Καραντίνα</target>
@@ -232,10 +200,6 @@
       <trans-unit id="sc94818fddfdfdbc6">
         <source>SIR insights</source>
         <target>Στοιχεία SIR</target>
-      </trans-unit>
-      <trans-unit id="s9585687a08d93257">
-        <source>Show fit overlay</source>
-        <target>Εμφάνιση επικάλυψης προσαρμογής</target>
       </trans-unit>
       <trans-unit id="s5aa43edcf11f09af">
         <source>Incubation duration</source>
@@ -304,6 +268,14 @@
       <trans-unit id="s7a3c4c7e8b923c76">
         <source>Drag this hotspot into the simulation map.</source>
         <target>Σύρετε αυτό το σημείο ενδιαφέροντος στον χάρτη προσομοίωσης.</target>
+      </trans-unit>
+      <trans-unit id="s7ede1c55e35ce9d6">
+        <source>Simulation</source>
+        <target>Προσομοίωση</target>
+      </trans-unit>
+      <trans-unit id="s5dd25778c99327a8">
+        <source>Printed snapshot of the epidemic simulation. Author options and interactive controls are omitted.</source>
+        <target>Εκτυπωμένο στιγμιότυπο της προσομοίωσης της επιδημίας. Οι επιλογές του συγγραφέα και τα διαδραστικά στοιχεία ελέγχου έχουν παραλειφθεί.</target>
       </trans-unit>
     </body>
   </file>

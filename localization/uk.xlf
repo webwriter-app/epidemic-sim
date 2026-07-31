@@ -97,26 +97,6 @@
         <source>Snapshot</source>
         <target>Знімок</target>
       </trans-unit>
-      <trans-unit id="s59a4f0d3558717a0">
-        <source>Susceptible (fit)</source>
-        <target>Схильний (придатний)</target>
-      </trans-unit>
-      <trans-unit id="s743b80c62863f363">
-        <source>Infected (fit)</source>
-        <target>Заражений (у формі)</target>
-      </trans-unit>
-      <trans-unit id="sb039a0b193cd20f8">
-        <source>Recovered (fit)</source>
-        <target>Одужав (у формі)</target>
-      </trans-unit>
-      <trans-unit id="sb53f7a197981b790">
-        <source>yes</source>
-        <target>так</target>
-      </trans-unit>
-      <trans-unit id="s08b35907b5589afa">
-        <source>no</source>
-        <target>ні</target>
-      </trans-unit>
       <trans-unit id="sf62c2403c94966db">
         <source>Current susceptible</source>
         <target>Поточна сприйнятливість</target>
@@ -193,18 +173,6 @@
         <source>SIR</source>
         <target>СІР</target>
       </trans-unit>
-      <trans-unit id="s759cf46d6eedafb8">
-        <source>Quarantine enabled</source>
-        <target>Увімкнено карантин</target>
-      </trans-unit>
-      <trans-unit id="s406f21b75bf1de3c">
-        <source>Hotspots enabled</source>
-        <target>Увімкнено точки доступу</target>
-      </trans-unit>
-      <trans-unit id="sc240442075ddb92f">
-        <source>Communities enabled</source>
-        <target>Підтримка спільнот</target>
-      </trans-unit>
       <trans-unit id="s6f54d7620146d1b1">
         <source>Quarantine</source>
         <target>Карантин</target>
@@ -232,10 +200,6 @@
       <trans-unit id="sc94818fddfdfdbc6">
         <source>SIR insights</source>
         <target>Аналітика SIR</target>
-      </trans-unit>
-      <trans-unit id="s9585687a08d93257">
-        <source>Show fit overlay</source>
-        <target>Показати накладку з підбором розміру</target>
       </trans-unit>
       <trans-unit id="s5aa43edcf11f09af">
         <source>Incubation duration</source>
@@ -304,6 +268,14 @@
       <trans-unit id="s7a3c4c7e8b923c76">
         <source>Drag this hotspot into the simulation map.</source>
         <target>Перетягніть цю активну точку на карту симуляції.</target>
+      </trans-unit>
+      <trans-unit id="s7ede1c55e35ce9d6">
+        <source>Simulation</source>
+        <target>Моделювання</target>
+      </trans-unit>
+      <trans-unit id="s5dd25778c99327a8">
+        <source>Printed snapshot of the epidemic simulation. Author options and interactive controls are omitted.</source>
+        <target>Роздрукований знімок моделювання епідемії. Параметри автора та інтерактивні елементи керування опущені.</target>
       </trans-unit>
     </body>
   </file>

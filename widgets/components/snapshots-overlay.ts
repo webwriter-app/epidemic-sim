@@ -42,7 +42,7 @@ function renderSnapshotCard(snapshot: SimulationSnapshot, ctx: SnapshotRenderCon
           <span>${msg("Infection probability")}: <strong>${Math.round(snapshot.config.infectionProbability * 100)}%</strong></span>
           <span>${msg("Recovery duration")}: <strong>${ctx.formatDays(snapshot.config.recoveryDuration)}</strong></span>
           <span>${msg("R0 (approx)")}: <strong>${ctx.formatApprox(snapshot.estimatedR0)}</strong></span>
-          <span>${msg("Frame")}: <strong>${snapshot.frameIndex}</strong></span>
+          <span>${msg("Time")}: <strong>${ctx.formatDays(snapshot.frameIndex)}</strong></span>
         </div>
       </sl-details>
     </article>

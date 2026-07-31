@@ -102,7 +102,7 @@ export function moveTransitioningAgent(
     return
   }
 
-  const transitionSpeed = speed * 2.6
+  const transitionSpeed = speed * 5
   const step = Math.min(transitionSpeed, distance)
   const nx = dx / distance
   const ny = dy / distance

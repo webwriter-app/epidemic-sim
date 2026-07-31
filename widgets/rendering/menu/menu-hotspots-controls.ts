@@ -15,7 +15,7 @@ export function renderHotspotsControls(options: RenderMenuOptions): TemplateResu
             <label class="side-menu__control">
               <span class="side-menu__control-head">
                 <span>${msg("Hotspot visit probability")}</span>
-                <span class="side-menu__control-value">${Math.round(options.hotspotVisitProbability * 100)}%</span>
+                <span class="side-menu__control-value">${Math.round(options.hotspotVisitProbability * 1000) / 10}%</span>
               </span>
               <sl-range min=${String(R.hotspotVisitProbability.min)} max=${String(R.hotspotVisitProbability.max)} step=${String(R.hotspotVisitProbability.step)} .value=${String(options.hotspotVisitProbability)} ?disabled=${!options.hotspotsEnabled} @sl-input=${options.onHotspotVisitProbabilityInput}></sl-range>
             </label>

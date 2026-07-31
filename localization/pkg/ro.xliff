@@ -1,6 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.1" srcLang="en" trgLang="ro">
 <file id="." original=".">
-<unit id="description"><segment><source>undefined</source><target>nedefinit</target></segment></unit>
+<unit id="description"><segment><source>Interactive agent-based epidemic models with charts and interventions.</source><target>Modele interactive de epidemie bazate pe agenți, cu grafice și intervenții.</target></segment></unit>
+<unit id="label"><segment><source>Epidemic Simulation</source><target>Simularea epidemiilor</target></segment></unit>
+</file>
+<file id="./widgets/webwriter-epidemic-sim.*" original="./widgets/webwriter-epidemic-sim.*">
+<unit id="label"><segment><source>Epidemic Simulation</source><target>Simularea unei epidemii</target></segment></unit>
+</file>
+<file id="./snippets/corona-verlauf.html" original="./snippets/corona-verlauf.html">
+<unit id="label"><segment><source>Flatten the Curve (COVID-19 SEIRD)</source><target>Aplatizarea curbei (COVID-19 SEIRD)</target></segment></unit>
 </file>
 </xliff>

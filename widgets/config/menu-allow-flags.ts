@@ -1,7 +1,6 @@
 import type {MenuAllowFlags} from "../rendering/menu-renderer"
 import type {WidgetSchema} from "./widget-schema"
 
-/** Snapshot of widget property values used to build menus and simulation config. */
 export type WidgetConfigValues = WidgetSchema
 
 export function buildMenuAllowFlags(values: WidgetConfigValues): MenuAllowFlags {
