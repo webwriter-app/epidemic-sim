@@ -39,7 +39,6 @@
 'se24130f1123560a0': `Speed`,
 's71ffa36b183c46fd': `Infection probability`,
 's09943be8697420ce': `Recovery duration`,
-'sef191ab7b2c9f986': `Frame`,
 'sc425e5671217eac0': `Snapshots gallery`,
 'sfc12d40fe5fa5f7d': `No snapshots yet.`,
 'sc522ce8abba9319e': `Community leave probability`,

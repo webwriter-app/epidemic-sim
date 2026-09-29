@@ -72,7 +72,6 @@
 'sd8f1f39f65abba47': `Resumen del gráfico SIR`,
 'sdc673e73b5c13aea': `Eliminar`,
 'se24130f1123560a0': `Velocidad`,
-'sef191ab7b2c9f986': `Marco`,
 'sf18604f4e560329a': `Instantáneas`,
 'sf3209a5af0f3631d': `Puntos de acceso`,
 'sf4cd19d7506d9e12': `Tiempo (días)`,

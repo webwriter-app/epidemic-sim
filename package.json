@@ -9,7 +9,39 @@
     "education",
     "explorable",
     "sir",
-    "seir"
+    "seir",
+    "widget-lang-en",
+    "widget-lang-de",
+    "widget-lang-ar",
+    "widget-lang-bg",
+    "widget-lang-cs",
+    "widget-lang-da",
+    "widget-lang-nl",
+    "widget-lang-et",
+    "widget-lang-fi",
+    "widget-lang-fr",
+    "widget-lang-el",
+    "widget-lang-hu",
+    "widget-lang-it",
+    "widget-lang-lv",
+    "widget-lang-lt",
+    "widget-lang-nb",
+    "widget-lang-pl",
+    "widget-lang-pt-PT",
+    "widget-lang-ro",
+    "widget-lang-ru",
+    "widget-lang-sk",
+    "widget-lang-sl",
+    "widget-lang-es",
+    "widget-lang-sv",
+    "widget-lang-tr",
+    "widget-lang-uk",
+    "widget-lang-pt-BR",
+    "widget-lang-ko",
+    "widget-lang-ja",
+    "widget-lang-id",
+    "widget-lang-zh-hans",
+    "widget-lang-zh-hant"
   ],
   "license": "MIT",
   "author": "Jason Iloppa <iloppajason@icloud.com>",
@@ -34,7 +66,6 @@
     "mocha": "^11.7.6",
     "typescript": "^5.8.3"
   },
-  "customElements": "custom-elements.json",
   "exports": {
     "./widgets/webwriter-epidemic-sim.*": {
       "source": "./widgets/webwriter-epidemic-sim.ts",
@@ -46,40 +77,12 @@
       "default": "./dist/tests/functionality.*"
     },
     "./icon": "./assets/icon.svg",
-    "./custom-elements.json": "./custom-elements.json"
+    "./custom-elements.json": "./custom-elements.json",
+    "./editing-config.json": "./editing-config.json"
   },
   "editingConfig": {
-    ".": {
-      "label": {
-        "_": "Epidemic Simulation",
-        "en": "Epidemic Simulation",
-        "de": "Epidemie-Simulation"
-      },
-      "description": {
-        "_": "Interactive agent-based epidemic models with charts and interventions.",
-        "en": "Interactive agent-based epidemic models with charts and interventions.",
-        "de": "Interaktive agentenbasierte Epidemie-Modelle mit Diagrammen und Maßnahmen."
-      }
-    },
-    "./widgets/webwriter-epidemic-sim.*": {
-      "label": {
-        "_": "Epidemic Simulation",
-        "en": "Epidemic Simulation",
-        "de": "Epidemie-Simulation"
-      },
-      "group": "flow interactive widget",
-      "isolating": true,
-      "content": "script*",
-      "parts": {
-        "options": {}
-      }
-    },
-    "./snippets/corona-verlauf.html": {
-      "label": {
-        "_": "Flatten the Curve (COVID-19 SEIRD)",
-        "en": "Flatten the Curve (COVID-19 SEIRD)",
-        "de": "Flatten the Curve (COVID-19 SEIRD)"
-      }
-    }
+    ".": {},
+    "./widgets/webwriter-epidemic-sim.*": {},
+    "./snippets/corona-verlauf.html": {}
   }
 }

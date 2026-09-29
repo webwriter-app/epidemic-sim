@@ -72,7 +72,6 @@
 'sd8f1f39f65abba47': `Overzicht van de SIR-grafiek`,
 'sdc673e73b5c13aea': `Verwijderen`,
 'se24130f1123560a0': `Snelheid`,
-'sef191ab7b2c9f986': `Frame`,
 'sf18604f4e560329a': `Momentopnames`,
 'sf3209a5af0f3631d': `Hotspots`,
 'sf4cd19d7506d9e12': `Tijd (dagen)`,

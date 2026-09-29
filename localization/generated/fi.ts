@@ -72,7 +72,6 @@
 'sd8f1f39f65abba47': `SIR-kaavion tilannekuva`,
 'sdc673e73b5c13aea': `Poista`,
 'se24130f1123560a0': `Nopeus`,
-'sef191ab7b2c9f986': `Kehys`,
 'sf18604f4e560329a': `Kuvakaappaukset`,
 'sf3209a5af0f3631d': `Kriittiset kohdat`,
 'sf4cd19d7506d9e12': `Aika (päivää)`,

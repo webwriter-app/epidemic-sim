@@ -72,7 +72,6 @@
 'sd8f1f39f65abba47': `Zrzut ekranu wykresu SIR`,
 'sdc673e73b5c13aea': `Usuń`,
 'se24130f1123560a0': `Prędkość`,
-'sef191ab7b2c9f986': `Rama`,
 'sf18604f4e560329a': `Migawki`,
 'sf3209a5af0f3631d': `Punkty dostępowe`,
 'sf4cd19d7506d9e12': `Czas (dni)`,

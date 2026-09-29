@@ -5,7 +5,7 @@
 <unit id="label"><segment><source>Epidemic Simulation</source><target>Epidēmijas simulācija</target></segment></unit>
 </file>
 <file id="./widgets/webwriter-epidemic-sim.*" original="./widgets/webwriter-epidemic-sim.*">
-<unit id="label"><segment><source>Epidemic Simulation</source><target>Epidēmijas modelēšana</target></segment></unit>
+<unit id="label"><segment><source>Epidemic Simulation</source><target>Epidēmijas simulācija</target></segment></unit>
 </file>
 <file id="./snippets/corona-verlauf.html" original="./snippets/corona-verlauf.html">
 <unit id="label"><segment><source>Flatten the Curve (COVID-19 SEIRD)</source><target>Līknes izlīdzināšana (COVID-19 SEIRD)</target></segment></unit>

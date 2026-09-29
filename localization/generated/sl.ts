@@ -72,7 +72,6 @@
 'sd8f1f39f65abba47': `Pregled grafa SIR`,
 'sdc673e73b5c13aea': `Izbriši`,
 'se24130f1123560a0': `Hitrost`,
-'sef191ab7b2c9f986': `Okvir`,
 'sf18604f4e560329a': `Posnetki`,
 'sf3209a5af0f3631d': `Goreča točka`,
 'sf4cd19d7506d9e12': `Čas (v dneh)`,

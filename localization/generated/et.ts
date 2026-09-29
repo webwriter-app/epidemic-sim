@@ -72,7 +72,6 @@
 'sd8f1f39f65abba47': `SIR-diagrammi ülevaade`,
 'sdc673e73b5c13aea': `Kustuta`,
 'se24130f1123560a0': `Kiirus`,
-'sef191ab7b2c9f986': `Raam`,
 'sf18604f4e560329a': `Hetkepildid`,
 'sf3209a5af0f3631d': `Kriitilised punktid`,
 'sf4cd19d7506d9e12': `Aeg (päevades)`,

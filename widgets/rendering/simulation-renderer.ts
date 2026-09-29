@@ -1,3 +1,4 @@
+import {msg} from "@lit/localize"
 import type {Agent, AgentState, SimulationAreas} from "../simulation/types"
 
 const AGENT_RADIUS = 3
@@ -40,7 +41,7 @@ function drawZones(ctx: CanvasRenderingContext2D, areas: SimulationAreas): void 
     ctx.strokeRect(areas.quarantine.x, areas.quarantine.y, areas.quarantine.width, areas.quarantine.height)
     ctx.fillStyle = "#f59e0b"
     ctx.font = '12px system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif'
-    ctx.fillText("Quarantine", areas.quarantine.x + 6, areas.quarantine.y + 14)
+    ctx.fillText(msg("Quarantine"), areas.quarantine.x + 6, areas.quarantine.y + 14)
   }
 
   for (let i = 0; i < areas.communities.length; i += 1) {

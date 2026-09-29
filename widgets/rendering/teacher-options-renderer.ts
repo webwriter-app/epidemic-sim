@@ -95,7 +95,7 @@ function renderRow(row: TeacherOptionRow): TemplateResult {
     return html`
       <div class="teacher-options__row">
         ${renderRowHead(row.label, row.allow, row.onAllowChange)}
-        <sl-select .value=${row.value} @sl-change=${row.onChange}>
+        <sl-select placement="bottom" hoist .value=${row.value} @sl-change=${row.onChange}>
           ${row.options.map(
             (option) => html`<sl-option value=${option.value}>${option.label}</sl-option>`,
           )}

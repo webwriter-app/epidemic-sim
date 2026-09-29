@@ -85,10 +85,6 @@
         <source>Create snapshot</source>
         <target>스냅샷 생성</target>
       </trans-unit>
-      <trans-unit id="sef191ab7b2c9f986">
-        <source>Frame</source>
-        <target>프레임</target>
-      </trans-unit>
       <trans-unit id="sdc673e73b5c13aea">
         <source>Delete</source>
         <target>삭제</target>

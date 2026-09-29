@@ -72,7 +72,6 @@
 'sd8f1f39f65abba47': `Snímka grafu SIR`,
 'sdc673e73b5c13aea': `Odstrániť`,
 'se24130f1123560a0': `Rýchlosť`,
-'sef191ab7b2c9f986': `Rám`,
 'sf18604f4e560329a': `Snímky`,
 'sf3209a5af0f3631d': `Kľúčové miesta`,
 'sf4cd19d7506d9e12': `Čas (dni)`,

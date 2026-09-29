@@ -72,7 +72,6 @@
 'sd8f1f39f65abba47': `SIR diagramos momentinė nuotrauka`,
 'sdc673e73b5c13aea': `Ištrinti`,
 'se24130f1123560a0': `Greitis`,
-'sef191ab7b2c9f986': `Rėmas`,
 'sf18604f4e560329a': `Momentinės nuotraukos`,
 'sf3209a5af0f3631d': `Karštosios vietos`,
 'sf4cd19d7506d9e12': `Laikas (dienos)`,

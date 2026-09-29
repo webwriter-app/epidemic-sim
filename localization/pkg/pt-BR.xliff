@@ -8,6 +8,6 @@
 <unit id="label"><segment><source>Epidemic Simulation</source><target>Simulação de epidemia</target></segment></unit>
 </file>
 <file id="./snippets/corona-verlauf.html" original="./snippets/corona-verlauf.html">
-<unit id="label"><segment><source>Flatten the Curve (COVID-19 SEIRD)</source><target>Achatar a Curva (COVID-19 SEIRD)</target></segment></unit>
+<unit id="label"><segment><source>Flatten the Curve (COVID-19 SEIRD)</source><target>Achatar a Curva (SEIRD da COVID-19)</target></segment></unit>
 </file>
 </xliff>

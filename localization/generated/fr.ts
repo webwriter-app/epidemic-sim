@@ -72,7 +72,6 @@
 'sd8f1f39f65abba47': `Aperçu du graphique SIR`,
 'sdc673e73b5c13aea': `Supprimer`,
 'se24130f1123560a0': `Vitesse`,
-'sef191ab7b2c9f986': `Cadre`,
 'sf18604f4e560329a': `Instantanés`,
 'sf3209a5af0f3631d': `Points d'accès`,
 'sf4cd19d7506d9e12': `Durée (jours)`,

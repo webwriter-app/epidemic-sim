@@ -72,7 +72,6 @@
 'sd8f1f39f65abba47': `Översikt över SIR-diagrammet`,
 'sdc673e73b5c13aea': `Ta bort`,
 'se24130f1123560a0': `Hastighet`,
-'sef191ab7b2c9f986': `Ram`,
 'sf18604f4e560329a': `Ögonblicksbilder`,
 'sf3209a5af0f3631d': `Hotspots`,
 'sf4cd19d7506d9e12': `Tid (dagar)`,

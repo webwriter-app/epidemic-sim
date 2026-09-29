@@ -85,10 +85,6 @@
         <source>Create snapshot</source>
         <target>Criar instantâneo</target>
       </trans-unit>
-      <trans-unit id="sef191ab7b2c9f986">
-        <source>Frame</source>
-        <target>Moldura</target>
-      </trans-unit>
       <trans-unit id="sdc673e73b5c13aea">
         <source>Delete</source>
         <target>Apagar</target>

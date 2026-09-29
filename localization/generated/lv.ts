@@ -72,7 +72,6 @@
 'sd8f1f39f65abba47': `SIR diagrammas momentuzņēmums`,
 'sdc673e73b5c13aea': `Dzēst`,
 'se24130f1123560a0': `Ātrums`,
-'sef191ab7b2c9f986': `Rāmis`,
 'sf18604f4e560329a': `Momentu uzņēmumi`,
 'sf3209a5af0f3631d': `Karstie punkti`,
 'sf4cd19d7506d9e12': `Laiks (dienās)`,

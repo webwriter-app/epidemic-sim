@@ -85,10 +85,6 @@
         <source>Create snapshot</source>
         <target>Luo tilannekuva</target>
       </trans-unit>
-      <trans-unit id="sef191ab7b2c9f986">
-        <source>Frame</source>
-        <target>Kehys</target>
-      </trans-unit>
       <trans-unit id="sdc673e73b5c13aea">
         <source>Delete</source>
         <target>Poista</target>

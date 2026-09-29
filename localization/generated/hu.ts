@@ -72,7 +72,6 @@
 'sd8f1f39f65abba47': `SIR-diagram pillanatfelvétel`,
 'sdc673e73b5c13aea': `Törlés`,
 'se24130f1123560a0': `Sebesség`,
-'sef191ab7b2c9f986': `Keret`,
 'sf18604f4e560329a': `Pillanatképek`,
 'sf3209a5af0f3631d': `Forró pontok`,
 'sf4cd19d7506d9e12': `Idő (nap)`,

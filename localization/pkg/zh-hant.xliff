@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.1" srcLang="en" trgLang="zh-Hant">
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.1" srcLang="en" trgLang="zh-hant">
 <file id="." original=".">
-<unit id="description"><segment><source>Interactive agent-based epidemic models with charts and interventions.</source><target>具備圖表與干預措施的互動式代理模型。</target></segment></unit>
+<unit id="description"><segment><source>Interactive agent-based epidemic models with charts and interventions.</source><target>具備圖表與干預措施的互動式基於代理的流行病模型。</target></segment></unit>
 <unit id="label"><segment><source>Epidemic Simulation</source><target>疫情模擬</target></segment></unit>
 </file>
 <file id="./widgets/webwriter-epidemic-sim.*" original="./widgets/webwriter-epidemic-sim.*">

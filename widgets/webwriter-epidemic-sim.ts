@@ -46,14 +46,17 @@ import {teacherOptionsStyles} from "./rendering/teacher-options-renderer"
 import {getEpidemicCounts, initializeAgents, stepSimulation} from "./simulation/engine"
 import {isEpidemicModelType, type EpidemicModelType} from "./simulation/epidemic-models"
 import {formatFrameCountAsDays} from "./simulation/time"
-import type {Agent, SimulationConfig} from "./simulation/types"
+import type {Agent, SimulationAreas, SimulationConfig} from "./simulation/types"
 import {epidemicSimStyles} from "./styles/epidemic-sim.styles"
 import {findTopmostHotspotAtPoint} from "./utils/hotspot-interaction"
 import {getCanvasPoint} from "./utils/canvas-coordinates"
 
 @customElement("webwriter-epidemic-sim")
 export class WebwriterEpidemicSim extends LitElementWw {
-  localize = LOCALIZE
+  protected localize = LOCALIZE as {
+    getLocale: () => string
+    setLocale: (locale: string) => Promise<void>
+  }
 
   static scopedElements = {
     "sl-button": SlButton,
@@ -372,7 +375,7 @@ export class WebwriterEpidemicSim extends LitElementWw {
   private readonly canvasHost = new CanvasHostController(this)
   private readonly chartRuntime = new ChartRuntime()
   private readonly snapshotService = new SnapshotService()
-  private readonly hotspotEditing = new HotspotEditingController(this, {
+  private readonly hotspotEditing: HotspotEditingController = new HotspotEditingController(this, {
     getCanvas: () => this.simulationCanvas,
     getConfig: () => this.config,
     enableHotspots: () => {
@@ -386,16 +389,16 @@ export class WebwriterEpidemicSim extends LitElementWw {
       this.schedulePersistWidgetState()
       this.restartSimulation()
     },
-    isPointerDragging: (hotspotId) => this.hotspotPointer.isDragging(hotspotId),
+    isPointerDragging: (hotspotId: number): boolean => this.hotspotPointer.isDragging(hotspotId),
     clearPointer: () => this.hotspotPointer.clear(),
     persistHotspots: () => {
       this.schedulePersistWidgetState()
     },
   })
-  private readonly hotspotPointer = new HotspotPointerController(this, {
+  private readonly hotspotPointer: HotspotPointerController = new HotspotPointerController(this, {
     getCanvas: () => this.simulationCanvas,
-    getAreas: () => this.hotspotEditing.getAreas(this.config),
-    updateHotspotRect: (hotspotId, rect) => this.hotspotEditing.updateHotspotRect(hotspotId, rect),
+    getAreas: (): SimulationAreas => this.hotspotEditing.getAreas(this.config),
+    updateHotspotRect: (hotspotId: number, rect) => this.hotspotEditing.updateHotspotRect(hotspotId, rect),
   })
   private persistStateTimer: number | null = null
   private applyingPersistedState = false

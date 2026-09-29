@@ -72,7 +72,6 @@
 'sd8f1f39f65abba47': `Instantaneu al graficului SIR`,
 'sdc673e73b5c13aea': `Șterge`,
 'se24130f1123560a0': `Viteză`,
-'sef191ab7b2c9f986': `Cadru`,
 'sf18604f4e560329a': `Instantanee`,
 'sf3209a5af0f3631d': `Puncte de acces`,
 'sf4cd19d7506d9e12': `Durată (zile)`,

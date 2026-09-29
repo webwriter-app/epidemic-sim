@@ -72,7 +72,6 @@
 'sd8f1f39f65abba47': `Panoramica del grafico SIR`,
 'sdc673e73b5c13aea': `Elimina`,
 'se24130f1123560a0': `Velocità`,
-'sef191ab7b2c9f986': `Cornice`,
 'sf18604f4e560329a': `Istantanee`,
 'sf3209a5af0f3631d': `Punti caldi`,
 'sf4cd19d7506d9e12': `Tempo (giorni)`,
