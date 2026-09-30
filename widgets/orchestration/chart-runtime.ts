@@ -85,11 +85,11 @@ export class ChartRuntime {
 
   buildSeries(config: SimulationConfig): ChartSeries[] {
     const compartmentSeries: Record<ChartCompartment, ChartSeries> = {
-      susceptible: {label: msg("Susceptible"), values: this.susceptibleHistory, color: "#2563eb"},
-      exposed: {label: msg("Exposed"), values: this.exposedHistory, color: "#f59e0b"},
-      infected: {label: msg("Infected"), values: this.infectedHistory, color: "#dc2626"},
-      recovered: {label: msg("Recovered"), values: this.recoveredHistory, color: "#16a34a"},
-      dead: {label: msg("Dead"), values: this.deadHistory, color: "#64748b"},
+      susceptible: {label: msg("Susceptible"), values: this.susceptibleHistory, color: "#56B4E9"},
+      exposed: {label: msg("Exposed"), values: this.exposedHistory, color: "#E69F00"},
+      infected: {label: msg("Infected"), values: this.infectedHistory, color: "#d55e00"},
+      recovered: {label: msg("Recovered"), values: this.recoveredHistory, color: "#009E73"},
+      dead: {label: msg("Dead"), values: this.deadHistory, color: "#666666"},
     }
     return getChartCompartments(config.modelType).map((compartment) => compartmentSeries[compartment])
   }

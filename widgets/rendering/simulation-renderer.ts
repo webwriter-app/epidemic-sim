@@ -3,11 +3,11 @@ import type {Agent, AgentState, SimulationAreas} from "../simulation/types"
 
 const AGENT_RADIUS = 3
 const AGENT_COLORS: Record<AgentState, string> = {
-  susceptible: "#2563eb",
-  exposed: "#f59e0b",
-  infected: "#dc2626",
-  recovered: "#16a34a",
-  dead: "#64748b",
+  susceptible: "#56B4E9",
+  exposed: "#E69F00",
+  infected: "#d55e00",
+  recovered: "#009E73",
+  dead: "#666666",
 }
 
 export function drawSimulation(
