@@ -15,6 +15,7 @@ export type TeacherOptionsContext = {
   infectionRadius: number
   infectionProbability: number
   recoveryDuration: number
+  simulationDuration: number
   quarantineEnabled: boolean
   quarantineProbability: number
   quarantineDuration: number
@@ -34,6 +35,7 @@ export type TeacherOptionsContext = {
   allowInfectionRadiusControl: boolean
   allowInfectionProbabilityControl: boolean
   allowRecoveryDurationControl: boolean
+  allowSimulationDurationControl: boolean
   allowQuarantineEnabledControl: boolean
   allowQuarantineProbabilityControl: boolean
   allowQuarantineDurationControl: boolean
@@ -54,6 +56,7 @@ export type TeacherOptionsContext = {
   onInfectionRadiusInput: (event: Event) => void
   onInfectionProbabilityInput: (event: Event) => void
   onRecoveryDurationInput: (event: Event) => void
+  onSimulationDurationInput: (event: Event) => void
   onQuarantineEnabled: (event: Event) => void
   onQuarantineProbabilityInput: (event: Event) => void
   onQuarantineDurationInput: (event: Event) => void
@@ -75,6 +78,7 @@ function rangeRow(
   onInput: (event: Event) => void,
   onAllowChange: (event: Event) => void,
   formatValue?: (value: number) => string,
+  description?: string,
 ) {
   const limits = getRangeLimits(key)
   return {
@@ -86,6 +90,7 @@ function rangeRow(
     step: limits.step,
     allow,
     formatValue,
+    description,
     onInput,
     onAllowChange,
   }
@@ -184,6 +189,16 @@ export function buildTeacherOptionsInput(ctx: TeacherOptionsContext): RenderTeac
           rangeRow("infectionRadius", msg("Infection radius"), ctx.infectionRadius, ctx.allowInfectionRadiusControl, ctx.onInfectionRadiusInput, (e) => ctx.onAllowChange("allowInfectionRadiusControl", e)),
           rangeRow("infectionProbability", msg("Infection probability"), ctx.infectionProbability, ctx.allowInfectionProbabilityControl, ctx.onInfectionProbabilityInput, (e) => ctx.onAllowChange("allowInfectionProbabilityControl", e), (v) => `${Math.round(v * 100)}%`),
           rangeRow("recoveryDuration", msg("Recovery duration"), ctx.recoveryDuration, ctx.allowRecoveryDurationControl, ctx.onRecoveryDurationInput, (e) => ctx.onAllowChange("allowRecoveryDurationControl", e), ctx.formatDays),
+          rangeRow(
+            "simulationDuration",
+            msg("Simulation duration"),
+            ctx.simulationDuration,
+            ctx.allowSimulationDurationControl,
+            ctx.onSimulationDurationInput,
+            (e) => ctx.onAllowChange("allowSimulationDurationControl", e),
+            ctx.formatDays,
+            msg("The simulation may end earlier when the epidemic is over"),
+          ),
         ],
       },
       {

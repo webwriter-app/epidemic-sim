@@ -57,6 +57,7 @@ export interface SimulationConfig {
   infectionRadius: number
   infectionProbability: number
   recoveryDuration: number
+  simulationDuration: number
   quarantineEnabled: boolean
   quarantineProbability: number
   quarantineDuration: number

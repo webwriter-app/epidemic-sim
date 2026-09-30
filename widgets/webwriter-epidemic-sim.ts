@@ -205,6 +205,22 @@ export class WebwriterEpidemicSim extends LitElementWw {
   accessor allowRecoveryDurationControl = false
 
   @property({
+    type: Number,
+    attribute: "simulation-duration",
+    reflect: true,
+    converter: numberAttributeConverter,
+  })
+  accessor simulationDuration = CONFIG_SCHEMA.simulationDuration.defaultValue
+
+  @property({
+    type: Boolean,
+    attribute: "allow-simulation-duration-control",
+    reflect: true,
+    converter: booleanAttributeConverter,
+  })
+  accessor allowSimulationDurationControl = false
+
+  @property({
     type: Boolean,
     attribute: "quarantine-enabled",
     reflect: true,
@@ -646,6 +662,7 @@ export class WebwriterEpidemicSim extends LitElementWw {
       infectionRadius: this.infectionRadius,
       infectionProbability: this.infectionProbability,
       recoveryDuration: this.recoveryDuration,
+      simulationDuration: this.simulationDuration,
       quarantineEnabled: this.quarantineEnabled,
       quarantineProbability: this.quarantineProbability,
       quarantineDuration: this.quarantineDuration,
@@ -665,6 +682,7 @@ export class WebwriterEpidemicSim extends LitElementWw {
       allowInfectionRadiusControl: this.allowInfectionRadiusControl,
       allowInfectionProbabilityControl: this.allowInfectionProbabilityControl,
       allowRecoveryDurationControl: this.allowRecoveryDurationControl,
+      allowSimulationDurationControl: this.allowSimulationDurationControl,
       allowQuarantineEnabledControl: this.allowQuarantineEnabledControl,
       allowHotspotsEnabledControl: this.allowHotspotsEnabledControl,
       allowCommunitiesEnabledControl: this.allowCommunitiesEnabledControl,
@@ -719,6 +737,9 @@ export class WebwriterEpidemicSim extends LitElementWw {
   }
 
   private isEpidemicWaveFinished(): boolean {
+    if (this.frameIndex >= this.config.simulationDuration) {
+      return true
+    }
     if (this.hasActiveInfection()) {
       return false
     }
@@ -759,6 +780,7 @@ export class WebwriterEpidemicSim extends LitElementWw {
     onInfectionRadiusInput: (event: Event) => this.updateConfigFromRange(event, "infectionRadius"),
     onInfectionProbabilityInput: (event: Event) => this.updateConfigFromRange(event, "infectionProbability"),
     onRecoveryDurationInput: (event: Event) => this.updateConfigFromRange(event, "recoveryDuration"),
+    onSimulationDurationInput: (event: Event) => this.updateConfigFromRange(event, "simulationDuration"),
     onQuarantineEnabled: (event: Event) => this.updateConfig("quarantineEnabled", this.parseSwitch(event)),
     onQuarantineProbabilityInput: (event: Event) => this.updateConfigFromRange(event, "quarantineProbability"),
     onQuarantineDurationInput: (event: Event) => this.updateConfigFromRange(event, "quarantineDuration"),
@@ -993,7 +1015,11 @@ export class WebwriterEpidemicSim extends LitElementWw {
       this.hotspotEditing.getAreas(this.config),
     )
     this.updateEpidemicCounts()
-    if (this.isEpidemicWaveFinished() && this.isRunning && this.chartRuntime.hadInfection) {
+    if (
+      this.isEpidemicWaveFinished() &&
+      this.isRunning &&
+      (this.chartRuntime.hadInfection || this.frameIndex >= this.config.simulationDuration)
+    ) {
       this.stopLoop()
       this.drawChart()
     }
@@ -1011,6 +1037,7 @@ export class WebwriterEpidemicSim extends LitElementWw {
       this.getCounts(),
       this.hasActiveInfection(),
       this.isEpidemicWaveFinished(),
+      this.frameIndex >= this.config.simulationDuration,
     )
   }
 

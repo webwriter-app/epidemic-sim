@@ -10,6 +10,7 @@ export type MenuAllowFlags = {
   allowInfectionRadiusControl: boolean
   allowInfectionProbabilityControl: boolean
   allowRecoveryDurationControl: boolean
+  allowSimulationDurationControl: boolean
   allowQuarantineEnabledControl: boolean
   allowHotspotsEnabledControl: boolean
   allowCommunitiesEnabledControl: boolean
@@ -51,6 +52,7 @@ export type RenderMenuOptions = MenuAllowFlags & {
   infectionRadius: number
   infectionProbability: number
   recoveryDuration: number
+  simulationDuration: number
   quarantineEnabled: boolean
   quarantineProbability: number
   quarantineDuration: number
@@ -71,6 +73,7 @@ export type RenderMenuOptions = MenuAllowFlags & {
   onInfectionRadiusInput: (event: Event) => void
   onInfectionProbabilityInput: (event: Event) => void
   onRecoveryDurationInput: (event: Event) => void
+  onSimulationDurationInput: (event: Event) => void
   onQuarantineEnabled: (event: Event) => void
   onQuarantineProbabilityInput: (event: Event) => void
   onQuarantineDurationInput: (event: Event) => void
@@ -98,7 +101,8 @@ export function hasGeneralMenuControls(flags: MenuAllowFlags): boolean {
     flags.allowSpeedControl ||
     flags.allowInfectionRadiusControl ||
     flags.allowInfectionProbabilityControl ||
-    flags.allowRecoveryDurationControl
+    flags.allowRecoveryDurationControl ||
+    flags.allowSimulationDurationControl
   )
 }
 

@@ -46,6 +46,7 @@ export class ChartRuntime {
     counts: ChartRuntimeCounts,
     hasActiveInfection: boolean,
     waveFinished: boolean,
+    simulationDurationReached: boolean,
   ): void {
     if (hasActiveInfection) {
       this.hadInfection = true
@@ -55,7 +56,7 @@ export class ChartRuntime {
       return
     }
 
-    const waveEnded = this.hadInfection && waveFinished
+    const waveEnded = (this.hadInfection && waveFinished) || simulationDurationReached
     const isFullDayCheckpoint = frameIndex % FRAMES_PER_DAY === 0
     if (!isFullDayCheckpoint) {
       if (waveEnded) {

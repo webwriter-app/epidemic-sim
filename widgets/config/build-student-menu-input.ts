@@ -13,6 +13,7 @@ type MenuHandlers = Pick<
   | "onInfectionRadiusInput"
   | "onInfectionProbabilityInput"
   | "onRecoveryDurationInput"
+  | "onSimulationDurationInput"
   | "onQuarantineEnabled"
   | "onQuarantineProbabilityInput"
   | "onQuarantineDurationInput"
@@ -44,6 +45,7 @@ export function buildStudentMenuInput(
     infectionRadius: options.infectionRadius,
     infectionProbability: options.infectionProbability,
     recoveryDuration: options.recoveryDuration,
+    simulationDuration: options.simulationDuration,
     quarantineEnabled: options.quarantineEnabled,
     quarantineProbability: options.quarantineProbability,
     quarantineDuration: options.quarantineDuration,
@@ -64,6 +66,7 @@ export function buildStudentMenuInput(
     allowInfectionRadiusControl: options.allowInfectionRadiusControl,
     allowInfectionProbabilityControl: options.allowInfectionProbabilityControl,
     allowRecoveryDurationControl: options.allowRecoveryDurationControl,
+    allowSimulationDurationControl: options.allowSimulationDurationControl,
     allowQuarantineEnabledControl: options.allowQuarantineEnabledControl,
     allowHotspotsEnabledControl: options.allowHotspotsEnabledControl,
     allowCommunitiesEnabledControl: options.allowCommunitiesEnabledControl,

@@ -17,6 +17,7 @@ export const sideMenuStyles: CSSResult = css`
   .side-menu__control { display: grid; gap: 4px; }
   .side-menu__control-head { display: flex; justify-content: space-between; gap: 6px; align-items: baseline; font-size: 0.82rem; line-height: 1.25; }
   .side-menu__control-value { color: #334155; font-size: 0.78rem; font-variant-numeric: tabular-nums; flex-shrink: 0; }
+  .side-menu__control-note { color: #64748b; font-size: 0.72rem; line-height: 1.3; }
   .side-menu sl-range { width: 100%; }
   .side-menu sl-select { width: 100%; }
   .side-menu sl-select::part(combobox) { width: 100%; }

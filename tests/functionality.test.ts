@@ -25,6 +25,7 @@ const sampleConfig: SimulationConfig = {
   infectionRadius: 10,
   infectionProbability: 0.1,
   recoveryDuration: 240,
+  simulationDuration: 8544,
   quarantineEnabled: false,
   quarantineProbability: 0.5,
   quarantineDuration: 120,

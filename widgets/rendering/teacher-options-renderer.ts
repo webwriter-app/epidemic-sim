@@ -13,6 +13,7 @@ type RangeRow = {
   formatValue?: (value: number) => string
   onInput: (event: Event) => void
   onAllowChange: (event: Event) => void
+  description?: string
 }
 
 type BooleanRow = {
@@ -110,6 +111,7 @@ function renderRow(row: TeacherOptionRow): TemplateResult {
       <div class="teacher-options__row">
         ${renderRowHead(row.label, row.allow, row.onAllowChange)}
         <div class="teacher-options__value-text">${displayValue}</div>
+        ${row.description ? html`<div class="teacher-options__description">${row.description}</div>` : null}
         <sl-range
           min=${String(row.min)}
           max=${String(row.max)}

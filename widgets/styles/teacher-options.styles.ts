@@ -34,6 +34,7 @@ export const teacherOptionsStyles: CSSResult = css`
   .teacher-options__label { flex: 1; min-width: 0; color: #334155; line-height: 1.35; font-size: 0.9rem; word-break: break-word; }
   .teacher-options__visibility { flex-shrink: 0; }
   .teacher-options__value-text { color: #64748b; font-size: 0.82rem; font-variant-numeric: tabular-nums; text-align: right; }
+  .teacher-options__description { color: #64748b; font-size: 0.78rem; line-height: 1.3; }
   .teacher-options sl-range { display: block; width: 100%; max-width: 100%; min-width: 0; }
   .teacher-options sl-range::part(form-control), .teacher-options sl-range::part(base) { width: 100%; max-width: 100%; min-width: 0; }
   .teacher-options sl-select { display: block; width: 100%; max-width: 100%; min-width: 0; }

@@ -74,5 +74,19 @@ export function renderGeneralControls(options: RenderMenuOptions): TemplateResul
           `
         : null
     }
+    ${
+      options.allowSimulationDurationControl
+        ? html`
+            <label class="side-menu__control">
+              <span class="side-menu__control-head">
+                <span>${msg("Simulation duration")}</span>
+                <span class="side-menu__control-value">${formatFrameCountAsDays(options.simulationDuration)}</span>
+              </span>
+              <span class="side-menu__control-note">${msg("The simulation may end earlier when the epidemic is over")}</span>
+              <sl-range min=${String(R.simulationDuration.min)} max=${String(R.simulationDuration.max)} step=${String(R.simulationDuration.step)} .value=${String(options.simulationDuration)} @sl-input=${options.onSimulationDurationInput}></sl-range>
+            </label>
+          `
+        : null
+    }
   `
 }

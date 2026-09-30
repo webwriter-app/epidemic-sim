@@ -10,6 +10,7 @@ export type AllowControlKey =
   | "allowInfectionRadiusControl"
   | "allowInfectionProbabilityControl"
   | "allowRecoveryDurationControl"
+  | "allowSimulationDurationControl"
   | "allowQuarantineEnabledControl"
   | "allowHotspotsEnabledControl"
   | "allowCommunitiesEnabledControl"
@@ -51,6 +52,7 @@ export const CONFIG_SCHEMA = {
   infectionRadius: {kind: "range", min: 4, max: 40, step: 1, defaultValue: 10} as RangeSchema,
   infectionProbability: {kind: "range", min: 0.01, max: 1, step: 0.01, defaultValue: 0.2} as RangeSchema,
   recoveryDuration: {kind: "range", min: 60, max: 2400, step: 30, defaultValue: 600} as RangeSchema,
+  simulationDuration: {kind: "range", min: 24, max: 8544, step: 24, defaultValue: 1440} as RangeSchema,
   quarantineEnabled: {kind: "toggle", defaultValue: false} as ToggleSchema,
   quarantineProbability: {kind: "range", min: 0.01, max: 1, step: 0.01, defaultValue: 0.7} as RangeSchema,
   quarantineDuration: {kind: "range", min: 30, max: 2400, step: 30, defaultValue: 450} as RangeSchema,
@@ -75,6 +77,7 @@ export type WidgetSchema = {
   infectionRadius: number
   infectionProbability: number
   recoveryDuration: number
+  simulationDuration: number
   quarantineEnabled: boolean
   quarantineProbability: number
   quarantineDuration: number
@@ -106,6 +109,7 @@ export const MENU_RANGE_LIMITS = {
   infectionRadius: getRangeLimits("infectionRadius"),
   infectionProbability: getRangeLimits("infectionProbability"),
   recoveryDuration: getRangeLimits("recoveryDuration"),
+  simulationDuration: getRangeLimits("simulationDuration"),
   quarantineProbability: getRangeLimits("quarantineProbability"),
   quarantineDuration: getRangeLimits("quarantineDuration"),
   hotspotVisitProbability: getRangeLimits("hotspotVisitProbability"),
