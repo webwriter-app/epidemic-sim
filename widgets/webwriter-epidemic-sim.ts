@@ -17,6 +17,7 @@ import shoelaceLightStyles from "@shoelace-style/shoelace/dist/themes/light.styl
 import LOCALIZE from "../localization/generated"
 
 import {formatApprox} from "./analytics/chart-insights"
+import type {SelectedHotspotInput} from "./components/canvas-panel"
 import {renderWidgetLayout} from "./components/widget-layout"
 import type {InsightsOverlayView} from "./components/chart-overlay"
 import {
@@ -51,8 +52,8 @@ import {isEpidemicModelType, type EpidemicModelType} from "./simulation/epidemic
 import {formatFrameCountAsDays} from "./simulation/time"
 import type {Agent, SimulationAreas, SimulationConfig} from "./simulation/types"
 import {epidemicSimStyles} from "./styles/epidemic-sim.styles"
-import {findTopmostHotspotAtPoint} from "./utils/hotspot-interaction"
-import {getCanvasPoint} from "./utils/canvas-coordinates"
+import {findTopmostHotspotAtPoint, getHotspotLabel, getScaledHotspotRect} from "./utils/hotspot-interaction"
+import {clampHotspotRect, getCanvasPoint} from "./utils/canvas-coordinates"
 
 @customElement("webwriter-epidemic-sim")
 export class WebwriterEpidemicSim extends LitElementWw {
@@ -422,6 +423,8 @@ export class WebwriterEpidemicSim extends LitElementWw {
     getCanvas: () => this.simulationCanvas,
     getAreas: (): SimulationAreas => this.hotspotEditing.getAreas(this.config),
     updateHotspotRect: (hotspotId: number, rect) => this.hotspotEditing.updateHotspotRect(hotspotId, rect),
+    removeHotspot: (hotspotId: number) => this.hotspotEditing.removeHotspot(hotspotId),
+    onRemovalPendingChange: () => this.requestUpdateAndRedrawSimulationWhenPaused(),
   })
   private persistStateTimer: number | null = null
   private applyingPersistedState = false
@@ -452,6 +455,8 @@ export class WebwriterEpidemicSim extends LitElementWw {
   @state() accessor chartContextMenuOpen = false
   @state() accessor chartContextMenuPosition = {x: 0, y: 0}
   @state() accessor isPrintPreparing = false
+  @state() accessor selectedHotspotId: number | null = null
+  @state() accessor hotspotPlacementActive = false
 
   private frameIndex = 0
   private agents: Agent[] = []
@@ -913,6 +918,10 @@ export class WebwriterEpidemicSim extends LitElementWw {
     if (event.key !== "Escape") {
       return
     }
+    if (this.hotspotPlacementActive) {
+      this.hotspotPlacementActive = false
+      return
+    }
     if (this.chartContextMenuOpen) {
       this.closeChartContextMenu()
       return
@@ -1075,7 +1084,10 @@ export class WebwriterEpidemicSim extends LitElementWw {
     const ctx = this.simulationCtx
     const canvas = this.simulationCanvas
     if (ctx && canvas) {
-      drawSimulation(ctx, canvas, this.agents, areas)
+      drawSimulation(ctx, canvas, this.agents, areas, {
+        removalHotspotId: this.hotspotPointer.getRemovalPendingHotspotId(),
+        selectedHotspotId: this.selectedHotspotId,
+      })
     }
     if (
       this.chartOverlayOpen &&
@@ -1137,8 +1149,70 @@ export class WebwriterEpidemicSim extends LitElementWw {
     if (!this.config.hotspotsEnabled) {
       return
     }
+    const point = getCanvasPoint(this.simulationCanvas, event.clientX, event.clientY)
+    if (this.hotspotPlacementActive) {
+      this.hotspotPlacementActive = false
+      if (!point) {
+        return
+      }
+      event.preventDefault()
+      this.hotspotEditing.addHotspotAtPoint(point.x, point.y)
+      this.selectHotspot(this.hotspotEditing.userHotspots.at(-1)?.id ?? null)
+      return
+    }
     const areas = this.hotspotEditing.getAreas(this.config)
-    this.hotspotPointer.handlePointerDown(event, areas.hotspots)
+    const hotspot = point ? findTopmostHotspotAtPoint(point.x, point.y, areas.hotspots) : null
+    const handled = this.hotspotPointer.handlePointerDown(event, areas.hotspots)
+    this.selectHotspot(hotspot?.id ?? (handled ? this.selectedHotspotId : null))
+  }
+
+  private onHotspotTokenClick = (): void => {
+    this.hotspotPlacementActive = !this.hotspotPlacementActive
+  }
+
+  private selectHotspot(hotspotId: number | null): void {
+    if (this.selectedHotspotId === hotspotId) {
+      return
+    }
+    this.selectedHotspotId = hotspotId
+    this.redrawSimulationWhenPaused()
+  }
+
+  private getSelectedHotspotInput(): SelectedHotspotInput | null {
+    const index = this.hotspotEditing.userHotspots.findIndex((hotspot) => hotspot.id === this.selectedHotspotId)
+    if (index < 0) {
+      return null
+    }
+    const hotspot = this.hotspotEditing.userHotspots[index]
+    const range = getRangeLimits("hotspotSize")
+    return {
+      label: getHotspotLabel(hotspot, index),
+      size: Math.round(Math.max(hotspot.rect.width, hotspot.rect.height)),
+      min: range.min,
+      max: range.max,
+      step: range.step,
+      onSizeInput: this.onSelectedHotspotSizeInput,
+      onDelete: this.deleteSelectedHotspot,
+    }
+  }
+
+  private onSelectedHotspotSizeInput = (event: Event): void => {
+    const hotspot = this.hotspotEditing.userHotspots.find((entry) => entry.id === this.selectedHotspotId)
+    if (!hotspot) {
+      return
+    }
+    const range = getRangeLimits("hotspotSize")
+    const size = this.clamp(Math.round(this.parseRangeInput(event)), range.min, range.max)
+    const areas = this.hotspotEditing.getAreas(this.config)
+    this.hotspotEditing.updateHotspotRect(hotspot.id, clampHotspotRect(getScaledHotspotRect(hotspot.rect, size), areas.main))
+  }
+
+  private deleteSelectedHotspot = (): void => {
+    if (this.selectedHotspotId === null) {
+      return
+    }
+    this.hotspotEditing.removeHotspot(this.selectedHotspotId)
+    this.selectedHotspotId = null
   }
 
   private onCanvasContextMenu = (event: MouseEvent): void => {
@@ -1204,6 +1278,8 @@ export class WebwriterEpidemicSim extends LitElementWw {
       onChartContextMenu: this.onChartContextMenu,
       onCreateSnapshot: this.createSnapshot,
       canvasDropActive: this.hotspotEditing.canvasDropActive,
+      hotspotPlacementActive: this.hotspotPlacementActive,
+      selectedHotspot: this.getSelectedHotspotInput(),
       hotspotsEnabled: this.hotspotsEnabled,
       showHotspotToolbox: this.isEditMode || this.allowHotspotsEnabledControl,
       isRunning: this.isRunning,
@@ -1214,6 +1290,7 @@ export class WebwriterEpidemicSim extends LitElementWw {
       onCanvasContextMenu: this.onCanvasContextMenu,
       onHotspotTokenDragStart: this.hotspotEditing.onTokenDragStart,
       onHotspotTokenDragEnd: this.hotspotEditing.onTokenDragEnd,
+      onHotspotTokenClick: this.onHotspotTokenClick,
       onToggleSimulation: this.toggleSimulation,
       onResetSimulation: this.resetSimulation,
       onOpenSnapshots: this.openSnapshotsOverlay,

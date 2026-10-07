@@ -49,6 +49,7 @@ export const layoutStyles = css`
   :host(.ww-beforeprint) .author-only,
   :host(.ww-beforeprint) .chart-context-menu,
   :host(.ww-beforeprint) .hotspot-toolbox--map,
+  :host(.ww-beforeprint) .hotspot-selection,
   :host(.ww-beforeprint) .simulation-actions,
   :host(.ww-beforeprint) .chart-overlay,
   :host(.ww-beforeprint) .snapshots-overlay,
@@ -56,6 +57,7 @@ export const layoutStyles = css`
   :host(.ww-printable) .author-only,
   :host(.ww-printable) .chart-context-menu,
   :host(.ww-printable) .hotspot-toolbox--map,
+  :host(.ww-printable) .hotspot-selection,
   :host(.ww-printable) .simulation-actions,
   :host(.ww-printable) .chart-overlay,
   :host(.ww-printable) .snapshots-overlay {
@@ -115,6 +117,7 @@ export const layoutStyles = css`
     .author-only,
     .chart-context-menu,
     .hotspot-toolbox--map,
+    .hotspot-selection,
     .simulation-actions,
     .chart-overlay,
     .snapshots-overlay {

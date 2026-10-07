@@ -1,7 +1,7 @@
 import {html} from "lit"
 import type {TemplateResult} from "lit"
 import {msg} from "@lit/localize"
-import {renderCanvasPanel} from "./canvas-panel"
+import {renderCanvasPanel, type SelectedHotspotInput} from "./canvas-panel"
 import {renderChartOverlay, type InsightsOverlayView} from "./chart-overlay"
 import type {ChartInsightData} from "./chart-insights-view"
 import {renderSnapshotsOverlay} from "./snapshots-overlay"
@@ -24,6 +24,8 @@ export type WidgetLayoutInput = {
   onChartContextMenu: (event: MouseEvent) => void
   onCreateSnapshot: () => void
   canvasDropActive: boolean
+  hotspotPlacementActive: boolean
+  selectedHotspot: SelectedHotspotInput | null
   hotspotsEnabled: boolean
   showHotspotToolbox: boolean
   isRunning: boolean
@@ -34,6 +36,7 @@ export type WidgetLayoutInput = {
   onCanvasContextMenu: (event: MouseEvent) => void
   onHotspotTokenDragStart: (event: DragEvent) => void
   onHotspotTokenDragEnd: () => void
+  onHotspotTokenClick: () => void
   onToggleSimulation: () => void
   onResetSimulation: () => void
   onOpenSnapshots: () => void
@@ -101,6 +104,8 @@ export function renderWidgetLayout(input: WidgetLayoutInput): TemplateResult {
 
           ${renderCanvasPanel({
             canvasDropActive: input.canvasDropActive,
+            hotspotPlacementActive: input.hotspotPlacementActive,
+            selectedHotspot: input.selectedHotspot,
             hotspotsEnabled: input.hotspotsEnabled,
             showHotspotToolbox: input.showHotspotToolbox,
             isRunning: input.isRunning,
@@ -112,6 +117,7 @@ export function renderWidgetLayout(input: WidgetLayoutInput): TemplateResult {
             onCanvasDoubleClick: input.onSimulationPanelDoubleClick,
             onHotspotTokenDragStart: input.onHotspotTokenDragStart,
             onHotspotTokenDragEnd: input.onHotspotTokenDragEnd,
+            onHotspotTokenClick: input.onHotspotTokenClick,
             onToggleSimulation: input.onToggleSimulation,
             onResetSimulation: input.onResetSimulation,
             onOpenSnapshots: input.onOpenSnapshots,

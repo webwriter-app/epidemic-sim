@@ -1,5 +1,6 @@
 import {msg} from "@lit/localize"
-import type {Agent, AgentState, SimulationAreas} from "../simulation/types"
+import type {Agent, AgentState, Rect, SimulationAreas} from "../simulation/types"
+import {getHotspotLabel} from "../utils/hotspot-interaction"
 
 const AGENT_RADIUS = 3
 const AGENT_COLORS: Record<AgentState, string> = {
@@ -15,6 +16,7 @@ export function drawSimulation(
   canvas: HTMLCanvasElement,
   agents: Agent[],
   areas: SimulationAreas,
+  options?: {removalHotspotId?: number | null; selectedHotspotId?: number | null},
 ): void {
   ctx.clearRect(0, 0, canvas.width, canvas.height)
   ctx.fillStyle = "#fcfdff"
@@ -28,7 +30,11 @@ export function drawSimulation(
     ctx.arc(agent.x, agent.y, AGENT_RADIUS, 0, Math.PI * 2)
     ctx.fill()
   }
+
+  drawHotspots(ctx, areas, options?.removalHotspotId ?? null, options?.selectedHotspotId ?? null)
 }
+
+const HOTSPOT_HANDLE_SIZE = 8
 
 function drawZones(ctx: CanvasRenderingContext2D, areas: SimulationAreas): void {
   ctx.save()
@@ -50,14 +56,56 @@ function drawZones(ctx: CanvasRenderingContext2D, areas: SimulationAreas): void 
     ctx.strokeRect(community.rect.x, community.rect.y, community.rect.width, community.rect.height)
   }
 
+  ctx.restore()
+}
+
+function drawHotspots(
+  ctx: CanvasRenderingContext2D,
+  areas: SimulationAreas,
+  removalHotspotId: number | null,
+  selectedHotspotId: number | null,
+): void {
+  ctx.save()
   for (let i = 0; i < areas.hotspots.length; i += 1) {
     const hotspot = areas.hotspots[i]
-    ctx.strokeStyle = "#7c3aed"
+    const removalPending = hotspot.id === removalHotspotId
+    const selected = hotspot.id === selectedHotspotId
+    const hotspotColor = removalPending ? "#dc2626" : "#7c3aed"
+    ctx.strokeStyle = hotspotColor
+    ctx.lineWidth = selected ? 3 : 2
+    ctx.setLineDash(removalPending ? [5, 4] : [])
     ctx.strokeRect(hotspot.rect.x, hotspot.rect.y, hotspot.rect.width, hotspot.rect.height)
-    ctx.fillStyle = "#7c3aed"
-    ctx.font = '11px system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif'
-    const label = hotspot.communityId === null ? `H${i + 1}` : `C${hotspot.communityId + 1}`
-    ctx.fillText(label, hotspot.rect.x + 4, hotspot.rect.y + 12)
+    ctx.setLineDash([])
+    ctx.lineWidth = 1
+    if (selected && !removalPending) {
+      drawHotspotHandles(ctx, hotspot.rect, hotspotColor)
+    }
+    const label = getHotspotLabel(hotspot, i)
+    ctx.font = 'bold 12px system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif'
+    ctx.lineJoin = "round"
+    ctx.lineWidth = 3
+    ctx.strokeStyle = "#ffffff"
+    ctx.strokeText(label, hotspot.rect.x + 5, hotspot.rect.y + 14)
+    ctx.fillStyle = hotspotColor
+    ctx.fillText(label, hotspot.rect.x + 5, hotspot.rect.y + 14)
   }
   ctx.restore()
+}
+
+function drawHotspotHandles(ctx: CanvasRenderingContext2D, rect: Rect, color: string): void {
+  const corners = [
+    {x: rect.x, y: rect.y},
+    {x: rect.x + rect.width, y: rect.y},
+    {x: rect.x, y: rect.y + rect.height},
+    {x: rect.x + rect.width, y: rect.y + rect.height},
+  ]
+  ctx.fillStyle = "#ffffff"
+  ctx.strokeStyle = color
+  for (let i = 0; i < corners.length; i += 1) {
+    const x = corners[i].x - HOTSPOT_HANDLE_SIZE / 2
+    const y = corners[i].y - HOTSPOT_HANDLE_SIZE / 2
+    ctx.fillRect(x, y, HOTSPOT_HANDLE_SIZE, HOTSPOT_HANDLE_SIZE)
+    ctx.lineWidth = 1.5
+    ctx.strokeRect(x, y, HOTSPOT_HANDLE_SIZE, HOTSPOT_HANDLE_SIZE)
+  }
 }

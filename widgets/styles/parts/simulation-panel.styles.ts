@@ -21,6 +21,8 @@ export const simulationPanelStyles = css`
     outline-offset: -4px;
     background: #f5f3ff;
   }
+  .panel--simulation canvas.hotspots-editable { touch-action: none; }
+  .panel--simulation canvas.placing-hotspot { cursor: crosshair; }
   .hotspot-toolbox__notice::part(base) { font-size: 0.8rem; font-weight: 500; }
   .hotspot-toolbox__token { user-select: none; cursor: grab; width: max-content; }
   .hotspot-toolbox__token::part(base) {
@@ -33,6 +35,7 @@ export const simulationPanelStyles = css`
     text-transform: uppercase;
   }
   .hotspot-toolbox__token:active { cursor: grabbing; }
+  .hotspot-toolbox__token--active::part(base) { background: #7c3aed; color: #ffffff; }
   .hotspot-toolbox--map {
     margin-top: 8px;
     display: flex;
@@ -40,6 +43,16 @@ export const simulationPanelStyles = css`
     gap: 10px;
     flex-wrap: wrap;
   }
+  .hotspot-selection {
+    margin-top: 8px;
+    display: flex;
+    align-items: flex-end;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .hotspot-selection__size { flex: 1 1 160px; }
+  .hotspot-selection__size::part(form-control-label) { font-size: 0.8rem; }
+  .hotspot-selection__delete::part(base) { color: #dc2626; border-color: #fecaca; }
   sl-range { width: 100%; }
   .actions { display: flex; justify-content: flex-end; gap: 8px; }
   .simulation-actions {

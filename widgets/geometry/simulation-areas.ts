@@ -1,3 +1,4 @@
+import {getRangeLimits} from "../config/widget-schema"
 import type {CommunityCell, Hotspot, Rect, SimulationAreas, SimulationConfig} from "../simulation/types"
 
 type AreaBuilderInput = {
@@ -90,17 +91,19 @@ function resolveUserHotspots(
 }
 
 export function getDefaultHotspotSize(mainRect: Rect, hotspotSize: number): number {
-  const rawSize = Math.max(24, Math.min(110, hotspotSize))
+  const sizeLimits = getRangeLimits("hotspotSize")
+  const rawSize = Math.max(sizeLimits.min, Math.min(sizeLimits.max, hotspotSize))
   const maxHorizontal = Math.max(18, mainRect.width - 8)
   const maxVertical = Math.max(18, mainRect.height - 8)
   return Math.min(rawSize, maxHorizontal, maxVertical)
 }
 
 export function clampHotspotRect(rect: Rect, mainRect: Rect): Rect {
-  const minWidth = Math.min(18, mainRect.width)
-  const minHeight = Math.min(18, mainRect.height)
-  const width = clamp(rect.width, minWidth, mainRect.width)
-  const height = clamp(rect.height, minHeight, mainRect.height)
+  const sizeLimits = getRangeLimits("hotspotSize")
+  const maxWidth = Math.min(sizeLimits.max, mainRect.width)
+  const maxHeight = Math.min(sizeLimits.max, mainRect.height)
+  const width = clamp(rect.width, Math.min(sizeLimits.min, maxWidth), maxWidth)
+  const height = clamp(rect.height, Math.min(sizeLimits.min, maxHeight), maxHeight)
   const minX = mainRect.x
   const minY = mainRect.y
   const maxX = mainRect.x + Math.max(0, mainRect.width - width)

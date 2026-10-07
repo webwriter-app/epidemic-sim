@@ -182,7 +182,6 @@ export function buildTeacherOptionsInput(ctx: TeacherOptionsContext): RenderTeac
       },
       {
         title: msg("General"),
-        open: true,
         rows: [
           rangeRow("population", msg("Population"), ctx.population, ctx.allowPopulationControl, ctx.onPopulationInput, (e) => ctx.onAllowChange("allowPopulationControl", e)),
           rangeRow("speed", msg("Speed"), ctx.speed, ctx.allowSpeedControl, ctx.onSpeedInput, (e) => ctx.onAllowChange("allowSpeedControl", e), (v) => v.toFixed(1)),

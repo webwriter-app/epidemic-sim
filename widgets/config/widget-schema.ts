@@ -60,7 +60,7 @@ export const CONFIG_SCHEMA = {
   hotspotVisitProbability: {kind: "range", min: 0.001, max: 0.2, step: 0.001, defaultValue: 0.02} as RangeSchema,
   hotspotStayDuration: {kind: "range", min: 30, max: 1800, step: 30, defaultValue: 240} as RangeSchema,
   hotspotMaxAgents: {kind: "range", min: 1, max: 120, step: 1, defaultValue: 30} as RangeSchema,
-  hotspotSize: {kind: "range", min: 24, max: 110, step: 2, defaultValue: 56} as RangeSchema,
+  hotspotSize: {kind: "range", min: 30, max: 130, step: 2, defaultValue: 56} as RangeSchema,
   communitiesEnabled: {kind: "toggle", defaultValue: false} as ToggleSchema,
   communityLeaveProbability: {kind: "range", min: 0.0001, max: 0.01, step: 0.0001, defaultValue: 0.0004} as RangeSchema,
 } as const
