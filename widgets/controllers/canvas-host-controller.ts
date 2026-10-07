@@ -22,6 +22,10 @@ export class CanvasHostController implements ReactiveController {
     return this.host.shadowRoot?.querySelector<HTMLCanvasElement>(selector) ?? null
   }
 
+  queryCanvases(selector: string): HTMLCanvasElement[] {
+    return Array.from(this.host.shadowRoot?.querySelectorAll<HTMLCanvasElement>(selector) ?? [])
+  }
+
   queryContext(selector: string): CanvasRenderingContext2D | null {
     return this.queryCanvas(selector)?.getContext("2d") ?? null
   }

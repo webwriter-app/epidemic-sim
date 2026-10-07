@@ -5,6 +5,9 @@ import {msg} from "@lit/localize"
 import SlButton from "@shoelace-style/shoelace/dist/components/button/button.component.js"
 import SlCard from "@shoelace-style/shoelace/dist/components/card/card.component.js"
 import SlDetails from "@shoelace-style/shoelace/dist/components/details/details.component.js"
+import SlDropdown from "@shoelace-style/shoelace/dist/components/dropdown/dropdown.component.js"
+import SlMenu from "@shoelace-style/shoelace/dist/components/menu/menu.component.js"
+import SlMenuItem from "@shoelace-style/shoelace/dist/components/menu-item/menu-item.component.js"
 import SlRange from "@shoelace-style/shoelace/dist/components/range/range.component.js"
 import SlSwitch from "@shoelace-style/shoelace/dist/components/switch/switch.component.js"
 import SlTag from "@shoelace-style/shoelace/dist/components/tag/tag.component.js"
@@ -38,7 +41,7 @@ import {
   parsePersistedState,
   encodePersistedState,
 } from "./orchestration/persisted-state"
-import {captureChartSnapshotImage, SnapshotService} from "./orchestration/snapshot-service"
+import {buildSnapshotCsv, drawSnapshotChart, renderSnapshotChartPng, SnapshotService} from "./orchestration/snapshot-service"
 import {hasVisibleMenuControls, sideMenuStyles} from "./rendering/menu-renderer"
 import {destroyChart, resetChart} from "./rendering/chart-renderer"
 import {drawSimulation} from "./rendering/simulation-renderer"
@@ -62,6 +65,9 @@ export class WebwriterEpidemicSim extends LitElementWw {
     "sl-button": SlButton,
     "sl-card": SlCard,
     "sl-details": SlDetails,
+    "sl-dropdown": SlDropdown,
+    "sl-menu": SlMenu,
+    "sl-menu-item": SlMenuItem,
     "sl-range": SlRange,
     "sl-switch": SlSwitch,
     "sl-tag": SlTag,
@@ -388,6 +394,7 @@ export class WebwriterEpidemicSim extends LitElementWw {
   private enlargedChartCanvas: HTMLCanvasElement | null = null
   private enlargedSimulationCanvas: HTMLCanvasElement | null = null
   private enlargedSimulationCtx: CanvasRenderingContext2D | null = null
+  private snapshotChartIds = new Map<HTMLCanvasElement, string>()
   private readonly canvasHost = new CanvasHostController(this)
   private readonly chartRuntime = new ChartRuntime()
   private readonly snapshotService = new SnapshotService()
@@ -495,6 +502,9 @@ export class WebwriterEpidemicSim extends LitElementWw {
         this.enlargedSimulationCtx = null
       }
     }
+    if (this.snapshotsOverlayOpen || changed.has("snapshotsOverlayOpen")) {
+      this.drawSnapshotCharts()
+    }
     if (changed.has("population") && changed.get("population") !== undefined) {
       this.reseedPopulation()
       return
@@ -526,6 +536,7 @@ export class WebwriterEpidemicSim extends LitElementWw {
     this.hotspotPointer.clear()
     destroyChart(this.chartCanvas)
     destroyChart(this.enlargedChartCanvas)
+    this.destroySnapshotCharts()
     this.enlargedSimulationCanvas = null
     this.enlargedSimulationCtx = null
     window.removeEventListener("keydown", this.onWindowKeyDown)
@@ -587,10 +598,7 @@ export class WebwriterEpidemicSim extends LitElementWw {
     this.applyingPersistedState = true
     try {
       this.hotspotEditing.hydrate(persisted.hotspots, persisted.nextHotspotId)
-      this.snapshotService.hydrate(
-        persisted.snapshots.map((snapshot) => ({...snapshot, chartImageJpeg: snapshot.chartImageJpeg ?? null})),
-        persisted.nextSnapshotId,
-      )
+      this.snapshotService.hydrate(persisted.snapshots, persisted.nextSnapshotId)
       if (options.restartSimulation && this.simulationCanvas) {
         this.restartSimulation({clearPointer: true})
       }
@@ -842,7 +850,6 @@ export class WebwriterEpidemicSim extends LitElementWw {
   }
 
   private createSnapshot = (): void => {
-    this.drawChart()
     const counts = this.getCounts()
     this.snapshotService.create({
       config: this.config,
@@ -860,18 +867,40 @@ export class WebwriterEpidemicSim extends LitElementWw {
       deadHistory: [...this.chartRuntime.deadHistory],
       userHotspots: this.hotspotEditing.userHotspots,
       estimatedR0: this.chartRuntime.estimateR0(this.config.recoveryDuration),
-      chartImageJpeg: captureChartSnapshotImage({
-        chartOverlayOpen: this.chartOverlayOpen && this.insightsView === "model",
-        enlargedChartCanvas: this.enlargedChartCanvas,
-        chartCanvas: this.chartCanvas,
-        population: this.config.population,
-        buildSeries: () => this.chartRuntime.buildSeries(this.config),
-        buildDayLabels: (series) => this.chartRuntime.buildDayLabels(series),
-      }),
     })
     this.flushPersistWidgetState()
     this.requestUpdate()
     this.closeChartContextMenu()
+  }
+
+  private downloadSnapshotImage = (snapshotId: string): void => {
+    const snapshot = this.snapshotService.snapshots.find((entry) => entry.id === snapshotId)
+    if (!snapshot || !this.shadowRoot) {
+      return
+    }
+    const png = renderSnapshotChartPng(this.shadowRoot, snapshot)
+    if (!png) {
+      return
+    }
+    this.triggerDownload(png, `${snapshot.label}.png`)
+  }
+
+  private downloadSnapshotTable = (snapshotId: string): void => {
+    const snapshot = this.snapshotService.snapshots.find((entry) => entry.id === snapshotId)
+    if (!snapshot) {
+      return
+    }
+    const csv = new Blob(["\ufeff", buildSnapshotCsv(snapshot)], {type: "text/csv;charset=utf-8"})
+    const url = URL.createObjectURL(csv)
+    this.triggerDownload(url, `${snapshot.label}.csv`)
+    window.setTimeout(() => URL.revokeObjectURL(url), 0)
+  }
+
+  private triggerDownload(href: string, fileName: string): void {
+    const link = document.createElement("a")
+    link.href = href
+    link.download = fileName
+    link.click()
   }
 
   private deleteSnapshot = (snapshotId: string): void => {
@@ -1075,6 +1104,35 @@ export class WebwriterEpidemicSim extends LitElementWw {
     )
   }
 
+  private drawSnapshotCharts(): void {
+    const canvases = this.canvasHost.queryCanvases(".snapshots-overlay__snapshot-chart canvas")
+    for (const canvas of this.snapshotChartIds.keys()) {
+      if (!canvases.includes(canvas)) {
+        destroyChart(canvas)
+        this.snapshotChartIds.delete(canvas)
+      }
+    }
+    for (const canvas of canvases) {
+      const snapshotId = canvas.dataset.snapshotId
+      if (!snapshotId || this.snapshotChartIds.get(canvas) === snapshotId) {
+        continue
+      }
+      const snapshot = this.snapshotService.snapshots.find((entry) => entry.id === snapshotId)
+      if (!snapshot) {
+        continue
+      }
+      drawSnapshotChart(canvas, snapshot)
+      this.snapshotChartIds.set(canvas, snapshotId)
+    }
+  }
+
+  private destroySnapshotCharts(): void {
+    for (const canvas of this.snapshotChartIds.keys()) {
+      destroyChart(canvas)
+    }
+    this.snapshotChartIds.clear()
+  }
+
   private onCanvasPointerDown = (event: PointerEvent): void => {
     if (!this.config.hotspotsEnabled) {
       return
@@ -1175,6 +1233,8 @@ export class WebwriterEpidemicSim extends LitElementWw {
       formatDays: formatFrameCountAsDays,
       formatApprox,
       onDeleteSnapshot: this.deleteSnapshot,
+      onDownloadSnapshotImage: this.downloadSnapshotImage,
+      onDownloadSnapshotTable: this.downloadSnapshotTable,
       chartOverlayOpen: this.chartOverlayOpen,
       chartOverlayTitle: this.chartRuntime.getInsightsOverlayTitle(this.config.modelType),
       insightsView: this.insightsView,

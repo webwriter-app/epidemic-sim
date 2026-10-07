@@ -83,7 +83,6 @@ export interface SimulationSnapshot {
   id: string
   label: string
   createdAt: number
-  chartImageJpeg: string | null
   estimatedR0: number | null
   config: SimulationConfig
   frameIndex: number

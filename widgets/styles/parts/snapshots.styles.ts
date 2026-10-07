@@ -47,6 +47,8 @@ export const snapshotsStyles = css`
   .snapshots-overlay__snapshot-meta { display: grid; gap: 2px; min-width: 0; }
   .snapshots-overlay__snapshot-title { font-weight: 600; color: #0f172a; }
   .snapshots-overlay__snapshot-time { color: #475569; font-size: 0.8rem; }
+  .snapshots-overlay__snapshot-actions { display: flex; gap: 6px; flex: 0 0 auto; }
+  .snapshots-overlay__download-button,
   .snapshots-overlay__delete-button {
     display: inline-flex;
     align-items: center;
@@ -63,15 +65,18 @@ export const snapshotsStyles = css`
     line-height: 1;
   }
   .snapshots-overlay__delete-button:hover { background: #fef2f2; }
-  .snapshots-overlay__snapshot-image {
+  .snapshots-overlay__download-button { border-color: #d6dce4; color: #334155; }
+  .snapshots-overlay__download-button:hover { background: #f1f5f9; }
+  .snapshots-overlay__snapshot-chart {
+    position: relative;
     width: 100%;
     height: min(20vh, 190px);
     min-height: 140px;
     border: 1px solid #d6dce4;
     border-radius: 8px;
-    object-fit: contain;
     background: #f8fafc;
   }
+  .snapshots-overlay__snapshot-chart canvas { display: block; width: 100% !important; height: 100% !important; }
   .snapshots-overlay__snapshot-details { border-top: 1px solid #e2e8f0; padding-top: 6px; }
   .snapshots-overlay__snapshot-details::part(base) { border: none; border-radius: 0; padding: 0; }
   .snapshots-overlay__snapshot-details::part(header) { padding: 0 0 6px 0; color: #334155; font-size: 0.82rem; }
@@ -88,6 +93,6 @@ export const snapshotsStyles = css`
   @media (max-width: 600px) {
     .snapshots-overlay { padding: 8px; }
     .snapshots-overlay__dialog { padding: 10px; border-radius: 8px; }
-    .snapshots-overlay__snapshot-image { height: min(18vh, 150px); min-height: 120px; }
+    .snapshots-overlay__snapshot-chart { height: min(18vh, 150px); min-height: 120px; }
   }
 `

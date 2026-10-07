@@ -46,6 +46,8 @@ export type WidgetLayoutInput = {
   formatDays: (frameCount: number) => string
   formatApprox: (value: number | null, digits?: number) => string
   onDeleteSnapshot: (snapshotId: string) => void
+  onDownloadSnapshotImage: (snapshotId: string) => void
+  onDownloadSnapshotTable: (snapshotId: string) => void
   chartOverlayOpen: boolean
   chartOverlayTitle: string
   insightsView: InsightsOverlayView
@@ -130,6 +132,8 @@ export function renderWidgetLayout(input: WidgetLayoutInput): TemplateResult {
           formatDays: input.formatDays,
           formatApprox: input.formatApprox,
           onDelete: input.onDeleteSnapshot,
+          onDownloadImage: input.onDownloadSnapshotImage,
+          onDownloadTable: input.onDownloadSnapshotTable,
         },
       })}
 

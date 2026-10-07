@@ -52,7 +52,6 @@ function sampleSnapshot(hotspot: Hotspot): SimulationSnapshot {
     id: "snapshot-1",
     label: "Snapshot 1",
     createdAt: 1_700_000_000_000,
-    chartImageJpeg: "data:image/jpeg;base64,dGVzdA==",
     estimatedR0: 2.5,
     config: {...sampleConfig},
     frameIndex: 48,
@@ -108,7 +107,7 @@ describe("<webwriter-epidemic-sim>", function () {
       assert.lengthOf(restored!.snapshots, 0)
     })
 
-    it("roundtrips snapshots including chart image", function () {
+    it("roundtrips snapshots including chart data", function () {
       const host = document.createElement("div")
       const hotspot = sampleHotspot()
       const snapshot = sampleSnapshot(hotspot)
@@ -129,16 +128,36 @@ describe("<webwriter-epidemic-sim>", function () {
       const restoredSnapshot = restored!.snapshots[0]
       assert.strictEqual(restoredSnapshot.id, "snapshot-1")
       assert.strictEqual(restoredSnapshot.label, "Snapshot 1")
-      assert.strictEqual(restoredSnapshot.chartImageJpeg, snapshot.chartImageJpeg)
       assert.strictEqual(restoredSnapshot.estimatedR0, 2.5)
       assert.strictEqual(restoredSnapshot.frameIndex, 48)
+      assert.deepEqual(restoredSnapshot.susceptibleHistory, [100, 90, 80])
       assert.deepEqual(restoredSnapshot.infectedHistory, [0, 10, 10])
+      assert.deepEqual(restoredSnapshot.recoveredHistory, [0, 0, 10])
+      assert.deepEqual(restoredSnapshot.config, sampleConfig)
       assert.lengthOf(restoredSnapshot.userHotspots, 1)
       assert.strictEqual(restoredSnapshot.userHotspots[0].id, 0)
 
       const reparsed = parsePersistedState(encodePersistedState(restored!))
       assert.isNotNull(reparsed)
-      assert.strictEqual(reparsed!.snapshots[0].chartImageJpeg, snapshot.chartImageJpeg)
+      assert.deepEqual(reparsed!.snapshots[0].infectedHistory, snapshot.infectedHistory)
+    })
+
+    it("drops legacy chart images from persisted snapshots", function () {
+      const snapshot = sampleSnapshot(sampleHotspot())
+      const legacyState = JSON.stringify({
+        version: 1,
+        hotspots: [],
+        nextHotspotId: 0,
+        nextSnapshotId: 2,
+        snapshots: [{...snapshot, chartImageJpeg: "data:image/jpeg;base64,dGVzdA=="}],
+      })
+
+      const restored = parsePersistedState(legacyState)
+      assert.isNotNull(restored)
+      assert.lengthOf(restored!.snapshots, 1)
+      assert.notProperty(restored!.snapshots[0], "chartImageJpeg")
+      assert.deepEqual(restored!.snapshots[0].infectedHistory, snapshot.infectedHistory)
+      assert.notInclude(encodePersistedState(restored!), "chartImageJpeg")
     })
   })
 })

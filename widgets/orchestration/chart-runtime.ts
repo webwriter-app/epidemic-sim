@@ -21,6 +21,30 @@ export type ChartRuntimeCounts = {
   dead: number
 }
 
+export type ChartHistories = {
+  susceptibleHistory: number[]
+  exposedHistory: number[]
+  infectedHistory: number[]
+  recoveredHistory: number[]
+  deadHistory: number[]
+}
+
+export function buildChartSeries(modelType: EpidemicModelType, histories: ChartHistories): ChartSeries[] {
+  const compartmentSeries: Record<ChartCompartment, ChartSeries> = {
+    susceptible: {label: msg("Susceptible"), values: histories.susceptibleHistory, color: "#56B4E9"},
+    exposed: {label: msg("Exposed"), values: histories.exposedHistory, color: "#E69F00"},
+    infected: {label: msg("Infected"), values: histories.infectedHistory, color: "#d55e00"},
+    recovered: {label: msg("Recovered"), values: histories.recoveredHistory, color: "#009E73"},
+    dead: {label: msg("Dead"), values: histories.deadHistory, color: "#666666"},
+  }
+  return getChartCompartments(modelType).map((compartment) => compartmentSeries[compartment])
+}
+
+export function buildChartDayLabels(series: ChartSeries[]): string[] {
+  const length = series.reduce((maxLength, entry) => Math.max(maxLength, entry.values.length), 0)
+  return Array.from({length}, (_, dayIndex) => String(dayIndex))
+}
+
 export class ChartRuntime {
   private readonly historyLimit = 2000
   susceptibleHistory: number[] = []
@@ -80,19 +104,11 @@ export class ChartRuntime {
   }
 
   buildDayLabels(series: ChartSeries[]): string[] {
-    const length = series.reduce((maxLength, entry) => Math.max(maxLength, entry.values.length), 0)
-    return Array.from({length}, (_, dayIndex) => String(dayIndex))
+    return buildChartDayLabels(series)
   }
 
   buildSeries(config: SimulationConfig): ChartSeries[] {
-    const compartmentSeries: Record<ChartCompartment, ChartSeries> = {
-      susceptible: {label: msg("Susceptible"), values: this.susceptibleHistory, color: "#56B4E9"},
-      exposed: {label: msg("Exposed"), values: this.exposedHistory, color: "#E69F00"},
-      infected: {label: msg("Infected"), values: this.infectedHistory, color: "#d55e00"},
-      recovered: {label: msg("Recovered"), values: this.recoveredHistory, color: "#009E73"},
-      dead: {label: msg("Dead"), values: this.deadHistory, color: "#666666"},
-    }
-    return getChartCompartments(config.modelType).map((compartment) => compartmentSeries[compartment])
+    return buildChartSeries(config.modelType, this)
   }
 
   draw(
