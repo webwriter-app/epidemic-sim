@@ -19,7 +19,7 @@ export const layoutStyles = css`
     display: grid;
     gap: 12px;
     grid-template-columns: 1fr;
-    grid-template-rows: auto minmax(360px, 1fr);
+    grid-template-rows: auto auto;
     height: 100%;
     min-width: 0;
     min-height: 0;
@@ -184,12 +184,10 @@ export const layoutStyles = css`
     max-height: 140px;
     border: 1px solid #94a3b8;
   }
-  :host(.ww-beforeprint) .simulation-stage,
   :host(.ww-beforeprint) .panel--simulation canvas,
-  :host(.ww-printable) .simulation-stage,
   :host(.ww-printable) .panel--simulation canvas {
-    min-height: 0;
-    max-height: 240px;
+    width: auto;
+    max-width: 100%;
     height: 240px;
     border: 1px solid #94a3b8;
   }
@@ -233,18 +231,15 @@ export const layoutStyles = css`
     .panel--chart canvas {
       max-height: 140px;
     }
-    .simulation-stage,
     .panel--simulation canvas {
-      min-height: 0;
-      max-height: 240px;
+      width: auto;
+      max-width: 100%;
       height: 240px;
     }
   }
 
   @media (max-width: 600px) {
     :host, .widget-shell { min-height: 440px; }
-    .layout { grid-template-rows: auto minmax(280px, 1fr); }
     .panel { min-height: 240px; }
-    .simulation-stage, .panel--simulation canvas { min-height: 280px; }
   }
 `

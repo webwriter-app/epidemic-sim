@@ -4,15 +4,13 @@ export const simulationPanelStyles = css`
   canvas { width: 100%; border: 1px solid #d6dce4; background: #fcfdff; }
   .simulation-stage {
     position: relative;
-    flex: 1;
-    min-height: 360px;
     display: flex;
     flex-direction: column;
   }
   .panel--simulation canvas {
-    flex: 1;
-    min-height: 360px;
+    width: 100%;
     height: auto;
+    aspect-ratio: 5 / 3;
     display: block;
   }
   .panel--simulation canvas.drop-active {

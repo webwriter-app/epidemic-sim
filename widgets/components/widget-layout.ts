@@ -130,55 +130,57 @@ export function renderWidgetLayout(input: WidgetLayoutInput): TemplateResult {
         }
       </section>
 
-      ${
-        showSidebarInsights
-          ? html`
-              <aside class="side-menu side-menu--insights">
-                <div class="side-menu__section">
-                  <div class="side-menu__title-row">
-                    <h3 class="side-menu__title">${input.insightsTitle}</h3>
-                  </div>
-                  ${renderInsights(input.chartInsights)}
-                </div>
-              </aside>
-            `
-          : input.studentMenu
-            ? renderMenu(input.studentMenu)
-            : null
-      }
-
-      <div class="widget-top-actions">
-        <button
-          type="button"
-          class="simulation-actions__icon-button"
-          aria-label=${msg("Snapshots")}
-          @click=${input.onOpenSnapshots}
-        >
-          ${renderSnapshotsIcon()}
-        </button>
+      <div class="side-panel">
         ${
-          input.isFullscreen
-            ? null
-            : html`
-                <button
-                  type="button"
-                  class="simulation-actions__icon-button ${input.insightsOpen ? "is-active" : ""}"
-                  aria-label=${msg("Insights")}
-                  aria-pressed=${input.insightsOpen ? "true" : "false"}
-                  @click=${input.onToggleInsights}
-                >
-                  ${renderInsightsIcon()}
-                </button>
+          showSidebarInsights
+            ? html`
+                <aside class="side-menu side-menu--insights">
+                  <div class="side-menu__section">
+                    <div class="side-menu__title-row">
+                      <h3 class="side-menu__title">${input.insightsTitle}</h3>
+                    </div>
+                    ${renderInsights(input.chartInsights)}
+                  </div>
+                </aside>
               `
+            : input.studentMenu
+              ? renderMenu(input.studentMenu)
+              : null
         }
-        <button
-          type="button"
-          class="simulation-actions__icon-button"
-          aria-label=${input.isFullscreen ? msg("Exit fullscreen") : msg("Fullscreen")}
-          @click=${input.onToggleFullscreen}
-        >
-          ${input.isFullscreen ? renderExitFullscreenIcon() : renderFullscreenIcon()}
-        </button>
+
+        <div class="widget-top-actions">
+          <button
+            type="button"
+            class="simulation-actions__icon-button"
+            aria-label=${msg("Snapshots")}
+            @click=${input.onOpenSnapshots}
+          >
+            ${renderSnapshotsIcon()}
+          </button>
+          ${
+            input.isFullscreen
+              ? null
+              : html`
+                  <button
+                    type="button"
+                    class="simulation-actions__icon-button ${input.insightsOpen ? "is-active" : ""}"
+                    aria-label=${msg("Insights")}
+                    aria-pressed=${input.insightsOpen ? "true" : "false"}
+                    @click=${input.onToggleInsights}
+                  >
+                    ${renderInsightsIcon()}
+                  </button>
+                `
+          }
+          <button
+            type="button"
+            class="simulation-actions__icon-button"
+            aria-label=${input.isFullscreen ? msg("Exit fullscreen") : msg("Fullscreen")}
+            @click=${input.onToggleFullscreen}
+          >
+            ${input.isFullscreen ? renderExitFullscreenIcon() : renderFullscreenIcon()}
+          </button>
+        </div>
       </div>
 
       ${renderSnapshotsOverlay({
