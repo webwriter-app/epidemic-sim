@@ -54,6 +54,7 @@ export class ChartRuntime {
   deadHistory: number[] = []
   epidemicEnded = false
   hadInfection = false
+  private hasUndrawnPoint = false
 
   reset(): void {
     this.susceptibleHistory = resetHistory()
@@ -94,9 +95,16 @@ export class ChartRuntime {
     pushHistoryValue(this.infectedHistory, counts.infected, this.historyLimit)
     pushHistoryValue(this.recoveredHistory, counts.recovered, this.historyLimit)
     pushHistoryValue(this.deadHistory, counts.dead, this.historyLimit)
+    this.hasUndrawnPoint = true
     if (waveEnded) {
       this.epidemicEnded = true
     }
+  }
+
+  takeUndrawnPoint(): boolean {
+    const hadUndrawnPoint = this.hasUndrawnPoint
+    this.hasUndrawnPoint = false
+    return hadUndrawnPoint
   }
 
   estimateR0(recoveryDuration: number): number | null {

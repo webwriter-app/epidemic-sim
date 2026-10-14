@@ -83,7 +83,7 @@ describe("<webwriter-epidemic-sim>", function () {
   })
 
   describe("persisted state", function () {
-    it("roundtrips hotspots via widget-state attribute and script child", function () {
+    it("roundtrips hotspots via the widget-state attribute", function () {
       const host = document.createElement("div")
       const hotspot = sampleHotspot()
 
@@ -96,7 +96,7 @@ describe("<webwriter-epidemic-sim>", function () {
       })
 
       assert.isNotNull(host.getAttribute(STATE_ATTRIBUTE))
-      assert.isNotNull(host.querySelector(`:scope > script[type="${STATE_SCRIPT_TYPE}"]`))
+      assert.isNull(host.querySelector(`:scope > script[type="${STATE_SCRIPT_TYPE}"]`))
 
       const restored = readPersistedState(host)
       assert.isNotNull(restored)
@@ -105,6 +105,23 @@ describe("<webwriter-epidemic-sim>", function () {
       assert.deepEqual(restored!.hotspots[0].rect, hotspot.rect)
       assert.strictEqual(restored!.nextHotspotId, 1)
       assert.lengthOf(restored!.snapshots, 0)
+    })
+
+    it("removes the legacy script child when writing", function () {
+      const host = document.createElement("div")
+      const legacy = document.createElement("script")
+      legacy.type = STATE_SCRIPT_TYPE
+      legacy.textContent = "{}"
+      host.appendChild(legacy)
+
+      writePersistedState(host, {version: 1, hotspots: [], nextHotspotId: 0, snapshots: [], nextSnapshotId: 1})
+
+      assert.isNull(host.querySelector(`:scope > script[type="${STATE_SCRIPT_TYPE}"]`))
+    })
+
+    it("treats a missing widget-state attribute as no saved state", function () {
+      const host = document.createElement("div")
+      assert.isNull(readPersistedState(host))
     })
 
     it("roundtrips snapshots including chart data", function () {

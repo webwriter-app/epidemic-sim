@@ -435,7 +435,7 @@ export class WebwriterEpidemicSim extends LitElementWw {
     }
     this.stepSimulation()
     this.drawSimulation()
-    if (this.isRunning) {
+    if (this.isRunning && this.chartRuntime.takeUndrawnPoint()) {
       this.drawChart()
     }
     if (this.insightsOpen || this.isFullscreen) {
@@ -587,13 +587,19 @@ export class WebwriterEpidemicSim extends LitElementWw {
     persisted: ReturnType<typeof readPersistedState>,
     options: {restartSimulation: boolean},
   ): void {
-    if (!persisted || this.applyingPersistedState) {
+    if (this.applyingPersistedState) {
       return
+    }
+    const state = persisted ?? {
+      hotspots: [],
+      nextHotspotId: this.hotspotEditing.getPersistedSnapshot().nextHotspotId,
+      snapshots: [],
+      nextSnapshotId: this.snapshotService.getPersistedMeta().nextSnapshotId,
     }
     this.applyingPersistedState = true
     try {
-      this.hotspotEditing.hydrate(persisted.hotspots, persisted.nextHotspotId)
-      this.snapshotService.hydrate(persisted.snapshots, persisted.nextSnapshotId)
+      this.hotspotEditing.hydrate(state.hotspots, state.nextHotspotId)
+      this.snapshotService.hydrate(state.snapshots, state.nextSnapshotId)
       if (options.restartSimulation && this.simulationCanvas) {
         this.restartSimulation({clearPointer: true})
       }

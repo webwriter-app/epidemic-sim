@@ -134,12 +134,7 @@ export function encodePersistedState(state: PersistedWidgetState): string {
 }
 
 export function readPersistedState(host: HTMLElement): PersistedWidgetState | null {
-  const fromAttribute = parsePersistedState(host.getAttribute(STATE_ATTRIBUTE))
-  if (fromAttribute) {
-    return fromAttribute
-  }
-  const script = host.querySelector(`:scope > script[type="${STATE_SCRIPT_TYPE}"]`)
-  return parsePersistedState(script?.textContent)
+  return parsePersistedState(host.getAttribute(STATE_ATTRIBUTE))
 }
 
 export function writePersistedState(host: HTMLElement, state: PersistedWidgetState): void {
@@ -147,14 +142,5 @@ export function writePersistedState(host: HTMLElement, state: PersistedWidgetSta
   if (host.getAttribute(STATE_ATTRIBUTE) !== encoded) {
     host.setAttribute(STATE_ATTRIBUTE, encoded)
   }
-
-  let script = host.querySelector(`:scope > script[type="${STATE_SCRIPT_TYPE}"]`) as HTMLScriptElement | null
-  if (!script) {
-    script = document.createElement("script")
-    script.type = STATE_SCRIPT_TYPE
-    host.appendChild(script)
-  }
-  if (script.textContent !== encoded) {
-    script.textContent = encoded
-  }
+  host.querySelector(`:scope > script[type="${STATE_SCRIPT_TYPE}"]`)?.remove()
 }
