@@ -19,7 +19,6 @@ import LOCALIZE from "../localization/generated"
 import {formatApprox} from "./analytics/chart-insights"
 import type {SelectedHotspotInput} from "./components/canvas-panel"
 import {renderWidgetLayout} from "./components/widget-layout"
-import type {InsightsOverlayView} from "./components/chart-overlay"
 import {
   booleanAttributeConverter,
   modelTypeAttributeConverter,
@@ -52,8 +51,8 @@ import {isEpidemicModelType, type EpidemicModelType} from "./simulation/epidemic
 import {formatFrameCountAsDays} from "./simulation/time"
 import type {Agent, SimulationAreas, SimulationConfig} from "./simulation/types"
 import {epidemicSimStyles} from "./styles/epidemic-sim.styles"
-import {findTopmostHotspotAtPoint, getHotspotLabel, getScaledHotspotRect} from "./utils/hotspot-interaction"
-import {clampHotspotRect, getCanvasPoint} from "./utils/canvas-coordinates"
+import {findTopmostHotspotAtPoint, getHotspotLabel} from "./utils/hotspot-interaction"
+import {fitCanvasToDisplaySize, getCanvasPoint} from "./utils/canvas-coordinates"
 
 @customElement("webwriter-epidemic-sim")
 export class WebwriterEpidemicSim extends LitElementWw {
@@ -392,9 +391,6 @@ export class WebwriterEpidemicSim extends LitElementWw {
   private simulationCanvas: HTMLCanvasElement | null = null
   private simulationCtx: CanvasRenderingContext2D | null = null
   private chartCanvas: HTMLCanvasElement | null = null
-  private enlargedChartCanvas: HTMLCanvasElement | null = null
-  private enlargedSimulationCanvas: HTMLCanvasElement | null = null
-  private enlargedSimulationCtx: CanvasRenderingContext2D | null = null
   private snapshotChartIds = new Map<HTMLCanvasElement, string>()
   private readonly canvasHost = new CanvasHostController(this)
   private readonly chartRuntime = new ChartRuntime()
@@ -442,15 +438,15 @@ export class WebwriterEpidemicSim extends LitElementWw {
     if (this.isRunning) {
       this.drawChart()
     }
-    if (this.chartOverlayOpen) {
+    if (this.insightsOpen || this.isFullscreen) {
       this.requestUpdate()
     }
     return this.isRunning
   })
 
   @state() accessor isRunning = false
-  @state() accessor chartOverlayOpen = false
-  @state() accessor insightsView: InsightsOverlayView = "model"
+  @state() accessor insightsOpen = false
+  @state() accessor isFullscreen = false
   @state() accessor snapshotsOverlayOpen = false
   @state() accessor chartContextMenuOpen = false
   @state() accessor chartContextMenuPosition = {x: 0, y: 0}
@@ -466,21 +462,25 @@ export class WebwriterEpidemicSim extends LitElementWw {
   private recoveredCount = 0
   private deadCount = 0
   private printClassObserver: MutationObserver | null = null
+  private canvasResizeObserver: ResizeObserver | null = null
 
   connectedCallback(): void {
     super.connectedCallback()
     window.addEventListener("keydown", this.onWindowKeyDown)
+    this.ownerDocument.addEventListener("fullscreenchange", this.syncFullscreenState)
     this.printClassObserver = new MutationObserver(() => {
       const next =
         this.classList.contains("ww-beforeprint") || this.classList.contains("ww-printable")
       if (next !== this.isPrintPreparing) {
         this.isPrintPreparing = next
       }
+      this.syncFullscreenState()
     })
     this.printClassObserver.observe(this, {attributes: true, attributeFilter: ["class"]})
     this.isPrintPreparing =
       this.classList.contains("ww-beforeprint") || this.classList.contains("ww-printable")
     if (this.simulationCanvas) {
+      this.observeCanvasSize()
       this.startLoop()
     }
   }
@@ -490,21 +490,6 @@ export class WebwriterEpidemicSim extends LitElementWw {
       if (this.widgetState !== this.lastWrittenWidgetState) {
         this.lastWrittenWidgetState = this.widgetState
         this.applyPersistedState(parsePersistedState(this.widgetState), {restartSimulation: true})
-      }
-    }
-    if (changed.has("chartOverlayOpen") || changed.has("insightsView")) {
-      if (this.chartOverlayOpen) {
-        this.resolveEnlargedOverlayCanvases()
-        if (this.insightsView === "model") {
-          this.drawChart()
-        } else {
-          this.drawSimulation()
-        }
-      } else if (changed.has("chartOverlayOpen") && changed.get("chartOverlayOpen")) {
-        destroyChart(this.enlargedChartCanvas)
-        this.enlargedChartCanvas = null
-        this.enlargedSimulationCanvas = null
-        this.enlargedSimulationCtx = null
       }
     }
     if (this.snapshotsOverlayOpen || changed.has("snapshotsOverlayOpen")) {
@@ -532,6 +517,8 @@ export class WebwriterEpidemicSim extends LitElementWw {
   disconnectedCallback(): void {
     this.printClassObserver?.disconnect()
     this.printClassObserver = null
+    this.canvasResizeObserver?.disconnect()
+    this.canvasResizeObserver = null
     if (this.persistStateTimer !== null) {
       window.clearTimeout(this.persistStateTimer)
       this.persistStateTimer = null
@@ -540,11 +527,9 @@ export class WebwriterEpidemicSim extends LitElementWw {
     this.stopLoop()
     this.hotspotPointer.clear()
     destroyChart(this.chartCanvas)
-    destroyChart(this.enlargedChartCanvas)
     this.destroySnapshotCharts()
-    this.enlargedSimulationCanvas = null
-    this.enlargedSimulationCtx = null
     window.removeEventListener("keydown", this.onWindowKeyDown)
+    this.ownerDocument.removeEventListener("fullscreenchange", this.syncFullscreenState)
     super.disconnectedCallback()
   }
 
@@ -552,6 +537,7 @@ export class WebwriterEpidemicSim extends LitElementWw {
     this.simulationCanvas = this.canvasHost.queryCanvas("#simulation-canvas")
     this.simulationCtx = this.canvasHost.queryContext("#simulation-canvas")
     this.chartCanvas = this.canvasHost.queryCanvas("#chart-canvas")
+    this.observeCanvasSize()
     this.applyPersistedState(readPersistedState(this), {restartSimulation: false})
     this.resetSimulation()
     this.startLoop()
@@ -711,6 +697,14 @@ export class WebwriterEpidemicSim extends LitElementWw {
 
   private clamp(value: number, min: number, max: number): number {
     return Math.max(min, Math.min(max, value))
+  }
+
+  private observeCanvasSize(): void {
+    if (!this.simulationCanvas || this.canvasResizeObserver) {
+      return
+    }
+    this.canvasResizeObserver = new ResizeObserver(() => this.redrawSimulationWhenPaused())
+    this.canvasResizeObserver.observe(this.simulationCanvas)
   }
 
   private redrawSimulationWhenPaused(): void {
@@ -930,71 +924,44 @@ export class WebwriterEpidemicSim extends LitElementWw {
       this.closeSnapshotsOverlay()
       return
     }
-    if (!this.chartOverlayOpen) {
+    if (this.insightsOpen) {
+      this.insightsOpen = false
       return
     }
-    this.closeChartOverlay()
+    if (this.isFullscreen) {
+      void this.toggleFullscreen()
+    }
   }
 
-  private openInsightsOverlay = async (view: InsightsOverlayView): Promise<void> => {
-    this.closeSnapshotsOverlay()
-    this.insightsView = view
-    this.chartOverlayOpen = true
+  private toggleInsights = (): void => {
     this.closeChartContextMenu()
-    await this.updateComplete
-    this.resolveEnlargedOverlayCanvases()
-    if (view === "model") {
-      this.drawChart()
-    } else {
-      this.drawSimulation()
+    this.insightsOpen = !this.insightsOpen
+  }
+
+  private syncFullscreenState = (): void => {
+    const next = this.ownerDocument.fullscreenElement === this || this.classList.contains("ww-fullscreen")
+    if (next !== this.isFullscreen) {
+      this.isFullscreen = next
     }
   }
 
-  private closeChartOverlay = (): void => {
-    if (!this.chartOverlayOpen) {
-      return
+  private toggleFullscreen = async (): Promise<void> => {
+    try {
+      if (this.isFullscreen) {
+        await this.ownerDocument.exitFullscreen()
+      } else {
+        await this.requestFullscreen()
+      }
+    } catch {
+      // the browser may reject fullscreen, e.g. without a user gesture
     }
-    this.chartOverlayOpen = false
-    destroyChart(this.enlargedChartCanvas)
-    this.enlargedChartCanvas = null
-    this.enlargedSimulationCanvas = null
-    this.enlargedSimulationCtx = null
-  }
-
-  private onInsightsViewChange = (view: InsightsOverlayView): void => {
-    if (this.insightsView === view) {
-      return
-    }
-    if (this.insightsView === "model") {
-      destroyChart(this.enlargedChartCanvas)
-      this.enlargedChartCanvas = null
-    } else {
-      this.enlargedSimulationCanvas = null
-      this.enlargedSimulationCtx = null
-    }
-    this.insightsView = view
-  }
-
-  private resolveEnlargedOverlayCanvases(): void {
-    if (!this.chartOverlayOpen) {
-      return
-    }
-    if (this.insightsView === "model") {
-      this.enlargedChartCanvas = this.canvasHost.queryCanvas("#chart-canvas-enlarged")
-      this.enlargedSimulationCanvas = null
-      this.enlargedSimulationCtx = null
-      return
-    }
-    this.enlargedSimulationCanvas = this.canvasHost.queryCanvas("#simulation-canvas-enlarged")
-    this.enlargedSimulationCtx = this.enlargedSimulationCanvas?.getContext("2d") ?? null
-    this.enlargedChartCanvas = null
+    this.syncFullscreenState()
   }
 
   private openSnapshotsOverlay = (): void => {
     if (this.snapshotsOverlayOpen) {
       return
     }
-    this.closeChartOverlay()
     this.closeChartContextMenu()
     this.snapshotsOverlayOpen = true
   }
@@ -1011,21 +978,6 @@ export class WebwriterEpidemicSim extends LitElementWw {
       return
     }
     this.closeSnapshotsOverlay()
-  }
-
-  private onChartOverlayBackdropClick = (event: MouseEvent): void => {
-    if (event.target !== event.currentTarget) {
-      return
-    }
-    this.closeChartOverlay()
-  }
-
-  private onChartPanelDoubleClick = (): void => {
-    void this.openInsightsOverlay("model")
-  }
-
-  private onSimulationPanelDoubleClick = (): void => {
-    void this.openInsightsOverlay("simulation")
   }
 
   private onChartContextMenu = (event: MouseEvent): void => {
@@ -1084,36 +1036,16 @@ export class WebwriterEpidemicSim extends LitElementWw {
     const ctx = this.simulationCtx
     const canvas = this.simulationCanvas
     if (ctx && canvas) {
+      fitCanvasToDisplaySize(canvas)
       drawSimulation(ctx, canvas, this.agents, areas, {
         removalHotspotId: this.hotspotPointer.getRemovalPendingHotspotId(),
         selectedHotspotId: this.selectedHotspotId,
       })
     }
-    if (
-      this.chartOverlayOpen &&
-      this.insightsView === "simulation" &&
-      this.enlargedSimulationCtx &&
-      this.enlargedSimulationCanvas
-    ) {
-      drawSimulation(this.enlargedSimulationCtx, this.enlargedSimulationCanvas, this.agents, areas)
-    }
   }
 
   private drawChart(): void {
-    const modelOverlayOpen = this.chartOverlayOpen && this.insightsView === "model"
-    if (modelOverlayOpen) {
-      const enlargedCanvas =
-        this.enlargedChartCanvas ?? this.canvasHost.queryCanvas("#chart-canvas-enlarged")
-      if (enlargedCanvas) {
-        this.enlargedChartCanvas = enlargedCanvas
-      }
-    }
-    this.chartRuntime.draw(
-      this.config,
-      this.chartCanvas,
-      this.enlargedChartCanvas,
-      modelOverlayOpen,
-    )
+    this.chartRuntime.draw(this.config, this.chartCanvas)
   }
 
   private drawSnapshotCharts(): void {
@@ -1183,28 +1115,10 @@ export class WebwriterEpidemicSim extends LitElementWw {
     if (index < 0) {
       return null
     }
-    const hotspot = this.hotspotEditing.userHotspots[index]
-    const range = getRangeLimits("hotspotSize")
     return {
-      label: getHotspotLabel(hotspot, index),
-      size: Math.round(Math.max(hotspot.rect.width, hotspot.rect.height)),
-      min: range.min,
-      max: range.max,
-      step: range.step,
-      onSizeInput: this.onSelectedHotspotSizeInput,
+      label: getHotspotLabel(this.hotspotEditing.userHotspots[index], index),
       onDelete: this.deleteSelectedHotspot,
     }
-  }
-
-  private onSelectedHotspotSizeInput = (event: Event): void => {
-    const hotspot = this.hotspotEditing.userHotspots.find((entry) => entry.id === this.selectedHotspotId)
-    if (!hotspot) {
-      return
-    }
-    const range = getRangeLimits("hotspotSize")
-    const size = this.clamp(Math.round(this.parseRangeInput(event)), range.min, range.max)
-    const areas = this.hotspotEditing.getAreas(this.config)
-    this.hotspotEditing.updateHotspotRect(hotspot.id, clampHotspotRect(getScaledHotspotRect(hotspot.rect, size), areas.main))
   }
 
   private deleteSelectedHotspot = (): void => {
@@ -1247,10 +1161,6 @@ export class WebwriterEpidemicSim extends LitElementWw {
     return option?.label ?? modelType.toUpperCase()
   }
 
-  private getModelTabLabel(): string {
-    return `${this.getModelTypeLabel(this.modelType)}-${msg("Model")}`
-  }
-
   private setAllowControl = (key: AllowControlKey, event: Event): void => {
     this[key] = this.parseSwitch(event)
   }
@@ -1273,8 +1183,6 @@ export class WebwriterEpidemicSim extends LitElementWw {
       chartContextMenuOpen: this.chartContextMenuOpen,
       chartContextMenuPosition: this.chartContextMenuPosition,
       onMainContentClick: this.onMainContentClick,
-      onChartPanelDoubleClick: this.onChartPanelDoubleClick,
-      onSimulationPanelDoubleClick: this.onSimulationPanelDoubleClick,
       onChartContextMenu: this.onChartContextMenu,
       onCreateSnapshot: this.createSnapshot,
       canvasDropActive: this.hotspotEditing.canvasDropActive,
@@ -1283,6 +1191,7 @@ export class WebwriterEpidemicSim extends LitElementWw {
       hotspotsEnabled: this.hotspotsEnabled,
       showHotspotToolbox: this.isEditMode || this.allowHotspotsEnabledControl,
       isRunning: this.isRunning,
+      isFullscreen: this.isFullscreen,
       onCanvasDragOver: this.hotspotEditing.onCanvasDragOver,
       onCanvasDragLeave: this.hotspotEditing.onCanvasDragLeave,
       onCanvasDrop: this.hotspotEditing.onCanvasDrop,
@@ -1294,6 +1203,8 @@ export class WebwriterEpidemicSim extends LitElementWw {
       onToggleSimulation: this.toggleSimulation,
       onResetSimulation: this.resetSimulation,
       onOpenSnapshots: this.openSnapshotsOverlay,
+      onToggleInsights: this.toggleInsights,
+      onToggleFullscreen: this.toggleFullscreen,
       studentMenu: this.hasVisibleMenuControls
         ? buildStudentMenuInput(
             this.getWidgetConfigValues(),
@@ -1312,14 +1223,9 @@ export class WebwriterEpidemicSim extends LitElementWw {
       onDeleteSnapshot: this.deleteSnapshot,
       onDownloadSnapshotImage: this.downloadSnapshotImage,
       onDownloadSnapshotTable: this.downloadSnapshotTable,
-      chartOverlayOpen: this.chartOverlayOpen,
-      chartOverlayTitle: this.chartRuntime.getInsightsOverlayTitle(this.config.modelType),
-      insightsView: this.insightsView,
-      modelTabLabel: this.getModelTabLabel(),
+      insightsOpen: this.insightsOpen,
+      insightsTitle: this.chartRuntime.getInsightsOverlayTitle(this.config.modelType),
       chartInsights: this.chartRuntime.buildInsightViewData(this.frameIndex, this.getCounts(), this.config),
-      onInsightsViewChange: this.onInsightsViewChange,
-      onChartBackdropClick: this.onChartOverlayBackdropClick,
-      onCloseChartOverlay: this.closeChartOverlay,
     })
   }
 }

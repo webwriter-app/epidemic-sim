@@ -2,9 +2,14 @@ import {html} from "lit"
 import type {TemplateResult} from "lit"
 import {msg} from "@lit/localize"
 import {renderCanvasPanel, type SelectedHotspotInput} from "./canvas-panel"
-import {renderChartOverlay, type InsightsOverlayView} from "./chart-overlay"
-import type {ChartInsightData} from "./chart-insights-view"
+import {renderInsights, type ChartInsightData} from "./chart-insights-view"
 import {renderSnapshotsOverlay} from "./snapshots-overlay"
+import {
+  renderExitFullscreenIcon,
+  renderFullscreenIcon,
+  renderInsightsIcon,
+  renderSnapshotsIcon,
+} from "../rendering/action-icons"
 import {renderMenu} from "../rendering/menu-renderer"
 import type {RenderMenuOptions} from "../rendering/menu-renderer"
 import {renderTeacherOptions} from "../rendering/teacher-options-renderer"
@@ -19,8 +24,6 @@ export type WidgetLayoutInput = {
   chartContextMenuOpen: boolean
   chartContextMenuPosition: {x: number; y: number}
   onMainContentClick: () => void
-  onChartPanelDoubleClick: () => void
-  onSimulationPanelDoubleClick: () => void
   onChartContextMenu: (event: MouseEvent) => void
   onCreateSnapshot: () => void
   canvasDropActive: boolean
@@ -29,6 +32,7 @@ export type WidgetLayoutInput = {
   hotspotsEnabled: boolean
   showHotspotToolbox: boolean
   isRunning: boolean
+  isFullscreen: boolean
   onCanvasDragOver: (event: DragEvent) => void
   onCanvasDragLeave: () => void
   onCanvasDrop: (event: DragEvent) => void
@@ -40,6 +44,8 @@ export type WidgetLayoutInput = {
   onToggleSimulation: () => void
   onResetSimulation: () => void
   onOpenSnapshots: () => void
+  onToggleInsights: () => void
+  onToggleFullscreen: () => void
   studentMenu: RenderMenuOptions | null
   snapshotsOverlayOpen: boolean
   snapshots: SimulationSnapshot[]
@@ -51,17 +57,13 @@ export type WidgetLayoutInput = {
   onDeleteSnapshot: (snapshotId: string) => void
   onDownloadSnapshotImage: (snapshotId: string) => void
   onDownloadSnapshotTable: (snapshotId: string) => void
-  chartOverlayOpen: boolean
-  chartOverlayTitle: string
-  insightsView: InsightsOverlayView
-  modelTabLabel: string
+  insightsOpen: boolean
+  insightsTitle: string
   chartInsights: ChartInsightData
-  onInsightsViewChange: (view: InsightsOverlayView) => void
-  onChartBackdropClick: (event: MouseEvent) => void
-  onCloseChartOverlay: () => void
 }
 
 export function renderWidgetLayout(input: WidgetLayoutInput): TemplateResult {
+  const showSidebarInsights = input.insightsOpen && !input.isFullscreen
   return html`
     ${
       input.showTeacherOptions
@@ -72,17 +74,12 @@ export function renderWidgetLayout(input: WidgetLayoutInput): TemplateResult {
           `
         : null
     }
-    <section class="widget-shell ${input.hasVisibleMenuControls ? "has-menu" : ""}">
+    <section class="widget-shell ${input.hasVisibleMenuControls || showSidebarInsights ? "has-menu" : ""}">
       <p class="print-hint">${msg("Printed snapshot of the epidemic simulation. Author options and interactive controls are omitted.")}</p>
       <section class="main-content" @click=${input.onMainContentClick}>
-        <section class="layout">
+        <section class="layout ${input.hotspotsEnabled ? "layout--hotspots" : ""}">
           <sl-card class="panel panel--chart">
-            <div
-              class="chart-wrap chart-wrap--interactive"
-              @dblclick=${input.onChartPanelDoubleClick}
-              @contextmenu=${input.onChartContextMenu}
-              title=${msg("Double-click to enlarge")}
-            >
+            <div class="chart-wrap" @contextmenu=${input.onChartContextMenu}>
               <canvas id="chart-canvas"></canvas>
             </div>
           </sl-card>
@@ -114,18 +111,75 @@ export function renderWidgetLayout(input: WidgetLayoutInput): TemplateResult {
             onCanvasDrop: input.onCanvasDrop,
             onCanvasPointerDown: input.onCanvasPointerDown,
             onCanvasContextMenu: input.onCanvasContextMenu,
-            onCanvasDoubleClick: input.onSimulationPanelDoubleClick,
             onHotspotTokenDragStart: input.onHotspotTokenDragStart,
             onHotspotTokenDragEnd: input.onHotspotTokenDragEnd,
             onHotspotTokenClick: input.onHotspotTokenClick,
             onToggleSimulation: input.onToggleSimulation,
             onResetSimulation: input.onResetSimulation,
-            onOpenSnapshots: input.onOpenSnapshots,
           })}
         </section>
+        ${
+          input.isFullscreen
+            ? html`
+                <section class="fullscreen-insights">
+                  <h3 class="fullscreen-insights__title">${input.insightsTitle}</h3>
+                  ${renderInsights(input.chartInsights)}
+                </section>
+              `
+            : null
+        }
       </section>
 
-      ${input.studentMenu ? renderMenu(input.studentMenu) : null}
+      ${
+        showSidebarInsights
+          ? html`
+              <aside class="side-menu side-menu--insights">
+                <div class="side-menu__section">
+                  <div class="side-menu__title-row">
+                    <h3 class="side-menu__title">${input.insightsTitle}</h3>
+                  </div>
+                  ${renderInsights(input.chartInsights)}
+                </div>
+              </aside>
+            `
+          : input.studentMenu
+            ? renderMenu(input.studentMenu)
+            : null
+      }
+
+      <div class="widget-top-actions">
+        <button
+          type="button"
+          class="simulation-actions__icon-button"
+          aria-label=${msg("Snapshots")}
+          @click=${input.onOpenSnapshots}
+        >
+          ${renderSnapshotsIcon()}
+        </button>
+        ${
+          input.isFullscreen
+            ? null
+            : html`
+                <button
+                  type="button"
+                  class="simulation-actions__icon-button ${input.insightsOpen ? "is-active" : ""}"
+                  aria-label=${msg("Insights")}
+                  aria-pressed=${input.insightsOpen ? "true" : "false"}
+                  @click=${input.onToggleInsights}
+                >
+                  ${renderInsightsIcon()}
+                </button>
+              `
+        }
+        <button
+          type="button"
+          class="simulation-actions__icon-button"
+          aria-label=${input.isFullscreen ? msg("Exit fullscreen") : msg("Fullscreen")}
+          @click=${input.onToggleFullscreen}
+        >
+          ${input.isFullscreen ? renderExitFullscreenIcon() : renderFullscreenIcon()}
+        </button>
+      </div>
 
       ${renderSnapshotsOverlay({
         open: input.snapshotsOverlayOpen,
@@ -141,18 +195,6 @@ export function renderWidgetLayout(input: WidgetLayoutInput): TemplateResult {
           onDownloadImage: input.onDownloadSnapshotImage,
           onDownloadTable: input.onDownloadSnapshotTable,
         },
-      })}
-
-      ${renderChartOverlay({
-        open: input.chartOverlayOpen,
-        title: input.chartOverlayTitle,
-        view: input.insightsView,
-        modelTabLabel: input.modelTabLabel,
-        insights: input.chartInsights,
-        onViewChange: input.onInsightsViewChange,
-        onBackdropClick: input.onChartBackdropClick,
-        onCreateSnapshot: input.onCreateSnapshot,
-        onClose: input.onCloseChartOverlay,
       })}
     </section>
   `

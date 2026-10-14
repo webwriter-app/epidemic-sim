@@ -83,15 +83,3 @@ export function getResizedHotspotRect(
   }
   return {x: Math.min(anchor.x, pointX), y: Math.min(anchor.y, pointY), width: Math.abs(pointX - anchor.x), height: Math.abs(pointY - anchor.y)}
 }
-
-export function getScaledHotspotRect(rect: Rect, size: number): Rect {
-  const scale = size / Math.max(1, rect.width, rect.height)
-  const width = rect.width * scale
-  const height = rect.height * scale
-  return {
-    x: rect.x + (rect.width - width) / 2,
-    y: rect.y + (rect.height - height) / 2,
-    width,
-    height,
-  }
-}

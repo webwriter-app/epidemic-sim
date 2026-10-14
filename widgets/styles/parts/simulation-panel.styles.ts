@@ -13,7 +13,6 @@ export const simulationPanelStyles = css`
     flex: 1;
     min-height: 360px;
     height: auto;
-    cursor: zoom-in;
     display: block;
   }
   .panel--simulation canvas.drop-active {
@@ -50,9 +49,8 @@ export const simulationPanelStyles = css`
     gap: 10px;
     flex-wrap: wrap;
   }
-  .hotspot-selection__size { flex: 1 1 160px; }
-  .hotspot-selection__size::part(form-control-label) { font-size: 0.8rem; }
   .hotspot-selection__delete::part(base) { color: #dc2626; border-color: #fecaca; }
+  .hotspot-selection__delete-icon { display: inline-flex; align-items: center; }
   sl-range { width: 100%; }
   .actions { display: flex; justify-content: flex-end; gap: 8px; }
   .simulation-actions {
@@ -74,17 +72,18 @@ export const simulationPanelStyles = css`
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 32px;
-    height: 32px;
+    width: 35px;
+    height: 35px;
     padding: 0;
     border: 1px solid #d6dce4;
     border-radius: 50%;
-    color: #334155;
+    color: #666666;
     background: rgba(255, 255, 255, 0.92);
     box-shadow: 0 1px 4px rgba(15, 23, 42, 0.12);
     cursor: pointer;
     line-height: 1;
   }
   .simulation-actions__icon-button:hover { background: #ffffff; }
+  .simulation-actions__icon-button svg { width: 16px; height: 16px; }
   .actions sl-button:not(.simulation-actions__icon-button)::part(base) { min-width: 112px; }
 `

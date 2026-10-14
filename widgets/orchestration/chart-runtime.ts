@@ -111,27 +111,15 @@ export class ChartRuntime {
     return buildChartSeries(config.modelType, this)
   }
 
-  draw(
-    config: SimulationConfig,
-    compactCanvas: HTMLCanvasElement | null,
-    enlargedCanvas: HTMLCanvasElement | null,
-    chartOverlayOpen: boolean,
-  ): void {
-    const xAxisTitle = msg("Time (days)")
-    if (compactCanvas) {
-      const compactSeries = this.buildSeries(config)
-      drawChart(compactCanvas, config.population, compactSeries, {
-        labels: this.buildDayLabels(compactSeries),
-        xAxisTitle,
-      })
+  draw(config: SimulationConfig, canvas: HTMLCanvasElement | null): void {
+    if (!canvas) {
+      return
     }
-    if (chartOverlayOpen && enlargedCanvas) {
-      const enlargedSeries = this.buildSeries(config)
-      drawChart(enlargedCanvas, config.population, enlargedSeries, {
-        labels: this.buildDayLabels(enlargedSeries),
-        xAxisTitle,
-      })
-    }
+    const series = this.buildSeries(config)
+    drawChart(canvas, config.population, series, {
+      labels: this.buildDayLabels(series),
+      xAxisTitle: msg("Time (days)"),
+    })
   }
 
   getInsightsOverlayTitle(modelType: EpidemicModelType): string {

@@ -6,17 +6,11 @@ import {
   renderPauseIcon,
   renderPlayIcon,
   renderResetIcon,
-  renderSnapshotsIcon,
 } from "../rendering/action-icons"
 import {SIMULATION_CANVAS_HEIGHT, SIMULATION_CANVAS_WIDTH} from "../simulation/canvas-dimensions"
 
 export type SelectedHotspotInput = {
   label: string
-  size: number
-  min: number
-  max: number
-  step: number
-  onSizeInput: (event: Event) => void
   onDelete: () => void
 }
 
@@ -32,31 +26,19 @@ type CanvasPanelInput = {
   onCanvasDrop: (event: DragEvent) => void
   onCanvasPointerDown: (event: PointerEvent) => void
   onCanvasContextMenu: (event: MouseEvent) => void
-  onCanvasDoubleClick: () => void
   onHotspotTokenDragStart: (event: DragEvent) => void
   onHotspotTokenDragEnd: () => void
   onHotspotTokenClick: () => void
   onToggleSimulation: () => void
   onResetSimulation: () => void
-  onOpenSnapshots: () => void
 }
 
 function renderSelectedHotspot(selected: SelectedHotspotInput): TemplateResult {
   return html`
     <div class="hotspot-selection">
-      <sl-range
-        class="hotspot-selection__size"
-        label=${`${selected.label} · ${msg("Hotspot size")}`}
-        tooltip="none"
-        min=${String(selected.min)}
-        max=${String(selected.max)}
-        step=${String(selected.step)}
-        .value=${selected.size}
-        @sl-input=${selected.onSizeInput}
-      ></sl-range>
       <sl-button class="hotspot-selection__delete" size="small" @click=${selected.onDelete}>
-        <span slot="prefix">${renderDeleteIcon()}</span>
-        ${msg("Delete")}
+        <span slot="prefix" class="hotspot-selection__delete-icon">${renderDeleteIcon()}</span>
+        ${msg("Delete")} ${selected.label}
       </sl-button>
     </div>
   `
@@ -75,7 +57,7 @@ function getCanvasClass(input: CanvasPanelInput): string {
 export function renderCanvasPanel(input: CanvasPanelInput): TemplateResult {
   return html`
     <sl-card class="panel panel--simulation">
-      <div class="simulation-stage" title=${msg("Double-click to enlarge")}>
+      <div class="simulation-stage">
         <canvas
           id="simulation-canvas"
           width=${SIMULATION_CANVAS_WIDTH}
@@ -86,17 +68,13 @@ export function renderCanvasPanel(input: CanvasPanelInput): TemplateResult {
           @drop=${input.onCanvasDrop}
           @pointerdown=${input.onCanvasPointerDown}
           @contextmenu=${input.onCanvasContextMenu}
-          @dblclick=${input.onCanvasDoubleClick}
         ></canvas>
         <div class="actions simulation-actions">
-          <button type="button" class="simulation-actions__icon-button simulation-actions__icon-button--play-pause" title=${input.isRunning ? msg("Pause") : msg("Start")} aria-label=${input.isRunning ? msg("Pause") : msg("Start")} @click=${input.onToggleSimulation}>
+          <button type="button" class="simulation-actions__icon-button simulation-actions__icon-button--play-pause" aria-label=${input.isRunning ? msg("Pause") : msg("Start")} @click=${input.onToggleSimulation}>
             ${input.isRunning ? renderPauseIcon() : renderPlayIcon()}
           </button>
-          <button type="button" class="simulation-actions__icon-button" title=${msg("Reset simulation")} aria-label=${msg("Reset simulation")} @click=${input.onResetSimulation}>
+          <button type="button" class="simulation-actions__icon-button" aria-label=${msg("Reset simulation")} @click=${input.onResetSimulation}>
             ${renderResetIcon()}
-          </button>
-          <button type="button" class="simulation-actions__icon-button" title=${msg("Snapshots")} aria-label=${msg("Snapshots")} @click=${input.onOpenSnapshots}>
-            ${renderSnapshotsIcon()}
           </button>
         </div>
       </div>

@@ -31,7 +31,6 @@ function renderSnapshotCard(snapshot: SimulationSnapshot, ctx: SnapshotRenderCon
               slot="trigger"
               type="button"
               class="snapshots-overlay__download-button"
-              title=${msg("Download")}
               aria-label=${msg("Download")}
             >
               ${renderDownloadIcon()}
@@ -47,7 +46,6 @@ function renderSnapshotCard(snapshot: SimulationSnapshot, ctx: SnapshotRenderCon
           <button
             type="button"
             class="snapshots-overlay__delete-button"
-            title=${msg("Delete")}
             aria-label=${msg("Delete")}
             @click=${() => ctx.onDelete(snapshot.id)}
           >
@@ -76,7 +74,7 @@ function renderSnapshotCard(snapshot: SimulationSnapshot, ctx: SnapshotRenderCon
 type SnapshotsOverlayInput = {
   open: boolean
   snapshots: SimulationSnapshot[]
-  onBackdropClick: (event: Event) => void
+  onBackdropClick: (event: MouseEvent) => void
   onCreateSnapshot: () => void
   onClose: () => void
   context: SnapshotRenderContext

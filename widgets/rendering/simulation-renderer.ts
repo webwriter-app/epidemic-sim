@@ -1,5 +1,6 @@
 import {msg} from "@lit/localize"
 import type {Agent, AgentState, Rect, SimulationAreas} from "../simulation/types"
+import {SIMULATION_CANVAS_HEIGHT, SIMULATION_CANVAS_WIDTH} from "../simulation/canvas-dimensions"
 import {getHotspotLabel} from "../utils/hotspot-interaction"
 
 const AGENT_RADIUS = 3
@@ -18,9 +19,10 @@ export function drawSimulation(
   areas: SimulationAreas,
   options?: {removalHotspotId?: number | null; selectedHotspotId?: number | null},
 ): void {
-  ctx.clearRect(0, 0, canvas.width, canvas.height)
+  ctx.setTransform(canvas.width / SIMULATION_CANVAS_WIDTH, 0, 0, canvas.height / SIMULATION_CANVAS_HEIGHT, 0, 0)
+  ctx.clearRect(0, 0, SIMULATION_CANVAS_WIDTH, SIMULATION_CANVAS_HEIGHT)
   ctx.fillStyle = "#fcfdff"
-  ctx.fillRect(0, 0, canvas.width, canvas.height)
+  ctx.fillRect(0, 0, SIMULATION_CANVAS_WIDTH, SIMULATION_CANVAS_HEIGHT)
   drawZones(ctx, areas)
 
   for (let i = 0; i < agents.length; i += 1) {

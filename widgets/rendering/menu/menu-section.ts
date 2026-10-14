@@ -8,7 +8,7 @@ export type MenuSectionHeaderSwitch = {
 
 export function renderMenuSection(
   title: string,
-  controls: TemplateResult,
+  controls: TemplateResult | null,
   headerSwitch?: MenuSectionHeaderSwitch,
 ): TemplateResult {
   return html`
@@ -27,7 +27,7 @@ export function renderMenuSection(
             : null
         }
       </div>
-      <div class="side-menu__controls">${controls}</div>
+      ${controls ? html`<div class="side-menu__controls">${controls}</div>` : null}
     </div>
   `
 }

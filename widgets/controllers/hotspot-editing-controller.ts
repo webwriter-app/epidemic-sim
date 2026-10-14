@@ -58,18 +58,9 @@ export class HotspotEditingController implements ReactiveController {
   }
 
   getAreas(config: SimulationConfig): SimulationAreas {
-    const canvas = this.callbacks.getCanvas()
-    if (!canvas) {
-      return buildSimulationAreas({
-        canvasWidth: SIMULATION_CANVAS_WIDTH,
-        canvasHeight: SIMULATION_CANVAS_HEIGHT,
-        config,
-        userHotspots: this.userHotspots,
-      })
-    }
     return buildSimulationAreas({
-      canvasWidth: canvas.width,
-      canvasHeight: canvas.height,
+      canvasWidth: SIMULATION_CANVAS_WIDTH,
+      canvasHeight: SIMULATION_CANVAS_HEIGHT,
       config,
       userHotspots: this.userHotspots,
     })

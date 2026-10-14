@@ -13,6 +13,11 @@ export const sideMenuStyles: CSSResult = css`
   .side-menu__title-switch::part(label) { display: none; margin: 0; }
   .side-menu__section { display: grid; gap: 8px; border-top: 1px solid #e5e7eb; padding-top: 10px; margin-top: 10px; }
   .side-menu__section:first-of-type { border-top: none; padding-top: 0; margin-top: 0; }
+  .widget-shell.has-menu .side-menu { padding-top: 55px; }
+  .side-menu--insights .insights { grid-template-columns: 1fr; gap: 6px; }
+  .side-menu--insights .insights__row { display: contents; }
+  .simulation-actions__icon-button.is-active { color: #334155; background: #f1f5f9; }
+  .widget-top-actions { position: absolute; top: 10px; right: 10px; z-index: 9; display: flex; gap: 14px; }
   .side-menu__controls { display: grid; gap: 8px; }
   .side-menu__control { display: grid; gap: 4px; }
   .side-menu__control-head { display: flex; justify-content: space-between; gap: 6px; align-items: baseline; font-size: 0.82rem; line-height: 1.25; }
