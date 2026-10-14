@@ -35,15 +35,15 @@
       </trans-unit>
       <trans-unit id="s77cc57dd46f7f5cc">
         <source>Hotspot visit probability</source>
-        <target>احتمال زيارة نقطة الاتصال</target>
+        <target>احتمال زيارة مكان تجمع</target>
       </trans-unit>
       <trans-unit id="sce044315d3edcee3">
         <source>Hotspot stay duration</source>
-        <target>مدة الإقامة في نقطة الاتصال</target>
+        <target>مدة البقاء في مكان التجمع</target>
       </trans-unit>
       <trans-unit id="s5bafee07187fb2ad">
         <source>Hotspot size</source>
-        <target>حجم نقطة الاتصال</target>
+        <target>حجم مكان التجمع</target>
       </trans-unit>
       <trans-unit id="sc522ce8abba9319e">
         <source>Community leave probability</source>
@@ -51,15 +51,15 @@
       </trans-unit>
       <trans-unit id="sbea80d4210f4af52">
         <source>Susceptible</source>
-        <target>عرضة</target>
+        <target>القابلون للإصابة</target>
       </trans-unit>
       <trans-unit id="s9ac5fba6ad7337b9">
         <source>Infected</source>
-        <target>مصاب</target>
+        <target>المصابون</target>
       </trans-unit>
       <trans-unit id="s20c7305417726e5a">
         <source>Recovered</source>
-        <target>تم استرداده</target>
+        <target>المتعافون</target>
       </trans-unit>
       <trans-unit id="s061cc20e3432dead">
         <source>Pause</source>
@@ -67,19 +67,19 @@
       </trans-unit>
       <trans-unit id="sae1c7f13b7c0c47f">
         <source>Start</source>
-        <target>ابدأ</target>
+        <target>تشغيل</target>
       </trans-unit>
       <trans-unit id="sf18604f4e560329a">
         <source>Snapshots</source>
-        <target>لقطات</target>
+        <target>اللقطات</target>
       </trans-unit>
       <trans-unit id="sa1cbd47c70068780">
         <source>Hotspot max agents</source>
-        <target>الحد الأقصى لعدد وكلاء نقطة الاتصال</target>
+        <target>الحد الأقصى للأشخاص في مكان التجمع</target>
       </trans-unit>
       <trans-unit id="sa7d4a2c8f4e43300">
         <source>Placed hotspots</source>
-        <target>النقاط الساخنة الموضوعة</target>
+        <target>أماكن التجمع الموضوعة</target>
       </trans-unit>
       <trans-unit id="sc932995c6f6478ff">
         <source>Create snapshot</source>
@@ -91,27 +91,27 @@
       </trans-unit>
       <trans-unit id="sce256a8918a7f18d">
         <source>Snapshot</source>
-        <target>لمحة سريعة</target>
+        <target>لقطة</target>
       </trans-unit>
       <trans-unit id="sf62c2403c94966db">
         <source>Current susceptible</source>
-        <target>معرض للإصابة حالياً</target>
+        <target>القابلون للإصابة حاليًا</target>
       </trans-unit>
       <trans-unit id="sc336500050494646">
         <source>Current infected</source>
-        <target>المصابون حالياً</target>
+        <target>المصابون حاليًا</target>
       </trans-unit>
       <trans-unit id="sb3b26f6f5b2035db">
         <source>Current recovered</source>
-        <target>التيار المسترد</target>
+        <target>المتعافون حاليًا</target>
       </trans-unit>
       <trans-unit id="s7be45f343cb15665">
         <source>Final recovered share</source>
-        <target>النسبة النهائية المستردة</target>
+        <target>النسبة النهائية للمتعافين</target>
       </trans-unit>
       <trans-unit id="sbe234bd424c5176e">
         <source>Peak infected</source>
-        <target>ذروة الإصابات</target>
+        <target>ذروة عدد المصابين</target>
       </trans-unit>
       <trans-unit id="s6e526bbb8672e76a">
         <source>R0 (approx)</source>
@@ -131,11 +131,11 @@
       </trans-unit>
       <trans-unit id="sd8f1f39f65abba47">
         <source>SIR chart snapshot</source>
-        <target>لمحة عن مخطط SIR</target>
+        <target>لقطة من مخطط SIR</target>
       </trans-unit>
       <trans-unit id="sf4cd19d7506d9e12">
         <source>Time (days)</source>
-        <target>المدة (بالأيام)</target>
+        <target>الوقت (بالأيام)</target>
       </trans-unit>
       <trans-unit id="sd4755728c441b538">
         <source>Elapsed time</source>
@@ -143,7 +143,7 @@
       </trans-unit>
       <trans-unit id="sc14daad34e9ee82f">
         <source>Peak time</source>
-        <target>ساعات الذروة</target>
+        <target>وقت الذروة</target>
       </trans-unit>
       <trans-unit id="s48e186fb300e5464">
         <source>Time</source>
@@ -151,7 +151,7 @@
       </trans-unit>
       <trans-unit id="sc425e5671217eac0">
         <source>Snapshots gallery</source>
-        <target>معرض الصور</target>
+        <target>معرض اللقطات</target>
       </trans-unit>
       <trans-unit id="sc3ac225273c8316b">
         <source>General</source>
@@ -163,11 +163,11 @@
       </trans-unit>
       <trans-unit id="s5ba7326ba78af02e">
         <source>Model type</source>
-        <target>نوع الطراز</target>
+        <target>نوع النموذج</target>
       </trans-unit>
       <trans-unit id="s97e4c519fa4905f9">
         <source>SIR</source>
-        <target>سيدي</target>
+        <target>SIR</target>
       </trans-unit>
       <trans-unit id="s6f54d7620146d1b1">
         <source>Quarantine</source>
@@ -175,7 +175,7 @@
       </trans-unit>
       <trans-unit id="sf3209a5af0f3631d">
         <source>Hotspots</source>
-        <target>النقاط الساخنة</target>
+        <target>أماكن التجمع</target>
       </trans-unit>
       <trans-unit id="s99adf8f78a414996">
         <source>Communities</source>
@@ -183,19 +183,15 @@
       </trans-unit>
       <trans-unit id="sfc12d40fe5fa5f7d">
         <source>No snapshots yet.</source>
-        <target>لا توجد صور حتى الآن.</target>
+        <target>لا توجد لقطات بعد.</target>
       </trans-unit>
       <trans-unit id="s716a6024e3fe999c">
         <source>Show</source>
-        <target>عرض</target>
-      </trans-unit>
-      <trans-unit id="s7cade6ea2b5ef848">
-        <source>Double-click to enlarge</source>
-        <target>انقر نقرًا مزدوجًا للتكبير</target>
+        <target>إظهار</target>
       </trans-unit>
       <trans-unit id="sc94818fddfdfdbc6">
         <source>SIR insights</source>
-        <target>رؤى SIR</target>
+        <target>مؤشرات SIR</target>
       </trans-unit>
       <trans-unit id="s5aa43edcf11f09af">
         <source>Incubation duration</source>
@@ -215,35 +211,35 @@
       </trans-unit>
       <trans-unit id="s7379168642ff77b3">
         <source>Exposed</source>
-        <target>المتعرضون</target>
+        <target>المعرَّضون</target>
       </trans-unit>
       <trans-unit id="sd049237343c44e47">
         <source>Dead</source>
-        <target>الوفيات</target>
+        <target>المتوفون</target>
       </trans-unit>
       <trans-unit id="s00ae53430e6c31cb">
         <source>SEIR insights</source>
-        <target>رؤى SEIR</target>
+        <target>مؤشرات SEIR</target>
       </trans-unit>
       <trans-unit id="s2e7ece256ba72b3b">
         <source>SEIRD insights</source>
-        <target>رؤى نموذج SEIRD</target>
+        <target>مؤشرات SEIRD</target>
       </trans-unit>
       <trans-unit id="s45b0974d18b97957">
         <source>SIRS insights</source>
-        <target>رؤى SIRS</target>
+        <target>مؤشرات SIRS</target>
       </trans-unit>
       <trans-unit id="s65aa7dfb7792b528">
         <source>SIRD insights</source>
-        <target>رؤى SIRD</target>
+        <target>مؤشرات SIRD</target>
       </trans-unit>
       <trans-unit id="s4f1a78fbc7a2da7a">
         <source>Current exposed</source>
-        <target>المعرض الحالي</target>
+        <target>المعرَّضون حاليًا</target>
       </trans-unit>
       <trans-unit id="s5fef8fa88777bdec">
         <source>Current dead</source>
-        <target>التيار المقطوع</target>
+        <target>المتوفون حتى الآن</target>
       </trans-unit>
       <trans-unit id="s62c095244a149fde">
         <source>SIRS</source>
@@ -263,16 +259,62 @@
       </trans-unit>
       <trans-unit id="s7a3c4c7e8b923c76">
         <source>Drag this hotspot into the simulation map.</source>
-        <target>اسحب هذه النقطة الفعالة إلى خريطة المحاكاة.</target>
-      </trans-unit>
-      <trans-unit id="s7ede1c55e35ce9d6">
-        <source>Simulation</source>
-        <target>المحاكاة</target>
+        <target>اسحب مكان التجمع هذا إلى خريطة المحاكاة.</target>
       </trans-unit>
       <trans-unit id="s5dd25778c99327a8">
         <source>Printed snapshot of the epidemic simulation. Author options and interactive controls are omitted.</source>
-        <target>لقطة مطبوعة لمحاكاة الوباء. تم حذف خيارات المؤلف وعناصر التحكم التفاعلية.</target>
+        <target>لقطة مطبوعة من محاكاة الوباء. تم حذف خيارات المؤلف وعناصر التحكم التفاعلية.</target>
       </trans-unit>
+<trans-unit id="s984d2b333eff760a">
+  <source>Tap the simulation map to place the hotspot.</source>
+  <target>انقر على خريطة المحاكاة لوضع مكان التجمع.</target>
+</trans-unit>
+<trans-unit id="sd3386a2ef42e80b9">
+  <source>Download</source>
+  <target>تنزيل</target>
+</trans-unit>
+<trans-unit id="s9d53ce2c390c880c">
+  <source>Image (PNG)</source>
+  <target>صورة (PNG)</target>
+</trans-unit>
+<trans-unit id="sed03791dbc19b9c0">
+  <source>Table (CSV)</source>
+  <target>جدول (CSV)</target>
+</trans-unit>
+<trans-unit id="s45615e2718064d48">
+  <source>Insights</source>
+  <target>المؤشرات</target>
+</trans-unit>
+<trans-unit id="s5334c0927cf25b86">
+  <source>Exit fullscreen</source>
+  <target>الخروج من وضع ملء الشاشة</target>
+</trans-unit>
+<trans-unit id="s4b10acae683d2978">
+  <source>Fullscreen</source>
+  <target>ملء الشاشة</target>
+</trans-unit>
+<trans-unit id="se0955919920ee87d">
+  <source>Day</source>
+  <target>اليوم</target>
+</trans-unit>
+<trans-unit id="sbe774904ccc6159e">
+  <source>Simulation duration</source>
+  <target>مدة المحاكاة</target>
+</trans-unit>
+<trans-unit id="s6fa549ec31db634a">
+  <source>The simulation may end earlier when the epidemic is over</source>
+  <target>قد تنتهي المحاكاة في وقت أبكر عند انتهاء الوباء</target>
+</trans-unit>
+<trans-unit id="saf63fe4c86022652">
+  <source>C</source>
+  <target>م</target>
+  <note from="lit-localize">Short label for a community, shown before its number</note>
+</trans-unit>
+<trans-unit id="saf63d94c8601e773">
+  <source>d</source>
+  <target>يوم</target>
+  <note from="lit-localize">Unit abbreviation for days, shown after a number</note>
+</trans-unit>
     </body>
   </file>
 </xliff>

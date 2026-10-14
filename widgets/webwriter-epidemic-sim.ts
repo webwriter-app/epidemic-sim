@@ -492,6 +492,10 @@ export class WebwriterEpidemicSim extends LitElementWw {
         this.applyPersistedState(parsePersistedState(this.widgetState), {restartSimulation: true})
       }
     }
+    if (changed.has("lang")) {
+      this.drawChart()
+      this.redrawSimulationWhenPaused()
+    }
     if (this.snapshotsOverlayOpen || changed.has("snapshotsOverlayOpen")) {
       this.drawSnapshotCharts()
     }

@@ -1,3 +1,4 @@
+import {msg} from "@lit/localize"
 import {getRangeLimits} from "../config/widget-schema"
 import type {Hotspot, Rect} from "../simulation/types"
 
@@ -13,7 +14,9 @@ export function findHotspotById(hotspots: Hotspot[], hotspotId: number): Hotspot
 }
 
 export function getHotspotLabel(hotspot: Hotspot, index: number): string {
-  return hotspot.communityId === null ? `H${index + 1}` : `C${hotspot.communityId + 1}`
+  return hotspot.communityId === null
+    ? `${msg("H")}${index + 1}`
+    : `${msg("C", {desc: "Short label for a community, shown before its number"})}${hotspot.communityId + 1}`
 }
 
 export function findTopmostHotspotAtPoint(x: number, y: number, hotspots: Hotspot[]): Hotspot | null {

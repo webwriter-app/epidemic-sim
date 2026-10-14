@@ -11,7 +11,7 @@
       </trans-unit>
       <trans-unit id="s7b564dc9f5db9ad8">
         <source>Infection radius</source>
-        <target>Smittesone</target>
+        <target>Smitteradius</target>
       </trans-unit>
       <trans-unit id="s71ffa36b183c46fd">
         <source>Infection probability</source>
@@ -19,11 +19,11 @@
       </trans-unit>
       <trans-unit id="s09943be8697420ce">
         <source>Recovery duration</source>
-        <target>Varighet av restitusjon</target>
+        <target>Tid til tilfriskning</target>
       </trans-unit>
       <trans-unit id="s6c42c02bb3a76cef">
         <source>Reset simulation</source>
-        <target>Tilbakestill simulering</target>
+        <target>Tilbakestill simuleringen</target>
       </trans-unit>
       <trans-unit id="s35264f659ccd236e">
         <source>Quarantine probability</source>
@@ -31,35 +31,35 @@
       </trans-unit>
       <trans-unit id="s5712f84064913c57">
         <source>Quarantine duration</source>
-        <target>Karantenevarighet</target>
+        <target>Karantenens varighet</target>
       </trans-unit>
       <trans-unit id="s77cc57dd46f7f5cc">
         <source>Hotspot visit probability</source>
-        <target>Sannsynlighet for besøk ved hotspot</target>
+        <target>Sannsynlighet for besøk på hotspot</target>
       </trans-unit>
       <trans-unit id="sce044315d3edcee3">
         <source>Hotspot stay duration</source>
-        <target>Oppholdets varighet ved hotspot</target>
+        <target>Oppholdstid på hotspot</target>
       </trans-unit>
       <trans-unit id="s5bafee07187fb2ad">
         <source>Hotspot size</source>
-        <target>Størrelse på hotspot</target>
+        <target>Hotspot-størrelse</target>
       </trans-unit>
       <trans-unit id="sc522ce8abba9319e">
         <source>Community leave probability</source>
-        <target>Sannsynlighet for å forlate fellesskapet</target>
+        <target>Sannsynlighet for å forlate lokalsamfunnet</target>
       </trans-unit>
       <trans-unit id="sbea80d4210f4af52">
         <source>Susceptible</source>
-        <target>Mottakelig</target>
+        <target>Mottakelige</target>
       </trans-unit>
       <trans-unit id="s9ac5fba6ad7337b9">
         <source>Infected</source>
-        <target>Smittet</target>
+        <target>Smittede</target>
       </trans-unit>
       <trans-unit id="s20c7305417726e5a">
         <source>Recovered</source>
-        <target>Gjenopprettet</target>
+        <target>Friske</target>
       </trans-unit>
       <trans-unit id="s061cc20e3432dead">
         <source>Pause</source>
@@ -75,7 +75,7 @@
       </trans-unit>
       <trans-unit id="sa1cbd47c70068780">
         <source>Hotspot max agents</source>
-        <target>Maks antall agenter på hotspot</target>
+        <target>Maks. personer per hotspot</target>
       </trans-unit>
       <trans-unit id="sa7d4a2c8f4e43300">
         <source>Placed hotspots</source>
@@ -83,7 +83,7 @@
       </trans-unit>
       <trans-unit id="sc932995c6f6478ff">
         <source>Create snapshot</source>
-        <target>Opprett øyeblikksbilde</target>
+        <target>Lag øyeblikksbilde</target>
       </trans-unit>
       <trans-unit id="sdc673e73b5c13aea">
         <source>Delete</source>
@@ -95,23 +95,23 @@
       </trans-unit>
       <trans-unit id="sf62c2403c94966db">
         <source>Current susceptible</source>
-        <target>Nåværende mottakelig</target>
+        <target>Mottakelige nå</target>
       </trans-unit>
       <trans-unit id="sc336500050494646">
         <source>Current infected</source>
-        <target>Nåværende smittede</target>
+        <target>Smittede nå</target>
       </trans-unit>
       <trans-unit id="sb3b26f6f5b2035db">
         <source>Current recovered</source>
-        <target>Strømmen er gjenopprettet</target>
+        <target>Friske nå</target>
       </trans-unit>
       <trans-unit id="s7be45f343cb15665">
         <source>Final recovered share</source>
-        <target>Endelig gjenvunnet andel</target>
+        <target>Endelig andel friske</target>
       </trans-unit>
       <trans-unit id="sbe234bd424c5176e">
         <source>Peak infected</source>
-        <target>Topp i smittetallene</target>
+        <target>Høyeste antall smittede</target>
       </trans-unit>
       <trans-unit id="s6e526bbb8672e76a">
         <source>R0 (approx)</source>
@@ -131,7 +131,7 @@
       </trans-unit>
       <trans-unit id="sd8f1f39f65abba47">
         <source>SIR chart snapshot</source>
-        <target>SIR-diagramoversikt</target>
+        <target>Øyeblikksbilde av SIR-diagrammet</target>
       </trans-unit>
       <trans-unit id="sf4cd19d7506d9e12">
         <source>Time (days)</source>
@@ -143,7 +143,7 @@
       </trans-unit>
       <trans-unit id="sc14daad34e9ee82f">
         <source>Peak time</source>
-        <target>Rush-tid</target>
+        <target>Tidspunkt for toppen</target>
       </trans-unit>
       <trans-unit id="s48e186fb300e5464">
         <source>Time</source>
@@ -151,7 +151,7 @@
       </trans-unit>
       <trans-unit id="sc425e5671217eac0">
         <source>Snapshots gallery</source>
-        <target>Bildegalleri</target>
+        <target>Galleri med øyeblikksbilder</target>
       </trans-unit>
       <trans-unit id="sc3ac225273c8316b">
         <source>General</source>
@@ -183,19 +183,15 @@
       </trans-unit>
       <trans-unit id="sfc12d40fe5fa5f7d">
         <source>No snapshots yet.</source>
-        <target>Ingen bilder ennå.</target>
+        <target>Ingen øyeblikksbilder ennå.</target>
       </trans-unit>
       <trans-unit id="s716a6024e3fe999c">
         <source>Show</source>
         <target>Vis</target>
       </trans-unit>
-      <trans-unit id="s7cade6ea2b5ef848">
-        <source>Double-click to enlarge</source>
-        <target>Dobbeltklikk for å forstørre</target>
-      </trans-unit>
       <trans-unit id="sc94818fddfdfdbc6">
         <source>SIR insights</source>
-        <target>SIR-innsikt</target>
+        <target>SIR-nøkkeltall</target>
       </trans-unit>
       <trans-unit id="s5aa43edcf11f09af">
         <source>Incubation duration</source>
@@ -207,7 +203,7 @@
       </trans-unit>
       <trans-unit id="s9ddf0979f55228fd">
         <source>Mortality probability</source>
-        <target>Sannsynlighet for dødelighet</target>
+        <target>Sannsynlighet for død</target>
       </trans-unit>
       <trans-unit id="s5da52af9b083c29a">
         <source>Model</source>
@@ -215,7 +211,7 @@
       </trans-unit>
       <trans-unit id="s7379168642ff77b3">
         <source>Exposed</source>
-        <target>Eksponert</target>
+        <target>Eksponerte</target>
       </trans-unit>
       <trans-unit id="sd049237343c44e47">
         <source>Dead</source>
@@ -223,27 +219,27 @@
       </trans-unit>
       <trans-unit id="s00ae53430e6c31cb">
         <source>SEIR insights</source>
-        <target>SEIR-innsikt</target>
+        <target>SEIR-nøkkeltall</target>
       </trans-unit>
       <trans-unit id="s2e7ece256ba72b3b">
         <source>SEIRD insights</source>
-        <target>SEIRD-innsikt</target>
+        <target>SEIRD-nøkkeltall</target>
       </trans-unit>
       <trans-unit id="s45b0974d18b97957">
         <source>SIRS insights</source>
-        <target>SIRS-innsikt</target>
+        <target>SIRS-nøkkeltall</target>
       </trans-unit>
       <trans-unit id="s65aa7dfb7792b528">
         <source>SIRD insights</source>
-        <target>SIRD-innsikter</target>
+        <target>SIRD-nøkkeltall</target>
       </trans-unit>
       <trans-unit id="s4f1a78fbc7a2da7a">
         <source>Current exposed</source>
-        <target>Nåværende eksponert</target>
+        <target>Eksponerte nå</target>
       </trans-unit>
       <trans-unit id="s5fef8fa88777bdec">
         <source>Current dead</source>
-        <target>Nåværende døde</target>
+        <target>Døde hittil</target>
       </trans-unit>
       <trans-unit id="s62c095244a149fde">
         <source>SIRS</source>
@@ -265,14 +261,60 @@
         <source>Drag this hotspot into the simulation map.</source>
         <target>Dra dette hotspotet inn på simuleringskartet.</target>
       </trans-unit>
-      <trans-unit id="s7ede1c55e35ce9d6">
-        <source>Simulation</source>
-        <target>Simulering</target>
-      </trans-unit>
       <trans-unit id="s5dd25778c99327a8">
         <source>Printed snapshot of the epidemic simulation. Author options and interactive controls are omitted.</source>
-        <target>Utskrift av et øyeblikksbilde fra epidemisimuleringen. Forfatterinnstillinger og interaktive kontroller er utelatt.</target>
+        <target>Utskrevet øyeblikksbilde av epidemisimuleringen. Forfatteralternativer og interaktive kontroller er utelatt.</target>
       </trans-unit>
+<trans-unit id="s984d2b333eff760a">
+  <source>Tap the simulation map to place the hotspot.</source>
+  <target>Trykk på simuleringskartet for å plassere hotspotet.</target>
+</trans-unit>
+<trans-unit id="sd3386a2ef42e80b9">
+  <source>Download</source>
+  <target>Last ned</target>
+</trans-unit>
+<trans-unit id="s9d53ce2c390c880c">
+  <source>Image (PNG)</source>
+  <target>Bilde (PNG)</target>
+</trans-unit>
+<trans-unit id="sed03791dbc19b9c0">
+  <source>Table (CSV)</source>
+  <target>Tabell (CSV)</target>
+</trans-unit>
+<trans-unit id="s45615e2718064d48">
+  <source>Insights</source>
+  <target>Nøkkeltall</target>
+</trans-unit>
+<trans-unit id="s5334c0927cf25b86">
+  <source>Exit fullscreen</source>
+  <target>Avslutt fullskjerm</target>
+</trans-unit>
+<trans-unit id="s4b10acae683d2978">
+  <source>Fullscreen</source>
+  <target>Fullskjerm</target>
+</trans-unit>
+<trans-unit id="se0955919920ee87d">
+  <source>Day</source>
+  <target>Dag</target>
+</trans-unit>
+<trans-unit id="sbe774904ccc6159e">
+  <source>Simulation duration</source>
+  <target>Simuleringens varighet</target>
+</trans-unit>
+<trans-unit id="s6fa549ec31db634a">
+  <source>The simulation may end earlier when the epidemic is over</source>
+  <target>Simuleringen kan avsluttes tidligere når epidemien er over</target>
+</trans-unit>
+<trans-unit id="saf63fe4c86022652">
+  <source>C</source>
+  <target>L</target>
+  <note from="lit-localize">Short label for a community, shown before its number</note>
+</trans-unit>
+<trans-unit id="saf63d94c8601e773">
+  <source>d</source>
+  <target>d</target>
+  <note from="lit-localize">Unit abbreviation for days, shown after a number</note>
+</trans-unit>
     </body>
   </file>
 </xliff>
