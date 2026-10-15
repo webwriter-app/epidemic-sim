@@ -1,5 +1,5 @@
-# Epidemic Sim (`@webwriter/epidemic-sim@0.0.1`)
-[License: MIT](LICENSE) | Version: 0.0.1
+# Epidemic Sim (`@webwriter/epidemic-sim@1.0.0`)
+[License: MIT](LICENSE) | Version: 1.0.0
 
 Interactive agent-based epidemic simulation (SIR/SIRS/SEIR/SIRD/SEIRD) for WebWriter explorables, with charts, quarantine, hotspots, and communities.
 
@@ -38,10 +38,6 @@ The simulation runs in steps of 24 frames per day. Durations (incubation, recove
 ### Saved state
 
 Settings are stored as attributes. Placed hotspots and snapshots are stored as JSON in the `widget-state` attribute. Snapshots only contain the data of the curves; the chart is redrawn from that data, so documents stay small.
-
-### Languages
-
-All texts are available in English and 31 further languages. The widget follows the language of the document.
 
 ## Snippets
 [Snippets](https://webwriter.app/docs/snippets/snippets/) are examples and templates using the package's widgets.

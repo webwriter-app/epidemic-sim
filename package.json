@@ -1,6 +1,6 @@
 {
   "name": "@webwriter/epidemic-sim",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Interactive agent-based epidemic simulation (SIR/SIRS/SEIR/SIRD/SEIRD) for WebWriter explorables, with charts, quarantine, hotspots, and communities.",
   "keywords": [
     "webwriter-widget",
