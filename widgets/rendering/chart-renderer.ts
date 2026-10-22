@@ -1,3 +1,4 @@
+import {msg} from "@lit/localize"
 import {Chart} from "chart.js/auto"
 
 export interface ChartSeries {
@@ -43,7 +44,7 @@ export function drawChart(
             },
             title: {
               display: true,
-              text: options?.xAxisTitle ?? "Time (days)",
+              text: options?.xAxisTitle ?? msg("Time (days)"),
             },
           },
           y: {
@@ -112,7 +113,7 @@ export function drawChart(
   }
   const xScale = chart.options.scales?.x
   if (xScale?.title) {
-    xScale.title.text = options?.xAxisTitle ?? "Time (days)"
+    xScale.title.text = options?.xAxisTitle ?? msg("Time (days)")
   }
 
   chart.update("none")

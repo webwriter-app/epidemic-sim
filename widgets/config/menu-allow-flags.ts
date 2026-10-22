@@ -14,6 +14,7 @@ export function buildMenuAllowFlags(values: WidgetConfigValues): MenuAllowFlags 
     allowInfectionRadiusControl: values.allowInfectionRadiusControl,
     allowInfectionProbabilityControl: values.allowInfectionProbabilityControl,
     allowRecoveryDurationControl: values.allowRecoveryDurationControl,
+    allowSimulationDurationControl: values.allowSimulationDurationControl,
     allowQuarantineEnabledControl: values.allowQuarantineEnabledControl,
     allowHotspotsEnabledControl: values.allowHotspotsEnabledControl,
     allowCommunitiesEnabledControl: values.allowCommunitiesEnabledControl,

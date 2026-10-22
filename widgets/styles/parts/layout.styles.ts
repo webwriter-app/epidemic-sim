@@ -19,7 +19,7 @@ export const layoutStyles = css`
     display: grid;
     gap: 12px;
     grid-template-columns: 1fr;
-    grid-template-rows: auto minmax(360px, 1fr);
+    grid-template-rows: auto auto;
     height: 100%;
     min-width: 0;
     min-height: 0;
@@ -39,6 +39,93 @@ export const layoutStyles = css`
   .panel p { margin: 0; color: #4d5b6a; font-size: 0.88rem; line-height: 1.4; }
   .print-hint { display: none; }
 
+  :host(.ww-fullscreen),
+  :host(:fullscreen) {
+    height: 100%;
+    min-height: 0;
+    padding: 16px;
+    overflow: hidden;
+    background: #ffffff;
+  }
+  :host(.ww-fullscreen) .widget-shell,
+  :host(:fullscreen) .widget-shell {
+    height: 100%;
+    min-height: 0;
+  }
+  :host(.ww-fullscreen) .main-content,
+  :host(:fullscreen) .main-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 12px;
+    container: fullscreen-main / size;
+  }
+  :host(.ww-fullscreen) .layout,
+  :host(:fullscreen) .layout {
+    --fs-panel-chrome: 26px;
+    --fs-map-extras: 0px;
+    --fs-content-height: calc(100vh - 32px - 12px - 112px);
+    --fs-box-width: min(
+      calc((100cqw - 12px) / 2 - var(--fs-panel-chrome)),
+      calc((var(--fs-content-height) - var(--fs-panel-chrome) - var(--fs-map-extras)) * 5 / 3)
+    );
+    container-type: inline-size;
+    flex: none;
+    height: auto;
+    min-height: 0;
+    grid-template-columns: repeat(2, auto);
+    grid-template-rows: auto;
+    justify-content: center;
+    align-items: start;
+  }
+  @container fullscreen-main (max-aspect-ratio: 6 / 5) {
+    :host(.ww-fullscreen) .layout,
+    :host(:fullscreen) .layout {
+      --fs-box-width: min(
+        calc(100cqw - var(--fs-panel-chrome)),
+        calc(((var(--fs-content-height) - 12px) / 2 - var(--fs-panel-chrome) - var(--fs-map-extras) / 2) * 5 / 3)
+      );
+      grid-template-columns: auto;
+    }
+  }
+  :host(.ww-fullscreen) .layout.layout--hotspots,
+  :host(:fullscreen) .layout.layout--hotspots {
+    --fs-map-extras: 84px;
+  }
+  :host(.ww-fullscreen) .panel,
+  :host(:fullscreen) .panel {
+    min-height: 0;
+  }
+  :host(.ww-fullscreen) .chart-wrap,
+  :host(:fullscreen) .chart-wrap {
+    width: var(--fs-box-width);
+    height: auto;
+    min-height: 0;
+    max-height: none;
+    aspect-ratio: 5 / 3;
+  }
+  :host(.ww-fullscreen) .simulation-stage,
+  :host(:fullscreen) .simulation-stage {
+    flex: none;
+    min-height: 0;
+  }
+  :host(.ww-fullscreen) .panel--simulation canvas,
+  :host(:fullscreen) .panel--simulation canvas {
+    flex: none;
+    width: var(--fs-box-width);
+    height: auto;
+    min-height: 0;
+    aspect-ratio: 5 / 3;
+  }
+  :host(.ww-fullscreen) .hotspot-toolbox--map,
+  :host(:fullscreen) .hotspot-toolbox--map {
+    flex-wrap: nowrap;
+  }
+  .fullscreen-insights { flex: none; }
+  .fullscreen-insights__title { margin: 0 0 8px; font-size: 1rem; font-weight: 600; color: #0f172a; }
+  .fullscreen-insights .insights { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
+  .fullscreen-insights .insights__row { display: contents; }
+
   :host(.ww-beforeprint),
   :host(.ww-printable) {
     min-height: 0;
@@ -49,15 +136,17 @@ export const layoutStyles = css`
   :host(.ww-beforeprint) .author-only,
   :host(.ww-beforeprint) .chart-context-menu,
   :host(.ww-beforeprint) .hotspot-toolbox--map,
+  :host(.ww-beforeprint) .hotspot-selection,
   :host(.ww-beforeprint) .simulation-actions,
-  :host(.ww-beforeprint) .chart-overlay,
+  :host(.ww-beforeprint) .widget-top-actions,
   :host(.ww-beforeprint) .snapshots-overlay,
   :host(.ww-printable) .teacher-options-shell,
   :host(.ww-printable) .author-only,
   :host(.ww-printable) .chart-context-menu,
   :host(.ww-printable) .hotspot-toolbox--map,
+  :host(.ww-printable) .hotspot-selection,
   :host(.ww-printable) .simulation-actions,
-  :host(.ww-printable) .chart-overlay,
+  :host(.ww-printable) .widget-top-actions,
   :host(.ww-printable) .snapshots-overlay {
     display: none !important;
   }
@@ -95,12 +184,10 @@ export const layoutStyles = css`
     max-height: 140px;
     border: 1px solid #94a3b8;
   }
-  :host(.ww-beforeprint) .simulation-stage,
   :host(.ww-beforeprint) .panel--simulation canvas,
-  :host(.ww-printable) .simulation-stage,
   :host(.ww-printable) .panel--simulation canvas {
-    min-height: 0;
-    max-height: 240px;
+    width: auto;
+    max-width: 100%;
     height: 240px;
     border: 1px solid #94a3b8;
   }
@@ -115,8 +202,9 @@ export const layoutStyles = css`
     .author-only,
     .chart-context-menu,
     .hotspot-toolbox--map,
+    .hotspot-selection,
     .simulation-actions,
-    .chart-overlay,
+    .widget-top-actions,
     .snapshots-overlay {
       display: none !important;
     }
@@ -143,18 +231,15 @@ export const layoutStyles = css`
     .panel--chart canvas {
       max-height: 140px;
     }
-    .simulation-stage,
     .panel--simulation canvas {
-      min-height: 0;
-      max-height: 240px;
+      width: auto;
+      max-width: 100%;
       height: 240px;
     }
   }
 
   @media (max-width: 600px) {
     :host, .widget-shell { min-height: 440px; }
-    .layout { grid-template-rows: auto minmax(280px, 1fr); }
     .panel { min-height: 240px; }
-    .simulation-stage, .panel--simulation canvas { min-height: 280px; }
   }
 `

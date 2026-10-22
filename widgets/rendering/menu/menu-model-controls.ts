@@ -16,7 +16,7 @@ export function renderModelControls(options: RenderMenuOptions): TemplateResult 
               <span class="side-menu__control-head">
                 <span>${msg("Model type")}</span>
               </span>
-              <sl-select .value=${options.modelType} @sl-change=${options.onModelTypeChange}>
+              <sl-select placement="bottom" hoist .value=${options.modelType} @sl-change=${options.onModelTypeChange}>
                 ${options.modelTypeOptions.map(
                   (option) => html`<sl-option value=${option.value}>${option.label}</sl-option>`,
                 )}

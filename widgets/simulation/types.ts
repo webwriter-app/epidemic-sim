@@ -57,6 +57,7 @@ export interface SimulationConfig {
   infectionRadius: number
   infectionProbability: number
   recoveryDuration: number
+  simulationDuration: number
   quarantineEnabled: boolean
   quarantineProbability: number
   quarantineDuration: number
@@ -82,7 +83,6 @@ export interface SimulationSnapshot {
   id: string
   label: string
   createdAt: number
-  chartImageJpeg: string | null
   estimatedR0: number | null
   config: SimulationConfig
   frameIndex: number

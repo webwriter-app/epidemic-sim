@@ -1,16 +1,7 @@
 import {msg} from "@lit/localize"
-import {drawChart} from "../rendering/chart-renderer"
-import type {ChartSeries} from "../rendering/chart-renderer"
+import {destroyChart, drawChart} from "../rendering/chart-renderer"
+import {buildChartDayLabels, buildChartSeries} from "./chart-runtime"
 import type {Hotspot, SimulationConfig, SimulationSnapshot} from "../simulation/types"
-
-export type SnapshotCaptureContext = {
-  chartOverlayOpen: boolean
-  enlargedChartCanvas: HTMLCanvasElement | null
-  chartCanvas: HTMLCanvasElement | null
-  population: number
-  buildSeries: () => ChartSeries[]
-  buildDayLabels: (series: ChartSeries[]) => string[]
-}
 
 export type SnapshotCreateInput = {
   config: SimulationConfig
@@ -28,7 +19,6 @@ export type SnapshotCreateInput = {
   deadHistory: number[]
   userHotspots: Hotspot[]
   estimatedR0: number | null
-  chartImageJpeg: string | null
 }
 
 function cloneHotspots(hotspots: Hotspot[]): Hotspot[] {
@@ -38,34 +28,56 @@ function cloneHotspots(hotspots: Hotspot[]): Hotspot[] {
   }))
 }
 
-export function captureChartSnapshotImage(ctx: SnapshotCaptureContext): string | null {
-  const sourceCanvas = ctx.chartOverlayOpen && ctx.enlargedChartCanvas ? ctx.enlargedChartCanvas : ctx.chartCanvas
-  if (!sourceCanvas) {
-    return null
-  }
-  const series = ctx.buildSeries()
-  const labels = ctx.buildDayLabels(series)
-  const xAxisTitle = msg("Time (days)")
+export function drawSnapshotChart(
+  canvas: HTMLCanvasElement,
+  snapshot: SimulationSnapshot,
+  options?: {showLegend?: boolean},
+): void {
+  const series = buildChartSeries(snapshot.config.modelType, snapshot)
+  drawChart(canvas, snapshot.config.population, series, {
+    showLegend: options?.showLegend ?? false,
+    labels: buildChartDayLabels(series),
+    xAxisTitle: msg("Time (days)"),
+  })
+}
+
+export function renderSnapshotChartPng(container: Node, snapshot: SimulationSnapshot): string | null {
+  const wrapper = document.createElement("div")
+  wrapper.style.cssText = "position: fixed; left: -10000px; top: 0; width: 1200px; height: 600px;"
+  const canvas = document.createElement("canvas")
+  wrapper.appendChild(canvas)
+  container.appendChild(wrapper)
   try {
-    drawChart(sourceCanvas, ctx.population, series, {showLegend: false, labels, xAxisTitle})
+    drawSnapshotChart(canvas, snapshot, {showLegend: true})
     const exportCanvas = document.createElement("canvas")
-    exportCanvas.width = sourceCanvas.width
-    exportCanvas.height = sourceCanvas.height
+    exportCanvas.width = canvas.width
+    exportCanvas.height = canvas.height
     const exportContext = exportCanvas.getContext("2d")
     if (!exportContext) {
-      drawChart(sourceCanvas, ctx.population, series, {showLegend: true, labels, xAxisTitle})
       return null
     }
     exportContext.fillStyle = "#ffffff"
     exportContext.fillRect(0, 0, exportCanvas.width, exportCanvas.height)
-    exportContext.drawImage(sourceCanvas, 0, 0)
-    const jpeg = exportCanvas.toDataURL("image/jpeg", 0.9)
-    drawChart(sourceCanvas, ctx.population, series, {showLegend: true, labels, xAxisTitle})
-    return jpeg
+    exportContext.drawImage(canvas, 0, 0)
+    return exportCanvas.toDataURL("image/png")
   } catch {
-    drawChart(sourceCanvas, ctx.population, series, {showLegend: true, labels, xAxisTitle})
     return null
+  } finally {
+    destroyChart(canvas)
+    wrapper.remove()
   }
+}
+
+function escapeCsvValue(value: string): string {
+  return /[",\n]/.test(value) ? `"${value.replace(/"/g, '""')}"` : value
+}
+
+export function buildSnapshotCsv(snapshot: SimulationSnapshot): string {
+  const series = buildChartSeries(snapshot.config.modelType, snapshot)
+  const dayLabels = buildChartDayLabels(series)
+  const header = [msg("Day"), ...series.map((entry) => entry.label)]
+  const rows = dayLabels.map((day, dayIndex) => [day, ...series.map((entry) => String(entry.values[dayIndex] ?? ""))])
+  return [header, ...rows].map((row) => row.map(escapeCsvValue).join(",")).join("\n")
 }
 
 export class SnapshotService {
@@ -82,7 +94,6 @@ export class SnapshotService {
       recoveredHistory: [...snapshot.recoveredHistory],
       deadHistory: [...snapshot.deadHistory],
       userHotspots: cloneHotspots(snapshot.userHotspots),
-      chartImageJpeg: snapshot.chartImageJpeg ?? null,
     }))
     this.nextSnapshotId = nextSnapshotId
   }
@@ -101,7 +112,6 @@ export class SnapshotService {
       id: snapshotId,
       label: `${msg("Snapshot")} ${this.nextSnapshotId - 1}`,
       createdAt: Date.now(),
-      chartImageJpeg: input.chartImageJpeg,
       estimatedR0: input.estimatedR0,
       config: {...input.config},
       frameIndex: input.frameIndex,

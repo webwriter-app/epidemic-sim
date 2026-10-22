@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.1" srcLang="en" trgLang="pl">
 <file id="." original=".">
-<unit id="description"><segment><source>Interactive agent-based epidemic models with charts and interventions.</source><target>Interaktywne modele epidemii oparte na agentach, zawierające wykresy i środki interwencyjne.</target></segment></unit>
+<unit id="description"><segment><source>Interactive agent-based epidemic models with charts and interventions.</source><target>Interaktywne modele epidemii oparte na agentach, zawierające wykresy i interwencje.</target></segment></unit>
 <unit id="label"><segment><source>Epidemic Simulation</source><target>Symulacja epidemii</target></segment></unit>
 </file>
 <file id="./widgets/webwriter-epidemic-sim.*" original="./widgets/webwriter-epidemic-sim.*">

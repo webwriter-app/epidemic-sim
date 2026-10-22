@@ -1,7 +1,7 @@
 import {html} from "lit"
 import type {TemplateResult} from "lit"
 import {msg} from "@lit/localize"
-import {renderDeleteIcon} from "../rendering/action-icons"
+import {renderDeleteIcon, renderDownloadIcon} from "../rendering/action-icons"
 import type {EpidemicModelType} from "../simulation/epidemic-models"
 import type {SimulationSnapshot} from "../simulation/types"
 
@@ -10,6 +10,8 @@ type SnapshotRenderContext = {
   formatDays: (frameCount: number) => string
   formatApprox: (value: number | null, digits?: number) => string
   onDelete: (id: string) => void
+  onDownloadImage: (id: string) => void
+  onDownloadTable: (id: string) => void
 }
 
 function renderSnapshotCard(snapshot: SimulationSnapshot, ctx: SnapshotRenderContext): TemplateResult {
@@ -20,20 +22,40 @@ function renderSnapshotCard(snapshot: SimulationSnapshot, ctx: SnapshotRenderCon
           <span class="snapshots-overlay__snapshot-title">${snapshot.label}</span>
           <span class="snapshots-overlay__snapshot-time"
             >${msg("Time")} ${ctx.formatDays(snapshot.frameIndex)} ·
-            ${new Date(snapshot.createdAt).toLocaleTimeString([], {hour: "2-digit", minute: "2-digit", second: "2-digit"})}</span
+            ${new Date(snapshot.createdAt).toLocaleString([], {day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit", second: "2-digit"})}</span
           >
         </div>
-        <button
-          type="button"
-          class="snapshots-overlay__delete-button"
-          title=${msg("Delete")}
-          aria-label=${msg("Delete")}
-          @click=${() => ctx.onDelete(snapshot.id)}
-        >
-          ${renderDeleteIcon()}
-        </button>
+        <div class="snapshots-overlay__snapshot-actions">
+          <sl-dropdown placement="bottom-end" hoist>
+            <button
+              slot="trigger"
+              type="button"
+              class="snapshots-overlay__download-button"
+              aria-label=${msg("Download")}
+            >
+              ${renderDownloadIcon()}
+            </button>
+            <sl-menu
+              @sl-select=${(event: CustomEvent<{item: {value: string}}>) =>
+                event.detail.item.value === "csv" ? ctx.onDownloadTable(snapshot.id) : ctx.onDownloadImage(snapshot.id)}
+            >
+              <sl-menu-item value="png">${msg("Image (PNG)")}</sl-menu-item>
+              <sl-menu-item value="csv">${msg("Table (CSV)")}</sl-menu-item>
+            </sl-menu>
+          </sl-dropdown>
+          <button
+            type="button"
+            class="snapshots-overlay__delete-button"
+            aria-label=${msg("Delete")}
+            @click=${() => ctx.onDelete(snapshot.id)}
+          >
+            ${renderDeleteIcon()}
+          </button>
+        </div>
       </div>
-      ${snapshot.chartImageJpeg ? html`<img class="snapshots-overlay__snapshot-image" src=${snapshot.chartImageJpeg} alt=${msg("SIR chart snapshot")} loading="lazy" />` : null}
+      <div class="snapshots-overlay__snapshot-chart">
+        <canvas data-snapshot-id=${snapshot.id} role="img" aria-label=${msg("SIR chart snapshot")}></canvas>
+      </div>
       <sl-details class="snapshots-overlay__snapshot-details" summary=${msg("Details")}>
         <div class="snapshots-overlay__snapshot-grid">
           <span>${msg("Model type")}: <strong>${ctx.modelTypeLabel(snapshot.config.modelType)}</strong></span>
@@ -52,7 +74,7 @@ function renderSnapshotCard(snapshot: SimulationSnapshot, ctx: SnapshotRenderCon
 type SnapshotsOverlayInput = {
   open: boolean
   snapshots: SimulationSnapshot[]
-  onBackdropClick: (event: Event) => void
+  onBackdropClick: (event: MouseEvent) => void
   onCreateSnapshot: () => void
   onClose: () => void
   context: SnapshotRenderContext

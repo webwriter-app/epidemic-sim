@@ -28,10 +28,10 @@ export function renderMenu(options: RenderMenuOptions): TemplateResult {
       ${hasModelMenuControls(options, options.modelType) ? renderMenuSection(msg("Model"), renderModelControls(options)) : null}
       ${hasGeneralMenuControls(options) ? renderMenuSection(msg("General"), renderGeneralControls(options)) : null}
       ${
-        hasQuarantineMenuControls(options)
+        hasQuarantineMenuControls(options) && (options.quarantineEnabled || options.allowQuarantineEnabledControl)
           ? renderMenuSection(
               msg("Quarantine"),
-              renderQuarantineControls(options),
+              options.quarantineEnabled ? renderQuarantineControls(options) : null,
               options.allowQuarantineEnabledControl
                 ? {checked: options.quarantineEnabled, onChange: options.onQuarantineEnabled}
                 : undefined,
@@ -39,10 +39,10 @@ export function renderMenu(options: RenderMenuOptions): TemplateResult {
           : null
       }
       ${
-        hasHotspotsMenuControls(options)
+        hasHotspotsMenuControls(options) && (options.hotspotsEnabled || options.allowHotspotsEnabledControl)
           ? renderMenuSection(
               msg("Hotspots"),
-              renderHotspotsControls(options),
+              options.hotspotsEnabled ? renderHotspotsControls(options) : null,
               options.allowHotspotsEnabledControl
                 ? {checked: options.hotspotsEnabled, onChange: options.onHotspotsEnabled}
                 : undefined,
@@ -50,10 +50,10 @@ export function renderMenu(options: RenderMenuOptions): TemplateResult {
           : null
       }
       ${
-        hasCommunitiesMenuControls(options)
+        hasCommunitiesMenuControls(options) && (options.communitiesEnabled || options.allowCommunitiesEnabledControl)
           ? renderMenuSection(
               msg("Communities"),
-              renderCommunitiesControls(options),
+              options.communitiesEnabled ? renderCommunitiesControls(options) : null,
               options.allowCommunitiesEnabledControl
                 ? {checked: options.communitiesEnabled, onChange: options.onCommunitiesEnabled}
                 : undefined,

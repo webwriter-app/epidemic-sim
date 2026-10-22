@@ -1,3 +1,9 @@
+declare module "mocha/mocha.css"
+
+declare module "@webwriter/build/test" {
+  export function getMochaConfig(): any
+}
+
 declare module '*.apng' {
   const content: string;
   export default content;

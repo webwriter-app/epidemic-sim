@@ -3,9 +3,7 @@ import type {Hotspot, SimulationSnapshot} from "../simulation/types"
 export const STATE_SCRIPT_TYPE = "application/json"
 export const STATE_ATTRIBUTE = "widget-state"
 
-export type PersistedSnapshot = Omit<SimulationSnapshot, "chartImageJpeg"> & {
-  chartImageJpeg?: string | null
-}
+export type PersistedSnapshot = SimulationSnapshot
 
 export type PersistedWidgetState = {
   version: 1
@@ -72,10 +70,6 @@ function parseSnapshot(value: unknown): PersistedSnapshot | null {
     id: entry.id,
     label: entry.label,
     createdAt: entry.createdAt,
-    chartImageJpeg:
-      typeof entry.chartImageJpeg === "string" && entry.chartImageJpeg.length > 0
-        ? entry.chartImageJpeg
-        : null,
     estimatedR0: entry.estimatedR0 ?? null,
     config: entry.config,
     frameIndex: entry.frameIndex,
@@ -135,20 +129,12 @@ export function encodePersistedState(state: PersistedWidgetState): string {
     hotspots: state.hotspots,
     nextHotspotId: state.nextHotspotId,
     nextSnapshotId: state.nextSnapshotId,
-    snapshots: state.snapshots.map((snapshot) => ({
-      ...snapshot,
-      chartImageJpeg: snapshot.chartImageJpeg ?? null,
-    })),
+    snapshots: state.snapshots,
   })
 }
 
 export function readPersistedState(host: HTMLElement): PersistedWidgetState | null {
-  const fromAttribute = parsePersistedState(host.getAttribute(STATE_ATTRIBUTE))
-  if (fromAttribute) {
-    return fromAttribute
-  }
-  const script = host.querySelector(`:scope > script[type="${STATE_SCRIPT_TYPE}"]`)
-  return parsePersistedState(script?.textContent)
+  return parsePersistedState(host.getAttribute(STATE_ATTRIBUTE))
 }
 
 export function writePersistedState(host: HTMLElement, state: PersistedWidgetState): void {
@@ -156,14 +142,5 @@ export function writePersistedState(host: HTMLElement, state: PersistedWidgetSta
   if (host.getAttribute(STATE_ATTRIBUTE) !== encoded) {
     host.setAttribute(STATE_ATTRIBUTE, encoded)
   }
-
-  let script = host.querySelector(`:scope > script[type="${STATE_SCRIPT_TYPE}"]`) as HTMLScriptElement | null
-  if (!script) {
-    script = document.createElement("script")
-    script.type = STATE_SCRIPT_TYPE
-    host.appendChild(script)
-  }
-  if (script.textContent !== encoded) {
-    script.textContent = encoded
-  }
+  host.querySelector(`:scope > script[type="${STATE_SCRIPT_TYPE}"]`)?.remove()
 }

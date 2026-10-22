@@ -5,9 +5,9 @@
 <unit id="label"><segment><source>Epidemic Simulation</source><target>Járványszimuláció</target></segment></unit>
 </file>
 <file id="./widgets/webwriter-epidemic-sim.*" original="./widgets/webwriter-epidemic-sim.*">
-<unit id="label"><segment><source>Epidemic Simulation</source><target>Járvány-szimuláció</target></segment></unit>
+<unit id="label"><segment><source>Epidemic Simulation</source><target>Járványszimuláció</target></segment></unit>
 </file>
 <file id="./snippets/corona-verlauf.html" original="./snippets/corona-verlauf.html">
-<unit id="label"><segment><source>Flatten the Curve (COVID-19 SEIRD)</source><target>A fertőzés terjedésének lassítása (COVID-19 SEIRD)</target></segment></unit>
+<unit id="label"><segment><source>Flatten the Curve (COVID-19 SEIRD)</source><target>A görbe lelassítása (COVID-19 SEIRD)</target></segment></unit>
 </file>
 </xliff>

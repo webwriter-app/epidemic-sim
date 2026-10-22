@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.1" srcLang="en" trgLang="zh-Hans">
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.1" srcLang="en" trgLang="zh-hans">
 <file id="." original=".">
 <unit id="description"><segment><source>Interactive agent-based epidemic models with charts and interventions.</source><target>带有图表和干预措施的交互式基于代理的流行病模型。</target></segment></unit>
 <unit id="label"><segment><source>Epidemic Simulation</source><target>流行病模拟</target></segment></unit>
@@ -8,6 +8,6 @@
 <unit id="label"><segment><source>Epidemic Simulation</source><target>疫情模拟</target></segment></unit>
 </file>
 <file id="./snippets/corona-verlauf.html" original="./snippets/corona-verlauf.html">
-<unit id="label"><segment><source>Flatten the Curve (COVID-19 SEIRD)</source><target>压平疫情曲线（COVID-19 SEIRD）</target></segment></unit>
+<unit id="label"><segment><source>Flatten the Curve (COVID-19 SEIRD)</source><target>压平曲线（COVID-19 SEIRD）</target></segment></unit>
 </file>
 </xliff>

@@ -13,6 +13,7 @@ export function buildSimulationConfig(options: WidgetConfigValues): SimulationCo
     infectionRadius: options.infectionRadius,
     infectionProbability: options.infectionProbability,
     recoveryDuration: options.recoveryDuration,
+    simulationDuration: options.simulationDuration,
     quarantineEnabled: options.quarantineEnabled,
     quarantineProbability: options.quarantineProbability,
     quarantineDuration: options.quarantineDuration,

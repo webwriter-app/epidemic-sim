@@ -11,7 +11,7 @@
       </trans-unit>
       <trans-unit id="s7b564dc9f5db9ad8">
         <source>Infection radius</source>
-        <target>Enfeksiyon yayılma alanı</target>
+        <target>Bulaş yarıçapı</target>
       </trans-unit>
       <trans-unit id="s71ffa36b183c46fd">
         <source>Infection probability</source>
@@ -35,19 +35,19 @@
       </trans-unit>
       <trans-unit id="s77cc57dd46f7f5cc">
         <source>Hotspot visit probability</source>
-        <target>Hotspot ziyaret olasılığı</target>
+        <target>Toplanma noktasını ziyaret olasılığı</target>
       </trans-unit>
       <trans-unit id="sce044315d3edcee3">
         <source>Hotspot stay duration</source>
-        <target>Hotspot kullanım süresi</target>
+        <target>Toplanma noktasında kalma süresi</target>
       </trans-unit>
       <trans-unit id="s5bafee07187fb2ad">
         <source>Hotspot size</source>
-        <target>Hotspot boyutu</target>
+        <target>Toplanma noktası boyutu</target>
       </trans-unit>
       <trans-unit id="sc522ce8abba9319e">
         <source>Community leave probability</source>
-        <target>Toplumdan ayrılma olasılığı</target>
+        <target>Topluluktan ayrılma olasılığı</target>
       </trans-unit>
       <trans-unit id="sbea80d4210f4af52">
         <source>Susceptible</source>
@@ -59,7 +59,7 @@
       </trans-unit>
       <trans-unit id="s20c7305417726e5a">
         <source>Recovered</source>
-        <target>Geri kazanıldı</target>
+        <target>İyileşmiş</target>
       </trans-unit>
       <trans-unit id="s061cc20e3432dead">
         <source>Pause</source>
@@ -67,7 +67,7 @@
       </trans-unit>
       <trans-unit id="sae1c7f13b7c0c47f">
         <source>Start</source>
-        <target>Başla</target>
+        <target>Başlat</target>
       </trans-unit>
       <trans-unit id="sf18604f4e560329a">
         <source>Snapshots</source>
@@ -75,19 +75,15 @@
       </trans-unit>
       <trans-unit id="sa1cbd47c70068780">
         <source>Hotspot max agents</source>
-        <target>Hotspot'ta en fazla temsilci sayısı</target>
+        <target>Toplanma noktası başına en fazla kişi</target>
       </trans-unit>
       <trans-unit id="sa7d4a2c8f4e43300">
         <source>Placed hotspots</source>
-        <target>Yerleştirilmiş erişim noktaları</target>
+        <target>Yerleştirilen toplanma noktaları</target>
       </trans-unit>
       <trans-unit id="sc932995c6f6478ff">
         <source>Create snapshot</source>
         <target>Anlık görüntü oluştur</target>
-      </trans-unit>
-      <trans-unit id="sef191ab7b2c9f986">
-        <source>Frame</source>
-        <target>Çerçeve</target>
       </trans-unit>
       <trans-unit id="sdc673e73b5c13aea">
         <source>Delete</source>
@@ -103,19 +99,19 @@
       </trans-unit>
       <trans-unit id="sc336500050494646">
         <source>Current infected</source>
-        <target>Şu anda enfekte olan</target>
+        <target>Şu anda enfekte</target>
       </trans-unit>
       <trans-unit id="sb3b26f6f5b2035db">
         <source>Current recovered</source>
-        <target>Akım geri kazanıldı</target>
+        <target>Şu anda iyileşmiş</target>
       </trans-unit>
       <trans-unit id="s7be45f343cb15665">
         <source>Final recovered share</source>
-        <target>Son geri kazanılan pay</target>
+        <target>Son iyileşen oranı</target>
       </trans-unit>
       <trans-unit id="sbe234bd424c5176e">
         <source>Peak infected</source>
-        <target>En fazla vaka görülen</target>
+        <target>En yüksek enfekte sayısı</target>
       </trans-unit>
       <trans-unit id="s6e526bbb8672e76a">
         <source>R0 (approx)</source>
@@ -135,11 +131,11 @@
       </trans-unit>
       <trans-unit id="sd8f1f39f65abba47">
         <source>SIR chart snapshot</source>
-        <target>SIR grafiği anlık görüntüsü</target>
+        <target>SIR grafiğinin anlık görüntüsü</target>
       </trans-unit>
       <trans-unit id="sf4cd19d7506d9e12">
         <source>Time (days)</source>
-        <target>Süre (gün)</target>
+        <target>Zaman (gün)</target>
       </trans-unit>
       <trans-unit id="sd4755728c441b538">
         <source>Elapsed time</source>
@@ -147,7 +143,7 @@
       </trans-unit>
       <trans-unit id="sc14daad34e9ee82f">
         <source>Peak time</source>
-        <target>Yoğun saatler</target>
+        <target>Zirve zamanı</target>
       </trans-unit>
       <trans-unit id="s48e186fb300e5464">
         <source>Time</source>
@@ -155,7 +151,7 @@
       </trans-unit>
       <trans-unit id="sc425e5671217eac0">
         <source>Snapshots gallery</source>
-        <target>Fotoğraf galerisi</target>
+        <target>Anlık görüntü galerisi</target>
       </trans-unit>
       <trans-unit id="sc3ac225273c8316b">
         <source>General</source>
@@ -171,7 +167,7 @@
       </trans-unit>
       <trans-unit id="s97e4c519fa4905f9">
         <source>SIR</source>
-        <target>EFENDİM</target>
+        <target>SIR</target>
       </trans-unit>
       <trans-unit id="s6f54d7620146d1b1">
         <source>Quarantine</source>
@@ -179,7 +175,7 @@
       </trans-unit>
       <trans-unit id="sf3209a5af0f3631d">
         <source>Hotspots</source>
-        <target>Önemli noktalar</target>
+        <target>Toplanma noktaları</target>
       </trans-unit>
       <trans-unit id="s99adf8f78a414996">
         <source>Communities</source>
@@ -193,13 +189,9 @@
         <source>Show</source>
         <target>Göster</target>
       </trans-unit>
-      <trans-unit id="s7cade6ea2b5ef848">
-        <source>Double-click to enlarge</source>
-        <target>Büyütmek için çift tıklayın</target>
-      </trans-unit>
       <trans-unit id="sc94818fddfdfdbc6">
         <source>SIR insights</source>
-        <target>SIR içgörüleri</target>
+        <target>SIR göstergeleri</target>
       </trans-unit>
       <trans-unit id="s5aa43edcf11f09af">
         <source>Incubation duration</source>
@@ -219,7 +211,7 @@
       </trans-unit>
       <trans-unit id="s7379168642ff77b3">
         <source>Exposed</source>
-        <target>Maruz kalan</target>
+        <target>Maruz kalmış</target>
       </trans-unit>
       <trans-unit id="sd049237343c44e47">
         <source>Dead</source>
@@ -227,27 +219,27 @@
       </trans-unit>
       <trans-unit id="s00ae53430e6c31cb">
         <source>SEIR insights</source>
-        <target>SEIR içgörüleri</target>
+        <target>SEIR göstergeleri</target>
       </trans-unit>
       <trans-unit id="s2e7ece256ba72b3b">
         <source>SEIRD insights</source>
-        <target>SEIRD bulguları</target>
+        <target>SEIRD göstergeleri</target>
       </trans-unit>
       <trans-unit id="s45b0974d18b97957">
         <source>SIRS insights</source>
-        <target>SIRS içgörüleri</target>
+        <target>SIRS göstergeleri</target>
       </trans-unit>
       <trans-unit id="s65aa7dfb7792b528">
         <source>SIRD insights</source>
-        <target>SIRD içgörüler</target>
+        <target>SIRD göstergeleri</target>
       </trans-unit>
       <trans-unit id="s4f1a78fbc7a2da7a">
         <source>Current exposed</source>
-        <target>Mevcut açık</target>
+        <target>Şu anda maruz kalmış</target>
       </trans-unit>
       <trans-unit id="s5fef8fa88777bdec">
         <source>Current dead</source>
-        <target>Mevcut ölü</target>
+        <target>Şimdiye kadar ölen</target>
       </trans-unit>
       <trans-unit id="s62c095244a149fde">
         <source>SIRS</source>
@@ -267,16 +259,62 @@
       </trans-unit>
       <trans-unit id="s7a3c4c7e8b923c76">
         <source>Drag this hotspot into the simulation map.</source>
-        <target>Bu etkin noktayı simülasyon haritasına sürükleyin.</target>
-      </trans-unit>
-      <trans-unit id="s7ede1c55e35ce9d6">
-        <source>Simulation</source>
-        <target>Simülasyon</target>
+        <target>Bu toplanma noktasını simülasyon haritasına sürükleyin.</target>
       </trans-unit>
       <trans-unit id="s5dd25778c99327a8">
         <source>Printed snapshot of the epidemic simulation. Author options and interactive controls are omitted.</source>
-        <target>Salgın simülasyonunun basılı anlık görüntüsü. Yazar seçenekleri ve etkileşimli kontroller çıkarılmıştır.</target>
+        <target>Salgın simülasyonunun yazdırılmış anlık görüntüsü. Yazar seçenekleri ve etkileşimli kontroller gösterilmez.</target>
       </trans-unit>
+<trans-unit id="s984d2b333eff760a">
+  <source>Tap the simulation map to place the hotspot.</source>
+  <target>Toplanma noktasını yerleştirmek için simülasyon haritasına dokunun.</target>
+</trans-unit>
+<trans-unit id="sd3386a2ef42e80b9">
+  <source>Download</source>
+  <target>İndir</target>
+</trans-unit>
+<trans-unit id="s9d53ce2c390c880c">
+  <source>Image (PNG)</source>
+  <target>Görsel (PNG)</target>
+</trans-unit>
+<trans-unit id="sed03791dbc19b9c0">
+  <source>Table (CSV)</source>
+  <target>Tablo (CSV)</target>
+</trans-unit>
+<trans-unit id="s45615e2718064d48">
+  <source>Insights</source>
+  <target>Göstergeler</target>
+</trans-unit>
+<trans-unit id="s5334c0927cf25b86">
+  <source>Exit fullscreen</source>
+  <target>Tam ekrandan çık</target>
+</trans-unit>
+<trans-unit id="s4b10acae683d2978">
+  <source>Fullscreen</source>
+  <target>Tam ekran</target>
+</trans-unit>
+<trans-unit id="se0955919920ee87d">
+  <source>Day</source>
+  <target>Gün</target>
+</trans-unit>
+<trans-unit id="sbe774904ccc6159e">
+  <source>Simulation duration</source>
+  <target>Simülasyon süresi</target>
+</trans-unit>
+<trans-unit id="s6fa549ec31db634a">
+  <source>The simulation may end earlier when the epidemic is over</source>
+  <target>Salgın sona erdiğinde simülasyon daha erken bitebilir</target>
+</trans-unit>
+<trans-unit id="saf63fe4c86022652">
+  <source>C</source>
+  <target>T</target>
+  <note from="lit-localize">Short label for a community, shown before its number</note>
+</trans-unit>
+<trans-unit id="saf63d94c8601e773">
+  <source>d</source>
+  <target>g</target>
+  <note from="lit-localize">Unit abbreviation for days, shown after a number</note>
+</trans-unit>
     </body>
   </file>
 </xliff>

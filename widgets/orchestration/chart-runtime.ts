@@ -21,6 +21,30 @@ export type ChartRuntimeCounts = {
   dead: number
 }
 
+export type ChartHistories = {
+  susceptibleHistory: number[]
+  exposedHistory: number[]
+  infectedHistory: number[]
+  recoveredHistory: number[]
+  deadHistory: number[]
+}
+
+export function buildChartSeries(modelType: EpidemicModelType, histories: ChartHistories): ChartSeries[] {
+  const compartmentSeries: Record<ChartCompartment, ChartSeries> = {
+    susceptible: {label: msg("Susceptible"), values: histories.susceptibleHistory, color: "#56B4E9"},
+    exposed: {label: msg("Exposed"), values: histories.exposedHistory, color: "#E69F00"},
+    infected: {label: msg("Infected"), values: histories.infectedHistory, color: "#d55e00"},
+    recovered: {label: msg("Recovered"), values: histories.recoveredHistory, color: "#009E73"},
+    dead: {label: msg("Dead"), values: histories.deadHistory, color: "#666666"},
+  }
+  return getChartCompartments(modelType).map((compartment) => compartmentSeries[compartment])
+}
+
+export function buildChartDayLabels(series: ChartSeries[]): string[] {
+  const length = series.reduce((maxLength, entry) => Math.max(maxLength, entry.values.length), 0)
+  return Array.from({length}, (_, dayIndex) => String(dayIndex))
+}
+
 export class ChartRuntime {
   private readonly historyLimit = 2000
   susceptibleHistory: number[] = []
@@ -30,6 +54,7 @@ export class ChartRuntime {
   deadHistory: number[] = []
   epidemicEnded = false
   hadInfection = false
+  private hasUndrawnPoint = false
 
   reset(): void {
     this.susceptibleHistory = resetHistory()
@@ -46,6 +71,7 @@ export class ChartRuntime {
     counts: ChartRuntimeCounts,
     hasActiveInfection: boolean,
     waveFinished: boolean,
+    simulationDurationReached: boolean,
   ): void {
     if (hasActiveInfection) {
       this.hadInfection = true
@@ -55,7 +81,7 @@ export class ChartRuntime {
       return
     }
 
-    const waveEnded = this.hadInfection && waveFinished
+    const waveEnded = (this.hadInfection && waveFinished) || simulationDurationReached
     const isFullDayCheckpoint = frameIndex % FRAMES_PER_DAY === 0
     if (!isFullDayCheckpoint) {
       if (waveEnded) {
@@ -69,9 +95,16 @@ export class ChartRuntime {
     pushHistoryValue(this.infectedHistory, counts.infected, this.historyLimit)
     pushHistoryValue(this.recoveredHistory, counts.recovered, this.historyLimit)
     pushHistoryValue(this.deadHistory, counts.dead, this.historyLimit)
+    this.hasUndrawnPoint = true
     if (waveEnded) {
       this.epidemicEnded = true
     }
+  }
+
+  takeUndrawnPoint(): boolean {
+    const hadUndrawnPoint = this.hasUndrawnPoint
+    this.hasUndrawnPoint = false
+    return hadUndrawnPoint
   }
 
   estimateR0(recoveryDuration: number): number | null {
@@ -79,42 +112,22 @@ export class ChartRuntime {
   }
 
   buildDayLabels(series: ChartSeries[]): string[] {
-    const length = series.reduce((maxLength, entry) => Math.max(maxLength, entry.values.length), 0)
-    return Array.from({length}, (_, dayIndex) => String(dayIndex))
+    return buildChartDayLabels(series)
   }
 
   buildSeries(config: SimulationConfig): ChartSeries[] {
-    const compartmentSeries: Record<ChartCompartment, ChartSeries> = {
-      susceptible: {label: msg("Susceptible"), values: this.susceptibleHistory, color: "#2563eb"},
-      exposed: {label: msg("Exposed"), values: this.exposedHistory, color: "#f59e0b"},
-      infected: {label: msg("Infected"), values: this.infectedHistory, color: "#dc2626"},
-      recovered: {label: msg("Recovered"), values: this.recoveredHistory, color: "#16a34a"},
-      dead: {label: msg("Dead"), values: this.deadHistory, color: "#64748b"},
-    }
-    return getChartCompartments(config.modelType).map((compartment) => compartmentSeries[compartment])
+    return buildChartSeries(config.modelType, this)
   }
 
-  draw(
-    config: SimulationConfig,
-    compactCanvas: HTMLCanvasElement | null,
-    enlargedCanvas: HTMLCanvasElement | null,
-    chartOverlayOpen: boolean,
-  ): void {
-    const xAxisTitle = msg("Time (days)")
-    if (compactCanvas) {
-      const compactSeries = this.buildSeries(config)
-      drawChart(compactCanvas, config.population, compactSeries, {
-        labels: this.buildDayLabels(compactSeries),
-        xAxisTitle,
-      })
+  draw(config: SimulationConfig, canvas: HTMLCanvasElement | null): void {
+    if (!canvas) {
+      return
     }
-    if (chartOverlayOpen && enlargedCanvas) {
-      const enlargedSeries = this.buildSeries(config)
-      drawChart(enlargedCanvas, config.population, enlargedSeries, {
-        labels: this.buildDayLabels(enlargedSeries),
-        xAxisTitle,
-      })
-    }
+    const series = this.buildSeries(config)
+    drawChart(canvas, config.population, series, {
+      labels: this.buildDayLabels(series),
+      xAxisTitle: msg("Time (days)"),
+    })
   }
 
   getInsightsOverlayTitle(modelType: EpidemicModelType): string {

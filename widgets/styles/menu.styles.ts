@@ -13,10 +13,18 @@ export const sideMenuStyles: CSSResult = css`
   .side-menu__title-switch::part(label) { display: none; margin: 0; }
   .side-menu__section { display: grid; gap: 8px; border-top: 1px solid #e5e7eb; padding-top: 10px; margin-top: 10px; }
   .side-menu__section:first-of-type { border-top: none; padding-top: 0; margin-top: 0; }
+  .widget-shell.has-menu .side-menu { padding-top: 55px; }
+  .side-menu--insights .insights { grid-template-columns: 1fr; gap: 6px; }
+  .side-menu--insights .insights__row { display: contents; }
+  .simulation-actions__icon-button.is-active { color: #334155; background: #f1f5f9; }
+  .side-panel { position: absolute; top: 0; right: 0; z-index: 8; }
+  .widget-shell.has-menu .side-panel { bottom: 0; width: var(--side-menu-width); }
+  .widget-top-actions { position: absolute; top: 10px; right: 10px; z-index: 9; display: flex; gap: 14px; }
   .side-menu__controls { display: grid; gap: 8px; }
   .side-menu__control { display: grid; gap: 4px; }
   .side-menu__control-head { display: flex; justify-content: space-between; gap: 6px; align-items: baseline; font-size: 0.82rem; line-height: 1.25; }
   .side-menu__control-value { color: #334155; font-size: 0.78rem; font-variant-numeric: tabular-nums; flex-shrink: 0; }
+  .side-menu__control-note { color: #64748b; font-size: 0.72rem; line-height: 1.3; }
   .side-menu sl-range { width: 100%; }
   .side-menu sl-select { width: 100%; }
   .side-menu sl-select::part(combobox) { width: 100%; }
@@ -40,6 +48,10 @@ export const sideMenuStyles: CSSResult = css`
     padding-right: 0;
     grid-column: 1;
     height: auto;
+  }
+  :host(.ww-beforeprint) .side-panel,
+  :host(.ww-printable) .side-panel {
+    display: contents;
   }
   :host(.ww-beforeprint) .side-menu,
   :host(.ww-printable) .side-menu {
@@ -87,6 +99,9 @@ export const sideMenuStyles: CSSResult = css`
       grid-column: 1;
       height: auto;
     }
+    .side-panel {
+      display: contents;
+    }
     .side-menu {
       position: static;
       width: auto;
@@ -109,6 +124,37 @@ export const sideMenuStyles: CSSResult = css`
     }
     .side-menu__control-head {
       font-size: 0.72rem;
+    }
+  }
+
+  :host { container: epidemic-widget / inline-size; }
+  @container epidemic-widget (max-width: 640px) {
+    .widget-shell { display: flex; flex-direction: column; height: auto; overflow: visible; }
+    .side-panel { position: static; order: -1; display: flex; justify-content: flex-end; margin-bottom: 8px; }
+    .side-panel .widget-top-actions { position: static; }
+    .widget-shell.has-menu .main-content { padding-right: 0; }
+    .widget-shell.has-menu .side-panel { position: relative; order: 1; display: block; width: auto; margin: 12px 0 0; }
+    .widget-shell.has-menu .side-panel .widget-top-actions { position: absolute; }
+    .widget-shell.has-menu .side-menu {
+      position: static;
+      width: auto;
+      border: 1px solid #d6dce4;
+      box-shadow: none;
+      overflow: visible;
+    }
+    :host(.ww-fullscreen) .widget-shell,
+    :host(:fullscreen) .widget-shell {
+      height: auto;
+    }
+    :host(.ww-fullscreen) .main-content,
+    :host(:fullscreen) .main-content {
+      container-type: normal;
+      justify-content: flex-start;
+    }
+    :host(.ww-fullscreen) .layout,
+    :host(:fullscreen) .layout {
+      --fs-box-width: calc(100cqw - var(--fs-panel-chrome));
+      grid-template-columns: auto;
     }
   }
 `

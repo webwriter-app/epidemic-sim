@@ -13,6 +13,7 @@ type RangeRow = {
   formatValue?: (value: number) => string
   onInput: (event: Event) => void
   onAllowChange: (event: Event) => void
+  description?: string
 }
 
 type BooleanRow = {
@@ -95,7 +96,7 @@ function renderRow(row: TeacherOptionRow): TemplateResult {
     return html`
       <div class="teacher-options__row">
         ${renderRowHead(row.label, row.allow, row.onAllowChange)}
-        <sl-select .value=${row.value} @sl-change=${row.onChange}>
+        <sl-select placement="bottom" hoist .value=${row.value} @sl-change=${row.onChange}>
           ${row.options.map(
             (option) => html`<sl-option value=${option.value}>${option.label}</sl-option>`,
           )}
@@ -110,6 +111,7 @@ function renderRow(row: TeacherOptionRow): TemplateResult {
       <div class="teacher-options__row">
         ${renderRowHead(row.label, row.allow, row.onAllowChange)}
         <div class="teacher-options__value-text">${displayValue}</div>
+        ${row.description ? html`<div class="teacher-options__description">${row.description}</div>` : null}
         <sl-range
           min=${String(row.min)}
           max=${String(row.max)}
