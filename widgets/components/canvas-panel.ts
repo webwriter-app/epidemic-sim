@@ -25,6 +25,7 @@ type CanvasPanelInput = {
   onCanvasDragLeave: () => void
   onCanvasDrop: (event: DragEvent) => void
   onCanvasPointerDown: (event: PointerEvent) => void
+  onCanvasPointerMove: (event: PointerEvent) => void
   onCanvasContextMenu: (event: MouseEvent) => void
   onHotspotTokenDragStart: (event: DragEvent) => void
   onHotspotTokenDragEnd: () => void
@@ -67,6 +68,7 @@ export function renderCanvasPanel(input: CanvasPanelInput): TemplateResult {
           @dragleave=${input.onCanvasDragLeave}
           @drop=${input.onCanvasDrop}
           @pointerdown=${input.onCanvasPointerDown}
+          @pointermove=${input.onCanvasPointerMove}
           @contextmenu=${input.onCanvasContextMenu}
         ></canvas>
         <div class="actions simulation-actions">

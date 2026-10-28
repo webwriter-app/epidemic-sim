@@ -52,6 +52,10 @@
   ],
   "license": "MIT",
   "author": "Jason Iloppa <iloppajason@icloud.com>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/webwriter-app/epidemic-sim.git"
+  },
   "scripts": {
     "prepublishOnly": "npx @webwriter/build",
     "dev": "npx @webwriter/build dev",

@@ -1108,6 +1108,16 @@ export class WebwriterEpidemicSim extends LitElementWw {
     this.selectHotspot(hotspot?.id ?? (handled ? this.selectedHotspotId : null))
   }
 
+  private onCanvasPointerMove = (event: PointerEvent): void => {
+    if (event.pointerType === "touch") {
+      return
+    }
+    const hotspots = this.config.hotspotsEnabled && !this.hotspotPlacementActive
+      ? this.hotspotEditing.getAreas(this.config).hotspots
+      : []
+    this.hotspotPointer.updateHoverCursor(event, hotspots)
+  }
+
   private onHotspotTokenClick = (): void => {
     this.hotspotPlacementActive = !this.hotspotPlacementActive
   }
@@ -1206,6 +1216,7 @@ export class WebwriterEpidemicSim extends LitElementWw {
       onCanvasDragLeave: this.hotspotEditing.onCanvasDragLeave,
       onCanvasDrop: this.hotspotEditing.onCanvasDrop,
       onCanvasPointerDown: this.onCanvasPointerDown,
+      onCanvasPointerMove: this.onCanvasPointerMove,
       onCanvasContextMenu: this.onCanvasContextMenu,
       onHotspotTokenDragStart: this.hotspotEditing.onTokenDragStart,
       onHotspotTokenDragEnd: this.hotspotEditing.onTokenDragEnd,

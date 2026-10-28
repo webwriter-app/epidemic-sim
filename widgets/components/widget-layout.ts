@@ -37,6 +37,7 @@ export type WidgetLayoutInput = {
   onCanvasDragLeave: () => void
   onCanvasDrop: (event: DragEvent) => void
   onCanvasPointerDown: (event: PointerEvent) => void
+  onCanvasPointerMove: (event: PointerEvent) => void
   onCanvasContextMenu: (event: MouseEvent) => void
   onHotspotTokenDragStart: (event: DragEvent) => void
   onHotspotTokenDragEnd: () => void
@@ -110,6 +111,7 @@ export function renderWidgetLayout(input: WidgetLayoutInput): TemplateResult {
             onCanvasDragLeave: input.onCanvasDragLeave,
             onCanvasDrop: input.onCanvasDrop,
             onCanvasPointerDown: input.onCanvasPointerDown,
+            onCanvasPointerMove: input.onCanvasPointerMove,
             onCanvasContextMenu: input.onCanvasContextMenu,
             onHotspotTokenDragStart: input.onHotspotTokenDragStart,
             onHotspotTokenDragEnd: input.onHotspotTokenDragEnd,
