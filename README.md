@@ -1,7 +1,7 @@
 # Epidemic Sim (`@webwriter/epidemic-sim@1.0.0`)
 [License: MIT](LICENSE) | Version: 1.0.0
 
-Interactive agent-based epidemic simulation (SIR/SIRS/SEIR/SIRD/SEIRD) for WebWriter explorables, with charts, quarantine, hotspots, and communities.
+Interactive agent-based epidemic simulation (SIR/SIRS/SEIR/SIRD/SEIRD) with charts, quarantine, hotspots, and communities.
 
 ## What the widget does
 
