@@ -54,7 +54,7 @@
   "license": "MIT",
   "author": "Jason Iloppa <iloppajason@icloud.com>",
   "scripts": {
-    "prepublishOnly": "npx @webwriter/build",
+    "prepublishOnly": "npx @webwriter/build && node scripts/build-tests.mjs",
     "dev": "npx @webwriter/build dev",
     "localize": "lit-localize extract && npx @webwriter/build localize && lit-localize build"
   },
