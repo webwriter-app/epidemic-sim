@@ -1,13 +1,14 @@
+import { sourceMsg } from "../../../localization/localizer";
+import type { MsgFn } from "@lit/localize";
 import {html} from "lit"
 import type {TemplateResult} from "lit"
-import {msg} from "@lit/localize"
 import {MENU_RANGE_LIMITS} from "../../config/widget-schema"
 import {formatFrameCountAsDays} from "../../simulation/time"
 import type {RenderMenuOptions} from "./menu-types"
 
 const R = MENU_RANGE_LIMITS
 
-export function renderQuarantineControls(options: RenderMenuOptions): TemplateResult {
+export function renderQuarantineControls(options: RenderMenuOptions, msg: MsgFn = sourceMsg): TemplateResult {
   return html`
     ${
       options.allowQuarantineProbabilityControl
@@ -28,7 +29,7 @@ export function renderQuarantineControls(options: RenderMenuOptions): TemplateRe
             <label class="side-menu__control">
               <span class="side-menu__control-head">
                 <span>${msg("Quarantine duration")}</span>
-                <span class="side-menu__control-value">${formatFrameCountAsDays(options.quarantineDuration)}</span>
+                <span class="side-menu__control-value">${formatFrameCountAsDays(options.quarantineDuration, msg)}</span>
               </span>
               <sl-range min=${String(R.quarantineDuration.min)} max=${String(R.quarantineDuration.max)} step=${String(R.quarantineDuration.step)} .value=${String(options.quarantineDuration)} ?disabled=${!options.quarantineEnabled} @sl-input=${options.onQuarantineDurationInput}></sl-range>
             </label>

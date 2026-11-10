@@ -31,7 +31,19 @@
       "ja": "疫病シミュレーション",
       "id": "Simulasi Epidemi",
       "zh-hans": "流行病模拟",
-      "zh-hant": "疫情模擬"
+      "zh-hant": "疫情模擬",
+      "_": "Epidemic Sim",
+      "en": "Epidemic Sim",
+      "en-US": "Epidemic Sim",
+      "en-GB": "Epidemic Sim",
+      "en-CA": "Epidemic Sim",
+      "en-AU": "Epidemic Sim",
+      "en-IN": "Epidemic Sim",
+      "zh": "流行病模拟",
+      "zh-Hans": "流行病模拟",
+      "zh-Hant": "疫情模擬",
+      "pt": "Simulação de epidemias",
+      "no": "Epidemisimulering"
     },
     "description": {
       "de": "Interaktive, agentenbasierte Epidemiemodelle mit Diagrammen und Maßnahmen.",
@@ -64,7 +76,19 @@
       "ja": "グラフと介入策を備えた、インタラクティブなエージェントベースの感染症モデル。",
       "id": "Model epidemi berbasis agen interaktif dengan grafik dan intervensi.",
       "zh-hans": "带有图表和干预措施的交互式基于代理的流行病模型。",
-      "zh-hant": "具備圖表與干預措施的互動式基於代理的流行病模型。"
+      "zh-hant": "具備圖表與干預措施的互動式基於代理的流行病模型。",
+      "_": "Interactive agent-based epidemic simulation (SIR/SIRS/SEIR/SIRD/SEIRD) for WebWriter explorables, with charts, quarantine, hotspots, and communities.",
+      "en": "Interactive agent-based epidemic simulation (SIR/SIRS/SEIR/SIRD/SEIRD) for WebWriter explorables, with charts, quarantine, hotspots, and communities.",
+      "en-US": "Interactive agent-based epidemic simulation (SIR/SIRS/SEIR/SIRD/SEIRD) for WebWriter explorables, with charts, quarantine, hotspots, and communities.",
+      "en-GB": "Interactive agent-based epidemic simulation (SIR/SIRS/SEIR/SIRD/SEIRD) for WebWriter explorables, with charts, quarantine, hotspots, and communities.",
+      "en-CA": "Interactive agent-based epidemic simulation (SIR/SIRS/SEIR/SIRD/SEIRD) for WebWriter explorables, with charts, quarantine, hotspots, and communities.",
+      "en-AU": "Interactive agent-based epidemic simulation (SIR/SIRS/SEIR/SIRD/SEIRD) for WebWriter explorables, with charts, quarantine, hotspots, and communities.",
+      "en-IN": "Interactive agent-based epidemic simulation (SIR/SIRS/SEIR/SIRD/SEIRD) for WebWriter explorables, with charts, quarantine, hotspots, and communities.",
+      "zh": "带有图表和干预措施的交互式基于代理的流行病模型。",
+      "zh-Hans": "带有图表和干预措施的交互式基于代理的流行病模型。",
+      "zh-Hant": "具備圖表與干預措施的互動式基於代理的流行病模型。",
+      "pt": "Modelos interativos de epidemias baseados em agentes, com gráficos e intervenções.",
+      "no": "Interaktive, agentbaserte epidemimodeller med diagrammer og tiltak."
     }
   },
   "./widgets/webwriter-epidemic-sim.*": {
@@ -99,7 +123,19 @@
       "ja": "疫病のシミュレーション",
       "id": "Simulasi Epidemi",
       "zh-hans": "疫情模拟",
-      "zh-hant": "疫情模擬"
+      "zh-hant": "疫情模擬",
+      "_": "Epidemic Sim",
+      "en": "Epidemic Sim",
+      "en-US": "Epidemic Sim",
+      "en-GB": "Epidemic Sim",
+      "en-CA": "Epidemic Sim",
+      "en-AU": "Epidemic Sim",
+      "en-IN": "Epidemic Sim",
+      "zh": "疫情模拟",
+      "zh-Hans": "疫情模拟",
+      "zh-Hant": "疫情模擬",
+      "pt": "Simulação de uma epidemia",
+      "no": "Simulering av epidemier"
     }
   },
   "./snippets/corona-verlauf.html": {
@@ -134,7 +170,19 @@
       "ja": "感染曲線を平坦化させる（COVID-19 SEIRD）",
       "id": "Ratakan Kurva (COVID-19 SEIRD)",
       "zh-hans": "压平曲线（COVID-19 SEIRD）",
-      "zh-hant": "壓平疫情曲線（COVID-19 SEIRD）"
+      "zh-hant": "壓平疫情曲線（COVID-19 SEIRD）",
+      "_": "Corona Verlauf",
+      "en": "Corona Verlauf",
+      "en-US": "Corona Verlauf",
+      "en-GB": "Corona Verlauf",
+      "en-CA": "Corona Verlauf",
+      "en-AU": "Corona Verlauf",
+      "en-IN": "Corona Verlauf",
+      "zh": "压平曲线（COVID-19 SEIRD）",
+      "zh-Hans": "压平曲线（COVID-19 SEIRD）",
+      "zh-Hant": "壓平疫情曲線（COVID-19 SEIRD）",
+      "pt": "Achatar a Curva (COVID-19 SEIRD)",
+      "no": "Flatte kurven (COVID-19 SEIRD)"
     }
   }
 }

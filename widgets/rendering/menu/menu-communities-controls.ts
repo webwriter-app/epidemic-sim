@@ -1,12 +1,13 @@
+import { sourceMsg } from "../../../localization/localizer";
+import type { MsgFn } from "@lit/localize";
 import {html} from "lit"
 import type {TemplateResult} from "lit"
-import {msg} from "@lit/localize"
 import {MENU_RANGE_LIMITS} from "../../config/widget-schema"
 import type {RenderMenuOptions} from "./menu-types"
 
 const R = MENU_RANGE_LIMITS
 
-export function renderCommunitiesControls(options: RenderMenuOptions): TemplateResult {
+export function renderCommunitiesControls(options: RenderMenuOptions, msg: MsgFn = sourceMsg): TemplateResult {
   return html`
     ${
       options.allowCommunityLeaveProbabilityControl

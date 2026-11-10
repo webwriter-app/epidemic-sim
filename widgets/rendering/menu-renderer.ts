@@ -1,6 +1,7 @@
+import { sourceMsg } from "../../localization/localizer";
+import type { MsgFn } from "@lit/localize";
 import {html} from "lit"
 import type {TemplateResult} from "lit"
-import {msg} from "@lit/localize"
 import {renderCommunitiesControls} from "./menu/menu-communities-controls"
 import {renderGeneralControls} from "./menu/menu-general-controls"
 import {renderHotspotsControls} from "./menu/menu-hotspots-controls"
@@ -22,16 +23,16 @@ export {sideMenuStyles} from "../styles/menu.styles"
 export type {MenuAllowFlags, RenderMenuOptions} from "./menu/menu-types"
 export {hasVisibleMenuControls}
 
-export function renderMenu(options: RenderMenuOptions): TemplateResult {
+export function renderMenu(options: RenderMenuOptions, msg: MsgFn = sourceMsg): TemplateResult {
   return html`
     <aside class="side-menu">
-      ${hasModelMenuControls(options, options.modelType) ? renderMenuSection(msg("Model"), renderModelControls(options)) : null}
-      ${hasGeneralMenuControls(options) ? renderMenuSection(msg("General"), renderGeneralControls(options)) : null}
+      ${hasModelMenuControls(options, options.modelType) ? renderMenuSection(msg("Model"), renderModelControls(options, msg)) : null}
+      ${hasGeneralMenuControls(options) ? renderMenuSection(msg("General"), renderGeneralControls(options, msg)) : null}
       ${
         hasQuarantineMenuControls(options) && (options.quarantineEnabled || options.allowQuarantineEnabledControl)
           ? renderMenuSection(
               msg("Quarantine"),
-              options.quarantineEnabled ? renderQuarantineControls(options) : null,
+              options.quarantineEnabled ? renderQuarantineControls(options, msg) : null,
               options.allowQuarantineEnabledControl
                 ? {checked: options.quarantineEnabled, onChange: options.onQuarantineEnabled}
                 : undefined,
@@ -42,7 +43,7 @@ export function renderMenu(options: RenderMenuOptions): TemplateResult {
         hasHotspotsMenuControls(options) && (options.hotspotsEnabled || options.allowHotspotsEnabledControl)
           ? renderMenuSection(
               msg("Hotspots"),
-              options.hotspotsEnabled ? renderHotspotsControls(options) : null,
+              options.hotspotsEnabled ? renderHotspotsControls(options, msg) : null,
               options.allowHotspotsEnabledControl
                 ? {checked: options.hotspotsEnabled, onChange: options.onHotspotsEnabled}
                 : undefined,
@@ -53,7 +54,7 @@ export function renderMenu(options: RenderMenuOptions): TemplateResult {
         hasCommunitiesMenuControls(options) && (options.communitiesEnabled || options.allowCommunitiesEnabledControl)
           ? renderMenuSection(
               msg("Communities"),
-              options.communitiesEnabled ? renderCommunitiesControls(options) : null,
+              options.communitiesEnabled ? renderCommunitiesControls(options, msg) : null,
               options.allowCommunitiesEnabledControl
                 ? {checked: options.communitiesEnabled, onChange: options.onCommunitiesEnabled}
                 : undefined,

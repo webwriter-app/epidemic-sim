@@ -1,7 +1,8 @@
+import type { MsgFn } from "@lit/localize";
+import { effectiveLanguage, localizeElement, nativeLanguageAttributes, sourceMsg } from "../localization/localizer";
 import {LitElementWw} from "@webwriter/lit"
 import {customElement, property, state} from "lit/decorators.js"
 import type {PropertyValues} from "lit"
-import {msg} from "@lit/localize"
 import SlButton from "@shoelace-style/shoelace/dist/components/button/button.component.js"
 import SlCard from "@shoelace-style/shoelace/dist/components/card/card.component.js"
 import SlDetails from "@shoelace-style/shoelace/dist/components/details/details.component.js"
@@ -14,7 +15,6 @@ import SlTag from "@shoelace-style/shoelace/dist/components/tag/tag.component.js
 import SlSelect from "@shoelace-style/shoelace/dist/components/select/select.component.js"
 import SlOption from "@shoelace-style/shoelace/dist/components/option/option.component.js"
 import shoelaceLightStyles from "@shoelace-style/shoelace/dist/themes/light.styles.js"
-import LOCALIZE from "../localization/generated"
 
 import {formatApprox} from "./analytics/chart-insights"
 import type {SelectedHotspotInput} from "./components/canvas-panel"
@@ -53,10 +53,15 @@ import {fitCanvasToDisplaySize, getCanvasPoint} from "./utils/canvas-coordinates
 
 @customElement("webwriter-epidemic-sim")
 export class WebwriterEpidemicSim extends LitElementWw {
-  protected localize = LOCALIZE as {
-    getLocale: () => string
-    setLocale: (locale: string) => Promise<void>
-  }
+  static override get observedAttributes() { return nativeLanguageAttributes(this, super.observedAttributes); }
+
+  override get lang(): string { return effectiveLanguage(this); }
+  override set lang(value: string) { this.setAttribute("lang", value); }
+  public readonly msg = localizeElement(this, true, () => {
+    Object.assign(this.options, this.getDrawerOptions())
+    this.drawChart()
+    this.redrawSimulationWhenPaused()
+  });
 
   static scopedElements = {
     "sl-button": SlButton,
@@ -378,39 +383,45 @@ export class WebwriterEpidemicSim extends LitElementWw {
   })
   accessor allowCommunityLeaveProbabilityControl = false
 
-  static optionGroups = {
-    model: {label: {_: "Model", de: "Modell"}, collapsible: true},
-    general: {label: {_: "General", de: "Allgemein"}, collapsible: true},
-    quarantine: {label: {_: "Quarantine", de: "Quarantäne"}, advanced: true},
-    hotspots: {label: {_: "Hotspots"}, advanced: true},
-    communities: {label: {_: "Communities", de: "Gemeinschaften"}, advanced: true},
-    controls: {label: {_: "Learner controls", de: "Steuerung für Lernende"}, advanced: true},
+  readonly optionGroups = WebwriterEpidemicSim.buildOptionGroups(this.msg);
+
+  static get optionGroups() { return this.buildOptionGroups(sourceMsg); }
+
+  private static buildOptionGroups(msg: MsgFn) {
+    return {
+      model: {label: { get _() { return msg("Model"); } }, collapsible: true},
+      general: {label: { get _() { return msg("General"); } }, collapsible: true},
+      quarantine: {label: { get _() { return msg("Quarantine"); } }, advanced: true},
+      hotspots: {label: { get _() { return msg("Hotspots"); } }, advanced: true},
+      communities: {label: { get _() { return msg("Communities"); } }, advanced: true},
+      controls: {label: { get _() { return msg("Learner controls"); } }, advanced: true},
+    };
   }
 
   readonly options = {};
 
   private getDrawerOptions() {
     const labels = {
-      modelType: ["Model type", "Modelltyp", "model"],
-      incubationDuration: ["Incubation duration", "Inkubationsdauer", "model"],
-      immunityDuration: ["Immunity duration", "Immunitätsdauer", "model"],
-      mortalityProbability: ["Mortality probability", "Sterbewahrscheinlichkeit", "model"],
-      population: ["Population", "Bevölkerung", "general"],
-      speed: ["Speed", "Geschwindigkeit", "general"],
-      infectionRadius: ["Infection radius", "Infektionsradius", "general"],
-      infectionProbability: ["Infection probability", "Infektionswahrscheinlichkeit", "general"],
-      recoveryDuration: ["Recovery duration", "Genesungsdauer", "general"],
-      simulationDuration: ["Simulation duration", "Simulationsdauer", "general"],
-      quarantineEnabled: ["Enable quarantine", "Quarantäne aktivieren", "quarantine"],
-      quarantineProbability: ["Quarantine probability", "Quarantänewahrscheinlichkeit", "quarantine"],
-      quarantineDuration: ["Quarantine duration", "Quarantänedauer", "quarantine"],
-      hotspotsEnabled: ["Enable hotspots", "Hotspots aktivieren", "hotspots"],
-      hotspotVisitProbability: ["Hotspot visit probability", "Hotspot-Besuchswahrscheinlichkeit", "hotspots"],
-      hotspotStayDuration: ["Hotspot stay duration", "Aufenthaltsdauer im Hotspot", "hotspots"],
-      hotspotMaxAgents: ["Maximum agents in a hotspot", "Maximale Personen im Hotspot", "hotspots"],
-      hotspotSize: ["Hotspot size", "Hotspot-Größe", "hotspots"],
-      communitiesEnabled: ["Enable communities", "Gemeinschaften aktivieren", "communities"],
-      communityLeaveProbability: ["Probability of leaving the community", "Wahrscheinlichkeit, die Gemeinschaft zu verlassen", "communities"],
+      modelType: [this.msg("Model type"), "model"],
+      incubationDuration: [this.msg("Incubation duration"), "model"],
+      immunityDuration: [this.msg("Immunity duration"), "model"],
+      mortalityProbability: [this.msg("Mortality probability"), "model"],
+      population: [this.msg("Population"), "general"],
+      speed: [this.msg("Speed"), "general"],
+      infectionRadius: [this.msg("Infection radius"), "general"],
+      infectionProbability: [this.msg("Infection probability"), "general"],
+      recoveryDuration: [this.msg("Recovery duration"), "general"],
+      simulationDuration: [this.msg("Simulation duration"), "general"],
+      quarantineEnabled: [this.msg("Enable quarantine"), "quarantine"],
+      quarantineProbability: [this.msg("Quarantine probability"), "quarantine"],
+      quarantineDuration: [this.msg("Quarantine duration"), "quarantine"],
+      hotspotsEnabled: [this.msg("Enable hotspots"), "hotspots"],
+      hotspotVisitProbability: [this.msg("Hotspot visit probability"), "hotspots"],
+      hotspotStayDuration: [this.msg("Hotspot stay duration"), "hotspots"],
+      hotspotMaxAgents: [this.msg("Maximum agents in a hotspot"), "hotspots"],
+      hotspotSize: [this.msg("Hotspot size"), "hotspots"],
+      communitiesEnabled: [this.msg("Enable communities"), "communities"],
+      communityLeaveProbability: [this.msg("Probability of leaving the community"), "communities"],
     } as const
     const model = this.modelType
     const visible = {
@@ -419,17 +430,17 @@ export class WebwriterEpidemicSim extends LitElementWw {
       mortalityProbability: model === "sird" || model === "seird",
     }
     return Object.fromEntries((Object.keys(labels) as (keyof typeof labels)[]).flatMap(key => {
-      const [en, de, group] = labels[key]
+      const [label, group] = labels[key]
       const hidden = key in visible && !visible[key as keyof typeof visible]
       const schema = CONFIG_SCHEMA[key]
-      const base = {label: {_: en, de}, group, hidden}
+      const base = {label: {_: label}, group, hidden}
       const setting = schema.kind === "range"
         ? {...base, type: Number, control: "range", min: schema.min, max: schema.max, step: schema.step}
         : schema.kind === "toggle"
           ? {...base, type: Boolean}
           : {...base, type: "select", options: this.getModelTypeOptions().map(({value, label}) => ({value, label: {_: label}}))}
       const control = `allow${key[0].toUpperCase()}${key.slice(1)}Control`
-      return [[key, setting], [control, {type: Boolean, group: "controls", label: {_: en, de}, hidden}]]
+      return [[key, setting], [control, {type: Boolean, group: "controls", label: {_: label}, hidden}]]
     }))
   }
 
@@ -455,8 +466,8 @@ export class WebwriterEpidemicSim extends LitElementWw {
   private chartCanvas: HTMLCanvasElement | null = null
   private snapshotChartIds = new Map<HTMLCanvasElement, string>()
   private readonly canvasHost = new CanvasHostController(this)
-  private readonly chartRuntime = new ChartRuntime()
-  private readonly snapshotService = new SnapshotService()
+  private readonly chartRuntime = new ChartRuntime(this.msg)
+  private readonly snapshotService = new SnapshotService(this.msg)
   private readonly hotspotEditing: HotspotEditingController = new HotspotEditingController(this, {
     getCanvas: () => this.simulationCanvas,
     getConfig: () => this.config,
@@ -951,7 +962,7 @@ export class WebwriterEpidemicSim extends LitElementWw {
     if (!snapshot || !this.shadowRoot) {
       return
     }
-    const png = renderSnapshotChartPng(this.shadowRoot, snapshot)
+    const png = renderSnapshotChartPng(this.shadowRoot, snapshot, this.msg)
     if (!png) {
       return
     }
@@ -963,7 +974,7 @@ export class WebwriterEpidemicSim extends LitElementWw {
     if (!snapshot) {
       return
     }
-    const csv = new Blob(["\ufeff", buildSnapshotCsv(snapshot)], {type: "text/csv;charset=utf-8"})
+    const csv = new Blob(["\ufeff", buildSnapshotCsv(snapshot, this.msg)], {type: "text/csv;charset=utf-8"})
     const url = URL.createObjectURL(csv)
     this.triggerDownload(url, `${snapshot.label}.csv`)
     window.setTimeout(() => URL.revokeObjectURL(url), 0)
@@ -1114,7 +1125,7 @@ export class WebwriterEpidemicSim extends LitElementWw {
       drawSimulation(ctx, canvas, this.agents, areas, {
         removalHotspotId: this.hotspotPointer.getRemovalPendingHotspotId(),
         selectedHotspotId: this.selectedHotspotId,
-      })
+      }, this.msg)
     }
   }
 
@@ -1139,7 +1150,7 @@ export class WebwriterEpidemicSim extends LitElementWw {
       if (!snapshot) {
         continue
       }
-      drawSnapshotChart(canvas, snapshot)
+      drawSnapshotChart(canvas, snapshot, undefined, this.msg)
       this.snapshotChartIds.set(canvas, snapshotId)
     }
   }
@@ -1190,7 +1201,7 @@ export class WebwriterEpidemicSim extends LitElementWw {
       return null
     }
     return {
-      label: getHotspotLabel(this.hotspotEditing.userHotspots[index], index),
+      label: getHotspotLabel(this.hotspotEditing.userHotspots[index], index, this.msg),
       onDelete: this.deleteSelectedHotspot,
     }
   }
@@ -1222,11 +1233,11 @@ export class WebwriterEpidemicSim extends LitElementWw {
 
   private getModelTypeOptions(): Array<{value: EpidemicModelType; label: string}> {
     return [
-      {value: "sir", label: msg("SIR")},
-      {value: "sirs", label: msg("SIRS")},
-      {value: "seir", label: msg("SEIR")},
-      {value: "sird", label: msg("SIRD")},
-      {value: "seird", label: msg("SEIRD")},
+      {value: "sir", label: this.msg("SIR")},
+      {value: "sirs", label: this.msg("SIRS")},
+      {value: "seir", label: this.msg("SEIR")},
+      {value: "sird", label: this.msg("SIRD")},
+      {value: "seird", label: this.msg("SEIRD")},
     ]
   }
 
@@ -1288,6 +1299,6 @@ export class WebwriterEpidemicSim extends LitElementWw {
       insightsOpen: this.insightsOpen,
       insightsTitle: this.chartRuntime.getInsightsOverlayTitle(this.config.modelType),
       chartInsights: this.chartRuntime.buildInsightViewData(this.frameIndex, this.getCounts(), this.config),
-    })
+    }, this.msg)
   }
 }

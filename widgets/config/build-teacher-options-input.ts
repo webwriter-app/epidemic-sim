@@ -1,4 +1,5 @@
-import {msg} from "@lit/localize"
+import { sourceMsg } from "../../localization/localizer";
+import type { MsgFn } from "@lit/localize";
 import type {AllowControlKey, ConfigSchemaKey} from "./widget-schema"
 import {getRangeLimits} from "./widget-schema"
 import type {RenderTeacherOptionsInput} from "../rendering/teacher-options-renderer"
@@ -96,7 +97,7 @@ function rangeRow(
   }
 }
 
-function getModelSpecificRows(ctx: TeacherOptionsContext): RenderTeacherOptionsInput["sections"][number]["rows"] {
+function getModelSpecificRows(ctx: TeacherOptionsContext, msg: MsgFn = sourceMsg): RenderTeacherOptionsInput["sections"][number]["rows"] {
   if (ctx.modelType === "seir") {
     return [
       rangeRow(
@@ -161,7 +162,7 @@ function getModelSpecificRows(ctx: TeacherOptionsContext): RenderTeacherOptionsI
   return []
 }
 
-export function buildTeacherOptionsInput(ctx: TeacherOptionsContext): RenderTeacherOptionsInput {
+export function buildTeacherOptionsInput(ctx: TeacherOptionsContext, msg: MsgFn = sourceMsg): RenderTeacherOptionsInput {
   return {
     sections: [
       {
@@ -177,7 +178,7 @@ export function buildTeacherOptionsInput(ctx: TeacherOptionsContext): RenderTeac
             onChange: ctx.onModelTypeChange,
             onAllowChange: (e) => ctx.onAllowChange("allowModelTypeControl", e),
           },
-          ...getModelSpecificRows(ctx),
+          ...getModelSpecificRows(ctx, msg),
         ],
       },
       {

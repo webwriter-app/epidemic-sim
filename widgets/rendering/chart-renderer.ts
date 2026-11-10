@@ -1,4 +1,5 @@
-import {msg} from "@lit/localize"
+import { sourceMsg } from "../../localization/localizer";
+import type { MsgFn } from "@lit/localize";
 import {Chart} from "chart.js/auto"
 
 export interface ChartSeries {
@@ -13,7 +14,7 @@ export function drawChart(
   canvas: HTMLCanvasElement,
   population: number,
   series: ChartSeries[],
-  options?: {showLegend?: boolean; labels?: string[]; xAxisTitle?: string},
+  options?: {showLegend?: boolean; labels?: string[]; xAxisTitle?: string}, msg: MsgFn = sourceMsg
 ): void {
   const longestSeriesLength = getLongestSeriesLength(series)
   const labels = options?.labels ?? Array.from({length: longestSeriesLength}, (_, index) => String(index))

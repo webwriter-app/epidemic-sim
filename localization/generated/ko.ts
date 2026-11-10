@@ -87,5 +87,11 @@
 'sf4cd19d7506d9e12': `시간 (일)`,
 'sf62c2403c94966db': `현재 감수성자`,
 'sfc12d40fe5fa5f7d': `아직 스냅샷이 없습니다.`,
+'s773eacc0b477d43c': `Learner controls`,
+'sdc6ec6514ca70ce6': `Enable quarantine`,
+'s18b7e5266a1b9512': `Enable hotspots`,
+'sdb807487fc2632a0': `Maximum agents in a hotspot`,
+'s7bb14d2609cd9c77': `Enable communities`,
+'s542603d2f3836073': `Probability of leaving the community`,
     };
   

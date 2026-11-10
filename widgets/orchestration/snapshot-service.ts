@@ -1,4 +1,5 @@
-import {msg} from "@lit/localize"
+import { sourceMsg } from "../../localization/localizer";
+import type { MsgFn } from "@lit/localize";
 import {destroyChart, drawChart} from "../rendering/chart-renderer"
 import {buildChartDayLabels, buildChartSeries} from "./chart-runtime"
 import type {Hotspot, SimulationConfig, SimulationSnapshot} from "../simulation/types"
@@ -31,24 +32,24 @@ function cloneHotspots(hotspots: Hotspot[]): Hotspot[] {
 export function drawSnapshotChart(
   canvas: HTMLCanvasElement,
   snapshot: SimulationSnapshot,
-  options?: {showLegend?: boolean},
+  options?: {showLegend?: boolean}, msg: MsgFn = sourceMsg
 ): void {
-  const series = buildChartSeries(snapshot.config.modelType, snapshot)
+  const series = buildChartSeries(snapshot.config.modelType, snapshot, msg)
   drawChart(canvas, snapshot.config.population, series, {
     showLegend: options?.showLegend ?? false,
     labels: buildChartDayLabels(series),
     xAxisTitle: msg("Time (days)"),
-  })
+  }, msg)
 }
 
-export function renderSnapshotChartPng(container: Node, snapshot: SimulationSnapshot): string | null {
+export function renderSnapshotChartPng(container: Node, snapshot: SimulationSnapshot, msg: MsgFn = sourceMsg): string | null {
   const wrapper = document.createElement("div")
   wrapper.style.cssText = "position: fixed; left: -10000px; top: 0; width: 1200px; height: 600px;"
   const canvas = document.createElement("canvas")
   wrapper.appendChild(canvas)
   container.appendChild(wrapper)
   try {
-    drawSnapshotChart(canvas, snapshot, {showLegend: true})
+    drawSnapshotChart(canvas, snapshot, {showLegend: true}, msg)
     const exportCanvas = document.createElement("canvas")
     exportCanvas.width = canvas.width
     exportCanvas.height = canvas.height
@@ -72,8 +73,8 @@ function escapeCsvValue(value: string): string {
   return /[",\n]/.test(value) ? `"${value.replace(/"/g, '""')}"` : value
 }
 
-export function buildSnapshotCsv(snapshot: SimulationSnapshot): string {
-  const series = buildChartSeries(snapshot.config.modelType, snapshot)
+export function buildSnapshotCsv(snapshot: SimulationSnapshot, msg: MsgFn = sourceMsg): string {
+  const series = buildChartSeries(snapshot.config.modelType, snapshot, msg)
   const dayLabels = buildChartDayLabels(series)
   const header = [msg("Day"), ...series.map((entry) => entry.label)]
   const rows = dayLabels.map((day, dayIndex) => [day, ...series.map((entry) => String(entry.values[dayIndex] ?? ""))])
@@ -81,6 +82,8 @@ export function buildSnapshotCsv(snapshot: SimulationSnapshot): string {
 }
 
 export class SnapshotService {
+  constructor(private readonly msg: MsgFn = sourceMsg) {}
+
   private nextSnapshotId = 1
   snapshots: SimulationSnapshot[] = []
 
@@ -110,7 +113,7 @@ export class SnapshotService {
     this.nextSnapshotId += 1
     const snapshot: SimulationSnapshot = {
       id: snapshotId,
-      label: `${msg("Snapshot")} ${this.nextSnapshotId - 1}`,
+      label: `${this.msg("Snapshot")} ${this.nextSnapshotId - 1}`,
       createdAt: Date.now(),
       estimatedR0: input.estimatedR0,
       config: {...input.config},
