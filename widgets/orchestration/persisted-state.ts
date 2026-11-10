@@ -1,7 +1,6 @@
 import type {Hotspot, SimulationSnapshot} from "../simulation/types"
 
 export const STATE_SCRIPT_TYPE = "application/json"
-export const STATE_ATTRIBUTE = "widget-state"
 
 export type PersistedSnapshot = SimulationSnapshot
 
@@ -133,14 +132,21 @@ export function encodePersistedState(state: PersistedWidgetState): string {
   })
 }
 
+export function getPersistedStateBlock(host: HTMLElement) {
+  return host.querySelector<HTMLScriptElement>(`:scope > script[type="${STATE_SCRIPT_TYPE}"][slot="data"]:not([src])`)
+}
+
 export function readPersistedState(host: HTMLElement): PersistedWidgetState | null {
-  return parsePersistedState(host.getAttribute(STATE_ATTRIBUTE))
+  return parsePersistedState(getPersistedStateBlock(host)?.textContent)
 }
 
 export function writePersistedState(host: HTMLElement, state: PersistedWidgetState): void {
-  const encoded = encodePersistedState(state)
-  if (host.getAttribute(STATE_ATTRIBUTE) !== encoded) {
-    host.setAttribute(STATE_ATTRIBUTE, encoded)
-  }
-  host.querySelector(`:scope > script[type="${STATE_SCRIPT_TYPE}"]`)?.remove()
+  const encoded = encodePersistedState(state).replace(/</g, "\\u003c")
+  const current = getPersistedStateBlock(host)
+  if (current?.textContent === encoded) return
+  const block = current ?? host.ownerDocument.createElement("script")
+  block.type = STATE_SCRIPT_TYPE
+  block.slot = "data"
+  block.textContent = encoded
+  if (!current) host.append(block)
 }

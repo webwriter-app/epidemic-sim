@@ -94,7 +94,6 @@ npm install @webwriter/epidemic-sim
 | `communitiesEnabled` (`communities-enabled`) | `boolean` | Splits the population into communities. | `false` | ✓ |
 | `communityLeaveProbability` (`community-leave-probability`) | `number` | Chance that a person leaves their community, 0.0001–0.01. | `0.0004` | ✓ |
 | `allow…Control` (`allow-…-control`) | `boolean` | One attribute per parameter above (e.g. `allow-speed-control`, `allow-quarantine-enabled-control`). If set, learners can change this parameter in the sidebar. | `false` | ✓ |
-| `widgetState` (`widget-state`) | `string` | JSON with placed hotspots and snapshots. Written by the widget. | `""` | ✓ |
 
 *Fields including [properties](https://developer.mozilla.org/en-US/docs/Glossary/Property/JavaScript) and [attributes](https://developer.mozilla.org/en-US/docs/Glossary/Attribute) define the current state of the widget and offer customization options.*
 
@@ -107,3 +106,5 @@ npm install @webwriter/epidemic-sim
 *The [editing config](https://webwriter.app/docs/packages/configuring/#editingconfig) defines how explorable authoring tools such as [WebWriter](https://webwriter.app) treat the widget.*
 
 *No public methods, slots, events, custom CSS properties, or CSS parts besides the `options` part used by WebWriter for the author options.*
+
+Placed hotspots and saved snapshots are stored in a direct JSON data block with `slot="data"`.
