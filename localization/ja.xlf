@@ -1,4 +1,5 @@
-<xliff xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd" xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd" version="1.2">
   <file original="lit-localize-inputs" datatype="plaintext" source-language="en" target-language="ja">
     <body>
       <trans-unit id="s6144a4a2c984c772">
@@ -315,6 +316,24 @@
   <target>日</target>
   <note from="lit-localize">Unit abbreviation for days, shown after a number</note>
 </trans-unit>
-    </body>
+    <trans-unit id="s773eacc0b477d43c">
+  <source>Learner controls</source>
+<target>学習者向けコントロール</target></trans-unit>
+<trans-unit id="sdc6ec6514ca70ce6">
+  <source>Enable quarantine</source>
+<target>隔離を有効にする</target></trans-unit>
+<trans-unit id="s18b7e5266a1b9512">
+  <source>Enable hotspots</source>
+<target>感染拠点を有効にする</target></trans-unit>
+<trans-unit id="sdb807487fc2632a0">
+  <source>Maximum agents in a hotspot</source>
+<target>感染拠点のエージェント最大数</target></trans-unit>
+<trans-unit id="s7bb14d2609cd9c77">
+  <source>Enable communities</source>
+<target>コミュニティを有効にする</target></trans-unit>
+<trans-unit id="s542603d2f3836073">
+  <source>Probability of leaving the community</source>
+<target>コミュニティを離れる確率</target></trans-unit>
+</body>
   </file>
 </xliff>

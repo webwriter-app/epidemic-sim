@@ -2,8 +2,8 @@
     // Do not modify this file by hand!
     // Re-generate this file by running lit-localize
 
-    
-    
+
+
 
     /* eslint-disable no-irregular-whitespace */
     /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -12,6 +12,7 @@
       's00ae53430e6c31cb': `Indicadores SEIR`,
 's061cc20e3432dead': `Pausa`,
 's09943be8697420ce': `Duração da recuperação`,
+'s18b7e5266a1b9512': `Ativar focos`,
 's20c7305417726e5a': `Recuperados`,
 's2e7ece256ba72b3b': `Indicadores SEIRD`,
 's35264f659ccd236e': `Probabilidade de quarentena`,
@@ -23,6 +24,7 @@
 's4b10acae683d2978': `Ecrã inteiro`,
 's4f1a78fbc7a2da7a': `Expostos atuais`,
 's5334c0927cf25b86': `Sair do ecrã inteiro`,
+'s542603d2f3836073': `Probabilidade de sair da comunidade`,
 's5712f84064913c57': `Duração da quarentena`,
 's5aa43edcf11f09af': `Período de incubação`,
 's5ba7326ba78af02e': `Tipo de modelo`,
@@ -43,9 +45,11 @@
 's716a6024e3fe999c': `Mostrar`,
 's71ffa36b183c46fd': `Probabilidade de infeção`,
 's7379168642ff77b3': `Expostos`,
+'s773eacc0b477d43c': `Controlos do aluno`,
 's77cc57dd46f7f5cc': `Probabilidade de visita a um ponto de encontro`,
 's7a3c4c7e8b923c76': `Arraste este ponto de encontro para o mapa da simulação.`,
 's7b564dc9f5db9ad8': `Raio de contágio`,
+'s7bb14d2609cd9c77': `Ativar comunidades`,
 's7be45f343cb15665': `Proporção final de recuperados`,
 's8f6ded5587ad8969': `Limiar de imunidade de grupo`,
 's941a41d587a259fd': `Duração da imunidade`,
@@ -78,7 +82,9 @@
 'sd3386a2ef42e80b9': `Transferir`,
 'sd4755728c441b538': `Tempo decorrido`,
 'sd8f1f39f65abba47': `Instantâneo do gráfico SIR`,
+'sdb807487fc2632a0': `Número máximo de agentes num foco`,
 'sdc673e73b5c13aea': `Apagar`,
+'sdc6ec6514ca70ce6': `Ativar quarentena`,
 'se0955919920ee87d': `Dia`,
 'se24130f1123560a0': `Velocidade`,
 'sed03791dbc19b9c0': `Tabela (CSV)`,
@@ -87,11 +93,4 @@
 'sf4cd19d7506d9e12': `Tempo (dias)`,
 'sf62c2403c94966db': `Suscetíveis atuais`,
 'sfc12d40fe5fa5f7d': `Ainda não há instantâneos.`,
-'s773eacc0b477d43c': `Learner controls`,
-'sdc6ec6514ca70ce6': `Enable quarantine`,
-'s18b7e5266a1b9512': `Enable hotspots`,
-'sdb807487fc2632a0': `Maximum agents in a hotspot`,
-'s7bb14d2609cd9c77': `Enable communities`,
-'s542603d2f3836073': `Probability of leaving the community`,
     };
-  

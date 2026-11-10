@@ -2,8 +2,8 @@
     // Do not modify this file by hand!
     // Re-generate this file by running lit-localize
 
-    
-    
+
+
 
     /* eslint-disable no-irregular-whitespace */
     /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -12,6 +12,7 @@
       's00ae53430e6c31cb': `SEIR 指標`,
 's061cc20e3432dead': `暫停`,
 's09943be8697420ce': `康復時長`,
+'s18b7e5266a1b9512': `啟用熱點`,
 's20c7305417726e5a': `康復者`,
 's2e7ece256ba72b3b': `SEIRD 指標`,
 's35264f659ccd236e': `隔離機率`,
@@ -23,6 +24,7 @@
 's4b10acae683d2978': `全螢幕`,
 's4f1a78fbc7a2da7a': `目前暴露者`,
 's5334c0927cf25b86': `結束全螢幕`,
+'s542603d2f3836073': `離開社群的機率`,
 's5712f84064913c57': `隔離時長`,
 's5aa43edcf11f09af': `潛伏期`,
 's5ba7326ba78af02e': `模型類型`,
@@ -43,9 +45,11 @@
 's716a6024e3fe999c': `顯示`,
 's71ffa36b183c46fd': `感染機率`,
 's7379168642ff77b3': `暴露者`,
+'s773eacc0b477d43c': `學習者控制項`,
 's77cc57dd46f7f5cc': `熱點造訪機率`,
 's7a3c4c7e8b923c76': `將此熱點拖曳到模擬地圖上。`,
 's7b564dc9f5db9ad8': `感染半徑`,
+'s7bb14d2609cd9c77': `啟用社群`,
 's7be45f343cb15665': `最終康復比例`,
 's8f6ded5587ad8969': `群體免疫閾值`,
 's941a41d587a259fd': `免疫持續時間`,
@@ -78,7 +82,9 @@
 'sd3386a2ef42e80b9': `下載`,
 'sd4755728c441b538': `經過時間`,
 'sd8f1f39f65abba47': `SIR 圖表快照`,
+'sdb807487fc2632a0': `熱點中的代理人上限`,
 'sdc673e73b5c13aea': `刪除`,
+'sdc6ec6514ca70ce6': `啟用隔離`,
 'se0955919920ee87d': `天`,
 'se24130f1123560a0': `速度`,
 'sed03791dbc19b9c0': `表格（CSV）`,
@@ -87,11 +93,4 @@
 'sf4cd19d7506d9e12': `時間（天）`,
 'sf62c2403c94966db': `目前易感者`,
 'sfc12d40fe5fa5f7d': `尚無快照。`,
-'s773eacc0b477d43c': `Learner controls`,
-'sdc6ec6514ca70ce6': `Enable quarantine`,
-'s18b7e5266a1b9512': `Enable hotspots`,
-'sdb807487fc2632a0': `Maximum agents in a hotspot`,
-'s7bb14d2609cd9c77': `Enable communities`,
-'s542603d2f3836073': `Probability of leaving the community`,
     };
-  

@@ -2,8 +2,8 @@
     // Do not modify this file by hand!
     // Re-generate this file by running lit-localize
 
-    
-    
+
+
 
     /* eslint-disable no-irregular-whitespace */
     /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -12,6 +12,7 @@
       's00ae53430e6c31cb': `SEIR-kerncijfers`,
 's061cc20e3432dead': `Pauze`,
 's09943be8697420ce': `Hersteltijd`,
+'s18b7e5266a1b9512': `Hotspots inschakelen`,
 's20c7305417726e5a': `Hersteld`,
 's2e7ece256ba72b3b': `SEIRD-kerncijfers`,
 's35264f659ccd236e': `Kans op quarantaine`,
@@ -23,6 +24,7 @@
 's4b10acae683d2978': `Volledig scherm`,
 's4f1a78fbc7a2da7a': `Momenteel blootgesteld`,
 's5334c0927cf25b86': `Volledig scherm afsluiten`,
+'s542603d2f3836073': `Kans om de gemeenschap te verlaten`,
 's5712f84064913c57': `Duur van de quarantaine`,
 's5aa43edcf11f09af': `Incubatietijd`,
 's5ba7326ba78af02e': `Modeltype`,
@@ -43,9 +45,11 @@
 's716a6024e3fe999c': `Tonen`,
 's71ffa36b183c46fd': `Kans op infectie`,
 's7379168642ff77b3': `Blootgesteld`,
+'s773eacc0b477d43c': `Bediening voor leerlingen`,
 's77cc57dd46f7f5cc': `Kans op bezoek aan een hotspot`,
 's7a3c4c7e8b923c76': `Sleep deze hotspot naar de simulatiekaart.`,
 's7b564dc9f5db9ad8': `Besmettingsradius`,
+'s7bb14d2609cd9c77': `Gemeenschappen inschakelen`,
 's7be45f343cb15665': `Uiteindelijk aandeel herstelden`,
 's8f6ded5587ad8969': `Drempel voor groepsimmuniteit`,
 's941a41d587a259fd': `Duur van de immuniteit`,
@@ -78,7 +82,9 @@
 'sd3386a2ef42e80b9': `Downloaden`,
 'sd4755728c441b538': `Verstreken tijd`,
 'sd8f1f39f65abba47': `Momentopname van de SIR-grafiek`,
+'sdb807487fc2632a0': `Maximumaantal agenten in een hotspot`,
 'sdc673e73b5c13aea': `Verwijderen`,
+'sdc6ec6514ca70ce6': `Quarantaine inschakelen`,
 'se0955919920ee87d': `Dag`,
 'se24130f1123560a0': `Snelheid`,
 'sed03791dbc19b9c0': `Tabel (CSV)`,
@@ -87,11 +93,4 @@
 'sf4cd19d7506d9e12': `Tijd (dagen)`,
 'sf62c2403c94966db': `Momenteel vatbaar`,
 'sfc12d40fe5fa5f7d': `Nog geen momentopnamen.`,
-'s773eacc0b477d43c': `Learner controls`,
-'sdc6ec6514ca70ce6': `Enable quarantine`,
-'s18b7e5266a1b9512': `Enable hotspots`,
-'sdb807487fc2632a0': `Maximum agents in a hotspot`,
-'s7bb14d2609cd9c77': `Enable communities`,
-'s542603d2f3836073': `Probability of leaving the community`,
     };
-  

@@ -2,8 +2,8 @@
     // Do not modify this file by hand!
     // Re-generate this file by running lit-localize
 
-    
-    
+
+
 
     /* eslint-disable no-irregular-whitespace */
     /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -12,6 +12,7 @@
       's00ae53430e6c31cb': `SEIR-nøkkeltall`,
 's061cc20e3432dead': `Pause`,
 's09943be8697420ce': `Tid til tilfriskning`,
+'s18b7e5266a1b9512': `Aktiver smitteområder`,
 's20c7305417726e5a': `Friske`,
 's2e7ece256ba72b3b': `SEIRD-nøkkeltall`,
 's35264f659ccd236e': `Sannsynlighet for karantene`,
@@ -23,6 +24,7 @@
 's4b10acae683d2978': `Fullskjerm`,
 's4f1a78fbc7a2da7a': `Eksponerte nå`,
 's5334c0927cf25b86': `Avslutt fullskjerm`,
+'s542603d2f3836073': `Sannsynlighet for å forlate fellesskapet`,
 's5712f84064913c57': `Karantenens varighet`,
 's5aa43edcf11f09af': `Inkubasjonstid`,
 's5ba7326ba78af02e': `Modelltype`,
@@ -43,9 +45,11 @@
 's716a6024e3fe999c': `Vis`,
 's71ffa36b183c46fd': `Sannsynlighet for smitte`,
 's7379168642ff77b3': `Eksponerte`,
+'s773eacc0b477d43c': `Kontroller for elever`,
 's77cc57dd46f7f5cc': `Sannsynlighet for besøk på hotspot`,
 's7a3c4c7e8b923c76': `Dra dette hotspotet inn på simuleringskartet.`,
 's7b564dc9f5db9ad8': `Smitteradius`,
+'s7bb14d2609cd9c77': `Aktiver fellesskap`,
 's7be45f343cb15665': `Endelig andel friske`,
 's8f6ded5587ad8969': `Terskel for flokkimmunitet`,
 's941a41d587a259fd': `Immunitetens varighet`,
@@ -78,7 +82,9 @@
 'sd3386a2ef42e80b9': `Last ned`,
 'sd4755728c441b538': `Forløpt tid`,
 'sd8f1f39f65abba47': `Øyeblikksbilde av SIR-diagrammet`,
+'sdb807487fc2632a0': `Maksimalt antall agenter i et smitteområde`,
 'sdc673e73b5c13aea': `Slett`,
+'sdc6ec6514ca70ce6': `Aktiver karantene`,
 'se0955919920ee87d': `Dag`,
 'se24130f1123560a0': `Hastighet`,
 'sed03791dbc19b9c0': `Tabell (CSV)`,
@@ -87,11 +93,4 @@
 'sf4cd19d7506d9e12': `Tid (dager)`,
 'sf62c2403c94966db': `Mottakelige nå`,
 'sfc12d40fe5fa5f7d': `Ingen øyeblikksbilder ennå.`,
-'s773eacc0b477d43c': `Learner controls`,
-'sdc6ec6514ca70ce6': `Enable quarantine`,
-'s18b7e5266a1b9512': `Enable hotspots`,
-'sdb807487fc2632a0': `Maximum agents in a hotspot`,
-'s7bb14d2609cd9c77': `Enable communities`,
-'s542603d2f3836073': `Probability of leaving the community`,
     };
-  

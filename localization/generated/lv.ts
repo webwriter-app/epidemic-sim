@@ -2,8 +2,8 @@
     // Do not modify this file by hand!
     // Re-generate this file by running lit-localize
 
-    
-    
+
+
 
     /* eslint-disable no-irregular-whitespace */
     /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -12,6 +12,7 @@
       's00ae53430e6c31cb': `SEIR rādītāji`,
 's061cc20e3432dead': `Pauze`,
 's09943be8697420ce': `Izveseļošanās ilgums`,
+'s18b7e5266a1b9512': `Iespējot uzliesmojuma vietas`,
 's20c7305417726e5a': `Izveseļojušies`,
 's2e7ece256ba72b3b': `SEIRD rādītāji`,
 's35264f659ccd236e': `Karantīnas varbūtība`,
@@ -23,6 +24,7 @@
 's4b10acae683d2978': `Pilnekrāna režīms`,
 's4f1a78fbc7a2da7a': `Pašlaik pakļautie`,
 's5334c0927cf25b86': `Iziet no pilnekrāna režīma`,
+'s542603d2f3836073': `Kopienas pamešanas varbūtība`,
 's5712f84064913c57': `Karantīnas ilgums`,
 's5aa43edcf11f09af': `Inkubācijas periods`,
 's5ba7326ba78af02e': `Modeļa tips`,
@@ -43,9 +45,11 @@
 's716a6024e3fe999c': `Rādīt`,
 's71ffa36b183c46fd': `Inficēšanās varbūtība`,
 's7379168642ff77b3': `Pakļautie`,
+'s773eacc0b477d43c': `Mācību vadīklas`,
 's77cc57dd46f7f5cc': `Pulcēšanās vietas apmeklējuma varbūtība`,
 's7a3c4c7e8b923c76': `Velciet šo pulcēšanās vietu uz simulācijas karti.`,
 's7b564dc9f5db9ad8': `Inficēšanās rādiuss`,
+'s7bb14d2609cd9c77': `Iespējot kopienas`,
 's7be45f343cb15665': `Izveseļojušos galīgā daļa`,
 's8f6ded5587ad8969': `Ganāmpulka imunitātes slieksnis`,
 's941a41d587a259fd': `Imunitātes ilgums`,
@@ -78,7 +82,9 @@
 'sd3386a2ef42e80b9': `Lejupielādēt`,
 'sd4755728c441b538': `Pagājušais laiks`,
 'sd8f1f39f65abba47': `SIR diagrammas momentuzņēmums`,
+'sdb807487fc2632a0': `Maksimālais aģentu skaits uzliesmojuma vietā`,
 'sdc673e73b5c13aea': `Dzēst`,
+'sdc6ec6514ca70ce6': `Iespējot karantīnu`,
 'se0955919920ee87d': `Diena`,
 'se24130f1123560a0': `Ātrums`,
 'sed03791dbc19b9c0': `Tabula (CSV)`,
@@ -87,11 +93,4 @@
 'sf4cd19d7506d9e12': `Laiks (dienas)`,
 'sf62c2403c94966db': `Pašlaik uzņēmīgie`,
 'sfc12d40fe5fa5f7d': `Vēl nav momentuzņēmumu.`,
-'s773eacc0b477d43c': `Learner controls`,
-'sdc6ec6514ca70ce6': `Enable quarantine`,
-'s18b7e5266a1b9512': `Enable hotspots`,
-'sdb807487fc2632a0': `Maximum agents in a hotspot`,
-'s7bb14d2609cd9c77': `Enable communities`,
-'s542603d2f3836073': `Probability of leaving the community`,
     };
-  

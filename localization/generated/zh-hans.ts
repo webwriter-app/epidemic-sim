@@ -2,8 +2,8 @@
     // Do not modify this file by hand!
     // Re-generate this file by running lit-localize
 
-    
-    
+
+
 
     /* eslint-disable no-irregular-whitespace */
     /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -12,6 +12,7 @@
       's00ae53430e6c31cb': `SEIR指标`,
 's061cc20e3432dead': `暂停`,
 's09943be8697420ce': `康复时长`,
+'s18b7e5266a1b9512': `启用热点`,
 's20c7305417726e5a': `康复者`,
 's2e7ece256ba72b3b': `SEIRD指标`,
 's35264f659ccd236e': `隔离概率`,
@@ -23,6 +24,7 @@
 's4b10acae683d2978': `全屏`,
 's4f1a78fbc7a2da7a': `当前暴露者`,
 's5334c0927cf25b86': `退出全屏`,
+'s542603d2f3836073': `离开社区的概率`,
 's5712f84064913c57': `隔离时长`,
 's5aa43edcf11f09af': `潜伏期`,
 's5ba7326ba78af02e': `模型类型`,
@@ -43,9 +45,11 @@
 's716a6024e3fe999c': `显示`,
 's71ffa36b183c46fd': `感染概率`,
 's7379168642ff77b3': `暴露者`,
+'s773eacc0b477d43c': `学习者控件`,
 's77cc57dd46f7f5cc': `热点访问概率`,
 's7a3c4c7e8b923c76': `将此热点拖到模拟地图上。`,
 's7b564dc9f5db9ad8': `感染半径`,
+'s7bb14d2609cd9c77': `启用社区`,
 's7be45f343cb15665': `最终康复比例`,
 's8f6ded5587ad8969': `群体免疫阈值`,
 's941a41d587a259fd': `免疫持续时间`,
@@ -78,7 +82,9 @@
 'sd3386a2ef42e80b9': `下载`,
 'sd4755728c441b538': `已用时间`,
 'sd8f1f39f65abba47': `SIR图表快照`,
+'sdb807487fc2632a0': `热点中的最大代理数量`,
 'sdc673e73b5c13aea': `删除`,
+'sdc6ec6514ca70ce6': `启用隔离`,
 'se0955919920ee87d': `天`,
 'se24130f1123560a0': `速度`,
 'sed03791dbc19b9c0': `表格（CSV）`,
@@ -87,11 +93,4 @@
 'sf4cd19d7506d9e12': `时间（天）`,
 'sf62c2403c94966db': `当前易感者`,
 'sfc12d40fe5fa5f7d': `还没有快照。`,
-'s773eacc0b477d43c': `Learner controls`,
-'sdc6ec6514ca70ce6': `Enable quarantine`,
-'s18b7e5266a1b9512': `Enable hotspots`,
-'sdb807487fc2632a0': `Maximum agents in a hotspot`,
-'s7bb14d2609cd9c77': `Enable communities`,
-'s542603d2f3836073': `Probability of leaving the community`,
     };
-  

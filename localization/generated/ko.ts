@@ -2,8 +2,8 @@
     // Do not modify this file by hand!
     // Re-generate this file by running lit-localize
 
-    
-    
+
+
 
     /* eslint-disable no-irregular-whitespace */
     /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -12,6 +12,7 @@
       's00ae53430e6c31cb': `SEIR 지표`,
 's061cc20e3432dead': `일시 정지`,
 's09943be8697420ce': `회복 기간`,
+'s18b7e5266a1b9512': `감염 거점 사용`,
 's20c7305417726e5a': `회복자`,
 's2e7ece256ba72b3b': `SEIRD 지표`,
 's35264f659ccd236e': `격리 확률`,
@@ -23,6 +24,7 @@
 's4b10acae683d2978': `전체 화면`,
 's4f1a78fbc7a2da7a': `현재 노출자`,
 's5334c0927cf25b86': `전체 화면 종료`,
+'s542603d2f3836073': `커뮤니티를 떠날 확률`,
 's5712f84064913c57': `격리 기간`,
 's5aa43edcf11f09af': `잠복기`,
 's5ba7326ba78af02e': `모델 유형`,
@@ -43,9 +45,11 @@
 's716a6024e3fe999c': `표시`,
 's71ffa36b183c46fd': `감염 확률`,
 's7379168642ff77b3': `노출자`,
+'s773eacc0b477d43c': `학습자 조작 도구`,
 's77cc57dd46f7f5cc': `핫스팟 방문 확률`,
 's7a3c4c7e8b923c76': `이 핫스팟을 시뮬레이션 지도로 드래그하세요.`,
 's7b564dc9f5db9ad8': `감염 반경`,
+'s7bb14d2609cd9c77': `커뮤니티 사용`,
 's7be45f343cb15665': `최종 회복자 비율`,
 's8f6ded5587ad8969': `집단 면역 임계치`,
 's941a41d587a259fd': `면역 지속 기간`,
@@ -78,7 +82,9 @@
 'sd3386a2ef42e80b9': `다운로드`,
 'sd4755728c441b538': `경과 시간`,
 'sd8f1f39f65abba47': `SIR 차트 스냅샷`,
+'sdb807487fc2632a0': `감염 거점의 최대 에이전트 수`,
 'sdc673e73b5c13aea': `삭제`,
+'sdc6ec6514ca70ce6': `격리 사용`,
 'se0955919920ee87d': `일`,
 'se24130f1123560a0': `속도`,
 'sed03791dbc19b9c0': `표 (CSV)`,
@@ -87,11 +93,4 @@
 'sf4cd19d7506d9e12': `시간 (일)`,
 'sf62c2403c94966db': `현재 감수성자`,
 'sfc12d40fe5fa5f7d': `아직 스냅샷이 없습니다.`,
-'s773eacc0b477d43c': `Learner controls`,
-'sdc6ec6514ca70ce6': `Enable quarantine`,
-'s18b7e5266a1b9512': `Enable hotspots`,
-'sdb807487fc2632a0': `Maximum agents in a hotspot`,
-'s7bb14d2609cd9c77': `Enable communities`,
-'s542603d2f3836073': `Probability of leaving the community`,
     };
-  

@@ -2,8 +2,8 @@
     // Do not modify this file by hand!
     // Re-generate this file by running lit-localize
 
-    
-    
+
+
 
     /* eslint-disable no-irregular-whitespace */
     /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -12,6 +12,7 @@
       's00ae53430e6c31cb': `SEIR göstergeleri`,
 's061cc20e3432dead': `Duraklat`,
 's09943be8697420ce': `İyileşme süresi`,
+'s18b7e5266a1b9512': `Salgın odaklarını etkinleştir`,
 's20c7305417726e5a': `İyileşmiş`,
 's2e7ece256ba72b3b': `SEIRD göstergeleri`,
 's35264f659ccd236e': `Karantina olasılığı`,
@@ -23,6 +24,7 @@
 's4b10acae683d2978': `Tam ekran`,
 's4f1a78fbc7a2da7a': `Şu anda maruz kalmış`,
 's5334c0927cf25b86': `Tam ekrandan çık`,
+'s542603d2f3836073': `Topluluktan ayrılma olasılığı`,
 's5712f84064913c57': `Karantina süresi`,
 's5aa43edcf11f09af': `Kuluçka süresi`,
 's5ba7326ba78af02e': `Model türü`,
@@ -43,9 +45,11 @@
 's716a6024e3fe999c': `Göster`,
 's71ffa36b183c46fd': `Enfeksiyon olasılığı`,
 's7379168642ff77b3': `Maruz kalmış`,
+'s773eacc0b477d43c': `Öğrenci kontrolleri`,
 's77cc57dd46f7f5cc': `Toplanma noktasını ziyaret olasılığı`,
 's7a3c4c7e8b923c76': `Bu toplanma noktasını simülasyon haritasına sürükleyin.`,
 's7b564dc9f5db9ad8': `Bulaş yarıçapı`,
+'s7bb14d2609cd9c77': `Toplulukları etkinleştir`,
 's7be45f343cb15665': `Son iyileşen oranı`,
 's8f6ded5587ad8969': `Sürü bağışıklığı eşiği`,
 's941a41d587a259fd': `Bağışıklık süresi`,
@@ -78,7 +82,9 @@
 'sd3386a2ef42e80b9': `İndir`,
 'sd4755728c441b538': `Geçen süre`,
 'sd8f1f39f65abba47': `SIR grafiğinin anlık görüntüsü`,
+'sdb807487fc2632a0': `Bir odaktaki en fazla ajan sayısı`,
 'sdc673e73b5c13aea': `Sil`,
+'sdc6ec6514ca70ce6': `Karantinayı etkinleştir`,
 'se0955919920ee87d': `Gün`,
 'se24130f1123560a0': `Hız`,
 'sed03791dbc19b9c0': `Tablo (CSV)`,
@@ -87,11 +93,4 @@
 'sf4cd19d7506d9e12': `Zaman (gün)`,
 'sf62c2403c94966db': `Şu anda duyarlı`,
 'sfc12d40fe5fa5f7d': `Henüz anlık görüntü yok.`,
-'s773eacc0b477d43c': `Learner controls`,
-'sdc6ec6514ca70ce6': `Enable quarantine`,
-'s18b7e5266a1b9512': `Enable hotspots`,
-'sdb807487fc2632a0': `Maximum agents in a hotspot`,
-'s7bb14d2609cd9c77': `Enable communities`,
-'s542603d2f3836073': `Probability of leaving the community`,
     };
-  
