@@ -105,7 +105,16 @@
       "ti": "መምሰሊ ለበዳ",
       "sw": "Epidemic Sim",
       "ha": "Kwaikwayon annoba",
-      "dv": "Epidemic Sim"
+      "dv": "Epidemic Sim",
+      "yue-Hans": "疫情模拟",
+      "yue-Hant": "疫情模擬",
+      "kmr": "Simulasyona belavbûna nexweşiyê",
+      "kmr-Latn": "Simulasyona belavbûna nexweşiyê",
+      "kmr-Arab": "سمولاسیۆنا بەلاڤبوونا نەخوەشیێ",
+      "ckb": "شبیه‌سازیی نەخۆشیی بڵاوبوونەوە",
+      "ckb-Arab": "شبیه‌سازیی نەخۆشیی بڵاوبوونەوە",
+      "af-ZA": "Epidemiesimulasie",
+      "af-NA": "Epidemiesimulasie"
     },
     "description": {
       "de": "Interaktive, agentenbasierte Epidemiemodelle mit Diagrammen und Maßnahmen.",
@@ -212,7 +221,16 @@
       "ti": "ኣብ WebWriter ንምድህሳስ ዝጠቅም፣ ኣብ ናይ ነፍሲ ወከፍ ሰብ ተግባር ዝተመርኮሰ መምሰሊ ለበዳ (SIR/SIRS/SEIR/SIRD/SEIRD)። ሰሌዳታት፣ ውሸባ፣ ቦታታት ብርቱዕ ምስፍሕፋሕን ማሕበረሰባትን ኣለዎ።",
       "sw": "Uigaji shirikishi wa janga unaotumia mawakala kwa nyenzo za uchunguzi za WebWriter, ukiwa na chati, karantini, maeneo hatarishi na jumuiya (SIR/SIRS/SEIR/SIRD/SEIRD).",
       "ha": "Kwaikwayon annoba da ake gwadawa a WebWriter bisa yadda kowane mutum yake mu'amala (SIR/SIRS/SEIR/SIRD/SEIRD). Yana da jadawali, keɓewa, wuraren da cuta ke yaɗuwa sosai da kuma al'ummomi.",
-      "dv": "ޗާޓް، ކަރަންޓީން، ހޮޓްސްޕޮޓް އަދި ކޮމިއުނިޓީ އެކުގައިވާ WebWriter ގެ އިންޓަރެކްޓިވް އެކްޓިވިޓީތަކަށް އެޖެންޓް ބޭސްޑް ވަބާ ސިމިއުލޭޝަން (SIR/SIRS/SEIR/SIRD/SEIRD)."
+      "dv": "ޗާޓް، ކަރަންޓީން، ހޮޓްސްޕޮޓް އަދި ކޮމިއުނިޓީ އެކުގައިވާ WebWriter ގެ އިންޓަރެކްޓިވް އެކްޓިވިޓީތަކަށް އެޖެންޓް ބޭސްޑް ވަބާ ސިމިއުލޭޝަން (SIR/SIRS/SEIR/SIRD/SEIRD).",
+      "yue-Hans": "供 WebWriter 探索活动使用嘅互动式代理人疫情模拟（SIR/SIRS/SEIR/SIRD/SEIRD），包括图表、隔离措施、热点同社群。",
+      "yue-Hant": "供 WebWriter 探索活動使用嘅互動式代理人疫情模擬（SIR/SIRS/SEIR/SIRD/SEIRD），包括圖表、隔離措施、熱點同社群。",
+      "kmr": "Simulasyoneke belavbûna nexweşiyê ya li ser bingeha ajanan (SIR/SIRS/SEIR/SIRD/SEIRD) ji bo keşfên WebWriter, bi grafîk, karantînayê, xalên germ û civakan.",
+      "kmr-Latn": "Simulasyoneke belavbûna nexweşiyê ya li ser bingeha ajanan (SIR/SIRS/SEIR/SIRD/SEIRD) ji bo keşfên WebWriter, bi grafîk, karantînayê, xalên germ û civakan.",
+      "kmr-Arab": "سمولاسیۆنەکە بەلاڤبوونا نەخوەشیێ یا ل سەر بنگەها ajanan (SIR/SIRS/SEIR/SIRD/SEIRD) ژ بۆ کەشفێن WebWriter, ب گرافیک, کارانتینایێ, خالێن گەرم ئوو جڤاکان.",
+      "ckb": "شبیه‌سازیی ئەپیدیمیی کارلێک‌لێکراوی بنەمای ئەجێنت (SIR/SIRS/SEIR/SIRD/SEIRD) بۆ ئێکسپلۆرەبلی WebWriter، لەگەڵ چارت، قەرەنتینە، ناوچەی گەرم و کۆمەڵگەکان.",
+      "ckb-Arab": "شبیه‌سازیی ئەپیدیمیی کارلێک‌لێکراوی بنەمای ئەجێنت (SIR/SIRS/SEIR/SIRD/SEIRD) بۆ ئێکسپلۆرەبلی WebWriter، لەگەڵ چارت، قەرەنتینە، ناوچەی گەرم و کۆمەڵگەکان.",
+      "af-ZA": "Interaktiewe agentgebaseerde epidemiesimulasie (SIR/SIRS/SEIR/SIRD/SEIRD) vir verkenbare WebWriter-inhoud, met grafieke, kwarantyn, brandpunte en gemeenskappe.",
+      "af-NA": "Interaktiewe agentgebaseerde epidemiesimulasie (SIR/SIRS/SEIR/SIRD/SEIRD) vir verkenbare WebWriter-inhoud, met grafieke, kwarantyn, brandpunte en gemeenskappe."
     }
   },
   "./widgets/webwriter-epidemic-sim.*": {
@@ -321,7 +339,16 @@
       "ti": "መምሰሊ ለበዳ",
       "sw": "Epidemic Sim",
       "ha": "Kwaikwayon annoba",
-      "dv": "Epidemic Sim"
+      "dv": "Epidemic Sim",
+      "yue-Hans": "疫情模拟",
+      "yue-Hant": "疫情模擬",
+      "kmr": "Simulasyona belavbûna nexweşiyê",
+      "kmr-Latn": "Simulasyona belavbûna nexweşiyê",
+      "kmr-Arab": "سمولاسیۆنا بەلاڤبوونا نەخوەشیێ",
+      "ckb": "شبیه‌سازیی نەخۆشیی بڵاوبوونەوە",
+      "ckb-Arab": "شبیه‌سازیی نەخۆشیی بڵاوبوونەوە",
+      "af-ZA": "Epidemiesimulasie",
+      "af-NA": "Epidemiesimulasie"
     }
   },
   "./snippets/corona-verlauf.html": {
@@ -430,7 +457,16 @@
       "ti": "ምስፍሕፋሕ COVID-19",
       "sw": "Mwenendo wa Corona",
       "ha": "Yaɗuwar COVID-19",
-      "dv": "ކޮރޯނާގެ މަރުހަލާ"
+      "dv": "ކޮރޯނާގެ މަރުހަލާ",
+      "yue-Hans": "新冠疫情走势",
+      "yue-Hant": "新冠疫情走勢",
+      "kmr": "Rêçûna Corona",
+      "kmr-Latn": "Rêçûna Corona",
+      "kmr-Arab": "رێچوونا جۆرۆنا",
+      "ckb": "ڕەوتی کۆرۆنا",
+      "ckb-Arab": "ڕەوتی کۆرۆنا",
+      "af-ZA": "Verloop van COVID-19",
+      "af-NA": "Verloop van COVID-19"
     }
   }
 }
