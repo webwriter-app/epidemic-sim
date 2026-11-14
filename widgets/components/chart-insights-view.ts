@@ -1,6 +1,7 @@
+import { sourceMsg } from "../../localization/localizer";
+import type { MsgFn } from "@lit/localize";
 import {html} from "lit"
 import type {TemplateResult} from "lit"
-import {msg} from "@lit/localize"
 
 export type ChartInsightData = {
   elapsedTime: string
@@ -16,7 +17,7 @@ export type ChartInsightData = {
   peakTime: string
 }
 
-export function renderInsights(insights: ChartInsightData): TemplateResult {
+export function renderInsights(insights: ChartInsightData, msg: MsgFn = sourceMsg): TemplateResult {
   return html`
     <div class="insights">
       <div class="insights__row">

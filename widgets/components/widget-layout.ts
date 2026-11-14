@@ -1,6 +1,7 @@
+import { sourceMsg } from "../../localization/localizer";
+import type { MsgFn } from "@lit/localize";
 import {html} from "lit"
 import type {TemplateResult} from "lit"
-import {msg} from "@lit/localize"
 import {renderCanvasPanel, type SelectedHotspotInput} from "./canvas-panel"
 import {renderInsights, type ChartInsightData} from "./chart-insights-view"
 import {renderSnapshotsOverlay} from "./snapshots-overlay"
@@ -12,15 +13,11 @@ import {
 } from "../rendering/action-icons"
 import {renderMenu} from "../rendering/menu-renderer"
 import type {RenderMenuOptions} from "../rendering/menu-renderer"
-import {renderTeacherOptions} from "../rendering/teacher-options-renderer"
-import type {RenderTeacherOptionsInput} from "../rendering/teacher-options-renderer"
 import type {SimulationSnapshot} from "../simulation/types"
 import type {EpidemicModelType} from "../simulation/epidemic-models"
 
 export type WidgetLayoutInput = {
   hasVisibleMenuControls: boolean
-  showTeacherOptions: boolean
-  teacherOptions: RenderTeacherOptionsInput
   chartContextMenuOpen: boolean
   chartContextMenuPosition: {x: number; y: number}
   onMainContentClick: () => void
@@ -62,18 +59,9 @@ export type WidgetLayoutInput = {
   chartInsights: ChartInsightData
 }
 
-export function renderWidgetLayout(input: WidgetLayoutInput): TemplateResult {
+export function renderWidgetLayout(input: WidgetLayoutInput, msg: MsgFn = sourceMsg): TemplateResult {
   const showSidebarInsights = input.insightsOpen && !input.isFullscreen
   return html`
-    ${
-      input.showTeacherOptions
-        ? html`
-            <div part="options" class="teacher-options-shell author-only">
-              ${renderTeacherOptions(input.teacherOptions)}
-            </div>
-          `
-        : null
-    }
     <section class="widget-shell ${input.hasVisibleMenuControls || showSidebarInsights ? "has-menu" : ""}">
       <p class="print-hint">${msg("Printed snapshot of the epidemic simulation. Author options and interactive controls are omitted.")}</p>
       <section class="main-content" @click=${input.onMainContentClick}>
@@ -116,14 +104,14 @@ export function renderWidgetLayout(input: WidgetLayoutInput): TemplateResult {
             onHotspotTokenClick: input.onHotspotTokenClick,
             onToggleSimulation: input.onToggleSimulation,
             onResetSimulation: input.onResetSimulation,
-          })}
+          }, msg)}
         </section>
         ${
           input.isFullscreen
             ? html`
                 <section class="fullscreen-insights">
                   <h3 class="fullscreen-insights__title">${input.insightsTitle}</h3>
-                  ${renderInsights(input.chartInsights)}
+                  ${renderInsights(input.chartInsights, msg)}
                 </section>
               `
             : null
@@ -139,12 +127,12 @@ export function renderWidgetLayout(input: WidgetLayoutInput): TemplateResult {
                     <div class="side-menu__title-row">
                       <h3 class="side-menu__title">${input.insightsTitle}</h3>
                     </div>
-                    ${renderInsights(input.chartInsights)}
+                    ${renderInsights(input.chartInsights, msg)}
                   </div>
                 </aside>
               `
             : input.studentMenu
-              ? renderMenu(input.studentMenu)
+              ? renderMenu(input.studentMenu, msg)
               : null
         }
 
@@ -197,7 +185,7 @@ export function renderWidgetLayout(input: WidgetLayoutInput): TemplateResult {
           onDownloadImage: input.onDownloadSnapshotImage,
           onDownloadTable: input.onDownloadSnapshotTable,
         },
-      })}
+      }, msg)}
     </section>
   `
 }

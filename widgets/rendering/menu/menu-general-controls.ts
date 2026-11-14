@@ -1,13 +1,14 @@
+import { sourceMsg } from "../../../localization/localizer";
+import type { MsgFn } from "@lit/localize";
 import {html} from "lit"
 import type {TemplateResult} from "lit"
-import {msg} from "@lit/localize"
 import {MENU_RANGE_LIMITS} from "../../config/widget-schema"
 import {formatFrameCountAsDays} from "../../simulation/time"
 import type {RenderMenuOptions} from "./menu-types"
 
 const R = MENU_RANGE_LIMITS
 
-export function renderGeneralControls(options: RenderMenuOptions): TemplateResult {
+export function renderGeneralControls(options: RenderMenuOptions, msg: MsgFn = sourceMsg): TemplateResult {
   return html`
     ${
       options.allowPopulationControl
@@ -67,7 +68,7 @@ export function renderGeneralControls(options: RenderMenuOptions): TemplateResul
             <label class="side-menu__control">
               <span class="side-menu__control-head">
                 <span>${msg("Recovery duration")}</span>
-                <span class="side-menu__control-value">${formatFrameCountAsDays(options.recoveryDuration)}</span>
+                <span class="side-menu__control-value">${formatFrameCountAsDays(options.recoveryDuration, msg)}</span>
               </span>
               <sl-range min=${String(R.recoveryDuration.min)} max=${String(R.recoveryDuration.max)} step=${String(R.recoveryDuration.step)} .value=${String(options.recoveryDuration)} @sl-input=${options.onRecoveryDurationInput}></sl-range>
             </label>
@@ -80,7 +81,7 @@ export function renderGeneralControls(options: RenderMenuOptions): TemplateResul
             <label class="side-menu__control">
               <span class="side-menu__control-head">
                 <span>${msg("Simulation duration")}</span>
-                <span class="side-menu__control-value">${formatFrameCountAsDays(options.simulationDuration)}</span>
+                <span class="side-menu__control-value">${formatFrameCountAsDays(options.simulationDuration, msg)}</span>
               </span>
               <span class="side-menu__control-note">${msg("The simulation may end earlier when the epidemic is over")}</span>
               <sl-range min=${String(R.simulationDuration.min)} max=${String(R.simulationDuration.max)} step=${String(R.simulationDuration.step)} .value=${String(options.simulationDuration)} @sl-input=${options.onSimulationDurationInput}></sl-range>

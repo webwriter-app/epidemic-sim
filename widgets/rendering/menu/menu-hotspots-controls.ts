@@ -1,13 +1,14 @@
+import { sourceMsg } from "../../../localization/localizer";
+import type { MsgFn } from "@lit/localize";
 import {html} from "lit"
 import type {TemplateResult} from "lit"
-import {msg} from "@lit/localize"
 import {MENU_RANGE_LIMITS} from "../../config/widget-schema"
 import {formatFrameCountAsDays} from "../../simulation/time"
 import type {RenderMenuOptions} from "./menu-types"
 
 const R = MENU_RANGE_LIMITS
 
-export function renderHotspotsControls(options: RenderMenuOptions): TemplateResult {
+export function renderHotspotsControls(options: RenderMenuOptions, msg: MsgFn = sourceMsg): TemplateResult {
   return html`
     ${
       options.allowHotspotVisitProbabilityControl
@@ -28,7 +29,7 @@ export function renderHotspotsControls(options: RenderMenuOptions): TemplateResu
             <label class="side-menu__control">
               <span class="side-menu__control-head">
                 <span>${msg("Hotspot stay duration")}</span>
-                <span class="side-menu__control-value">${formatFrameCountAsDays(options.hotspotStayDuration)}</span>
+                <span class="side-menu__control-value">${formatFrameCountAsDays(options.hotspotStayDuration, msg)}</span>
               </span>
               <sl-range min=${String(R.hotspotStayDuration.min)} max=${String(R.hotspotStayDuration.max)} step=${String(R.hotspotStayDuration.step)} .value=${String(options.hotspotStayDuration)} ?disabled=${!options.hotspotsEnabled} @sl-input=${options.onHotspotStayDurationInput}></sl-range>
             </label>

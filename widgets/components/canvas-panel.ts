@@ -1,6 +1,7 @@
+import { sourceMsg } from "../../localization/localizer";
+import type { MsgFn } from "@lit/localize";
 import {html} from "lit"
 import type {TemplateResult} from "lit"
-import {msg} from "@lit/localize"
 import {
   renderDeleteIcon,
   renderPauseIcon,
@@ -33,7 +34,7 @@ type CanvasPanelInput = {
   onResetSimulation: () => void
 }
 
-function renderSelectedHotspot(selected: SelectedHotspotInput): TemplateResult {
+function renderSelectedHotspot(selected: SelectedHotspotInput, msg: MsgFn = sourceMsg): TemplateResult {
   return html`
     <div class="hotspot-selection">
       <sl-button class="hotspot-selection__delete" size="small" @click=${selected.onDelete}>
@@ -54,7 +55,7 @@ function getCanvasClass(input: CanvasPanelInput): string {
     .join(" ")
 }
 
-export function renderCanvasPanel(input: CanvasPanelInput): TemplateResult {
+export function renderCanvasPanel(input: CanvasPanelInput, msg: MsgFn = sourceMsg): TemplateResult {
   return html`
     <sl-card class="panel panel--simulation">
       <div class="simulation-stage">
@@ -100,7 +101,7 @@ export function renderCanvasPanel(input: CanvasPanelInput): TemplateResult {
             </div>
           `
         : null}
-      ${input.hotspotsEnabled && input.selectedHotspot ? renderSelectedHotspot(input.selectedHotspot) : null}
+      ${input.hotspotsEnabled && input.selectedHotspot ? renderSelectedHotspot(input.selectedHotspot, msg) : null}
     </sl-card>
   `
 }

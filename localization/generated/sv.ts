@@ -2,8 +2,8 @@
     // Do not modify this file by hand!
     // Re-generate this file by running lit-localize
 
-    
-    
+
+
 
     /* eslint-disable no-irregular-whitespace */
     /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -12,6 +12,7 @@
       's00ae53430e6c31cb': `SEIR-nyckeltal`,
 's061cc20e3432dead': `Paus`,
 's09943be8697420ce': `Tid till tillfrisknande`,
+'s18b7e5266a1b9512': `Aktivera smitthärdar`,
 's20c7305417726e5a': `Tillfrisknade`,
 's2e7ece256ba72b3b': `SEIRD-nyckeltal`,
 's35264f659ccd236e': `Sannolikhet för karantän`,
@@ -23,6 +24,7 @@
 's4b10acae683d2978': `Helskärm`,
 's4f1a78fbc7a2da7a': `Exponerade just nu`,
 's5334c0927cf25b86': `Avsluta helskärm`,
+'s542603d2f3836073': `Sannolikhet att lämna gruppen`,
 's5712f84064913c57': `Karantänens längd`,
 's5aa43edcf11f09af': `Inkubationstid`,
 's5ba7326ba78af02e': `Modelltyp`,
@@ -43,9 +45,11 @@
 's716a6024e3fe999c': `Visa`,
 's71ffa36b183c46fd': `Sannolikhet för infektion`,
 's7379168642ff77b3': `Exponerade`,
+'s773eacc0b477d43c': `Reglage för elever`,
 's77cc57dd46f7f5cc': `Sannolikhet för besök på hotspot`,
 's7a3c4c7e8b923c76': `Dra den här hotspoten till simuleringskartan.`,
 's7b564dc9f5db9ad8': `Smittradie`,
+'s7bb14d2609cd9c77': `Aktivera grupper`,
 's7be45f343cb15665': `Slutlig andel tillfrisknade`,
 's8f6ded5587ad8969': `Tröskel för flockimmunitet`,
 's941a41d587a259fd': `Immunitetens varaktighet`,
@@ -78,7 +82,9 @@
 'sd3386a2ef42e80b9': `Ladda ned`,
 'sd4755728c441b538': `Förfluten tid`,
 'sd8f1f39f65abba47': `Ögonblicksbild av SIR-diagrammet`,
+'sdb807487fc2632a0': `Högsta antal agenter i en smitthärd`,
 'sdc673e73b5c13aea': `Ta bort`,
+'sdc6ec6514ca70ce6': `Aktivera karantän`,
 'se0955919920ee87d': `Dag`,
 'se24130f1123560a0': `Hastighet`,
 'sed03791dbc19b9c0': `Tabell (CSV)`,
@@ -88,4 +94,3 @@
 'sf62c2403c94966db': `Mottagliga just nu`,
 'sfc12d40fe5fa5f7d': `Inga ögonblicksbilder än.`,
     };
-  

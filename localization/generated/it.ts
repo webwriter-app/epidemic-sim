@@ -2,8 +2,8 @@
     // Do not modify this file by hand!
     // Re-generate this file by running lit-localize
 
-    
-    
+
+
 
     /* eslint-disable no-irregular-whitespace */
     /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -12,6 +12,7 @@
       's00ae53430e6c31cb': `Indicatori SEIR`,
 's061cc20e3432dead': `Pausa`,
 's09943be8697420ce': `Durata della guarigione`,
+'s18b7e5266a1b9512': `Abilita i focolai`,
 's20c7305417726e5a': `Guariti`,
 's2e7ece256ba72b3b': `Indicatori SEIRD`,
 's35264f659ccd236e': `Probabilità di quarantena`,
@@ -23,6 +24,7 @@
 's4b10acae683d2978': `Schermo intero`,
 's4f1a78fbc7a2da7a': `Esposti attuali`,
 's5334c0927cf25b86': `Esci da schermo intero`,
+'s542603d2f3836073': `Probabilità di lasciare la comunità`,
 's5712f84064913c57': `Durata della quarantena`,
 's5aa43edcf11f09af': `Periodo di incubazione`,
 's5ba7326ba78af02e': `Tipo di modello`,
@@ -43,9 +45,11 @@
 's716a6024e3fe999c': `Mostra`,
 's71ffa36b183c46fd': `Probabilità di infezione`,
 's7379168642ff77b3': `Esposti`,
+'s773eacc0b477d43c': `Controlli per chi apprende`,
 's77cc57dd46f7f5cc': `Probabilità di visita a un luogo di aggregazione`,
 's7a3c4c7e8b923c76': `Trascina questo luogo di aggregazione sulla mappa della simulazione.`,
 's7b564dc9f5db9ad8': `Raggio di contagio`,
+'s7bb14d2609cd9c77': `Abilita le comunità`,
 's7be45f343cb15665': `Quota finale di guariti`,
 's8f6ded5587ad8969': `Soglia di immunità di gregge`,
 's941a41d587a259fd': `Durata dell'immunità`,
@@ -78,7 +82,9 @@
 'sd3386a2ef42e80b9': `Scarica`,
 'sd4755728c441b538': `Tempo trascorso`,
 'sd8f1f39f65abba47': `Istantanea del grafico SIR`,
+'sdb807487fc2632a0': `Numero massimo di agenti in un focolaio`,
 'sdc673e73b5c13aea': `Elimina`,
+'sdc6ec6514ca70ce6': `Abilita la quarantena`,
 'se0955919920ee87d': `Giorno`,
 'se24130f1123560a0': `Velocità`,
 'sed03791dbc19b9c0': `Tabella (CSV)`,
@@ -88,4 +94,3 @@
 'sf62c2403c94966db': `Suscettibili attuali`,
 'sfc12d40fe5fa5f7d': `Ancora nessuna istantanea.`,
     };
-  

@@ -2,8 +2,8 @@
     // Do not modify this file by hand!
     // Re-generate this file by running lit-localize
 
-    
-    
+
+
 
     /* eslint-disable no-irregular-whitespace */
     /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -12,6 +12,7 @@
       's00ae53430e6c31cb': `SEIR rodikliai`,
 's061cc20e3432dead': `Pauzė`,
 's09943be8697420ce': `Pasveikimo trukmė`,
+'s18b7e5266a1b9512': `Įjungti židinius`,
 's20c7305417726e5a': `Pasveikę`,
 's2e7ece256ba72b3b': `SEIRD rodikliai`,
 's35264f659ccd236e': `Karantino tikimybė`,
@@ -23,6 +24,7 @@
 's4b10acae683d2978': `Visas ekranas`,
 's4f1a78fbc7a2da7a': `Šiuo metu turėję sąlytį`,
 's5334c0927cf25b86': `Išeiti iš viso ekrano režimo`,
+'s542603d2f3836073': `Tikimybė palikti bendruomenę`,
 's5712f84064913c57': `Karantino trukmė`,
 's5aa43edcf11f09af': `Inkubacinis laikotarpis`,
 's5ba7326ba78af02e': `Modelio tipas`,
@@ -43,9 +45,11 @@
 's716a6024e3fe999c': `Rodyti`,
 's71ffa36b183c46fd': `Užsikrėtimo tikimybė`,
 's7379168642ff77b3': `Turėję sąlytį`,
+'s773eacc0b477d43c': `Mokinio valdikliai`,
 's77cc57dd46f7f5cc': `Susibūrimo vietos aplankymo tikimybė`,
 's7a3c4c7e8b923c76': `Nutempkite šią susibūrimo vietą į simuliacijos žemėlapį.`,
 's7b564dc9f5db9ad8': `Užkrėtimo spindulys`,
+'s7bb14d2609cd9c77': `Įjungti bendruomenes`,
 's7be45f343cb15665': `Galutinė pasveikusiųjų dalis`,
 's8f6ded5587ad8969': `Kolektyvinio imuniteto riba`,
 's941a41d587a259fd': `Imuniteto trukmė`,
@@ -78,7 +82,9 @@
 'sd3386a2ef42e80b9': `Atsisiųsti`,
 'sd4755728c441b538': `Praėjęs laikas`,
 'sd8f1f39f65abba47': `SIR diagramos momentinė kopija`,
+'sdb807487fc2632a0': `Didžiausias agentų skaičius židinyje`,
 'sdc673e73b5c13aea': `Ištrinti`,
+'sdc6ec6514ca70ce6': `Įjungti karantiną`,
 'se0955919920ee87d': `Diena`,
 'se24130f1123560a0': `Greitis`,
 'sed03791dbc19b9c0': `Lentelė (CSV)`,
@@ -88,4 +94,3 @@
 'sf62c2403c94966db': `Šiuo metu imlūs`,
 'sfc12d40fe5fa5f7d': `Momentinių kopijų dar nėra.`,
     };
-  

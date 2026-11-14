@@ -2,8 +2,8 @@
     // Do not modify this file by hand!
     // Re-generate this file by running lit-localize
 
-    
-    
+
+
 
     /* eslint-disable no-irregular-whitespace */
     /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -12,6 +12,7 @@
       's00ae53430e6c31cb': `Wskaźniki SEIR`,
 's061cc20e3432dead': `Pauza`,
 's09943be8697420ce': `Czas powrotu do zdrowia`,
+'s18b7e5266a1b9512': `Włącz ogniska`,
 's20c7305417726e5a': `Ozdrowiali`,
 's2e7ece256ba72b3b': `Wskaźniki SEIRD`,
 's35264f659ccd236e': `Prawdopodobieństwo kwarantanny`,
@@ -23,6 +24,7 @@
 's4b10acae683d2978': `Pełny ekran`,
 's4f1a78fbc7a2da7a': `Obecnie narażeni`,
 's5334c0927cf25b86': `Zamknij tryb pełnoekranowy`,
+'s542603d2f3836073': `Prawdopodobieństwo opuszczenia społeczności`,
 's5712f84064913c57': `Czas trwania kwarantanny`,
 's5aa43edcf11f09af': `Okres inkubacji`,
 's5ba7326ba78af02e': `Typ modelu`,
@@ -43,9 +45,11 @@
 's716a6024e3fe999c': `Pokaż`,
 's71ffa36b183c46fd': `Prawdopodobieństwo zakażenia`,
 's7379168642ff77b3': `Narażeni`,
+'s773eacc0b477d43c': `Sterowanie dla ucznia`,
 's77cc57dd46f7f5cc': `Prawdopodobieństwo odwiedzenia miejsca zgromadzeń`,
 's7a3c4c7e8b923c76': `Przeciągnij to miejsce zgromadzeń na mapę symulacji.`,
 's7b564dc9f5db9ad8': `Promień zakażenia`,
+'s7bb14d2609cd9c77': `Włącz społeczności`,
 's7be45f343cb15665': `Końcowy odsetek ozdrowiałych`,
 's8f6ded5587ad8969': `Próg odporności zbiorowej`,
 's941a41d587a259fd': `Czas trwania odporności`,
@@ -78,7 +82,9 @@
 'sd3386a2ef42e80b9': `Pobierz`,
 'sd4755728c441b538': `Upływ czasu`,
 'sd8f1f39f65abba47': `Migawka wykresu SIR`,
+'sdb807487fc2632a0': `Maksymalna liczba agentów w ognisku`,
 'sdc673e73b5c13aea': `Usuń`,
+'sdc6ec6514ca70ce6': `Włącz kwarantannę`,
 'se0955919920ee87d': `Dzień`,
 'se24130f1123560a0': `Prędkość`,
 'sed03791dbc19b9c0': `Tabela (CSV)`,
@@ -88,4 +94,3 @@
 'sf62c2403c94966db': `Obecnie podatni`,
 'sfc12d40fe5fa5f7d': `Brak migawek.`,
     };
-  

@@ -1,6 +1,7 @@
+import { sourceMsg } from "../../localization/localizer";
+import type { MsgFn } from "@lit/localize";
 import {html} from "lit"
 import type {TemplateResult} from "lit"
-import {msg} from "@lit/localize"
 import {renderDeleteIcon, renderDownloadIcon} from "../rendering/action-icons"
 import type {EpidemicModelType} from "../simulation/epidemic-models"
 import type {SimulationSnapshot} from "../simulation/types"
@@ -14,7 +15,7 @@ type SnapshotRenderContext = {
   onDownloadTable: (id: string) => void
 }
 
-function renderSnapshotCard(snapshot: SimulationSnapshot, ctx: SnapshotRenderContext): TemplateResult {
+function renderSnapshotCard(snapshot: SimulationSnapshot, ctx: SnapshotRenderContext, msg: MsgFn = sourceMsg): TemplateResult {
   return html`
     <article class="snapshots-overlay__snapshot-card">
       <div class="snapshots-overlay__snapshot-head">
@@ -80,7 +81,7 @@ type SnapshotsOverlayInput = {
   context: SnapshotRenderContext
 }
 
-export function renderSnapshotsOverlay(input: SnapshotsOverlayInput): TemplateResult | null {
+export function renderSnapshotsOverlay(input: SnapshotsOverlayInput, msg: MsgFn = sourceMsg): TemplateResult | null {
   if (!input.open) {
     return null
   }
@@ -96,7 +97,7 @@ export function renderSnapshotsOverlay(input: SnapshotsOverlayInput): TemplateRe
         </header>
         ${input.snapshots.length === 0
           ? html`<div class="snapshots-overlay__empty">${msg("No snapshots yet.")}</div>`
-          : html`<div class="snapshots-overlay__grid">${input.snapshots.map((snapshot) => renderSnapshotCard(snapshot, input.context))}</div>`}
+          : html`<div class="snapshots-overlay__grid">${input.snapshots.map((snapshot) => renderSnapshotCard(snapshot, input.context, msg))}</div>`}
       </article>
     </section>
   `

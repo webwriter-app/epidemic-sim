@@ -1,7 +1,8 @@
+import type { MsgFn } from "@lit/localize";
+import { effectiveLanguage, localizeElement, nativeLanguageAttributes, sourceMsg } from "../localization/localizer";
 import {LitElementWw} from "@webwriter/lit"
 import {customElement, property, state} from "lit/decorators.js"
 import type {PropertyValues} from "lit"
-import {msg} from "@lit/localize"
 import SlButton from "@shoelace-style/shoelace/dist/components/button/button.component.js"
 import SlCard from "@shoelace-style/shoelace/dist/components/card/card.component.js"
 import SlDetails from "@shoelace-style/shoelace/dist/components/details/details.component.js"
@@ -14,7 +15,6 @@ import SlTag from "@shoelace-style/shoelace/dist/components/tag/tag.component.js
 import SlSelect from "@shoelace-style/shoelace/dist/components/select/select.component.js"
 import SlOption from "@shoelace-style/shoelace/dist/components/option/option.component.js"
 import shoelaceLightStyles from "@shoelace-style/shoelace/dist/themes/light.styles.js"
-import LOCALIZE from "../localization/generated"
 
 import {formatApprox} from "./analytics/chart-insights"
 import type {SelectedHotspotInput} from "./components/canvas-panel"
@@ -26,7 +26,6 @@ import {
 } from "./config/attribute-converters"
 import {buildSimulationConfig} from "./config/build-simulation-config"
 import {buildStudentMenuInput} from "./config/build-student-menu-input"
-import {buildTeacherOptionsInput} from "./config/build-teacher-options-input"
 import {buildMenuAllowFlags, type WidgetConfigValues} from "./config/menu-allow-flags"
 import {CONFIG_SCHEMA, getRangeLimits, type AllowControlKey} from "./config/widget-schema"
 import {AnimationLoopController} from "./controllers/animation-loop-controller"
@@ -37,15 +36,13 @@ import {ChartRuntime, type ChartRuntimeCounts} from "./orchestration/chart-runti
 import {
   readPersistedState,
   writePersistedState,
-  STATE_ATTRIBUTE,
   parsePersistedState,
-  encodePersistedState,
+  getPersistedStateBlock,
 } from "./orchestration/persisted-state"
 import {buildSnapshotCsv, drawSnapshotChart, renderSnapshotChartPng, SnapshotService} from "./orchestration/snapshot-service"
 import {hasVisibleMenuControls, sideMenuStyles} from "./rendering/menu-renderer"
 import {destroyChart, resetChart} from "./rendering/chart-renderer"
 import {drawSimulation} from "./rendering/simulation-renderer"
-import {teacherOptionsStyles} from "./rendering/teacher-options-renderer"
 import {getEpidemicCounts, initializeAgents, stepSimulation} from "./simulation/engine"
 import {isEpidemicModelType, type EpidemicModelType} from "./simulation/epidemic-models"
 import {formatFrameCountAsDays} from "./simulation/time"
@@ -56,10 +53,15 @@ import {fitCanvasToDisplaySize, getCanvasPoint} from "./utils/canvas-coordinates
 
 @customElement("webwriter-epidemic-sim")
 export class WebwriterEpidemicSim extends LitElementWw {
-  protected localize = LOCALIZE as {
-    getLocale: () => string
-    setLocale: (locale: string) => Promise<void>
-  }
+  static override get observedAttributes() { return nativeLanguageAttributes(this, super.observedAttributes); }
+
+  override get lang(): string { return effectiveLanguage(this); }
+  override set lang(value: string) { this.setAttribute("lang", value); }
+  public readonly msg = localizeElement(this, true, () => {
+    Object.assign(this.options, this.getDrawerOptions())
+    this.drawChart()
+    this.redrawSimulationWhenPaused()
+  });
 
   static scopedElements = {
     "sl-button": SlButton,
@@ -74,7 +76,7 @@ export class WebwriterEpidemicSim extends LitElementWw {
     "sl-select": SlSelect,
     "sl-option": SlOption,
   }
-  static styles = [shoelaceLightStyles, ...epidemicSimStyles, sideMenuStyles, teacherOptionsStyles]
+  static styles = [shoelaceLightStyles, ...epidemicSimStyles, sideMenuStyles]
 
   @property({
     type: String,
@@ -381,8 +383,79 @@ export class WebwriterEpidemicSim extends LitElementWw {
   })
   accessor allowCommunityLeaveProbabilityControl = false
 
-  @property({attribute: STATE_ATTRIBUTE, reflect: true})
-  accessor widgetState = ""
+  readonly optionGroups = WebwriterEpidemicSim.buildOptionGroups(this.msg);
+
+  static get optionGroups() { return this.buildOptionGroups(sourceMsg); }
+
+  private static buildOptionGroups(msg: MsgFn) {
+    return {
+      model: {label: { get _() { return msg("Model"); } }, collapsible: true},
+      general: {label: { get _() { return msg("General"); } }, collapsible: true},
+      quarantine: {label: { get _() { return msg("Quarantine"); } }, advanced: true},
+      hotspots: {label: { get _() { return msg("Hotspots"); } }, advanced: true},
+      communities: {label: { get _() { return msg("Communities"); } }, advanced: true},
+      controls: {label: { get _() { return msg("Learner controls"); } }, advanced: true},
+    };
+  }
+
+  readonly options = {};
+
+  private getDrawerOptions() {
+    const labels = {
+      modelType: [this.msg("Model type"), "model"],
+      incubationDuration: [this.msg("Incubation duration"), "model"],
+      immunityDuration: [this.msg("Immunity duration"), "model"],
+      mortalityProbability: [this.msg("Mortality probability"), "model"],
+      population: [this.msg("Population"), "general"],
+      speed: [this.msg("Speed"), "general"],
+      infectionRadius: [this.msg("Infection radius"), "general"],
+      infectionProbability: [this.msg("Infection probability"), "general"],
+      recoveryDuration: [this.msg("Recovery duration"), "general"],
+      simulationDuration: [this.msg("Simulation duration"), "general"],
+      quarantineEnabled: [this.msg("Enable quarantine"), "quarantine"],
+      quarantineProbability: [this.msg("Quarantine probability"), "quarantine"],
+      quarantineDuration: [this.msg("Quarantine duration"), "quarantine"],
+      hotspotsEnabled: [this.msg("Enable hotspots"), "hotspots"],
+      hotspotVisitProbability: [this.msg("Hotspot visit probability"), "hotspots"],
+      hotspotStayDuration: [this.msg("Hotspot stay duration"), "hotspots"],
+      hotspotMaxAgents: [this.msg("Maximum agents in a hotspot"), "hotspots"],
+      hotspotSize: [this.msg("Hotspot size"), "hotspots"],
+      communitiesEnabled: [this.msg("Enable communities"), "communities"],
+      communityLeaveProbability: [this.msg("Probability of leaving the community"), "communities"],
+    } as const
+    const model = this.modelType
+    const visible = {
+      incubationDuration: model === "seir" || model === "seird",
+      immunityDuration: model === "sirs",
+      mortalityProbability: model === "sird" || model === "seird",
+    }
+    return Object.fromEntries((Object.keys(labels) as (keyof typeof labels)[]).flatMap(key => {
+      const [label, group] = labels[key]
+      const hidden = key in visible && !visible[key as keyof typeof visible]
+      const schema = CONFIG_SCHEMA[key]
+      const base = {label: {_: label}, group, hidden}
+      const setting = schema.kind === "range"
+        ? {...base, type: Number, control: "range", min: schema.min, max: schema.max, step: schema.step}
+        : schema.kind === "toggle"
+          ? {...base, type: Boolean}
+          : {...base, type: "select", options: this.getModelTypeOptions().map(({value, label}) => ({value, label: {_: label}}))}
+      const control = `allow${key[0].toUpperCase()}${key.slice(1)}Control`
+      return [[key, setting], [control, {type: Boolean, group: "controls", label: {_: label}, hidden}]]
+    }))
+  }
+
+  private stateObserver = new MutationObserver(() => this.syncPersistedState())
+
+  private syncPersistedState() {
+    const text = getPersistedStateBlock(this)?.textContent ?? ""
+    if (text === this.lastWrittenWidgetState) return
+    if (this.persistStateTimer !== null) {
+      window.clearTimeout(this.persistStateTimer)
+      this.persistStateTimer = null
+    }
+    this.lastWrittenWidgetState = text
+    this.applyPersistedState(parsePersistedState(text), {restartSimulation: true})
+  }
 
   private get config(): SimulationConfig {
     return buildSimulationConfig(this.getWidgetConfigValues())
@@ -393,8 +466,8 @@ export class WebwriterEpidemicSim extends LitElementWw {
   private chartCanvas: HTMLCanvasElement | null = null
   private snapshotChartIds = new Map<HTMLCanvasElement, string>()
   private readonly canvasHost = new CanvasHostController(this)
-  private readonly chartRuntime = new ChartRuntime()
-  private readonly snapshotService = new SnapshotService()
+  private readonly chartRuntime = new ChartRuntime(this.msg)
+  private readonly snapshotService = new SnapshotService(this.msg)
   private readonly hotspotEditing: HotspotEditingController = new HotspotEditingController(this, {
     getCanvas: () => this.simulationCanvas,
     getConfig: () => this.config,
@@ -466,6 +539,8 @@ export class WebwriterEpidemicSim extends LitElementWw {
 
   connectedCallback(): void {
     super.connectedCallback()
+    this.stateObserver.observe(this, {childList: true, subtree: true, characterData: true, attributes: true, attributeFilter: ["slot", "type", "src"]})
+    if (this.hasUpdated) this.syncPersistedState()
     window.addEventListener("keydown", this.onWindowKeyDown)
     this.ownerDocument.addEventListener("fullscreenchange", this.syncFullscreenState)
     this.printClassObserver = new MutationObserver(() => {
@@ -486,11 +561,9 @@ export class WebwriterEpidemicSim extends LitElementWw {
   }
 
   protected updated(changed: PropertyValues<this>): void {
-    if (changed.has("widgetState")) {
-      if (this.widgetState !== this.lastWrittenWidgetState) {
-        this.lastWrittenWidgetState = this.widgetState
-        this.applyPersistedState(parsePersistedState(this.widgetState), {restartSimulation: true})
-      }
+    if (changed.has("modelType") || changed.has("lang")) {
+      Object.assign(this.options, this.getDrawerOptions())
+      this.dispatchEvent(new Event("optionschange", {bubbles: true}))
     }
     if (changed.has("lang")) {
       this.drawChart()
@@ -519,6 +592,7 @@ export class WebwriterEpidemicSim extends LitElementWw {
   }
 
   disconnectedCallback(): void {
+    this.stateObserver.disconnect()
     this.printClassObserver?.disconnect()
     this.printClassObserver = null
     this.canvasResizeObserver?.disconnect()
@@ -542,6 +616,7 @@ export class WebwriterEpidemicSim extends LitElementWw {
     this.simulationCtx = this.canvasHost.queryContext("#simulation-canvas")
     this.chartCanvas = this.canvasHost.queryCanvas("#chart-canvas")
     this.observeCanvasSize()
+    this.lastWrittenWidgetState = getPersistedStateBlock(this)?.textContent ?? ""
     this.applyPersistedState(readPersistedState(this), {restartSimulation: false})
     this.resetSimulation()
     this.startLoop()
@@ -561,6 +636,10 @@ export class WebwriterEpidemicSim extends LitElementWw {
     if (this.applyingPersistedState) {
       return
     }
+    if ((getPersistedStateBlock(this)?.textContent ?? "") !== this.lastWrittenWidgetState) {
+      this.syncPersistedState()
+      return
+    }
     const hotspotMeta = this.hotspotEditing.getPersistedSnapshot()
     const snapshotMeta = this.snapshotService.getPersistedMeta()
     const state = {
@@ -570,14 +649,10 @@ export class WebwriterEpidemicSim extends LitElementWw {
       snapshots: snapshotMeta.snapshots,
       nextSnapshotId: snapshotMeta.nextSnapshotId,
     }
-    const encoded = encodePersistedState(state)
     this.applyingPersistedState = true
     try {
-      this.lastWrittenWidgetState = encoded
-      if (this.widgetState !== encoded) {
-        this.widgetState = encoded
-      }
       writePersistedState(this, state)
+      this.lastWrittenWidgetState = getPersistedStateBlock(this)?.textContent ?? ""
     } finally {
       this.applyingPersistedState = false
     }
@@ -887,7 +962,7 @@ export class WebwriterEpidemicSim extends LitElementWw {
     if (!snapshot || !this.shadowRoot) {
       return
     }
-    const png = renderSnapshotChartPng(this.shadowRoot, snapshot)
+    const png = renderSnapshotChartPng(this.shadowRoot, snapshot, this.msg)
     if (!png) {
       return
     }
@@ -899,7 +974,7 @@ export class WebwriterEpidemicSim extends LitElementWw {
     if (!snapshot) {
       return
     }
-    const csv = new Blob(["\ufeff", buildSnapshotCsv(snapshot)], {type: "text/csv;charset=utf-8"})
+    const csv = new Blob(["\ufeff", buildSnapshotCsv(snapshot, this.msg)], {type: "text/csv;charset=utf-8"})
     const url = URL.createObjectURL(csv)
     this.triggerDownload(url, `${snapshot.label}.csv`)
     window.setTimeout(() => URL.revokeObjectURL(url), 0)
@@ -1050,7 +1125,7 @@ export class WebwriterEpidemicSim extends LitElementWw {
       drawSimulation(ctx, canvas, this.agents, areas, {
         removalHotspotId: this.hotspotPointer.getRemovalPendingHotspotId(),
         selectedHotspotId: this.selectedHotspotId,
-      })
+      }, this.msg)
     }
   }
 
@@ -1075,7 +1150,7 @@ export class WebwriterEpidemicSim extends LitElementWw {
       if (!snapshot) {
         continue
       }
-      drawSnapshotChart(canvas, snapshot)
+      drawSnapshotChart(canvas, snapshot, undefined, this.msg)
       this.snapshotChartIds.set(canvas, snapshotId)
     }
   }
@@ -1126,7 +1201,7 @@ export class WebwriterEpidemicSim extends LitElementWw {
       return null
     }
     return {
-      label: getHotspotLabel(this.hotspotEditing.userHotspots[index], index),
+      label: getHotspotLabel(this.hotspotEditing.userHotspots[index], index, this.msg),
       onDelete: this.deleteSelectedHotspot,
     }
   }
@@ -1158,11 +1233,11 @@ export class WebwriterEpidemicSim extends LitElementWw {
 
   private getModelTypeOptions(): Array<{value: EpidemicModelType; label: string}> {
     return [
-      {value: "sir", label: msg("SIR")},
-      {value: "sirs", label: msg("SIRS")},
-      {value: "seir", label: msg("SEIR")},
-      {value: "sird", label: msg("SIRD")},
-      {value: "seird", label: msg("SEIRD")},
+      {value: "sir", label: this.msg("SIR")},
+      {value: "sirs", label: this.msg("SIRS")},
+      {value: "seir", label: this.msg("SEIR")},
+      {value: "sird", label: this.msg("SIRD")},
+      {value: "seird", label: this.msg("SEIRD")},
     ]
   }
 
@@ -1175,21 +1250,9 @@ export class WebwriterEpidemicSim extends LitElementWw {
     this[key] = this.parseSwitch(event)
   }
 
-  private getTeacherOptionsContext() {
-    return {
-      ...this.getWidgetConfigValues(),
-      modelTypeOptions: this.getModelTypeOptions(),
-      formatDays: formatFrameCountAsDays,
-      ...this.configHandlers,
-      onAllowChange: this.setAllowControl,
-    }
-  }
-
   render() {
     return renderWidgetLayout({
       hasVisibleMenuControls: this.hasVisibleMenuControls,
-      showTeacherOptions: !this.isPrintPreparing,
-      teacherOptions: buildTeacherOptionsInput(this.getTeacherOptionsContext()),
       chartContextMenuOpen: this.chartContextMenuOpen,
       chartContextMenuPosition: this.chartContextMenuPosition,
       onMainContentClick: this.onMainContentClick,
@@ -1236,6 +1299,6 @@ export class WebwriterEpidemicSim extends LitElementWw {
       insightsOpen: this.insightsOpen,
       insightsTitle: this.chartRuntime.getInsightsOverlayTitle(this.config.modelType),
       chartInsights: this.chartRuntime.buildInsightViewData(this.frameIndex, this.getCounts(), this.config),
-    })
+    }, this.msg)
   }
 }

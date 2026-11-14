@@ -1,4 +1,5 @@
-import {msg} from "@lit/localize"
+import { sourceMsg } from "../../localization/localizer";
+import type { MsgFn } from "@lit/localize";
 import type {ChartInsightData} from "../components/chart-insights-view"
 import {
   computeChartInsights,
@@ -29,7 +30,7 @@ export type ChartHistories = {
   deadHistory: number[]
 }
 
-export function buildChartSeries(modelType: EpidemicModelType, histories: ChartHistories): ChartSeries[] {
+export function buildChartSeries(modelType: EpidemicModelType, histories: ChartHistories, msg: MsgFn = sourceMsg): ChartSeries[] {
   const compartmentSeries: Record<ChartCompartment, ChartSeries> = {
     susceptible: {label: msg("Susceptible"), values: histories.susceptibleHistory, color: "#56B4E9"},
     exposed: {label: msg("Exposed"), values: histories.exposedHistory, color: "#E69F00"},
@@ -46,6 +47,8 @@ export function buildChartDayLabels(series: ChartSeries[]): string[] {
 }
 
 export class ChartRuntime {
+  constructor(private readonly msg: MsgFn = sourceMsg) {}
+
   private readonly historyLimit = 2000
   susceptibleHistory: number[] = []
   exposedHistory: number[] = []
@@ -116,7 +119,7 @@ export class ChartRuntime {
   }
 
   buildSeries(config: SimulationConfig): ChartSeries[] {
-    return buildChartSeries(config.modelType, this)
+    return buildChartSeries(config.modelType, this, this.msg)
   }
 
   draw(config: SimulationConfig, canvas: HTMLCanvasElement | null): void {
@@ -126,24 +129,24 @@ export class ChartRuntime {
     const series = this.buildSeries(config)
     drawChart(canvas, config.population, series, {
       labels: this.buildDayLabels(series),
-      xAxisTitle: msg("Time (days)"),
-    })
+      xAxisTitle: this.msg("Time (days)"),
+    }, this.msg)
   }
 
   getInsightsOverlayTitle(modelType: EpidemicModelType): string {
     if (modelType === "seir") {
-      return msg("SEIR insights")
+      return this.msg("SEIR insights")
     }
     if (modelType === "seird") {
-      return msg("SEIRD insights")
+      return this.msg("SEIRD insights")
     }
     if (modelType === "sirs") {
-      return msg("SIRS insights")
+      return this.msg("SIRS insights")
     }
     if (modelType === "sird") {
-      return msg("SIRD insights")
+      return this.msg("SIRD insights")
     }
-    return msg("SIR insights")
+    return this.msg("SIR insights")
   }
 
   buildInsightViewData(frameIndex: number, counts: ChartRuntimeCounts, config: SimulationConfig): ChartInsightData {
@@ -164,7 +167,7 @@ export class ChartRuntime {
     const herdThresholdLabel =
       insights.herdImmunityThreshold === null ? "–" : formatPercent(insights.herdImmunityThreshold)
     return {
-      elapsedTime: formatFrameCountAsDays(insights.currentFrame),
+      elapsedTime: formatFrameCountAsDays(insights.currentFrame, this.msg),
       estimatedR0: formatApprox(insights.estimatedR0),
       herdImmunityThreshold: herdThresholdLabel,
       currentSusceptible: `${Math.round(insights.currentSusceptible)} (${formatPercent(insights.currentSusceptibleShare)})`,
@@ -180,7 +183,7 @@ export class ChartRuntime {
           : undefined,
       finalRecoveredShare: insights.finalRecoveredShare === null ? "–" : formatPercent(insights.finalRecoveredShare),
       peakInfected: `${Math.round(insights.peakInfected)} (${formatPercent(peakShare)})`,
-      peakTime: formatFrameCountAsDays(insights.peakFrame),
+      peakTime: formatFrameCountAsDays(insights.peakFrame, this.msg),
     }
   }
 }

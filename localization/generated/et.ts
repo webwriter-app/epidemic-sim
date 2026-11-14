@@ -2,8 +2,8 @@
     // Do not modify this file by hand!
     // Re-generate this file by running lit-localize
 
-    
-    
+
+
 
     /* eslint-disable no-irregular-whitespace */
     /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -12,6 +12,7 @@
       's00ae53430e6c31cb': `SEIR näitajad`,
 's061cc20e3432dead': `Paus`,
 's09943be8697420ce': `Paranemise kestus`,
+'s18b7e5266a1b9512': `Luba nakkuskolded`,
 's20c7305417726e5a': `Paranenud`,
 's2e7ece256ba72b3b': `SEIRD näitajad`,
 's35264f659ccd236e': `Karantiini tõenäosus`,
@@ -23,6 +24,7 @@
 's4b10acae683d2978': `Täisekraan`,
 's4f1a78fbc7a2da7a': `Praegu kokkupuutunud`,
 's5334c0927cf25b86': `Välju täisekraanist`,
+'s542603d2f3836073': `Kogukonnast lahkumise tõenäosus`,
 's5712f84064913c57': `Karantiini kestus`,
 's5aa43edcf11f09af': `Peiteaeg`,
 's5ba7326ba78af02e': `Mudeli tüüp`,
@@ -43,9 +45,11 @@
 's716a6024e3fe999c': `Näita`,
 's71ffa36b183c46fd': `Nakatumise tõenäosus`,
 's7379168642ff77b3': `Kokkupuutunud`,
+'s773eacc0b477d43c': `Õppija juhtelemendid`,
 's77cc57dd46f7f5cc': `Kogunemiskoha külastamise tõenäosus`,
 's7a3c4c7e8b923c76': `Lohistage see kogunemiskoht simulatsioonikaardile.`,
 's7b564dc9f5db9ad8': `Nakatumisraadius`,
+'s7bb14d2609cd9c77': `Luba kogukonnad`,
 's7be45f343cb15665': `Paranenute lõplik osakaal`,
 's8f6ded5587ad8969': `Karjaimmuunsuse lävi`,
 's941a41d587a259fd': `Immuunsuse kestus`,
@@ -78,7 +82,9 @@
 'sd3386a2ef42e80b9': `Laadi alla`,
 'sd4755728c441b538': `Kulunud aeg`,
 'sd8f1f39f65abba47': `SIR-diagrammi hetktõmmis`,
+'sdb807487fc2632a0': `Nakkuskolde agentide ülempiir`,
 'sdc673e73b5c13aea': `Kustuta`,
+'sdc6ec6514ca70ce6': `Luba karantiin`,
 'se0955919920ee87d': `Päev`,
 'se24130f1123560a0': `Kiirus`,
 'sed03791dbc19b9c0': `Tabel (CSV)`,
@@ -88,4 +94,3 @@
 'sf62c2403c94966db': `Praegu vastuvõtlikud`,
 'sfc12d40fe5fa5f7d': `Hetktõmmiseid veel pole.`,
     };
-  

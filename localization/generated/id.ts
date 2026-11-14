@@ -2,8 +2,8 @@
     // Do not modify this file by hand!
     // Re-generate this file by running lit-localize
 
-    
-    
+
+
 
     /* eslint-disable no-irregular-whitespace */
     /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -12,6 +12,7 @@
       's00ae53430e6c31cb': `Indikator SEIR`,
 's061cc20e3432dead': `Jeda`,
 's09943be8697420ce': `Lama pemulihan`,
+'s18b7e5266a1b9512': `Aktifkan titik penularan`,
 's20c7305417726e5a': `Sembuh`,
 's2e7ece256ba72b3b': `Indikator SEIRD`,
 's35264f659ccd236e': `Probabilitas karantina`,
@@ -23,6 +24,7 @@
 's4b10acae683d2978': `Layar penuh`,
 's4f1a78fbc7a2da7a': `Terpapar saat ini`,
 's5334c0927cf25b86': `Keluar dari layar penuh`,
+'s542603d2f3836073': `Kemungkinan meninggalkan komunitas`,
 's5712f84064913c57': `Lama karantina`,
 's5aa43edcf11f09af': `Masa inkubasi`,
 's5ba7326ba78af02e': `Jenis model`,
@@ -43,9 +45,11 @@
 's716a6024e3fe999c': `Tampilkan`,
 's71ffa36b183c46fd': `Kemungkinan terinfeksi`,
 's7379168642ff77b3': `Terpapar`,
+'s773eacc0b477d43c': `Kontrol untuk pelajar`,
 's77cc57dd46f7f5cc': `Probabilitas mengunjungi titik kumpul`,
 's7a3c4c7e8b923c76': `Seret titik kumpul ini ke peta simulasi.`,
 's7b564dc9f5db9ad8': `Radius penularan`,
+'s7bb14d2609cd9c77': `Aktifkan komunitas`,
 's7be45f343cb15665': `Proporsi akhir yang sembuh`,
 's8f6ded5587ad8969': `Ambang kekebalan kelompok`,
 's941a41d587a259fd': `Lama kekebalan`,
@@ -78,7 +82,9 @@
 'sd3386a2ef42e80b9': `Unduh`,
 'sd4755728c441b538': `Waktu berlalu`,
 'sd8f1f39f65abba47': `Cuplikan grafik SIR`,
+'sdb807487fc2632a0': `Jumlah maksimum agen di titik penularan`,
 'sdc673e73b5c13aea': `Hapus`,
+'sdc6ec6514ca70ce6': `Aktifkan karantina`,
 'se0955919920ee87d': `Hari`,
 'se24130f1123560a0': `Kecepatan`,
 'sed03791dbc19b9c0': `Tabel (CSV)`,
@@ -88,4 +94,3 @@
 'sf62c2403c94966db': `Rentan saat ini`,
 'sfc12d40fe5fa5f7d': `Belum ada cuplikan.`,
     };
-  

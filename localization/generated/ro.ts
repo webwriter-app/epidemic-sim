@@ -2,8 +2,8 @@
     // Do not modify this file by hand!
     // Re-generate this file by running lit-localize
 
-    
-    
+
+
 
     /* eslint-disable no-irregular-whitespace */
     /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -12,6 +12,7 @@
       's00ae53430e6c31cb': `Indicatori SEIR`,
 's061cc20e3432dead': `Pauză`,
 's09943be8697420ce': `Durata vindecării`,
+'s18b7e5266a1b9512': `Activează focarele`,
 's20c7305417726e5a': `Vindecați`,
 's2e7ece256ba72b3b': `Indicatori SEIRD`,
 's35264f659ccd236e': `Probabilitatea de carantină`,
@@ -23,6 +24,7 @@
 's4b10acae683d2978': `Ecran complet`,
 's4f1a78fbc7a2da7a': `Expuși în prezent`,
 's5334c0927cf25b86': `Ieșire din ecran complet`,
+'s542603d2f3836073': `Probabilitatea de a părăsi comunitatea`,
 's5712f84064913c57': `Durata carantinei`,
 's5aa43edcf11f09af': `Perioada de incubație`,
 's5ba7326ba78af02e': `Tipul modelului`,
@@ -43,9 +45,11 @@
 's716a6024e3fe999c': `Afișează`,
 's71ffa36b183c46fd': `Probabilitatea de infectare`,
 's7379168642ff77b3': `Expuși`,
+'s773eacc0b477d43c': `Controale pentru elevi`,
 's77cc57dd46f7f5cc': `Probabilitatea de vizitare a unui loc de întâlnire`,
 's7a3c4c7e8b923c76': `Trageți acest loc de întâlnire pe harta simulării.`,
 's7b564dc9f5db9ad8': `Raza de infectare`,
+'s7bb14d2609cd9c77': `Activează comunitățile`,
 's7be45f343cb15665': `Proporția finală a vindecaților`,
 's8f6ded5587ad8969': `Pragul imunității de turmă`,
 's941a41d587a259fd': `Durata imunității`,
@@ -78,7 +82,9 @@
 'sd3386a2ef42e80b9': `Descărcare`,
 'sd4755728c441b538': `Timp scurs`,
 'sd8f1f39f65abba47': `Instantaneu al graficului SIR`,
+'sdb807487fc2632a0': `Numărul maxim de agenți într-un focar`,
 'sdc673e73b5c13aea': `Șterge`,
+'sdc6ec6514ca70ce6': `Activează carantina`,
 'se0955919920ee87d': `Zi`,
 'se24130f1123560a0': `Viteză`,
 'sed03791dbc19b9c0': `Tabel (CSV)`,
@@ -88,4 +94,3 @@
 'sf62c2403c94966db': `Susceptibili în prezent`,
 'sfc12d40fe5fa5f7d': `Încă nu există instantanee.`,
     };
-  

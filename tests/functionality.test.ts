@@ -6,7 +6,7 @@ import "../widgets/webwriter-epidemic-sim"
 import {
   readPersistedState,
   writePersistedState,
-  STATE_ATTRIBUTE,
+  getPersistedStateBlock,
   STATE_SCRIPT_TYPE,
   encodePersistedState,
   parsePersistedState,
@@ -83,7 +83,7 @@ describe("<webwriter-epidemic-sim>", function () {
   })
 
   describe("persisted state", function () {
-    it("roundtrips hotspots via the widget-state attribute", function () {
+    it("roundtrips hotspots via a direct data block", function () {
       const host = document.createElement("div")
       const hotspot = sampleHotspot()
 
@@ -95,8 +95,7 @@ describe("<webwriter-epidemic-sim>", function () {
         nextSnapshotId: 1,
       })
 
-      assert.isNotNull(host.getAttribute(STATE_ATTRIBUTE))
-      assert.isNull(host.querySelector(`:scope > script[type="${STATE_SCRIPT_TYPE}"]`))
+      assert.isNotNull(getPersistedStateBlock(host))
 
       const restored = readPersistedState(host)
       assert.isNotNull(restored)
@@ -107,7 +106,7 @@ describe("<webwriter-epidemic-sim>", function () {
       assert.lengthOf(restored!.snapshots, 0)
     })
 
-    it("removes the legacy script child when writing", function () {
+    it("updates the data block in place and preserves unrelated script children", function () {
       const host = document.createElement("div")
       const legacy = document.createElement("script")
       legacy.type = STATE_SCRIPT_TYPE
@@ -116,10 +115,14 @@ describe("<webwriter-epidemic-sim>", function () {
 
       writePersistedState(host, {version: 1, hotspots: [], nextHotspotId: 0, snapshots: [], nextSnapshotId: 1})
 
-      assert.isNull(host.querySelector(`:scope > script[type="${STATE_SCRIPT_TYPE}"]`))
+      const block = getPersistedStateBlock(host)
+      writePersistedState(host, {version: 1, hotspots: [sampleHotspot()], nextHotspotId: 1, snapshots: [], nextSnapshotId: 1})
+      assert.strictEqual(getPersistedStateBlock(host), block)
+      assert.strictEqual(legacy.parentElement, host)
+      assert.lengthOf(readPersistedState(host)!.hotspots, 1)
     })
 
-    it("treats a missing widget-state attribute as no saved state", function () {
+    it("treats a missing data block as no saved state", function () {
       const host = document.createElement("div")
       assert.isNull(readPersistedState(host))
     })

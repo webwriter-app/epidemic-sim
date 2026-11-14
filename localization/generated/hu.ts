@@ -2,8 +2,8 @@
     // Do not modify this file by hand!
     // Re-generate this file by running lit-localize
 
-    
-    
+
+
 
     /* eslint-disable no-irregular-whitespace */
     /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -12,6 +12,7 @@
       's00ae53430e6c31cb': `SEIR-mutatók`,
 's061cc20e3432dead': `Szünet`,
 's09943be8697420ce': `Gyógyulási idő`,
+'s18b7e5266a1b9512': `Gócpontok engedélyezése`,
 's20c7305417726e5a': `Gyógyultak`,
 's2e7ece256ba72b3b': `SEIRD-mutatók`,
 's35264f659ccd236e': `Karantén valószínűsége`,
@@ -23,6 +24,7 @@
 's4b10acae683d2978': `Teljes képernyő`,
 's4f1a78fbc7a2da7a': `Jelenleg exponáltak`,
 's5334c0927cf25b86': `Kilépés a teljes képernyőből`,
+'s542603d2f3836073': `A közösség elhagyásának valószínűsége`,
 's5712f84064913c57': `A karantén időtartama`,
 's5aa43edcf11f09af': `Lappangási idő`,
 's5ba7326ba78af02e': `Modelltípus`,
@@ -43,9 +45,11 @@
 's716a6024e3fe999c': `Megjelenítés`,
 's71ffa36b183c46fd': `A fertőzés valószínűsége`,
 's7379168642ff77b3': `Exponáltak`,
+'s773eacc0b477d43c': `Tanulói vezérlők`,
 's77cc57dd46f7f5cc': `Gyülekezőhely felkeresésének valószínűsége`,
 's7a3c4c7e8b923c76': `Húzza ezt a gyülekezőhelyet a szimulációs térképre.`,
 's7b564dc9f5db9ad8': `Fertőzési sugár`,
+'s7bb14d2609cd9c77': `Közösségek engedélyezése`,
 's7be45f343cb15665': `A gyógyultak végső aránya`,
 's8f6ded5587ad8969': `A nyájimmunitás küszöbe`,
 's941a41d587a259fd': `Az immunitás időtartama`,
@@ -78,7 +82,9 @@
 'sd3386a2ef42e80b9': `Letöltés`,
 'sd4755728c441b538': `Eltelt idő`,
 'sd8f1f39f65abba47': `SIR-diagram pillanatképe`,
+'sdb807487fc2632a0': `A gócpontban lévő szereplők maximális száma`,
 'sdc673e73b5c13aea': `Törlés`,
+'sdc6ec6514ca70ce6': `Karantén engedélyezése`,
 'se0955919920ee87d': `Nap`,
 'se24130f1123560a0': `Sebesség`,
 'sed03791dbc19b9c0': `Táblázat (CSV)`,
@@ -88,4 +94,3 @@
 'sf62c2403c94966db': `Jelenleg fogékonyak`,
 'sfc12d40fe5fa5f7d': `Még nincsenek pillanatképek.`,
     };
-  

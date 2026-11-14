@@ -1,13 +1,14 @@
+import { sourceMsg } from "../../../localization/localizer";
+import type { MsgFn } from "@lit/localize";
 import {html} from "lit"
 import type {TemplateResult} from "lit"
-import {msg} from "@lit/localize"
 import {MENU_RANGE_LIMITS} from "../../config/widget-schema"
 import {formatFrameCountAsDays} from "../../simulation/time"
 import type {RenderMenuOptions} from "./menu-types"
 
 const R = MENU_RANGE_LIMITS
 
-export function renderModelControls(options: RenderMenuOptions): TemplateResult {
+export function renderModelControls(options: RenderMenuOptions, msg: MsgFn = sourceMsg): TemplateResult {
   return html`
     ${
       options.allowModelTypeControl
@@ -32,7 +33,7 @@ export function renderModelControls(options: RenderMenuOptions): TemplateResult 
             <label class="side-menu__control">
               <span class="side-menu__control-head">
                 <span>${msg("Incubation duration")}</span>
-                <span class="side-menu__control-value">${formatFrameCountAsDays(options.incubationDuration)}</span>
+                <span class="side-menu__control-value">${formatFrameCountAsDays(options.incubationDuration, msg)}</span>
               </span>
               <sl-range min=${String(R.incubationDuration.min)} max=${String(R.incubationDuration.max)} step=${String(R.incubationDuration.step)} .value=${String(options.incubationDuration)} @sl-input=${options.onIncubationDurationInput}></sl-range>
             </label>
@@ -45,7 +46,7 @@ export function renderModelControls(options: RenderMenuOptions): TemplateResult 
             <label class="side-menu__control">
               <span class="side-menu__control-head">
                 <span>${msg("Immunity duration")}</span>
-                <span class="side-menu__control-value">${formatFrameCountAsDays(options.immunityDuration)}</span>
+                <span class="side-menu__control-value">${formatFrameCountAsDays(options.immunityDuration, msg)}</span>
               </span>
               <sl-range min=${String(R.immunityDuration.min)} max=${String(R.immunityDuration.max)} step=${String(R.immunityDuration.step)} .value=${String(options.immunityDuration)} @sl-input=${options.onImmunityDurationInput}></sl-range>
             </label>
