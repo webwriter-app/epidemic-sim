@@ -140,18 +140,18 @@
   "dependencies": {
     "@lit/localize": "^0.12.2",
     "@shoelace-style/shoelace": "^2.20.1",
-    "@webwriter/lit": "^2",
-    "chart.js": "^4.5.1",
-    "lit": "^3"
+    "@webwriter/lit": "^3.0.0",
+    "chart.js": "^4.6.1",
+    "lit": "^3.3.3"
   },
   "devDependencies": {
-    "@lit/localize-tools": "^0.8",
+    "@lit/localize-tools": "^0.8.2",
     "@types/chai": "^5.2.3",
     "@types/mocha": "^10.0.10",
-    "@webwriter/build": "^1.12.0",
-    "chai": "^6.2.2",
-    "mocha": "^11.7.6",
-    "typescript": "^5.8.3"
+    "@webwriter/build": "^1.13.1",
+    "chai": "^6.3.0",
+    "mocha": "^12.0.3",
+    "typescript": "^7.0.2"
   },
   "exports": {
     "./widgets/webwriter-epidemic-sim.*": {
