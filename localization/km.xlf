@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+<file target-language="km" source-language="en" original="lit-localize-inputs" datatype="plaintext">
+<body>
+<trans-unit id="sdc673e73b5c13aea">
+  <source>Delete</source>
+<target>លុប</target></trans-unit>
+<trans-unit id="s061cc20e3432dead">
+  <source>Pause</source>
+<target>ផ្អាក</target></trans-unit>
+<trans-unit id="sae1c7f13b7c0c47f">
+  <source>Start</source>
+<target>ចាប់ផ្តើម</target></trans-unit>
+<trans-unit id="s6c42c02bb3a76cef">
+  <source>Reset simulation</source>
+<target>កំណត់ការក្លែងធ្វើឡើងវិញ</target></trans-unit>
+<trans-unit id="saf64054c86023237">
+  <source>H</source>
+<target>H</target></trans-unit>
+<trans-unit id="s984d2b333eff760a">
+  <source>Tap the simulation map to place the hotspot.</source>
+<target>ប៉ះផែនទីការក្លែងធ្វើ ដើម្បីដាក់តំបន់ហានិភ័យ។</target></trans-unit>
+<trans-unit id="s7a3c4c7e8b923c76">
+  <source>Drag this hotspot into the simulation map.</source>
+<target>អូសតំបន់ហានិភ័យនេះទៅក្នុងផែនទីការក្លែងធ្វើ។</target></trans-unit>
+<trans-unit id="sd4755728c441b538">
+  <source>Elapsed time</source>
+<target>ពេលវេលាដែលកន្លងផុត</target></trans-unit>
+<trans-unit id="s6e526bbb8672e76a">
+  <source>R0 (approx)</source>
+<target>R0 (ប្រហែល)</target></trans-unit>
+<trans-unit id="s8f6ded5587ad8969">
+  <source>Herd immunity threshold</source>
+<target>កម្រិតភាពស៊ាំសហគមន៍</target></trans-unit>
+<trans-unit id="sf62c2403c94966db">
+  <source>Current susceptible</source>
+<target>បច្ចុប្បន្នងាយឆ្លង</target></trans-unit>
+<trans-unit id="s4f1a78fbc7a2da7a">
+  <source>Current exposed</source>
+<target>បច្ចុប្បន្នបានប៉ះពាល់</target></trans-unit>
+<trans-unit id="sc336500050494646">
+  <source>Current infected</source>
+<target>បច្ចុប្បន្នឆ្លងមេរោគ</target></trans-unit>
+<trans-unit id="sb3b26f6f5b2035db">
+  <source>Current recovered</source>
+<target>បច្ចុប្បន្នជាសះស្បើយ</target></trans-unit>
+<trans-unit id="s5fef8fa88777bdec">
+  <source>Current dead</source>
+<target>បច្ចុប្បន្នស្លាប់</target></trans-unit>
+<trans-unit id="s7be45f343cb15665">
+  <source>Final recovered share</source>
+<target>ចំណែកអ្នកជាសះស្បើយចុងក្រោយ</target></trans-unit>
+<trans-unit id="sbe234bd424c5176e">
+  <source>Peak infected</source>
+<target>ចំនួនឆ្លងខ្ពស់បំផុត</target></trans-unit>
+<trans-unit id="sc14daad34e9ee82f">
+  <source>Peak time</source>
+<target>ពេលវេលាខ្ពស់បំផុត</target></trans-unit>
+<trans-unit id="s48e186fb300e5464">
+  <source>Time</source>
+<target>ម៉ោង</target></trans-unit>
+<trans-unit id="sd3386a2ef42e80b9">
+  <source>Download</source>
+<target>ទាញយក</target></trans-unit>
+<trans-unit id="s9d53ce2c390c880c">
+  <source>Image (PNG)</source>
+<target>រូបភាព (PNG)</target></trans-unit>
+<trans-unit id="sed03791dbc19b9c0">
+  <source>Table (CSV)</source>
+<target>តារាង (CSV)</target></trans-unit>
+<trans-unit id="sd8f1f39f65abba47">
+  <source>SIR chart snapshot</source>
+<target>រូបថតក្រាហ្វ SIR</target></trans-unit>
+<trans-unit id="s355b21b89ce5d9c5">
+  <source>Details</source>
+<target>ព័ត៌មានលម្អិត</target></trans-unit>
+<trans-unit id="s5ba7326ba78af02e">
+  <source>Model type</source>
+<target>ប្រភេទម៉ូដែល</target></trans-unit>
+<trans-unit id="s6144a4a2c984c772">
+  <source>Population</source>
+<target>ចំនួនប្រជាជន</target></trans-unit>
+<trans-unit id="se24130f1123560a0">
+  <source>Speed</source>
+<target>ល្បឿន</target></trans-unit>
+<trans-unit id="s71ffa36b183c46fd">
+  <source>Infection probability</source>
+<target>ប្រូបាប៊ីលីតេឆ្លង</target></trans-unit>
+<trans-unit id="s09943be8697420ce">
+  <source>Recovery duration</source>
+<target>រយៈពេលជាសះស្បើយ</target></trans-unit>
+<trans-unit id="sc425e5671217eac0">
+  <source>Snapshots gallery</source>
+<target>វិចិត្រសាលរូបថត</target></trans-unit>
+<trans-unit id="sc932995c6f6478ff">
+  <source>Create snapshot</source>
+<target>បង្កើតរូបថត</target></trans-unit>
+<trans-unit id="s5e8250fb85d64c23">
+  <source>Close</source>
+<target>បិទ</target></trans-unit>
+<trans-unit id="sfc12d40fe5fa5f7d">
+  <source>No snapshots yet.</source>
+<target>មិនទាន់មានរូបថតទេ។</target></trans-unit>
+<trans-unit id="s5dd25778c99327a8">
+  <source>Printed snapshot of the epidemic simulation. Author options and interactive controls are omitted.</source>
+<target>រូបភាពបោះពុម្ពនៃការក្លែងធ្វើជំងឺរាតត្បាត។ មិនបង្ហាញជម្រើសអ្នកនិពន្ធ និងការគ្រប់គ្រងអន្តរកម្មទេ។</target></trans-unit>
+<trans-unit id="sf18604f4e560329a">
+  <source>Snapshots</source>
+<target>រូបថត</target></trans-unit>
+<trans-unit id="s45615e2718064d48">
+  <source>Insights</source>
+<target>ការយល់ដឹង</target></trans-unit>
+<trans-unit id="s5334c0927cf25b86">
+  <source>Exit fullscreen</source>
+<target>ចេញពីពេញអេក្រង់</target></trans-unit>
+<trans-unit id="s4b10acae683d2978">
+  <source>Fullscreen</source>
+<target>ពេញអេក្រង់</target></trans-unit>
+<trans-unit id="s716a6024e3fe999c">
+  <source>Show</source>
+<target>បង្ហាញ</target></trans-unit>
+<trans-unit id="sbea80d4210f4af52">
+  <source>Susceptible</source>
+<target>ងាយឆ្លង</target></trans-unit>
+<trans-unit id="s7379168642ff77b3">
+  <source>Exposed</source>
+<target>បានប៉ះពាល់</target></trans-unit>
+<trans-unit id="s9ac5fba6ad7337b9">
+  <source>Infected</source>
+<target>ឆ្លងមេរោគ</target></trans-unit>
+<trans-unit id="s20c7305417726e5a">
+  <source>Recovered</source>
+<target>ជាសះស្បើយ</target></trans-unit>
+<trans-unit id="sd049237343c44e47">
+  <source>Dead</source>
+<target>ស្លាប់</target></trans-unit>
+<trans-unit id="se0955919920ee87d">
+  <source>Day</source>
+<target>ថ្ងៃ</target></trans-unit>
+<trans-unit id="sf4cd19d7506d9e12">
+  <source>Time (days)</source>
+<target>ពេលវេលា (ថ្ងៃ)</target></trans-unit>
+<trans-unit id="s5da52af9b083c29a">
+  <source>Model</source>
+<target>ម៉ូដែល</target></trans-unit>
+<trans-unit id="sc3ac225273c8316b">
+  <source>General</source>
+<target>ទូទៅ</target></trans-unit>
+<trans-unit id="s6f54d7620146d1b1">
+  <source>Quarantine</source>
+<target>ការដាក់ឱ្យនៅដាច់ដោយឡែក</target></trans-unit>
+<trans-unit id="sf3209a5af0f3631d">
+  <source>Hotspots</source>
+<target>តំបន់ហានិភ័យ</target></trans-unit>
+<trans-unit id="s99adf8f78a414996">
+  <source>Communities</source>
+<target>សហគមន៍</target></trans-unit>
+<trans-unit id="sc522ce8abba9319e">
+  <source>Community leave probability</source>
+<target>ប្រូបាប៊ីលីតេចាកចេញពីសហគមន៍</target></trans-unit>
+<trans-unit id="s7b564dc9f5db9ad8">
+  <source>Infection radius</source>
+<target>កាំឆ្លង</target></trans-unit>
+<trans-unit id="sbe774904ccc6159e">
+  <source>Simulation duration</source>
+<target>រយៈពេលក្លែងធ្វើ</target></trans-unit>
+<trans-unit id="s6fa549ec31db634a">
+  <source>The simulation may end earlier when the epidemic is over</source>
+<target>ការក្លែងធ្វើអាចបញ្ចប់មុនពេល ប្រសិនបើជំងឺរាតត្បាតបានបញ្ចប់</target></trans-unit>
+<trans-unit id="s77cc57dd46f7f5cc">
+  <source>Hotspot visit probability</source>
+<target>ប្រូបាប៊ីលីតេទៅតំបន់ហានិភ័យ</target></trans-unit>
+<trans-unit id="sce044315d3edcee3">
+  <source>Hotspot stay duration</source>
+<target>រយៈពេលស្នាក់នៅតំបន់ហានិភ័យ</target></trans-unit>
+<trans-unit id="sa1cbd47c70068780">
+  <source>Hotspot max agents</source>
+<target>ភ្នាក់ងារអតិបរមានៅតំបន់ហានិភ័យ</target></trans-unit>
+<trans-unit id="s5bafee07187fb2ad">
+  <source>Hotspot size</source>
+<target>ទំហំតំបន់ហានិភ័យ</target></trans-unit>
+<trans-unit id="sa7d4a2c8f4e43300">
+  <source>Placed hotspots</source>
+<target>តំបន់ហានិភ័យដែលបានដាក់</target></trans-unit>
+<trans-unit id="s5aa43edcf11f09af">
+  <source>Incubation duration</source>
+<target>រយៈពេលភ្ញាស់</target></trans-unit>
+<trans-unit id="s941a41d587a259fd">
+  <source>Immunity duration</source>
+<target>រយៈពេលភាពស៊ាំ</target></trans-unit>
+<trans-unit id="s9ddf0979f55228fd">
+  <source>Mortality probability</source>
+<target>ប្រូបាប៊ីលីតេស្លាប់</target></trans-unit>
+<trans-unit id="s35264f659ccd236e">
+  <source>Quarantine probability</source>
+<target>ប្រូបាប៊ីលីតេដាក់ឱ្យនៅដាច់ដោយឡែក</target></trans-unit>
+<trans-unit id="s5712f84064913c57">
+  <source>Quarantine duration</source>
+<target>រយៈពេលដាក់ឱ្យនៅដាច់ដោយឡែក</target></trans-unit>
+<trans-unit id="s97e4c519fa4905f9">
+  <source>SIR</source>
+<target>SIR</target></trans-unit>
+<trans-unit id="s62c095244a149fde">
+  <source>SIRS</source>
+<target>SIRS</target></trans-unit>
+<trans-unit id="s4215a8243823eda2">
+  <source>SEIR</source>
+<target>SEIR</target></trans-unit>
+<trans-unit id="s62c0a8244a14c027">
+  <source>SIRD</source>
+<target>SIRD</target></trans-unit>
+<trans-unit id="s6eba9b8b650d3dd2">
+  <source>SEIRD</source>
+<target>SEIRD</target></trans-unit>
+<trans-unit id="saf63fe4c86022652">
+  <source>C</source>
+  <note from="lit-localize">Short label for a community, shown before its number</note>
+<target>C</target></trans-unit>
+<trans-unit id="saf63d94c8601e773">
+  <source>d</source>
+  <note from="lit-localize">Unit abbreviation for days, shown after a number</note>
+<target>d</target></trans-unit>
+<trans-unit id="s773eacc0b477d43c">
+  <source>Learner controls</source>
+<target>ការគ្រប់គ្រងអ្នកសិក្សា</target></trans-unit>
+<trans-unit id="s00ae53430e6c31cb">
+  <source>SEIR insights</source>
+<target>ការយល់ដឹង SEIR</target></trans-unit>
+<trans-unit id="s2e7ece256ba72b3b">
+  <source>SEIRD insights</source>
+<target>ការយល់ដឹង SEIRD</target></trans-unit>
+<trans-unit id="s45b0974d18b97957">
+  <source>SIRS insights</source>
+<target>ការយល់ដឹង SIRS</target></trans-unit>
+<trans-unit id="s65aa7dfb7792b528">
+  <source>SIRD insights</source>
+<target>ការយល់ដឹង SIRD</target></trans-unit>
+<trans-unit id="sc94818fddfdfdbc6">
+  <source>SIR insights</source>
+<target>ការយល់ដឹង SIR</target></trans-unit>
+<trans-unit id="sce256a8918a7f18d">
+  <source>Snapshot</source>
+<target>រូបថត</target></trans-unit>
+<trans-unit id="sdc6ec6514ca70ce6">
+  <source>Enable quarantine</source>
+<target>បើកការដាក់ឱ្យនៅដាច់ដោយឡែក</target></trans-unit>
+<trans-unit id="s18b7e5266a1b9512">
+  <source>Enable hotspots</source>
+<target>បើកតំបន់ហានិភ័យ</target></trans-unit>
+<trans-unit id="sdb807487fc2632a0">
+  <source>Maximum agents in a hotspot</source>
+<target>ចំនួនភ្នាក់ងារអតិបរមាក្នុងតំបន់ហានិភ័យ</target></trans-unit>
+<trans-unit id="s7bb14d2609cd9c77">
+  <source>Enable communities</source>
+<target>បើកសហគមន៍</target></trans-unit>
+<trans-unit id="s542603d2f3836073">
+  <source>Probability of leaving the community</source>
+<target>ប្រូបាប៊ីលីតេចាកចេញពីសហគមន៍</target></trans-unit>
+</body>
+</file>
+</xliff>
