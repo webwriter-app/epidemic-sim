@@ -1,71 +1,602 @@
 {
   "schemaVersion": "1.0.0",
+  "readme": "",
   "modules": [
     {
       "kind": "javascript-module",
-      "path": "widgets/webwriter-epidemic-sim.ts",
+      "path": "src/widgets/webwriter-epidemic-sim.ts",
       "declarations": [
         {
           "kind": "class",
-          "description": "Interactive agent-based epidemic simulation widget for SIR/SIRS/SEIR/SIRD/SEIRD models with chart insights, quarantine, hotspots, and communities.",
+          "description": "Agent-based epidemic simulation with a live chart, a simulation map and optional interventions.\n\nPeople are dots on a map; an infected dot within the infection radius of a susceptible one may infect it.\nThe model (SIR, SIRS, SEIR, SIRD, SEIRD) decides which states exist. Learners can switch on quarantine,\nhotspots (places where people gather) and communities, save snapshots of the curves and read key figures\nsuch as R0 in the insights panel. Authors set the parameters in the options panel; each has an\n`allow-...-control` attribute that shows it in the learners' sidebar.\n\nThe simulation runs 24 frames per day. Durations are stored in frames and shown in days (120 frames are 5 days).\nSettings are attributes. Hotspots and snapshots are JSON in a direct data block (`<script slot=\"data\">`);\nsnapshots hold only the curve data, so documents stay small.",
           "name": "WebwriterEpidemicSim",
-          "tagName": "webwriter-epidemic-sim",
-          "customElement": true,
-          "attributes": [
-            {"name": "model-type", "type": {"text": "string"}, "default": "\"sir\"", "description": "Epidemic model type."},
-            {"name": "incubation-duration", "type": {"text": "number"}, "description": "Incubation duration in frames."},
-            {"name": "immunity-duration", "type": {"text": "number"}, "description": "Immunity duration in frames."},
-            {"name": "mortality-probability", "type": {"text": "number"}, "description": "Probability of death while infected."},
-            {"name": "population", "type": {"text": "number"}, "description": "Number of agents."},
-            {"name": "speed", "type": {"text": "number"}, "description": "Agent movement speed."},
-            {"name": "infection-radius", "type": {"text": "number"}, "description": "Infection contact radius."},
-            {"name": "infection-probability", "type": {"text": "number"}, "description": "Per-contact infection probability."},
-            {"name": "recovery-duration", "type": {"text": "number"}, "description": "Recovery duration in frames."},
-            {"name": "quarantine-enabled", "type": {"text": "boolean"}, "description": "Enable quarantine zone."},
-            {"name": "quarantine-probability", "type": {"text": "number"}},
-            {"name": "quarantine-duration", "type": {"text": "number"}},
-            {"name": "hotspots-enabled", "type": {"text": "boolean"}, "description": "Enable hotspot areas."},
-            {"name": "hotspot-visit-probability", "type": {"text": "number"}},
-            {"name": "hotspot-stay-duration", "type": {"text": "number"}},
-            {"name": "hotspot-max-agents", "type": {"text": "number"}},
-            {"name": "hotspot-size", "type": {"text": "number"}},
-            {"name": "communities-enabled", "type": {"text": "boolean"}},
-            {"name": "community-leave-probability", "type": {"text": "number"}},
-            {"name": "allow-model-type-control", "type": {"text": "boolean"}, "description": "Allow learners to change model type."},
-            {"name": "allow-incubation-duration-control", "type": {"text": "boolean"}},
-            {"name": "allow-immunity-duration-control", "type": {"text": "boolean"}},
-            {"name": "allow-mortality-probability-control", "type": {"text": "boolean"}},
-            {"name": "allow-population-control", "type": {"text": "boolean"}},
-            {"name": "allow-speed-control", "type": {"text": "boolean"}},
-            {"name": "allow-infection-radius-control", "type": {"text": "boolean"}},
-            {"name": "allow-infection-probability-control", "type": {"text": "boolean"}},
-            {"name": "allow-recovery-duration-control", "type": {"text": "boolean"}},
-            {"name": "allow-quarantine-enabled-control", "type": {"text": "boolean"}},
-            {"name": "allow-quarantine-probability-control", "type": {"text": "boolean"}},
-            {"name": "allow-quarantine-duration-control", "type": {"text": "boolean"}},
-            {"name": "allow-hotspots-enabled-control", "type": {"text": "boolean"}},
-            {"name": "allow-hotspot-visit-probability-control", "type": {"text": "boolean"}},
-            {"name": "allow-hotspot-stay-duration-control", "type": {"text": "boolean"}},
-            {"name": "allow-hotspot-max-agents-control", "type": {"text": "boolean"}},
-            {"name": "allow-hotspot-size-control", "type": {"text": "boolean"}},
-            {"name": "allow-communities-enabled-control", "type": {"text": "boolean"}},
-            {"name": "allow-community-leave-probability-control", "type": {"text": "boolean"}},
-            {"name": "widget-state", "type": {"text": "string"}, "description": "JSON blob for hotspots and snapshots (persisted across save/reload)."},
-            {"name": "contenteditable", "type": {"text": "string"}, "description": "WebWriter editing mode."},
-            {"name": "lang", "type": {"text": "string"}, "description": "Localization language."}
-          ],
-          "members": [],
-          "cssParts": [
+          "members": [
             {
+              "kind": "field",
+              "name": "scopedElements",
+              "type": {
+                "text": "object"
+              },
+              "static": true,
+              "default": "{ \"sl-button\": SlButton, \"sl-card\": SlCard, \"sl-details\": SlDetails, \"sl-dropdown\": SlDropdown, \"sl-icon\": SlIcon, \"sl-menu\": SlMenu, \"sl-menu-item\": SlMenuItem, \"sl-range\": SlRange, \"sl-switch\": SlSwitch, \"sl-tag\": SlTag, \"sl-select\": SlSelect, \"sl-option\": SlOption, }"
+            },
+            {
+              "kind": "field",
+              "name": "optionGroups",
+              "type": {
+                "text": "object"
+              },
+              "static": true,
+              "default": "{ model: {label: (widget: {msg: MsgFn}) => widget.msg(\"Model\"), collapsible: true}, general: {label: (widget: {msg: MsgFn}) => widget.msg(\"General\"), collapsible: true}, quarantine: {label: (widget: {msg: MsgFn}) => widget.msg(\"Quarantine\"), advanced: true}, hotspots: {label: (widget: {msg: MsgFn}) => widget.msg(\"Hotspots\"), advanced: true}, communities: {label: (widget: {msg: MsgFn}) => widget.msg(\"Communities\"), advanced: true}, controls: {label: (widget: {msg: MsgFn}) => widget.msg(\"Learner controls\"), advanced: true}, }"
+            },
+            {
+              "kind": "field",
               "name": "options",
-              "description": "Author-only configuration panel shown in the WebWriter options toolbox."
+              "readonly": true,
+              "inheritedFrom": {
+                "name": "Settings",
+                "module": "dist/widgets/webwriter-epidemic-sim.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "localize"
+            },
+            {
+              "kind": "field",
+              "name": "msg",
+              "privacy": "public",
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "#permissions",
+              "privacy": "private",
+              "default": "new Permissions(this)"
+            },
+            {
+              "kind": "field",
+              "name": "#drag",
+              "privacy": "private",
+              "default": "new Drag(this)"
+            },
+            {
+              "kind": "field",
+              "name": "run",
+              "privacy": "private",
+              "readonly": true,
+              "default": "new SimulationRun()"
+            },
+            {
+              "kind": "field",
+              "name": "canvasHost",
+              "privacy": "private",
+              "readonly": true,
+              "default": "new CanvasHostController(this)"
+            },
+            {
+              "kind": "field",
+              "name": "chartRuntime",
+              "privacy": "private",
+              "readonly": true,
+              "default": "new ChartRuntime(this.msg)"
+            },
+            {
+              "kind": "field",
+              "name": "snapshotService",
+              "privacy": "private",
+              "readonly": true,
+              "default": "new SnapshotService(this.msg)"
+            },
+            {
+              "kind": "field",
+              "name": "snapshotActions",
+              "privacy": "private",
+              "readonly": true,
+              "default": "new SnapshotActions({ msg: this.msg, service: this.snapshotService, canvasHost: this.canvasHost, getRoot: () => this.shadowRoot, run: this.run, chartRuntime: this.chartRuntime, getConfig: () => this.config, getHotspots: () => this.hotspotEditing.userHotspots, onChanged: () => { this.stateSync.flush() this.requestUpdate() }, })"
+            },
+            {
+              "kind": "field",
+              "name": "hotspotEditing",
+              "type": {
+                "text": "HotspotEditingController"
+              },
+              "privacy": "private",
+              "readonly": true,
+              "default": "new HotspotEditingController({ getCanvas: () => this.simulationCanvas, getConfig: () => this.config, enableHotspots: () => { this.hotspotsEnabled = true }, onHotspotsChanged: () => { this.stateSync.schedule() this.requestUpdateAndRedrawSimulationWhenPaused() }, onRestartPreservingHotspots: () => { this.stateSync.schedule() this.restartSimulation() }, isPointerDragging: (hotspotId: number): boolean => this.hotspotPointer.isDragging(hotspotId), clearPointer: () => this.hotspotPointer.clear(), persistHotspots: () => { this.stateSync.schedule() }, })"
+            },
+            {
+              "kind": "field",
+              "name": "hotspotPointer",
+              "type": {
+                "text": "HotspotPointerController"
+              },
+              "privacy": "private",
+              "readonly": true,
+              "default": "new HotspotPointerController(this, { getCanvas: () => this.simulationCanvas, getAreas: (): SimulationAreas => this.hotspotEditing.getAreas(this.config), updateHotspotRect: (hotspotId: number, rect) => this.hotspotEditing.updateHotspotRect(hotspotId, rect), removeHotspot: (hotspotId: number) => this.hotspotEditing.removeHotspot(hotspotId), onRemovalPendingChange: () => this.requestUpdateAndRedrawSimulationWhenPaused(), })"
+            },
+            {
+              "kind": "field",
+              "name": "hotspotSelection",
+              "privacy": "private",
+              "readonly": true,
+              "default": "new HotspotSelection({ msg: this.msg, editing: this.hotspotEditing, pointer: this.hotspotPointer, getCanvas: () => this.simulationCanvas, getConfig: () => this.config, onSelectionChange: () => this.redrawSimulationWhenPaused(), requestUpdate: () => this.requestUpdate(), })"
+            },
+            {
+              "kind": "field",
+              "name": "stateSync",
+              "privacy": "private",
+              "readonly": true,
+              "default": "new WidgetStateSync({ element: this, hotspotEditing: this.hotspotEditing, snapshotService: this.snapshotService, hasCanvas: () => this.simulationCanvas !== null, restartSimulation: (options) => this.restartSimulation(options), requestUpdate: () => this.requestUpdate(), })"
+            },
+            {
+              "kind": "field",
+              "name": "configHandlers",
+              "privacy": "private",
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "#playback",
+              "privacy": "private",
+              "default": "new Playback(this, { interval: 1 / 60, step: () => { if (this.classList.contains(\"ww-beforeprint\")) { this.stopLoop() } if (!this.isRunning) { return } this.stepSimulation() }, draw: () => { this.drawSimulation() if (this.isRunning && this.chartRuntime.takeUndrawnPoint()) { this.drawChart() } if (this.insightsOpen || this.isFullscreen) { this.requestUpdate() } }, })"
+            },
+            {
+              "kind": "field",
+              "name": "simulationCanvas",
+              "type": {
+                "text": "HTMLCanvasElement | null"
+              },
+              "privacy": "private",
+              "default": "null"
+            },
+            {
+              "kind": "field",
+              "name": "simulationCtx",
+              "type": {
+                "text": "CanvasRenderingContext2D | null"
+              },
+              "privacy": "private",
+              "default": "null"
+            },
+            {
+              "kind": "field",
+              "name": "chartCanvas",
+              "type": {
+                "text": "HTMLCanvasElement | null"
+              },
+              "privacy": "private",
+              "default": "null"
+            },
+            {
+              "kind": "field",
+              "name": "stateObserver",
+              "privacy": "private",
+              "default": "new MutationObserver(() => this.stateSync.sync())"
+            },
+            {
+              "kind": "field",
+              "name": "shownLocale",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "private",
+              "default": "sourceLocale"
+            },
+            {
+              "kind": "field",
+              "name": "listeners",
+              "type": {
+                "text": "AbortController | null"
+              },
+              "privacy": "private",
+              "default": "null"
+            },
+            {
+              "kind": "field",
+              "name": "printClassObserver",
+              "type": {
+                "text": "MutationObserver | null"
+              },
+              "privacy": "private",
+              "default": "null"
+            },
+            {
+              "kind": "field",
+              "name": "canvasResizeObserver",
+              "type": {
+                "text": "ResizeObserver | null"
+              },
+              "privacy": "private",
+              "default": "null"
+            },
+            {
+              "kind": "field",
+              "name": "insightsOpen",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false"
+            },
+            {
+              "kind": "field",
+              "name": "isFullscreen",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false"
+            },
+            {
+              "kind": "field",
+              "name": "snapshotsOverlayOpen",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false"
+            },
+            {
+              "kind": "field",
+              "name": "chartContextMenuOpen",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false"
+            },
+            {
+              "kind": "field",
+              "name": "chartContextMenuPosition",
+              "type": {
+                "text": "object"
+              },
+              "default": "{x: 0, y: 0}"
+            },
+            {
+              "kind": "field",
+              "name": "isPrintPreparing",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false"
+            },
+            {
+              "kind": "field",
+              "name": "config",
+              "type": {
+                "text": "SimulationConfig"
+              },
+              "privacy": "private",
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "isRunning",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "resetSimulation",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "restartSimulation",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "options",
+                  "optional": true,
+                  "type": {
+                    "text": "{clearPointer?: boolean}"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "initializeAgents",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "infectedAtFrame",
+                  "type": {
+                    "text": "number"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "field",
+              "name": "hasVisibleMenuControls",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "readonly": true
+            },
+            {
+              "kind": "method",
+              "name": "getMenuAllowFlags",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "getWidgetConfigValues",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "WidgetConfigValues"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "observeCanvasSize",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "redrawSimulationWhenPaused",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "requestUpdateAndRedrawSimulationWhenPaused",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "updateConfig",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "key",
+                  "type": {
+                    "text": "K"
+                  }
+                },
+                {
+                  "name": "value",
+                  "type": {
+                    "text": "SimulationConfig[K]"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "reseedPopulation",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "startLoop",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "stopLoop",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "field",
+              "name": "toggleSimulation",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "onMainContentClick",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "createSnapshot",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "onWindowKeyDown",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "toggleInsights",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "syncFullscreenState",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "toggleFullscreen",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "openSnapshotsOverlay",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "closeSnapshotsOverlay",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "onSnapshotsOverlayBackdropClick",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "onChartContextMenu",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "closeChartContextMenu",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "stepSimulation",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "updateEpidemicCounts",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "drawSimulation",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "drawChart",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "getModelTypeOptions",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "Array<{value: EpidemicModelType; label: string}>"
+                }
+              }
+            },
+            {
+              "kind": "field",
+              "name": "getModelTypeLabel",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "setAllowControl",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "settings",
+              "static": true,
+              "default": "declarations",
+              "inheritedFrom": {
+                "name": "Settings",
+                "module": "dist/widgets/webwriter-epidemic-sim.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "finalize",
+              "static": true,
+              "inheritedFrom": {
+                "name": "Settings",
+                "module": "dist/widgets/webwriter-epidemic-sim.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "settingsCore",
+              "default": "new SettingsCore(this, { ...options, root: () => this.renderRoot, rendered: () => this.updateComplete })",
+              "inheritedFrom": {
+                "name": "Settings",
+                "module": "dist/widgets/webwriter-epidemic-sim.js"
+              }
             }
           ],
-          "slots": [],
+          "events": [
+            {
+              "name": "optionschange",
+              "type": {
+                "text": "Event"
+              }
+            }
+          ],
+          "mixins": [
+            {
+              "name": "Settings",
+              "package": "@webwriter/lit/settings"
+            }
+          ],
           "superclass": {
             "name": "LitElementWw",
             "package": "@webwriter/lit"
-          }
+          },
+          "tagName": "webwriter-epidemic-sim",
+          "customElement": true,
+          "modulePath": "src/widgets/webwriter-epidemic-sim.ts",
+          "definitionPath": "src/widgets/webwriter-epidemic-sim.ts"
         }
       ],
       "exports": [
@@ -74,7 +605,7 @@
           "name": "WebwriterEpidemicSim",
           "declaration": {
             "name": "WebwriterEpidemicSim",
-            "module": "widgets/webwriter-epidemic-sim.ts"
+            "module": "src/widgets/webwriter-epidemic-sim.ts"
           }
         },
         {
@@ -82,7 +613,7 @@
           "name": "webwriter-epidemic-sim",
           "declaration": {
             "name": "WebwriterEpidemicSim",
-            "module": "widgets/webwriter-epidemic-sim.ts"
+            "module": "src/widgets/webwriter-epidemic-sim.ts"
           }
         }
       ]

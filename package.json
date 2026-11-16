@@ -133,29 +133,31 @@
   "license": "MIT",
   "author": "Jason Iloppa <iloppajason@icloud.com>",
   "scripts": {
-    "prepublishOnly": "npx @webwriter/build && node scripts/build-tests.mjs",
-    "dev": "npx @webwriter/build dev",
+    "prepublishOnly": "npx @webwriter/build --shared-dependencies",
+    "dev": "npx @webwriter/build dev --shared-dependencies",
     "localize": "lit-localize extract && npx @webwriter/build localize && lit-localize build"
   },
   "dependencies": {
     "@lit/localize": "^0.12.2",
     "@shoelace-style/shoelace": "^2.20.1",
-    "@webwriter/lit": "^3.0.0",
+    "@tabler/icons": "^3.52.0",
+    "@webwriter/lit": "^3.2.0",
+    "@webwriter/widget": "^1.2.0",
     "chart.js": "^4.6.1",
-    "lit": "^3.3.3"
+    "lit": "^3.3.0"
   },
   "devDependencies": {
     "@lit/localize-tools": "^0.8.2",
     "@types/chai": "^5.2.3",
     "@types/mocha": "^10.0.10",
-    "@webwriter/build": "^1.13.1",
+    "@webwriter/build": "^1.14.0",
     "chai": "^6.3.0",
     "mocha": "^12.0.3",
     "typescript": "^7.0.2"
   },
   "exports": {
     "./widgets/webwriter-epidemic-sim.*": {
-      "source": "./widgets/webwriter-epidemic-sim.ts",
+      "source": "./src/widgets/webwriter-epidemic-sim.ts",
       "default": "./dist/widgets/webwriter-epidemic-sim.*"
     },
     "./snippets/corona-verlauf.html": "./snippets/corona-verlauf.html",
@@ -163,7 +165,19 @@
       "source": "./tests/functionality.test.ts",
       "default": "./dist/tests/functionality.*"
     },
-    "./icon": "./assets/icon.svg",
+    "./tests/settings.*": {
+      "source": "./tests/settings.test.ts",
+      "default": "./dist/tests/settings.*"
+    },
+    "./tests/playback.*": {
+      "source": "./tests/playback.test.ts",
+      "default": "./dist/tests/playback.*"
+    },
+    "./tests/hotspots.*": {
+      "source": "./tests/hotspots.test.ts",
+      "default": "./dist/tests/hotspots.*"
+    },
+    "./icon": "./icon.svg",
     "./custom-elements.json": "./custom-elements.json",
     "./editing-config.json": "./editing-config.json"
   },
@@ -171,5 +185,6 @@
     ".": {},
     "./widgets/webwriter-epidemic-sim.*": {},
     "./snippets/corona-verlauf.html": {}
-  }
+  },
+  "customElements": "custom-elements.json"
 }

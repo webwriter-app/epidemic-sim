@@ -2,7 +2,7 @@ import "mocha/mocha.js"
 import "mocha/mocha.css"
 import {getMochaConfig} from "@webwriter/build/test"
 import {assert} from "chai"
-import "../widgets/webwriter-epidemic-sim"
+import "../src/widgets/webwriter-epidemic-sim"
 import {
   readPersistedState,
   writePersistedState,
@@ -10,8 +10,8 @@ import {
   STATE_SCRIPT_TYPE,
   encodePersistedState,
   parsePersistedState,
-} from "../widgets/orchestration/persisted-state"
-import type {Hotspot, SimulationConfig, SimulationSnapshot} from "../widgets/simulation/types"
+} from "../src/components/persisted-state"
+import type {Hotspot, SimulationConfig, SimulationSnapshot} from "../src/model/simulation/types"
 
 mocha.setup(getMochaConfig())
 

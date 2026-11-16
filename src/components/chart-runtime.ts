@@ -1,0 +1,190 @@
+import { sourceMsg } from "../../localization/localizer";
+import type { MsgFn } from "@lit/localize";
+import type {ChartInsightData} from "./chart-insights-view"
+import {
+  computeChartInsights,
+  estimateBasicReproductionNumber,
+  formatApprox,
+  formatPercent,
+} from "../model/analytics/chart-insights"
+import {drawChart} from "./rendering/chart-renderer"
+import type {ChartSeries} from "./rendering/chart-renderer"
+import {getChartCompartments, type ChartCompartment, type EpidemicModelType} from "../model/simulation/epidemic-models"
+import {pushHistoryValue, resetHistory} from "../model/simulation/history"
+import {FRAMES_PER_DAY} from "../model/simulation/time"
+import {formatFrameCountAsDays} from "./format-days"
+import type {SimulationConfig} from "../model/simulation/types"
+
+export type ChartRuntimeCounts = {
+  susceptible: number
+  exposed: number
+  infected: number
+  recovered: number
+  dead: number
+}
+
+export type ChartHistories = {
+  susceptibleHistory: number[]
+  exposedHistory: number[]
+  infectedHistory: number[]
+  recoveredHistory: number[]
+  deadHistory: number[]
+}
+
+export function buildChartSeries(modelType: EpidemicModelType, histories: ChartHistories, msg: MsgFn = sourceMsg): ChartSeries[] {
+  const compartmentSeries: Record<ChartCompartment, ChartSeries> = {
+    susceptible: {label: msg("Susceptible"), values: histories.susceptibleHistory, color: "#56B4E9"},
+    exposed: {label: msg("Exposed"), values: histories.exposedHistory, color: "#E69F00"},
+    infected: {label: msg("Infected"), values: histories.infectedHistory, color: "#d55e00"},
+    recovered: {label: msg("Recovered"), values: histories.recoveredHistory, color: "#009E73"},
+    dead: {label: msg("Dead"), values: histories.deadHistory, color: "#666666"},
+  }
+  return getChartCompartments(modelType).map((compartment) => compartmentSeries[compartment])
+}
+
+export function buildChartDayLabels(series: ChartSeries[]): string[] {
+  const length = series.reduce((maxLength, entry) => Math.max(maxLength, entry.values.length), 0)
+  return Array.from({length}, (_, dayIndex) => String(dayIndex))
+}
+
+export class ChartRuntime {
+  constructor(private readonly msg: MsgFn = sourceMsg) {}
+
+  private readonly historyLimit = 2000
+  susceptibleHistory: number[] = []
+  exposedHistory: number[] = []
+  infectedHistory: number[] = []
+  recoveredHistory: number[] = []
+  deadHistory: number[] = []
+  epidemicEnded = false
+  hadInfection = false
+  private hasUndrawnPoint = false
+
+  reset(): void {
+    this.susceptibleHistory = resetHistory()
+    this.exposedHistory = resetHistory()
+    this.infectedHistory = resetHistory()
+    this.recoveredHistory = resetHistory()
+    this.deadHistory = resetHistory()
+    this.epidemicEnded = false
+    this.hadInfection = false
+  }
+
+  recordPoint(
+    frameIndex: number,
+    counts: ChartRuntimeCounts,
+    hasActiveInfection: boolean,
+    waveFinished: boolean,
+    simulationDurationReached: boolean,
+  ): void {
+    if (hasActiveInfection) {
+      this.hadInfection = true
+    }
+
+    if (this.epidemicEnded) {
+      return
+    }
+
+    const waveEnded = (this.hadInfection && waveFinished) || simulationDurationReached
+    const isFullDayCheckpoint = frameIndex % FRAMES_PER_DAY === 0
+    if (!isFullDayCheckpoint) {
+      if (waveEnded) {
+        this.epidemicEnded = true
+      }
+      return
+    }
+
+    pushHistoryValue(this.susceptibleHistory, counts.susceptible, this.historyLimit)
+    pushHistoryValue(this.exposedHistory, counts.exposed, this.historyLimit)
+    pushHistoryValue(this.infectedHistory, counts.infected, this.historyLimit)
+    pushHistoryValue(this.recoveredHistory, counts.recovered, this.historyLimit)
+    pushHistoryValue(this.deadHistory, counts.dead, this.historyLimit)
+    this.hasUndrawnPoint = true
+    if (waveEnded) {
+      this.epidemicEnded = true
+    }
+  }
+
+  takeUndrawnPoint(): boolean {
+    const hadUndrawnPoint = this.hasUndrawnPoint
+    this.hasUndrawnPoint = false
+    return hadUndrawnPoint
+  }
+
+  estimateR0(recoveryDuration: number): number | null {
+    return estimateBasicReproductionNumber(this.infectedHistory, recoveryDuration)
+  }
+
+  buildDayLabels(series: ChartSeries[]): string[] {
+    return buildChartDayLabels(series)
+  }
+
+  buildSeries(config: SimulationConfig): ChartSeries[] {
+    return buildChartSeries(config.modelType, this, this.msg)
+  }
+
+  draw(config: SimulationConfig, canvas: HTMLCanvasElement | null): void {
+    if (!canvas) {
+      return
+    }
+    const series = this.buildSeries(config)
+    drawChart(canvas, config.population, series, {
+      labels: this.buildDayLabels(series),
+      xAxisTitle: this.msg("Time (days)"),
+    }, this.msg)
+  }
+
+  getInsightsOverlayTitle(modelType: EpidemicModelType): string {
+    if (modelType === "seir") {
+      return this.msg("SEIR insights")
+    }
+    if (modelType === "seird") {
+      return this.msg("SEIRD insights")
+    }
+    if (modelType === "sirs") {
+      return this.msg("SIRS insights")
+    }
+    if (modelType === "sird") {
+      return this.msg("SIRD insights")
+    }
+    return this.msg("SIR insights")
+  }
+
+  buildInsightViewData(frameIndex: number, counts: ChartRuntimeCounts, config: SimulationConfig): ChartInsightData {
+    const insights = computeChartInsights({
+      infectedHistory: this.infectedHistory,
+      frameIndex,
+      population: config.population,
+      recoveryDuration: config.recoveryDuration,
+      epidemicEnded: this.epidemicEnded,
+      susceptibleCount: counts.susceptible,
+      exposedCount: counts.exposed,
+      infectedCount: counts.infected,
+      recoveredCount: counts.recovered,
+      deadCount: counts.dead,
+    })
+    const population = Math.max(1, config.population)
+    const peakShare = insights.peakInfected / population
+    const herdThresholdLabel =
+      insights.herdImmunityThreshold === null ? "–" : formatPercent(insights.herdImmunityThreshold)
+    return {
+      elapsedTime: formatFrameCountAsDays(insights.currentFrame, this.msg),
+      estimatedR0: formatApprox(insights.estimatedR0),
+      herdImmunityThreshold: herdThresholdLabel,
+      currentSusceptible: `${Math.round(insights.currentSusceptible)} (${formatPercent(insights.currentSusceptibleShare)})`,
+      currentExposed:
+        config.modelType === "seir" || config.modelType === "seird"
+          ? `${Math.round(insights.currentExposed)} (${formatPercent(insights.currentExposedShare)})`
+          : undefined,
+      currentInfected: `${Math.round(insights.currentInfected)} (${formatPercent(insights.currentInfectedShare)})`,
+      currentRecovered: `${Math.round(insights.currentRecovered)} (${formatPercent(insights.currentRecoveredShare)})`,
+      currentDead:
+        config.modelType === "sird" || config.modelType === "seird"
+          ? `${Math.round(insights.currentDead)} (${formatPercent(insights.currentDeadShare)})`
+          : undefined,
+      finalRecoveredShare: insights.finalRecoveredShare === null ? "–" : formatPercent(insights.finalRecoveredShare),
+      peakInfected: `${Math.round(insights.peakInfected)} (${formatPercent(peakShare)})`,
+      peakTime: formatFrameCountAsDays(insights.peakFrame, this.msg),
+    }
+  }
+}
