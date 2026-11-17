@@ -6,7 +6,7 @@ import type {HotspotEditingController} from "./hotspot-editing-controller"
 import {findTopmostHotspotAtPoint, getHotspotLabel} from "./hotspot-interaction"
 import type {HotspotPointerController} from "./hotspot-pointer-controller"
 
-export type HotspotSelectionHost = {
+type HotspotSelectionHost = {
   msg: MsgFn
   editing: HotspotEditingController
   pointer: HotspotPointerController

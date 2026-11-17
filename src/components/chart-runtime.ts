@@ -15,7 +15,7 @@ import {FRAMES_PER_DAY} from "../model/simulation/time"
 import {formatFrameCountAsDays} from "./format-days"
 import type {SimulationConfig} from "../model/simulation/types"
 
-export type ChartRuntimeCounts = {
+type ChartRuntimeCounts = {
   susceptible: number
   exposed: number
   infected: number
@@ -23,7 +23,7 @@ export type ChartRuntimeCounts = {
   dead: number
 }
 
-export type ChartHistories = {
+type ChartHistories = {
   susceptibleHistory: number[]
   exposedHistory: number[]
   infectedHistory: number[]

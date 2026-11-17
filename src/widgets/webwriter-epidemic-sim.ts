@@ -27,7 +27,6 @@ import {renderWidgetLayout} from "../components/widget-layout"
 import {buildSimulationConfig} from "../model/config/build-simulation-config"
 import {buildStudentMenuInput} from "../model/config/build-student-menu-input"
 import {buildMenuAllowFlags, type WidgetConfigValues} from "../model/config/menu-allow-flags"
-import {type AllowControlKey} from "../model/config/widget-schema"
 import {MODEL_TYPE_LABELS, SETTINGS} from "../model/config/widget-settings"
 import {CanvasHostController} from "../components/canvas-host-controller"
 import {HotspotEditingController} from "../components/hotspot-editing-controller"
@@ -38,7 +37,7 @@ import {HotspotSelection} from "../components/hotspot-selection"
 import {SimulationRun} from "../model/simulation/run"
 import {SnapshotActions} from "../components/snapshot-actions"
 import {WidgetStateSync} from "../components/widget-state-sync"
-import {createConfigHandlers, parseSwitch} from "../components/config-handlers"
+import {createConfigHandlers} from "../components/config-handlers"
 import {hasVisibleMenuControls, sideMenuStyles} from "../components/rendering/menu-renderer"
 import {destroyChart, resetChart} from "../components/rendering/chart-renderer"
 import {drawSimulation} from "../components/rendering/simulation-renderer"
@@ -218,7 +217,7 @@ export class WebwriterEpidemicSim extends Settings(LitElementWw, SETTINGS) {
   private stateObserver = new MutationObserver(() => this.stateSync.sync())
   private shownLocale: string = sourceLocale
   private listeners: AbortController | null = null
-  private printClassObserver: MutationObserver | null = null
+  private classObserver: MutationObserver | null = null
   private canvasResizeObserver: ResizeObserver | null = null
 
   @state() accessor insightsOpen = false
@@ -226,7 +225,6 @@ export class WebwriterEpidemicSim extends Settings(LitElementWw, SETTINGS) {
   @state() accessor snapshotsOverlayOpen = false
   @state() accessor chartContextMenuOpen = false
   @state() accessor chartContextMenuPosition = {x: 0, y: 0}
-  @state() accessor isPrintPreparing = false
 
   connectedCallback(): void {
     super.connectedCallback()
@@ -235,17 +233,8 @@ export class WebwriterEpidemicSim extends Settings(LitElementWw, SETTINGS) {
     this.listeners = new AbortController()
     window.addEventListener("keydown", this.onWindowKeyDown, {signal: this.listeners.signal})
     this.ownerDocument.addEventListener("fullscreenchange", this.syncFullscreenState, {signal: this.listeners.signal})
-    this.printClassObserver = new MutationObserver(() => {
-      const next =
-        this.classList.contains("ww-beforeprint") || this.classList.contains("ww-printable")
-      if (next !== this.isPrintPreparing) {
-        this.isPrintPreparing = next
-      }
-      this.syncFullscreenState()
-    })
-    this.printClassObserver.observe(this, {attributes: true, attributeFilter: ["class"]})
-    this.isPrintPreparing =
-      this.classList.contains("ww-beforeprint") || this.classList.contains("ww-printable")
+    this.classObserver = new MutationObserver(this.syncFullscreenState)
+    this.classObserver.observe(this, {attributes: true, attributeFilter: ["class"]})
     this.observeCanvasSize()
   }
 
@@ -283,8 +272,8 @@ export class WebwriterEpidemicSim extends Settings(LitElementWw, SETTINGS) {
 
   disconnectedCallback(): void {
     this.stateObserver.disconnect()
-    this.printClassObserver?.disconnect()
-    this.printClassObserver = null
+    this.classObserver?.disconnect()
+    this.classObserver = null
     this.canvasResizeObserver?.disconnect()
     this.canvasResizeObserver = null
     this.stateSync.flushPending()
@@ -536,10 +525,6 @@ export class WebwriterEpidemicSim extends Settings(LitElementWw, SETTINGS) {
   }
 
   private getModelTypeLabel = (modelType: EpidemicModelType): string => MODEL_TYPE_LABELS[modelType](this)
-
-  private setAllowControl = (key: AllowControlKey, event: Event): void => {
-    this[key] = parseSwitch(event)
-  }
 
   render() {
     return renderWidgetLayout({

@@ -5,15 +5,6 @@ import type {Hotspot, Rect} from "../model/simulation/types"
 
 export type HotspotCorner = "nw" | "ne" | "sw" | "se"
 
-export function findHotspotById(hotspots: Hotspot[], hotspotId: number): Hotspot | null {
-  for (let i = 0; i < hotspots.length; i += 1) {
-    if (hotspots[i].id === hotspotId) {
-      return hotspots[i]
-    }
-  }
-  return null
-}
-
 export function getHotspotLabel(hotspot: Hotspot, index: number, msg: MsgFn = sourceMsg): string {
   return hotspot.communityId === null
     ? `${msg("H")}${index + 1}`

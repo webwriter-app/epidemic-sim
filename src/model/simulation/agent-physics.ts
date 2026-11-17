@@ -4,7 +4,7 @@ export function randomSpeedScale(): number {
   return 0.75 + Math.random() * 0.5
 }
 
-export function applyRandomWalk(agent: Agent, speed: number): void {
+function applyRandomWalk(agent: Agent, speed: number): void {
   const jitter = 0.25
   agent.vx += (Math.random() - 0.5) * jitter
   agent.vy += (Math.random() - 0.5) * jitter

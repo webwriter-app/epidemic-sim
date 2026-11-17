@@ -1,8 +1,8 @@
 import type {EpidemicModelType} from "./epidemic-models"
 
 export type AgentState = "susceptible" | "exposed" | "infected" | "recovered" | "dead"
-export type AgentZone = "main" | "quarantine"
-export type AgentTransition = "none" | "toQuarantine" | "toMain" | "toHotspot" | "toCommunity"
+type AgentZone = "main" | "quarantine"
+type AgentTransition = "none" | "toQuarantine" | "toMain" | "toHotspot" | "toCommunity"
 
 export interface Rect {
   x: number

@@ -2,9 +2,9 @@ import type {Hotspot, SimulationSnapshot} from "../model/simulation/types"
 
 export const STATE_SCRIPT_TYPE = "application/json"
 
-export type PersistedSnapshot = SimulationSnapshot
+type PersistedSnapshot = SimulationSnapshot
 
-export type PersistedWidgetState = {
+type PersistedWidgetState = {
   version: 1
   hotspots: Hotspot[]
   nextHotspotId: number

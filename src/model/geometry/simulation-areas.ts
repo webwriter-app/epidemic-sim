@@ -42,7 +42,7 @@ export function buildSimulationAreas(input: AreaBuilderInput): SimulationAreas {
   }
 }
 
-export function createCommunities(mainRect: Rect): CommunityCell[] {
+function createCommunities(mainRect: Rect): CommunityCell[] {
   const communities: CommunityCell[] = []
   const cols = 3
   const rows = 3

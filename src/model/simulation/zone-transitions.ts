@@ -60,7 +60,7 @@ export function beginTransitionToHotspot(agent: Agent, hotspot: Hotspot): void {
   agent.hotspotUntilFrame = -1
 }
 
-export function completeTransition(agent: Agent, speed: number, frameIndex: number, hotspotStayDuration: number): void {
+function completeTransition(agent: Agent, speed: number, frameIndex: number, hotspotStayDuration: number): void {
   if (agent.transition === "toQuarantine") {
     agent.zone = "quarantine"
     clearHotspotVisit(agent)

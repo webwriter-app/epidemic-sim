@@ -7,7 +7,7 @@ import {
 } from "./persisted-state"
 import type {SnapshotService} from "./snapshot-service"
 
-export type WidgetStateSyncHost = {
+type WidgetStateSyncHost = {
   element: HTMLElement
   hotspotEditing: HotspotEditingController
   snapshotService: SnapshotService

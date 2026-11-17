@@ -54,7 +54,7 @@ export function estimateBasicReproductionNumber(
   return estimatedR0
 }
 
-export type ChartInsights = {
+type ChartInsights = {
   peakInfected: number
   peakFrame: number
   currentFrame: number

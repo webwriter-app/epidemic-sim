@@ -6,7 +6,7 @@ import type {ChartRuntime} from "./chart-runtime"
 import {destroyChart} from "./rendering/chart-renderer"
 import {buildSnapshotCsv, drawSnapshotChart, renderSnapshotChartPng, type SnapshotService} from "./snapshot-service"
 
-export type SnapshotActionsHost = {
+type SnapshotActionsHost = {
   msg: MsgFn
   service: SnapshotService
   canvasHost: CanvasHostController

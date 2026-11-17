@@ -1,6 +1,8 @@
 import { sourceMsg } from "../../../localization/localizer";
 import type { MsgFn } from "@lit/localize";
-import {Chart} from "chart.js/auto"
+import {CategoryScale, Chart, LineController, LineElement, LinearScale, Legend, PointElement, Tooltip} from "chart.js"
+
+Chart.register(CategoryScale, LinearScale, LineController, LineElement, PointElement, Legend, Tooltip)
 
 export interface ChartSeries {
   label: string

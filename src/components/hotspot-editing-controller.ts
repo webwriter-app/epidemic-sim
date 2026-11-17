@@ -10,7 +10,7 @@ import {clampHotspotPosition} from "./canvas-coordinates"
 
 export type DragCommitEvent = CustomEvent<DragCommitDetail>
 
-export type HotspotEditingCallbacks = {
+type HotspotEditingCallbacks = {
   getCanvas: () => HTMLCanvasElement | null
   getConfig: () => SimulationConfig
   enableHotspots: () => void

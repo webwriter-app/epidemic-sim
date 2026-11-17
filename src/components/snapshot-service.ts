@@ -4,7 +4,7 @@ import {destroyChart, drawChart} from "./rendering/chart-renderer"
 import {buildChartDayLabels, buildChartSeries} from "./chart-runtime"
 import type {Hotspot, SimulationConfig, SimulationSnapshot} from "../model/simulation/types"
 
-export type SnapshotCreateInput = {
+type SnapshotCreateInput = {
   config: SimulationConfig
   frameIndex: number
   epidemicEnded: boolean

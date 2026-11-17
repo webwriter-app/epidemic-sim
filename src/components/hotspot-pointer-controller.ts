@@ -1,8 +1,9 @@
 import type {ReactiveController, ReactiveControllerHost} from "lit"
 import type {Hotspot, Rect, SimulationAreas} from "../model/simulation/types"
-import {clampHotspotPosition, clampHotspotRect, getCanvasPoint} from "./canvas-coordinates"
+import {clampHotspotRect} from "../model/geometry/simulation-areas"
+import {findHotspotById} from "../model/simulation/spatial-helpers"
+import {clampHotspotPosition, getCanvasPoint} from "./canvas-coordinates"
 import {
-  findHotspotById,
   getHotspotCornerAtPoint,
   getOppositeCornerPoint,
   getResizedHotspotRect,
@@ -11,7 +12,7 @@ import {
 
 const TOUCH_HANDLE_RADIUS = 18
 
-export type HotspotPointerCallbacks = {
+type HotspotPointerCallbacks = {
   getCanvas: () => HTMLCanvasElement | null
   getAreas: () => SimulationAreas
   updateHotspotRect: (hotspotId: number, rect: Rect) => void
@@ -87,10 +88,6 @@ export class HotspotPointerController implements ReactiveController {
     this.host = host
     this.callbacks = callbacks
     host.addController(this)
-  }
-
-  isActive(): boolean {
-    return this.draggingHotspotId !== null || this.resizingHotspotId !== null
   }
 
   isDragging(hotspotId: number): boolean {

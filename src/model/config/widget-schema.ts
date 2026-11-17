@@ -22,7 +22,7 @@ export type AllowControlKey =
   | "allowHotspotSizeControl"
   | "allowCommunityLeaveProbabilityControl"
 
-export type RangeSchema = {
+type RangeSchema = {
   kind: "range"
   min: number
   max: number
@@ -30,12 +30,12 @@ export type RangeSchema = {
   defaultValue: number
 }
 
-export type ToggleSchema = {
+type ToggleSchema = {
   kind: "toggle"
   defaultValue: boolean
 }
 
-export type SelectSchema<TValue extends string> = {
+type SelectSchema<TValue extends string> = {
   kind: "select"
   defaultValue: TValue
 }
@@ -90,7 +90,7 @@ export type WidgetSchema = {
   communityLeaveProbability: number
 } & Record<AllowControlKey, boolean>
 
-export type RangeLimits = {min: number; max: number; step: number}
+type RangeLimits = {min: number; max: number; step: number}
 
 export function getRangeLimits(key: ConfigSchemaKey): RangeLimits {
   const schema = CONFIG_SCHEMA[key]

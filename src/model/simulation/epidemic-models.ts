@@ -20,15 +20,3 @@ export function getChartCompartments(modelType: EpidemicModelType): ChartCompart
   }
   return ["susceptible", "infected", "recovered"]
 }
-
-export interface ModelSpecificDefaults {
-  incubationDuration: number
-  immunityDuration: number
-  mortalityProbability: number
-}
-
-export const DEFAULT_MODEL_SPECIFIC_DEFAULTS: ModelSpecificDefaults = {
-  incubationDuration: 120,
-  immunityDuration: 1200,
-  mortalityProbability: 0.02,
-}

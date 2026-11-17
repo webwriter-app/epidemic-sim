@@ -1,4 +1,3 @@
-import {getRangeLimits} from "../model/config/widget-schema"
 import {SIMULATION_CANVAS_HEIGHT, SIMULATION_CANVAS_WIDTH} from "../model/simulation/canvas-dimensions"
 import type {Rect} from "../model/simulation/types"
 
@@ -51,24 +50,6 @@ export function clampHotspotPosition(x: number, y: number, size: number, mainRec
   return {
     x: clamp(x, minX, maxX),
     y: clamp(y, minY, maxY),
-  }
-}
-
-export function clampHotspotRect(rect: Rect, mainRect: Rect): Rect {
-  const sizeLimits = getRangeLimits("hotspotSize")
-  const maxWidth = Math.min(sizeLimits.max, mainRect.width)
-  const maxHeight = Math.min(sizeLimits.max, mainRect.height)
-  const width = clamp(rect.width, Math.min(sizeLimits.min, maxWidth), maxWidth)
-  const height = clamp(rect.height, Math.min(sizeLimits.min, maxHeight), maxHeight)
-  const minX = mainRect.x
-  const minY = mainRect.y
-  const maxX = mainRect.x + Math.max(0, mainRect.width - width)
-  const maxY = mainRect.y + Math.max(0, mainRect.height - height)
-  return {
-    x: clamp(rect.x, minX, maxX),
-    y: clamp(rect.y, minY, maxY),
-    width,
-    height,
   }
 }
 

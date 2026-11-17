@@ -2,7 +2,7 @@ import {getRangeLimits} from "../model/config/widget-schema"
 import {isEpidemicModelType, type EpidemicModelType} from "../model/simulation/epidemic-models"
 import type {SimulationConfig} from "../model/simulation/types"
 
-export function parseRangeInput(event: Event): number {
+function parseRangeInput(event: Event): number {
   const target = (event.currentTarget ?? event.target) as ({value?: string | number} & EventTarget) | null
   return target?.value !== undefined ? Number(target.value) : 0
 }
@@ -16,7 +16,7 @@ function clamp(value: number, min: number, max: number): number {
   return Math.max(min, Math.min(max, value))
 }
 
-export type ConfigHandlerHost = {
+type ConfigHandlerHost = {
   getPopulation: () => number
   setPopulation: (population: number) => void
   getModelType: () => EpidemicModelType

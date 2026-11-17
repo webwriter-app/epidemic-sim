@@ -15,7 +15,7 @@ import type {RenderMenuOptions} from "./rendering/menu-renderer"
 import type {SimulationSnapshot} from "../model/simulation/types"
 import type {EpidemicModelType} from "../model/simulation/epidemic-models"
 
-export type WidgetLayoutInput = {
+type WidgetLayoutInput = {
   hasVisibleMenuControls: boolean
   chartContextMenuOpen: boolean
   chartContextMenuPosition: {x: number; y: number}

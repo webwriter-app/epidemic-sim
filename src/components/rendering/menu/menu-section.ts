@@ -1,7 +1,7 @@
 import {html} from "lit"
 import type {TemplateResult} from "lit"
 
-export type MenuSectionHeaderSwitch = {
+type MenuSectionHeaderSwitch = {
   checked: boolean
   onChange: (event: Event) => void
 }

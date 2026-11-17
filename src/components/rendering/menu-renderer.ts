@@ -15,7 +15,6 @@ import {
   hasModelMenuControls,
   hasQuarantineMenuControls,
   hasVisibleMenuControls,
-  type MenuAllowFlags,
   type RenderMenuOptions,
 } from "./menu/menu-types"
 
