@@ -2,6 +2,7 @@ import { sourceMsg } from "../../localization/localizer";
 import type { MsgFn } from "@lit/localize";
 import {destroyChart, drawChart} from "./rendering/chart-renderer"
 import {buildChartDayLabels, buildChartSeries} from "./chart-runtime"
+import {buildHistoryTable, historyTableToCsv} from "../model/simulation/history-table"
 import type {Hotspot, SimulationConfig, SimulationSnapshot} from "../model/simulation/types"
 
 type SnapshotCreateInput = {
@@ -69,16 +70,9 @@ export function renderSnapshotChartPng(container: Node, snapshot: SimulationSnap
   }
 }
 
-function escapeCsvValue(value: string): string {
-  return /[",\n]/.test(value) ? `"${value.replace(/"/g, '""')}"` : value
-}
-
 export function buildSnapshotCsv(snapshot: SimulationSnapshot, msg: MsgFn = sourceMsg): string {
   const series = buildChartSeries(snapshot.config.modelType, snapshot, msg)
-  const dayLabels = buildChartDayLabels(series)
-  const header = [msg("Day"), ...series.map((entry) => entry.label)]
-  const rows = dayLabels.map((day, dayIndex) => [day, ...series.map((entry) => String(entry.values[dayIndex] ?? ""))])
-  return [header, ...rows].map((row) => row.map(escapeCsvValue).join(",")).join("\n")
+  return historyTableToCsv(buildHistoryTable(msg("Day"), series))
 }
 
 export class SnapshotService {
@@ -133,6 +127,10 @@ export class SnapshotService {
     }
     this.snapshots = [snapshot, ...this.snapshots]
     return snapshot
+  }
+
+  deleteAll(): void {
+    this.snapshots = []
   }
 
   delete(snapshotId: string): void {

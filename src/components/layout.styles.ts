@@ -4,12 +4,12 @@ export const layoutStyles = css`
   :host {
     display: block;
     width: 100%;
-    max-width: 100%;
-    min-width: 0;
+    min-width: 300px;
+    max-width: 2100px;
     min-height: 520px;
     box-sizing: border-box;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    color: #1a1a1a;
+    font-family: var(--ww-font-family, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif);
+    color: var(--ww-text-color, #1a1a1a);
   }
   *, *::before, *::after { box-sizing: inherit; }
   .widget-shell {
@@ -238,5 +238,12 @@ export const layoutStyles = css`
   @media (max-width: 600px) {
     :host, .widget-shell { min-height: 440px; }
     .panel { min-height: 240px; }
+  }
+
+  .print-image { display: none; }
+  @media print {
+    .print-image { display: block; width: 100%; height: auto; }
+    .chart-wrap > .print-image { height: 100%; object-fit: contain; }
+    .chart-wrap:has(> .print-image) > canvas, .simulation-stage:has(> .print-image) > canvas { display: none !important; }
   }
 `

@@ -53,6 +53,14 @@ export class SnapshotActions {
     this.host.onChanged()
   }
 
+  deleteAll(): void {
+    if (this.host.service.snapshots.length === 0) {
+      return
+    }
+    this.host.service.deleteAll()
+    this.host.onChanged()
+  }
+
   downloadImage(snapshotId: string): void {
     const snapshot = this.find(snapshotId)
     const root = this.host.getRoot()

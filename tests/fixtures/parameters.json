@@ -1,0 +1,9 @@
+{
+  "modelType": "seird",
+  "incubationDuration": 150,
+  "population": 300,
+  "speed": 2,
+  "infectionProbability": 0.35,
+  "quarantineEnabled": true,
+  "unknownKey": "ignored"
+}

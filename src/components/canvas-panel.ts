@@ -4,7 +4,7 @@ import iconReset from "@tabler/icons/outline/refresh.svg"
 import iconDelete from "@tabler/icons/outline/trash.svg"
 import { sourceMsg } from "../../localization/localizer";
 import type { MsgFn } from "@lit/localize";
-import {html} from "lit"
+import {html, nothing} from "lit"
 import type {TemplateResult} from "lit"
 import type {DragCommitEvent} from "./hotspot-editing-controller"
 import {SIMULATION_CANVAS_HEIGHT, SIMULATION_CANVAS_WIDTH} from "../model/simulation/canvas-dimensions"
@@ -23,6 +23,8 @@ type CanvasPanelInput = {
   onCanvasDragCommit: (event: DragCommitEvent) => void
   onCanvasPointerDown: (event: PointerEvent) => void
   onCanvasContextMenu: (event: MouseEvent) => void
+  onCanvasKeyDown: (event: KeyboardEvent) => void
+  printImage: string | null
   onHotspotTokenClick: () => void
   onToggleSimulation: () => void
   onResetSimulation: () => void
@@ -50,19 +52,24 @@ function getCanvasClass(input: CanvasPanelInput): string {
 
 export function renderCanvasPanel(input: CanvasPanelInput, msg: MsgFn = sourceMsg): TemplateResult {
   return html`
-    <sl-card class="panel panel--simulation">
+    <sl-card class="panel panel--simulation" part="map">
       <div class="simulation-stage">
         <canvas
           id="simulation-canvas"
           width=${SIMULATION_CANVAS_WIDTH}
           height=${SIMULATION_CANVAS_HEIGHT}
           class=${getCanvasClass(input)}
+          tabindex=${input.hotspotsEnabled && input.showHotspotToolbox ? "0" : nothing}
+          role=${input.hotspotsEnabled && input.showHotspotToolbox ? "application" : nothing}
+          aria-label=${input.hotspotsEnabled && input.showHotspotToolbox ? msg("Simulation map. Enter selects the next hotspot, arrow keys move it, Delete removes it.") : nothing}
+          @keydown=${input.onCanvasKeyDown}
           data-ww-drop="hotspot"
           data-ww-drop-position="point"
           @ww-dragcommit=${input.onCanvasDragCommit}
           @pointerdown=${input.onCanvasPointerDown}
           @contextmenu=${input.onCanvasContextMenu}
         ></canvas>
+        ${input.printImage ? html`<img class="print-image" alt="" src=${input.printImage}>` : null}
         <div class="actions simulation-actions">
           <button type="button" class="simulation-actions__icon-button simulation-actions__icon-button--play-pause" aria-label=${input.isRunning ? msg("Pause") : msg("Start")} @click=${input.onToggleSimulation}>
             <sl-icon src=${input.isRunning ? iconPause : iconPlay}></sl-icon>

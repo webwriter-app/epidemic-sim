@@ -25,6 +25,20 @@ The simulation runs 24 frames per day. Durations are stored in frames and shown 
 Settings are attributes. Hotspots and snapshots are JSON in a direct data block (`<script slot="data">`);
 snapshots hold only the curve data, so documents stay small.
 
+Input: everything works with mouse, touch and keyboard. On the map, Enter selects the next hotspot (Shift+Enter
+the previous one), the arrow keys move the selected hotspot (Shift for fine steps), Delete removes it and
+Escape ends placing. Placing and deleting also have visible buttons, so no right click is needed.
+
+Data: the curves export as CSV (`text/csv`) or a native `table`; the parameters export and import as JSON (`.json`, the
+setting names, for example `{"modelType": "seir", "population": 300}`). An import checks every value first and
+changes nothing when one is wrong; hotspots and snapshots are not in the file. Signals for other widgets:
+`infected` (number of infected people), `history` (table: day column and one column per compartment, one row
+per day) and `ended` (boolean). Connect a chart widget to `#id[history]`.
+
+Layout: 300 to 2100 px wide; controls move below the map under 640 px, curves and map sit side by side from 1100 px.
+Theme: text uses `--ww-text-color` and `--ww-font-family`, hotspots use `--ww-theme-accent-1`; the state colors stay fixed.
+Print: curves and map print as pictures of their current state with the parameter values; buttons are hidden.
+
 ### Usage
 
 Use with a CDN (e.g. [jsdelivr](https://jsdelivr.com)):
@@ -50,25 +64,29 @@ npm install @webwriter/epidemic-sim
 | Name (Attribute Name) | Type | Description | Default | Reflects |
 | :-------------------: | :--: | :---------: | :-----: | :------: |
 | `WebwriterEpidemicSim.scopedElements` | `object` | - | `{ "sl-button": SlButton, "sl-card": SlCard, "sl-details": SlDetails, "sl-dropdown": SlDropdown, "sl-icon": SlIcon, "sl-menu": SlMenu, "sl-menu-item": SlMenuItem, "sl-range": SlRange, "sl-switch": SlSwitch, "sl-tag": SlTag, "sl-select": SlSelect, "sl-option": SlOption, }` | ✗ |
-| `WebwriterEpidemicSim.optionGroups` | `object` | - | `{ model: {label: (widget: {msg: MsgFn}) => widget.msg("Model"), collapsible: true}, general: {label: (widget: {msg: MsgFn}) => widget.msg("General"), collapsible: true}, quarantine: {label: (widget: {msg: MsgFn}) => widget.msg("Quarantine"), advanced: true}, hotspots: {label: (widget: {msg: MsgFn}) => widget.msg("Hotspots"), advanced: true}, communities: {label: (widget: {msg: MsgFn}) => widget.msg("Communities"), advanced: true}, controls: {label: (widget: {msg: MsgFn}) => widget.msg("Learner controls"), advanced: true}, }` | ✗ |
+| `WebwriterEpidemicSim.optionGroups` | - | - | `OPTION_GROUPS` | ✗ |
+| `WebwriterEpidemicSim.actions` | - | - | `DATA_ACTIONS` | ✗ |
+| `WebwriterEpidemicSim.convertFrom` | `object` | - | `{".json": importParameters}` | ✗ |
+| `WebwriterEpidemicSim.convertTo` | `object` | - | `{"text/csv": exportHistoryCsv, ".json": exportParameters, table: exportHistoryTable}` | ✗ |
 | `options` | - | - | - | ✗ |
 | `localize` | - | - | - | ✗ |
 | `msg` | - | - | - | ✗ |
+| `signals` | - | - | - | ✗ |
 | `insightsOpen` | `boolean` | - | `false` | ✗ |
 | `isFullscreen` | `boolean` | - | `false` | ✗ |
 | `snapshotsOverlayOpen` | `boolean` | - | `false` | ✗ |
 | `chartContextMenuOpen` | `boolean` | - | `false` | ✗ |
 | `chartContextMenuPosition` | `object` | - | `{x: 0, y: 0}` | ✗ |
-| `isPrintPreparing` | `boolean` | - | `false` | ✗ |
-| `WebwriterEpidemicSim.settings` | - | - | `declarations` | ✗ |
-| `settingsCore` | - | - | `new SettingsCore(this, { ...options, root: () => this.renderRoot, rendered: () => this.updateComplete })` | ✗ |
 
 *Fields including [properties](https://developer.mozilla.org/en-US/docs/Glossary/Property/JavaScript) and [attributes](https://developer.mozilla.org/en-US/docs/Glossary/Attribute) define the current state of the widget and offer customization options.*
 
 ## Methods
 | Name | Description | Parameters |
 | :--: | :---------: | :-------: |
-| `finalize` | - | -
+| `historyTable` | - | -
+| `clearSnapshots` | - | -
+| `removeHotspots` | - | -
+| `parameterValues` | - | -
 
 *[Methods](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Method_definitions) allow programmatic access to the widget.*
 
@@ -79,6 +97,14 @@ npm install @webwriter/epidemic-sim
 
 *[Events](https://developer.mozilla.org/en-US/docs/Web/Events) are dispatched by the widget after certain triggers.*
 
+## CSS parts
+| Name | Description |
+| :--: | :---------: |
+| chart | The card around the curves. |
+| map | The card around the simulation map. |
+
+*[CSS parts](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_shadow_parts) allow freely styling internals of the widget with CSS.*
+
 ## Editing config
 | Name | Value |
 | :--: | :---------: |
@@ -86,8 +112,8 @@ npm install @webwriter/epidemic-sim
 
 *The [editing config](https://webwriter.app/docs/packages/configuring/#editingconfig) defines how explorable authoring tools such as [WebWriter](https://webwriter.app) treat the widget.*
 
-*No public slots, custom CSS properties, or CSS parts.*
+*No public slots, or custom CSS properties.*
 
 
 ---
-*Generated with @webwriter/build@1.9.1*
+*Generated with @webwriter/build@1.14.0*

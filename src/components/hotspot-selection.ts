@@ -1,7 +1,7 @@
 import type {MsgFn} from "@lit/localize"
 import type {SimulationAreas, SimulationConfig} from "../model/simulation/types"
 import type {SelectedHotspotInput} from "./canvas-panel"
-import {getCanvasPoint} from "./canvas-coordinates"
+import {clampHotspotPosition, getCanvasPoint} from "./canvas-coordinates"
 import type {HotspotEditingController} from "./hotspot-editing-controller"
 import {findTopmostHotspotAtPoint, getHotspotLabel} from "./hotspot-interaction"
 import type {HotspotPointerController} from "./hotspot-pointer-controller"
@@ -78,6 +78,37 @@ export class HotspotSelection {
 
   onTokenClick = (): void => {
     this.placementActive = !this.placementActive
+  }
+
+  /** Keyboard path for the map: Enter selects the next hotspot, arrows move it, Delete removes it. */
+  onCanvasKeyDown = (event: KeyboardEvent): void => {
+    if (!this.host.getConfig().hotspotsEnabled || event.altKey || event.ctrlKey || event.metaKey) {
+      return
+    }
+    const hotspots = this.host.editing.userHotspots
+    const step = event.shiftKey ? 10 : 30
+    const arrows: Record<string, [number, number]> = {
+      ArrowLeft: [-step, 0], ArrowRight: [step, 0], ArrowUp: [0, -step], ArrowDown: [0, step],
+    }
+    if (event.key === "Enter" && hotspots.length > 0) {
+      const index = hotspots.findIndex((hotspot) => hotspot.id === this.selectedId)
+      const next = (index + (event.shiftKey ? -1 : 1) + hotspots.length) % hotspots.length
+      this.select(hotspots[index < 0 && event.shiftKey ? hotspots.length - 1 : index < 0 ? 0 : next].id)
+    } else if (event.key in arrows && this.selectedId !== null) {
+      const hotspot = hotspots.find((entry) => entry.id === this.selectedId)
+      if (!hotspot) {
+        return
+      }
+      const [dx, dy] = arrows[event.key]
+      const main = this.host.editing.getAreas(this.host.getConfig()).main
+      const moved = clampHotspotPosition(hotspot.rect.x + dx, hotspot.rect.y + dy, hotspot.rect.width, main)
+      this.host.editing.updateHotspotRect(hotspot.id, {...hotspot.rect, ...moved})
+    } else if ((event.key === "Delete" || event.key === "Backspace") && this.selectedId !== null) {
+      this.deleteSelected()
+    } else {
+      return
+    }
+    event.preventDefault()
   }
 
   getSelectedInput(): SelectedHotspotInput | null {

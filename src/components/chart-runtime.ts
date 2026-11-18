@@ -58,6 +58,8 @@ export class ChartRuntime {
   deadHistory: number[] = []
   epidemicEnded = false
   hadInfection = false
+  /** Counts the changes of the stored curves, so that a reader can tell cheaply whether they changed. */
+  revision = 0
   private hasUndrawnPoint = false
 
   reset(): void {
@@ -68,6 +70,7 @@ export class ChartRuntime {
     this.deadHistory = resetHistory()
     this.epidemicEnded = false
     this.hadInfection = false
+    this.revision += 1
   }
 
   recordPoint(
@@ -100,6 +103,7 @@ export class ChartRuntime {
     pushHistoryValue(this.recoveredHistory, counts.recovered, this.historyLimit)
     pushHistoryValue(this.deadHistory, counts.dead, this.historyLimit)
     this.hasUndrawnPoint = true
+    this.revision += 1
     if (waveEnded) {
       this.epidemicEnded = true
     }

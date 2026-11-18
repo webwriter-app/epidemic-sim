@@ -18,7 +18,7 @@ export function drawSimulation(
   canvas: HTMLCanvasElement,
   agents: Agent[],
   areas: SimulationAreas,
-  options?: {removalHotspotId?: number | null; selectedHotspotId?: number | null}, msg: MsgFn = sourceMsg
+  options?: {removalHotspotId?: number | null; selectedHotspotId?: number | null; hotspotColor?: string}, msg: MsgFn = sourceMsg
 ): void {
   ctx.setTransform(canvas.width / SIMULATION_CANVAS_WIDTH, 0, 0, canvas.height / SIMULATION_CANVAS_HEIGHT, 0, 0)
   ctx.clearRect(0, 0, SIMULATION_CANVAS_WIDTH, SIMULATION_CANVAS_HEIGHT)
@@ -34,7 +34,7 @@ export function drawSimulation(
     ctx.fill()
   }
 
-  drawHotspots(ctx, areas, options?.removalHotspotId ?? null, options?.selectedHotspotId ?? null, msg)
+  drawHotspots(ctx, areas, options?.removalHotspotId ?? null, options?.selectedHotspotId ?? null, options?.hotspotColor ?? "#7c3aed", msg)
 }
 
 const HOTSPOT_HANDLE_SIZE = 8
@@ -66,14 +66,15 @@ function drawHotspots(
   ctx: CanvasRenderingContext2D,
   areas: SimulationAreas,
   removalHotspotId: number | null,
-  selectedHotspotId: number | null, msg: MsgFn = sourceMsg
+  selectedHotspotId: number | null,
+  accentColor: string, msg: MsgFn = sourceMsg
 ): void {
   ctx.save()
   for (let i = 0; i < areas.hotspots.length; i += 1) {
     const hotspot = areas.hotspots[i]
     const removalPending = hotspot.id === removalHotspotId
     const selected = hotspot.id === selectedHotspotId
-    const hotspotColor = removalPending ? "#dc2626" : "#7c3aed"
+    const hotspotColor = removalPending ? "#dc2626" : accentColor
     ctx.strokeStyle = hotspotColor
     ctx.lineWidth = selected ? 3 : 2
     ctx.setLineDash(removalPending ? [5, 4] : [])

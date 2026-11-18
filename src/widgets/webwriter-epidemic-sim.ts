@@ -27,7 +27,7 @@ import {renderWidgetLayout} from "../components/widget-layout"
 import {buildSimulationConfig} from "../model/config/build-simulation-config"
 import {buildStudentMenuInput} from "../model/config/build-student-menu-input"
 import {buildMenuAllowFlags, type WidgetConfigValues} from "../model/config/menu-allow-flags"
-import {MODEL_TYPE_LABELS, SETTINGS} from "../model/config/widget-settings"
+import {DATA_ACTIONS, MODEL_TYPE_LABELS, OPTION_GROUPS, SETTINGS, withModelVisibility} from "../model/config/widget-settings"
 import {CanvasHostController} from "../components/canvas-host-controller"
 import {HotspotEditingController} from "../components/hotspot-editing-controller"
 import {HotspotPointerController} from "../components/hotspot-pointer-controller"
@@ -46,6 +46,10 @@ import {formatFrameCountAsDays} from "../components/format-days"
 import type {SimulationAreas, SimulationConfig} from "../model/simulation/types"
 import {epidemicSimStyles} from "../components/epidemic-sim.styles"
 import {fitCanvasToDisplaySize} from "../components/canvas-coordinates"
+import {buildHistoryTable, type HistoryTable} from "../model/simulation/history-table"
+import {exportHistoryCsv, exportHistoryTable, exportParameters, importParameters, PublishedSignals, type ParameterValues} from "../components/data-exchange"
+import {PrintImages} from "../components/print-images"
+import {ThemeAccent} from "../components/theme-accent"
 
 /**
  * Agent-based epidemic simulation with a live chart, a simulation map and optional interventions.
@@ -59,6 +63,23 @@ import {fitCanvasToDisplaySize} from "../components/canvas-coordinates"
  * The simulation runs 24 frames per day. Durations are stored in frames and shown in days (120 frames are 5 days).
  * Settings are attributes. Hotspots and snapshots are JSON in a direct data block (`<script slot="data">`);
  * snapshots hold only the curve data, so documents stay small.
+ *
+ * Input: everything works with mouse, touch and keyboard. On the map, Enter selects the next hotspot (Shift+Enter
+ * the previous one), the arrow keys move the selected hotspot (Shift for fine steps), Delete removes it and
+ * Escape ends placing. Placing and deleting also have visible buttons, so no right click is needed.
+ *
+ * Data: the curves export as CSV (`text/csv`) or a native `table`; the parameters export and import as JSON (`.json`, the
+ * setting names, for example `{"modelType": "seir", "population": 300}`). An import checks every value first and
+ * changes nothing when one is wrong; hotspots and snapshots are not in the file. Signals for other widgets:
+ * `infected` (number of infected people), `history` (table: day column and one column per compartment, one row
+ * per day) and `ended` (boolean). Connect a chart widget to `#id[history]`.
+ *
+ * Layout: 300 to 2100 px wide; controls move below the map under 640 px, curves and map sit side by side from 1100 px.
+ * Theme: text uses `--ww-text-color` and `--ww-font-family`, hotspots use `--ww-theme-accent-1`; the state colors stay fixed.
+ * Print: curves and map print as pictures of their current state with the parameter values; buttons are hidden.
+ *
+ * @part chart - The card around the curves.
+ * @part map - The card around the simulation map.
  */
 @customElement("webwriter-epidemic-sim")
 export class WebwriterEpidemicSim extends Settings(LitElementWw, SETTINGS) {
@@ -79,30 +100,14 @@ export class WebwriterEpidemicSim extends Settings(LitElementWw, SETTINGS) {
     "sl-option": SlOption,
   }
 
-  static optionGroups = {
-    model: {label: (widget: {msg: MsgFn}) => widget.msg("Model"), collapsible: true},
-    general: {label: (widget: {msg: MsgFn}) => widget.msg("General"), collapsible: true},
-    quarantine: {label: (widget: {msg: MsgFn}) => widget.msg("Quarantine"), advanced: true},
-    hotspots: {label: (widget: {msg: MsgFn}) => widget.msg("Hotspots"), advanced: true},
-    communities: {label: (widget: {msg: MsgFn}) => widget.msg("Communities"), advanced: true},
-    controls: {label: (widget: {msg: MsgFn}) => widget.msg("Learner controls"), advanced: true},
-  }
+  static optionGroups = OPTION_GROUPS
+  static actions = DATA_ACTIONS
+  static convertFrom = {".json": importParameters}
+  static convertTo = {"text/csv": exportHistoryCsv, ".json": exportParameters, table: exportHistoryTable}
 
   // Which settings apply depends on the model; the labels come from the settings.
   override get options() {
-    const options = {...super.options}
-    const model = this.modelType
-    const visible: Record<string, boolean> = {
-      incubationDuration: model === "seir" || model === "seird",
-      immunityDuration: model === "sirs",
-      mortalityProbability: model === "sird" || model === "seird",
-    }
-    for (const [key, shown] of Object.entries(visible)) {
-      const control = `allow${key[0].toUpperCase()}${key.slice(1)}Control`
-      options[key] = {...options[key], hidden: !shown}
-      options[control] = {...options[control], hidden: !shown}
-    }
-    return options
+    return withModelVisibility(super.options, this.modelType)
   }
 
   localize = localizer(this, {
@@ -112,6 +117,8 @@ export class WebwriterEpidemicSim extends Settings(LitElementWw, SETTINGS) {
     drawer: true,
   })
   public readonly msg = this.localize.msg;
+  #published = new PublishedSignals()
+  readonly signals = this.#published.signals
   #permissions = new Permissions(this)
   #drag = new Drag(this)
 
@@ -211,6 +218,12 @@ export class WebwriterEpidemicSim extends Settings(LitElementWw, SETTINGS) {
     },
   })
 
+  private readonly accent = new ThemeAccent(this, "--ww-theme-accent-1", "#7c3aed")
+  private readonly printImages = new PrintImages(this, {
+    getCanvases: () => ({chart: this.chartCanvas, map: this.simulationCanvas}),
+    drawMap: () => this.drawSimulation(),
+    drawChart: () => this.drawChart(),
+  })
   private simulationCanvas: HTMLCanvasElement | null = null
   private simulationCtx: CanvasRenderingContext2D | null = null
   private chartCanvas: HTMLCanvasElement | null = null
@@ -232,6 +245,7 @@ export class WebwriterEpidemicSim extends Settings(LitElementWw, SETTINGS) {
     if (this.hasUpdated) this.stateSync.sync()
     this.listeners = new AbortController()
     window.addEventListener("keydown", this.onWindowKeyDown, {signal: this.listeners.signal})
+    this.printImages.listen(this.listeners.signal)
     this.ownerDocument.addEventListener("fullscreenchange", this.syncFullscreenState, {signal: this.listeners.signal})
     this.classObserver = new MutationObserver(this.syncFullscreenState)
     this.classObserver.observe(this, {attributes: true, attributeFilter: ["class"]})
@@ -296,7 +310,7 @@ export class WebwriterEpidemicSim extends Settings(LitElementWw, SETTINGS) {
   }
 
   private get config(): SimulationConfig {
-    return buildSimulationConfig(this.getWidgetConfigValues())
+    return buildSimulationConfig(this)
   }
 
   private get isRunning(): boolean {
@@ -329,15 +343,7 @@ export class WebwriterEpidemicSim extends Settings(LitElementWw, SETTINGS) {
   }
 
   private get hasVisibleMenuControls(): boolean {
-    return hasVisibleMenuControls(this.getMenuAllowFlags(), this.modelType)
-  }
-
-  private getMenuAllowFlags() {
-    return buildMenuAllowFlags(this.getWidgetConfigValues())
-  }
-
-  private getWidgetConfigValues(): WidgetConfigValues {
-    return this
+    return hasVisibleMenuControls(buildMenuAllowFlags(this), this.modelType)
   }
 
   private observeCanvasSize(): void {
@@ -429,6 +435,7 @@ export class WebwriterEpidemicSim extends Settings(LitElementWw, SETTINGS) {
   }
 
   private syncFullscreenState = (): void => {
+    this.printImages.syncWithHostClass(this.classList.contains("ww-beforeprint"))
     const next = this.ownerDocument.fullscreenElement === this || this.classList.contains("ww-fullscreen")
     if (next !== this.isFullscreen) {
       this.isFullscreen = next
@@ -501,6 +508,23 @@ export class WebwriterEpidemicSim extends Settings(LitElementWw, SETTINGS) {
       this.run.isWaveFinished(this.config),
       this.run.frameIndex >= this.config.simulationDuration,
     )
+    this.#published.publish(this.run.counts, this.chartRuntime.epidemicEnded, this.chartRuntime.revision, () => this.historyTable())
+  }
+
+  historyTable(): HistoryTable {
+    return buildHistoryTable(this.msg("Day"), this.chartRuntime.buildSeries(this.config))
+  }
+
+  clearSnapshots(): void {
+    this.snapshotActions.deleteAll()
+  }
+
+  removeHotspots(): void {
+    this.hotspotEditing.removeAll()
+  }
+
+  parameterValues(): ParameterValues {
+    return this.config as unknown as ParameterValues
   }
 
   private drawSimulation(): void {
@@ -512,16 +536,13 @@ export class WebwriterEpidemicSim extends Settings(LitElementWw, SETTINGS) {
       drawSimulation(ctx, canvas, this.run.agents, areas, {
         removalHotspotId: this.hotspotPointer.getRemovalPendingHotspotId(),
         selectedHotspotId: this.hotspotSelection.selectedId,
+        hotspotColor: this.accent.color(),
       }, this.msg)
     }
   }
 
   private drawChart(): void {
     this.chartRuntime.draw(this.config, this.chartCanvas)
-  }
-
-  private getModelTypeOptions(): Array<{value: EpidemicModelType; label: string}> {
-    return EPIDEMIC_MODEL_TYPES.map((value) => ({value, label: MODEL_TYPE_LABELS[value](this)}))
   }
 
   private getModelTypeLabel = (modelType: EpidemicModelType): string => MODEL_TYPE_LABELS[modelType](this)
@@ -543,6 +564,8 @@ export class WebwriterEpidemicSim extends Settings(LitElementWw, SETTINGS) {
       onCanvasDragCommit: this.hotspotEditing.onCanvasDragCommit,
       onCanvasPointerDown: this.hotspotSelection.onCanvasPointerDown,
       onCanvasContextMenu: this.hotspotSelection.onCanvasContextMenu,
+      onCanvasKeyDown: this.hotspotSelection.onCanvasKeyDown,
+      printImages: this.printImages.images,
       onHotspotTokenClick: this.hotspotSelection.onTokenClick,
       onToggleSimulation: this.toggleSimulation,
       onResetSimulation: this.resetSimulation,
@@ -551,9 +574,9 @@ export class WebwriterEpidemicSim extends Settings(LitElementWw, SETTINGS) {
       onToggleFullscreen: this.toggleFullscreen,
       studentMenu: this.hasVisibleMenuControls
         ? buildStudentMenuInput(
-            this.getWidgetConfigValues(),
+            this,
             this.hotspotEditing.userHotspots.length,
-            this.getModelTypeOptions(),
+            EPIDEMIC_MODEL_TYPES.map((value) => ({value, label: MODEL_TYPE_LABELS[value](this)})),
             this.configHandlers,
           )
         : null,

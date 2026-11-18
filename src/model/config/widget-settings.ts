@@ -101,3 +101,45 @@ export const SETTINGS = {
   allowHotspotSizeControl: allow("hotspotSize"),
   allowCommunityLeaveProbabilityControl: allow("communityLeaveProbability"),
 } as const
+
+export const OPTION_GROUPS = {
+  model: {label: (widget: Host) => widget.msg("Model"), collapsible: true},
+  general: {label: (widget: Host) => widget.msg("General"), collapsible: true},
+  quarantine: {label: (widget: Host) => widget.msg("Quarantine"), advanced: true},
+  hotspots: {label: (widget: Host) => widget.msg("Hotspots"), advanced: true},
+  communities: {label: (widget: Host) => widget.msg("Communities"), advanced: true},
+  controls: {label: (widget: Host) => widget.msg("Learner controls"), advanced: true},
+  data: {label: (widget: Host) => widget.msg("Saved data"), advanced: true},
+}
+
+/** Actions that remove what the learners and authors saved in the document. */
+export const DATA_ACTIONS = {
+  clearSnapshots: {
+    label: (widget: Host) => widget.msg("Delete all snapshots"),
+    group: "data",
+    intent: "danger" as const,
+    confirm: (widget: Host) => widget.msg("Delete all saved snapshots from this document?"),
+  },
+  removeHotspots: {
+    label: (widget: Host) => widget.msg("Remove all hotspots"),
+    group: "data",
+    intent: "danger" as const,
+    confirm: (widget: Host) => widget.msg("Remove all hotspots from the map?"),
+  },
+}
+
+/** Hides the settings that the model does not use, together with their learner controls. */
+export function withModelVisibility<T extends Record<string, object>>(options: T, model: string): T {
+  const result: Record<string, object> = {...options}
+  const visible: Record<string, boolean> = {
+    incubationDuration: model === "seir" || model === "seird",
+    immunityDuration: model === "sirs",
+    mortalityProbability: model === "sird" || model === "seird",
+  }
+  for (const [key, shown] of Object.entries(visible)) {
+    const control = `allow${key[0].toUpperCase()}${key.slice(1)}Control`
+    result[key] = {...result[key], hidden: !shown}
+    result[control] = {...result[control], hidden: !shown}
+  }
+  return result as T
+}

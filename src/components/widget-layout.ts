@@ -31,6 +31,8 @@ type WidgetLayoutInput = {
   onCanvasDragCommit: (event: DragCommitEvent) => void
   onCanvasPointerDown: (event: PointerEvent) => void
   onCanvasContextMenu: (event: MouseEvent) => void
+  onCanvasKeyDown: (event: KeyboardEvent) => void
+  printImages: {chart: string; map: string} | null
   onHotspotTokenClick: () => void
   onToggleSimulation: () => void
   onResetSimulation: () => void
@@ -60,9 +62,10 @@ export function renderWidgetLayout(input: WidgetLayoutInput, msg: MsgFn = source
       <p class="print-hint">${msg("Printed snapshot of the epidemic simulation. Author options and interactive controls are omitted.")}</p>
       <section class="main-content" @click=${input.onMainContentClick}>
         <section class="layout ${input.hotspotsEnabled ? "layout--hotspots" : ""}">
-          <sl-card class="panel panel--chart">
+          <sl-card class="panel panel--chart" part="chart">
             <div class="chart-wrap" @contextmenu=${input.onChartContextMenu}>
               <canvas id="chart-canvas"></canvas>
+              ${input.printImages?.chart ? html`<img class="print-image" alt="" src=${input.printImages.chart}>` : null}
             </div>
           </sl-card>
           ${
@@ -90,6 +93,8 @@ export function renderWidgetLayout(input: WidgetLayoutInput, msg: MsgFn = source
             onCanvasDragCommit: input.onCanvasDragCommit,
             onCanvasPointerDown: input.onCanvasPointerDown,
             onCanvasContextMenu: input.onCanvasContextMenu,
+            onCanvasKeyDown: input.onCanvasKeyDown,
+            printImage: input.printImages?.map ?? null,
             onHotspotTokenClick: input.onHotspotTokenClick,
             onToggleSimulation: input.onToggleSimulation,
             onResetSimulation: input.onResetSimulation,

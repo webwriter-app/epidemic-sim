@@ -14,7 +14,7 @@ export const simulationPanelStyles = css`
     display: block;
   }
   .panel--simulation canvas[data-ww-drop-over] {
-    outline: 2px dashed #7c3aed;
+    outline: 2px dashed var(--ww-theme-accent-1, #7c3aed);
     outline-offset: -4px;
     background: #f5f3ff;
   }
@@ -26,13 +26,13 @@ export const simulationPanelStyles = css`
     min-width: 34px;
     min-height: 34px;
     border-width: 2px;
-    border-color: #7c3aed;
-    color: #7c3aed;
+    border-color: var(--ww-theme-accent-1, #7c3aed);
+    color: var(--ww-theme-accent-1, #7c3aed);
     font-weight: 700;
     text-transform: uppercase;
   }
   .hotspot-toolbox__token:active { cursor: grabbing; }
-  .hotspot-toolbox__token--active::part(base) { background: #7c3aed; color: #ffffff; }
+  .hotspot-toolbox__token--active::part(base) { background: var(--ww-theme-accent-1, #7c3aed); color: #ffffff; }
   .hotspot-toolbox--map {
     margin-top: 8px;
     display: flex;
@@ -83,5 +83,11 @@ export const simulationPanelStyles = css`
   }
   .simulation-actions__icon-button:hover { background: #ffffff; }
   sl-icon { width: 16px; height: 16px; }
+  .simulation-actions__icon-button:focus-visible,
+  .panel--simulation canvas:focus-visible { outline: 2px solid var(--ww-theme-accent-1, #7c3aed); outline-offset: 2px; }
+  @media (pointer: coarse) {
+    .simulation-actions__icon-button { width: 44px; height: 44px; }
+    .hotspot-toolbox__token::part(base) { min-width: 44px; min-height: 44px; }
+  }
   .actions sl-button:not(.simulation-actions__icon-button)::part(base) { min-width: 112px; }
 `

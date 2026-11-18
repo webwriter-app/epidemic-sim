@@ -349,7 +349,14 @@
       "ckb-Arab": "شبیه‌سازیی نەخۆشیی بڵاوبوونەوە",
       "af-ZA": "Epidemiesimulasie",
       "af-NA": "Epidemiesimulasie"
-    }
+    },
+    "importFormats": [
+      ".json"
+    ],
+    "exportFormats": [
+      "text/csv",
+      ".json"
+    ]
   },
   "./snippets/corona-verlauf.html": {
     "label": {

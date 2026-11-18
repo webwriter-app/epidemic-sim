@@ -8,8 +8,18 @@
       "declarations": [
         {
           "kind": "class",
-          "description": "Agent-based epidemic simulation with a live chart, a simulation map and optional interventions.\n\nPeople are dots on a map; an infected dot within the infection radius of a susceptible one may infect it.\nThe model (SIR, SIRS, SEIR, SIRD, SEIRD) decides which states exist. Learners can switch on quarantine,\nhotspots (places where people gather) and communities, save snapshots of the curves and read key figures\nsuch as R0 in the insights panel. Authors set the parameters in the options panel; each has an\n`allow-...-control` attribute that shows it in the learners' sidebar.\n\nThe simulation runs 24 frames per day. Durations are stored in frames and shown in days (120 frames are 5 days).\nSettings are attributes. Hotspots and snapshots are JSON in a direct data block (`<script slot=\"data\">`);\nsnapshots hold only the curve data, so documents stay small.",
+          "description": "Agent-based epidemic simulation with a live chart, a simulation map and optional interventions.\n\nPeople are dots on a map; an infected dot within the infection radius of a susceptible one may infect it.\nThe model (SIR, SIRS, SEIR, SIRD, SEIRD) decides which states exist. Learners can switch on quarantine,\nhotspots (places where people gather) and communities, save snapshots of the curves and read key figures\nsuch as R0 in the insights panel. Authors set the parameters in the options panel; each has an\n`allow-...-control` attribute that shows it in the learners' sidebar.\n\nThe simulation runs 24 frames per day. Durations are stored in frames and shown in days (120 frames are 5 days).\nSettings are attributes. Hotspots and snapshots are JSON in a direct data block (`<script slot=\"data\">`);\nsnapshots hold only the curve data, so documents stay small.\n\nInput: everything works with mouse, touch and keyboard. On the map, Enter selects the next hotspot (Shift+Enter\nthe previous one), the arrow keys move the selected hotspot (Shift for fine steps), Delete removes it and\nEscape ends placing. Placing and deleting also have visible buttons, so no right click is needed.\n\nData: the curves export as CSV (`text/csv`) or a native `table`; the parameters export and import as JSON (`.json`, the\nsetting names, for example `{\"modelType\": \"seir\", \"population\": 300}`). An import checks every value first and\nchanges nothing when one is wrong; hotspots and snapshots are not in the file. Signals for other widgets:\n`infected` (number of infected people), `history` (table: day column and one column per compartment, one row\nper day) and `ended` (boolean). Connect a chart widget to `#id[history]`.\n\nLayout: 300 to 2100 px wide; controls move below the map under 640 px, curves and map sit side by side from 1100 px.\nTheme: text uses `--ww-text-color` and `--ww-font-family`, hotspots use `--ww-theme-accent-1`; the state colors stay fixed.\nPrint: curves and map print as pictures of their current state with the parameter values; buttons are hidden.",
           "name": "WebwriterEpidemicSim",
+          "cssParts": [
+            {
+              "description": "The card around the curves.",
+              "name": "chart"
+            },
+            {
+              "description": "The card around the simulation map.",
+              "name": "map"
+            }
+          ],
           "members": [
             {
               "kind": "field",
@@ -23,20 +33,37 @@
             {
               "kind": "field",
               "name": "optionGroups",
+              "static": true,
+              "default": "OPTION_GROUPS"
+            },
+            {
+              "kind": "field",
+              "name": "actions",
+              "static": true,
+              "default": "DATA_ACTIONS"
+            },
+            {
+              "kind": "field",
+              "name": "convertFrom",
               "type": {
                 "text": "object"
               },
               "static": true,
-              "default": "{ model: {label: (widget: {msg: MsgFn}) => widget.msg(\"Model\"), collapsible: true}, general: {label: (widget: {msg: MsgFn}) => widget.msg(\"General\"), collapsible: true}, quarantine: {label: (widget: {msg: MsgFn}) => widget.msg(\"Quarantine\"), advanced: true}, hotspots: {label: (widget: {msg: MsgFn}) => widget.msg(\"Hotspots\"), advanced: true}, communities: {label: (widget: {msg: MsgFn}) => widget.msg(\"Communities\"), advanced: true}, controls: {label: (widget: {msg: MsgFn}) => widget.msg(\"Learner controls\"), advanced: true}, }"
+              "default": "{\".json\": importParameters}"
+            },
+            {
+              "kind": "field",
+              "name": "convertTo",
+              "type": {
+                "text": "object"
+              },
+              "static": true,
+              "default": "{\"text/csv\": exportHistoryCsv, \".json\": exportParameters, table: exportHistoryTable}"
             },
             {
               "kind": "field",
               "name": "options",
-              "readonly": true,
-              "inheritedFrom": {
-                "name": "Settings",
-                "module": "dist/widgets/webwriter-epidemic-sim.js"
-              }
+              "readonly": true
             },
             {
               "kind": "field",
@@ -46,6 +73,17 @@
               "kind": "field",
               "name": "msg",
               "privacy": "public",
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "#published",
+              "privacy": "private",
+              "default": "new PublishedSignals()"
+            },
+            {
+              "kind": "field",
+              "name": "signals",
               "readonly": true
             },
             {
@@ -143,6 +181,20 @@
             },
             {
               "kind": "field",
+              "name": "accent",
+              "privacy": "private",
+              "readonly": true,
+              "default": "new ThemeAccent(this, \"--ww-theme-accent-1\", \"#7c3aed\")"
+            },
+            {
+              "kind": "field",
+              "name": "printImages",
+              "privacy": "private",
+              "readonly": true,
+              "default": "new PrintImages(this, { getCanvases: () => ({chart: this.chartCanvas, map: this.simulationCanvas}), drawMap: () => this.drawSimulation(), drawChart: () => this.drawChart(), })"
+            },
+            {
+              "kind": "field",
               "name": "simulationCanvas",
               "type": {
                 "text": "HTMLCanvasElement | null"
@@ -194,7 +246,7 @@
             },
             {
               "kind": "field",
-              "name": "printClassObserver",
+              "name": "classObserver",
               "type": {
                 "text": "MutationObserver | null"
               },
@@ -249,14 +301,6 @@
                 "text": "object"
               },
               "default": "{x: 0, y: 0}"
-            },
-            {
-              "kind": "field",
-              "name": "isPrintPreparing",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false"
             },
             {
               "kind": "field",
@@ -326,21 +370,6 @@
               },
               "privacy": "private",
               "readonly": true
-            },
-            {
-              "kind": "method",
-              "name": "getMenuAllowFlags",
-              "privacy": "private"
-            },
-            {
-              "kind": "method",
-              "name": "getWidgetConfigValues",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "WidgetConfigValues"
-                }
-              }
             },
             {
               "kind": "method",
@@ -508,6 +537,42 @@
             },
             {
               "kind": "method",
+              "name": "historyTable",
+              "return": {
+                "type": {
+                  "text": "HistoryTable"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "clearSnapshots",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "removeHotspots",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "parameterValues",
+              "return": {
+                "type": {
+                  "text": "ParameterValues"
+                }
+              }
+            },
+            {
+              "kind": "method",
               "name": "drawSimulation",
               "privacy": "private",
               "return": {
@@ -527,52 +592,9 @@
               }
             },
             {
-              "kind": "method",
-              "name": "getModelTypeOptions",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "Array<{value: EpidemicModelType; label: string}>"
-                }
-              }
-            },
-            {
               "kind": "field",
               "name": "getModelTypeLabel",
               "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "setAllowControl",
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "settings",
-              "static": true,
-              "default": "declarations",
-              "inheritedFrom": {
-                "name": "Settings",
-                "module": "dist/widgets/webwriter-epidemic-sim.js"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "finalize",
-              "static": true,
-              "inheritedFrom": {
-                "name": "Settings",
-                "module": "dist/widgets/webwriter-epidemic-sim.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "settingsCore",
-              "default": "new SettingsCore(this, { ...options, root: () => this.renderRoot, rendered: () => this.updateComplete })",
-              "inheritedFrom": {
-                "name": "Settings",
-                "module": "dist/widgets/webwriter-epidemic-sim.js"
-              }
             }
           ],
           "events": [

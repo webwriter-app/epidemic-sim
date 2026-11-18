@@ -112,6 +112,16 @@ export class HotspotEditingController {
     }
   }
 
+  removeAll(): void {
+    if (this.userHotspots.length === 0) {
+      return
+    }
+    this.callbacks.clearPointer()
+    this.userHotspots = []
+    this.persist()
+    this.callbacks.onHotspotsChanged()
+  }
+
   removeHotspot(hotspotId: number): void {
     const hasHotspot = this.userHotspots.some((hotspot) => hotspot.id === hotspotId)
     if (!hasHotspot) {
