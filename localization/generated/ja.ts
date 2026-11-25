@@ -2,8 +2,8 @@
     // Do not modify this file by hand!
     // Re-generate this file by running lit-localize
 
-    
-    
+
+
 
     /* eslint-disable no-irregular-whitespace */
     /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -16,7 +16,6 @@
 's2e7ece256ba72b3b': `SEIRDの指標`,
 's35264f659ccd236e': `隔離される確率`,
 's355b21b89ce5d9c5': `詳細`,
-'s4215a8243823eda2': `SEIR`,
 's45615e2718064d48': `指標`,
 's45b0974d18b97957': `SIRSの指標`,
 's48e186fb300e5464': `時間`,
@@ -32,15 +31,11 @@
 's5e8250fb85d64c23': `閉じる`,
 's5fef8fa88777bdec': `現在の死亡者`,
 's6144a4a2c984c772': `人口`,
-'s62c095244a149fde': `SIRS`,
-'s62c0a8244a14c027': `SIRD`,
 's65aa7dfb7792b528': `SIRDの指標`,
 's6c42c02bb3a76cef': `シミュレーションをリセット`,
 's6e526bbb8672e76a': `R0（概算）`,
-'s6eba9b8b650d3dd2': `SEIRD`,
 's6f54d7620146d1b1': `隔離`,
 's6fa549ec31db634a': `流行が終息すると、シミュレーションが早く終了する場合があります`,
-'s716a6024e3fe999c': `表示`,
 's71ffa36b183c46fd': `感染確率`,
 's7379168642ff77b3': `曝露者`,
 's77cc57dd46f7f5cc': `ホットスポットへの訪問確率`,
@@ -49,12 +44,12 @@
 's7be45f343cb15665': `最終的な回復者の割合`,
 's8f6ded5587ad8969': `集団免疫の閾値`,
 's941a41d587a259fd': `免疫の持続期間`,
-'s97e4c519fa4905f9': `SIR`,
 's984d2b333eff760a': `シミュレーションマップをタップしてホットスポットを配置してください。`,
 's99adf8f78a414996': `コミュニティ`,
 's9ac5fba6ad7337b9': `感染者`,
 's9d53ce2c390c880c': `画像（PNG）`,
 's9ddf0979f55228fd': `死亡確率`,
+'s9f744a5dec575b76': `シミュレーションマップ。Enter で次のホットスポットを選び、矢印キーで移動し、Delete で削除します。`,
 'sa1cbd47c70068780': `ホットスポットあたりの最大人数`,
 'sa7d4a2c8f4e43300': `配置したホットスポット`,
 'sae1c7f13b7c0c47f': `開始`,
@@ -88,4 +83,3 @@
 'sf62c2403c94966db': `現在の感受性者`,
 'sfc12d40fe5fa5f7d': `スナップショットはまだありません。`,
     };
-  

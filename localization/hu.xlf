@@ -1,4 +1,5 @@
-<xliff xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd" xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd" version="1.2">
   <file original="lit-localize-inputs" datatype="plaintext" source-language="en" target-language="hu">
     <body>
       <trans-unit id="s6144a4a2c984c772">
@@ -165,10 +166,6 @@
         <source>Model type</source>
         <target>Modelltípus</target>
       </trans-unit>
-      <trans-unit id="s97e4c519fa4905f9">
-        <source>SIR</source>
-        <target>SIR</target>
-      </trans-unit>
       <trans-unit id="s6f54d7620146d1b1">
         <source>Quarantine</source>
         <target>Karantén</target>
@@ -184,10 +181,6 @@
       <trans-unit id="sfc12d40fe5fa5f7d">
         <source>No snapshots yet.</source>
         <target>Még nincsenek pillanatképek.</target>
-      </trans-unit>
-      <trans-unit id="s716a6024e3fe999c">
-        <source>Show</source>
-        <target>Megjelenítés</target>
       </trans-unit>
       <trans-unit id="sc94818fddfdfdbc6">
         <source>SIR insights</source>
@@ -240,22 +233,6 @@
       <trans-unit id="s5fef8fa88777bdec">
         <source>Current dead</source>
         <target>Eddig elhunytak</target>
-      </trans-unit>
-      <trans-unit id="s62c095244a149fde">
-        <source>SIRS</source>
-        <target>SIRS</target>
-      </trans-unit>
-      <trans-unit id="s4215a8243823eda2">
-        <source>SEIR</source>
-        <target>SEIR</target>
-      </trans-unit>
-      <trans-unit id="s62c0a8244a14c027">
-        <source>SIRD</source>
-        <target>SIRD</target>
-      </trans-unit>
-      <trans-unit id="s6eba9b8b650d3dd2">
-        <source>SEIRD</source>
-        <target>SEIRD</target>
       </trans-unit>
       <trans-unit id="s7a3c4c7e8b923c76">
         <source>Drag this hotspot into the simulation map.</source>
@@ -315,6 +292,52 @@
   <target>nap</target>
   <note from="lit-localize">Unit abbreviation for days, shown after a number</note>
 </trans-unit>
-    </body>
+<trans-unit id="s9f744a5dec575b76">
+  <source>Simulation map. Enter selects the next hotspot, arrow keys move it, Delete removes it.</source>
+  <target>Szimulációs térkép. Az Enter kiválasztja a következő gócpontot, a nyílbillentyűk mozgatják, a Delete törli.</target>
+</trans-unit>
+<trans-unit id="s97e4c519fa4905f9">
+        <source>SIR</source>
+        <target>SIR</target>
+      </trans-unit>
+<trans-unit id="s716a6024e3fe999c">
+        <source>Show</source>
+        <target>Megjelenítés</target>
+      </trans-unit>
+<trans-unit id="s62c095244a149fde">
+        <source>SIRS</source>
+        <target>SIRS</target>
+      </trans-unit>
+<trans-unit id="s4215a8243823eda2">
+        <source>SEIR</source>
+        <target>SEIR</target>
+      </trans-unit>
+<trans-unit id="s62c0a8244a14c027">
+        <source>SIRD</source>
+        <target>SIRD</target>
+      </trans-unit>
+<trans-unit id="s6eba9b8b650d3dd2">
+        <source>SEIRD</source>
+        <target>SEIRD</target>
+      </trans-unit>
+<trans-unit id="s773eacc0b477d43c">
+  <source>Learner controls</source>
+<target>Tanulói vezérlők</target></trans-unit>
+<trans-unit id="sdc6ec6514ca70ce6">
+  <source>Enable quarantine</source>
+<target>Karantén engedélyezése</target></trans-unit>
+<trans-unit id="s18b7e5266a1b9512">
+  <source>Enable hotspots</source>
+<target>Gócpontok engedélyezése</target></trans-unit>
+<trans-unit id="sdb807487fc2632a0">
+  <source>Maximum agents in a hotspot</source>
+<target>A gócpontban lévő szereplők maximális száma</target></trans-unit>
+<trans-unit id="s7bb14d2609cd9c77">
+  <source>Enable communities</source>
+<target>Közösségek engedélyezése</target></trans-unit>
+<trans-unit id="s542603d2f3836073">
+  <source>Probability of leaving the community</source>
+<target>A közösség elhagyásának valószínűsége</target></trans-unit>
+</body>
   </file>
 </xliff>

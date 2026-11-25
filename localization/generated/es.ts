@@ -2,8 +2,8 @@
     // Do not modify this file by hand!
     // Re-generate this file by running lit-localize
 
-    
-    
+
+
 
     /* eslint-disable no-irregular-whitespace */
     /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -16,7 +16,6 @@
 's2e7ece256ba72b3b': `Indicadores SEIRD`,
 's35264f659ccd236e': `Probabilidad de cuarentena`,
 's355b21b89ce5d9c5': `Detalles`,
-'s4215a8243823eda2': `SEIR`,
 's45615e2718064d48': `Indicadores`,
 's45b0974d18b97957': `Indicadores SIRS`,
 's48e186fb300e5464': `Tiempo`,
@@ -32,15 +31,11 @@
 's5e8250fb85d64c23': `Cerrar`,
 's5fef8fa88777bdec': `Fallecidos hasta ahora`,
 's6144a4a2c984c772': `Población`,
-'s62c095244a149fde': `SIRS`,
-'s62c0a8244a14c027': `SIRD`,
 's65aa7dfb7792b528': `Indicadores SIRD`,
 's6c42c02bb3a76cef': `Restablecer la simulación`,
 's6e526bbb8672e76a': `R0 (aprox.)`,
-'s6eba9b8b650d3dd2': `SEIRD`,
 's6f54d7620146d1b1': `Cuarentena`,
 's6fa549ec31db634a': `La simulación puede terminar antes cuando la epidemia haya acabado`,
-'s716a6024e3fe999c': `Mostrar`,
 's71ffa36b183c46fd': `Probabilidad de infección`,
 's7379168642ff77b3': `Expuestos`,
 's77cc57dd46f7f5cc': `Probabilidad de visitar un punto de encuentro`,
@@ -49,12 +44,12 @@
 's7be45f343cb15665': `Proporción final de recuperados`,
 's8f6ded5587ad8969': `Umbral de inmunidad colectiva`,
 's941a41d587a259fd': `Duración de la inmunidad`,
-'s97e4c519fa4905f9': `SIR`,
 's984d2b333eff760a': `Toca el mapa de simulación para colocar el punto de encuentro.`,
 's99adf8f78a414996': `Comunidades`,
 's9ac5fba6ad7337b9': `Infectados`,
 's9d53ce2c390c880c': `Imagen (PNG)`,
 's9ddf0979f55228fd': `Probabilidad de fallecimiento`,
+'s9f744a5dec575b76': `Mapa de la simulación. Intro selecciona el siguiente foco, las flechas lo mueven y Supr lo elimina.`,
 'sa1cbd47c70068780': `Máx. de personas por punto de encuentro`,
 'sa7d4a2c8f4e43300': `Puntos de encuentro colocados`,
 'sae1c7f13b7c0c47f': `Iniciar`,
@@ -88,4 +83,3 @@
 'sf62c2403c94966db': `Susceptibles actuales`,
 'sfc12d40fe5fa5f7d': `Aún no hay instantáneas.`,
     };
-  

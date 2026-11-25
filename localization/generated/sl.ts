@@ -2,8 +2,8 @@
     // Do not modify this file by hand!
     // Re-generate this file by running lit-localize
 
-    
-    
+
+
 
     /* eslint-disable no-irregular-whitespace */
     /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -16,7 +16,6 @@
 's2e7ece256ba72b3b': `Kazalniki SEIRD`,
 's35264f659ccd236e': `Verjetnost karantene`,
 's355b21b89ce5d9c5': `Podrobnosti`,
-'s4215a8243823eda2': `SEIR`,
 's45615e2718064d48': `Kazalniki`,
 's45b0974d18b97957': `Kazalniki SIRS`,
 's48e186fb300e5464': `Čas`,
@@ -32,15 +31,11 @@
 's5e8250fb85d64c23': `Zapri`,
 's5fef8fa88777bdec': `Umrli do zdaj`,
 's6144a4a2c984c772': `Prebivalstvo`,
-'s62c095244a149fde': `SIRS`,
-'s62c0a8244a14c027': `SIRD`,
 's65aa7dfb7792b528': `Kazalniki SIRD`,
 's6c42c02bb3a76cef': `Ponastavi simulacijo`,
 's6e526bbb8672e76a': `R0 (približno)`,
-'s6eba9b8b650d3dd2': `SEIRD`,
 's6f54d7620146d1b1': `Karantena`,
 's6fa549ec31db634a': `Simulacija se lahko konča prej, ko je epidemije konec`,
-'s716a6024e3fe999c': `Prikaži`,
 's71ffa36b183c46fd': `Verjetnost okužbe`,
 's7379168642ff77b3': `Izpostavljeni`,
 's77cc57dd46f7f5cc': `Verjetnost obiska zbirališča`,
@@ -49,12 +44,12 @@
 's7be45f343cb15665': `Končni delež ozdravljenih`,
 's8f6ded5587ad8969': `Prag čredne imunosti`,
 's941a41d587a259fd': `Trajanje imunosti`,
-'s97e4c519fa4905f9': `SIR`,
 's984d2b333eff760a': `Tapnite zemljevid simulacije, da postavite zbirališče.`,
 's99adf8f78a414996': `Skupnosti`,
 's9ac5fba6ad7337b9': `Okuženi`,
 's9d53ce2c390c880c': `Slika (PNG)`,
 's9ddf0979f55228fd': `Verjetnost smrti`,
+'s9f744a5dec575b76': `Zemljevid simulacije. Enter izbere naslednje žarišče, puščice ga premaknejo, Delete pa odstrani.`,
 'sa1cbd47c70068780': `Najv. število oseb na zbirališču`,
 'sa7d4a2c8f4e43300': `Postavljena zbirališča`,
 'sae1c7f13b7c0c47f': `Zaženi`,
@@ -88,4 +83,3 @@
 'sf62c2403c94966db': `Trenutno dovzetni`,
 'sfc12d40fe5fa5f7d': `Še ni posnetkov.`,
     };
-  

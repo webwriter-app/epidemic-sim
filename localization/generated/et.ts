@@ -2,8 +2,8 @@
     // Do not modify this file by hand!
     // Re-generate this file by running lit-localize
 
-    
-    
+
+
 
     /* eslint-disable no-irregular-whitespace */
     /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -16,7 +16,6 @@
 's2e7ece256ba72b3b': `SEIRD näitajad`,
 's35264f659ccd236e': `Karantiini tõenäosus`,
 's355b21b89ce5d9c5': `Täpsem info`,
-'s4215a8243823eda2': `SEIR`,
 's45615e2718064d48': `Näitajad`,
 's45b0974d18b97957': `SIRS näitajad`,
 's48e186fb300e5464': `Aeg`,
@@ -32,15 +31,11 @@
 's5e8250fb85d64c23': `Sulge`,
 's5fef8fa88777bdec': `Surnud praeguseks`,
 's6144a4a2c984c772': `Elanikkond`,
-'s62c095244a149fde': `SIRS`,
-'s62c0a8244a14c027': `SIRD`,
 's65aa7dfb7792b528': `SIRD näitajad`,
 's6c42c02bb3a76cef': `Lähtesta simulatsioon`,
 's6e526bbb8672e76a': `R0 (ligikaudu)`,
-'s6eba9b8b650d3dd2': `SEIRD`,
 's6f54d7620146d1b1': `Karantiin`,
 's6fa549ec31db634a': `Simulatsioon võib lõppeda varem, kui epideemia on möödas`,
-'s716a6024e3fe999c': `Näita`,
 's71ffa36b183c46fd': `Nakatumise tõenäosus`,
 's7379168642ff77b3': `Kokkupuutunud`,
 's77cc57dd46f7f5cc': `Kogunemiskoha külastamise tõenäosus`,
@@ -49,12 +44,12 @@
 's7be45f343cb15665': `Paranenute lõplik osakaal`,
 's8f6ded5587ad8969': `Karjaimmuunsuse lävi`,
 's941a41d587a259fd': `Immuunsuse kestus`,
-'s97e4c519fa4905f9': `SIR`,
 's984d2b333eff760a': `Puudutage simulatsioonikaarti, et kogunemiskoht paigutada.`,
 's99adf8f78a414996': `Kogukonnad`,
 's9ac5fba6ad7337b9': `Nakatunud`,
 's9d53ce2c390c880c': `Pilt (PNG)`,
 's9ddf0979f55228fd': `Suremise tõenäosus`,
+'s9f744a5dec575b76': `Simulatsiooni kaart. Enter valib järgmise kolde, nooleklahvid liigutavad seda ja Delete eemaldab selle.`,
 'sa1cbd47c70068780': `Max inimesi kogunemiskohas`,
 'sa7d4a2c8f4e43300': `Paigutatud kogunemiskohad`,
 'sae1c7f13b7c0c47f': `Käivita`,
@@ -88,4 +83,3 @@
 'sf62c2403c94966db': `Praegu vastuvõtlikud`,
 'sfc12d40fe5fa5f7d': `Hetktõmmiseid veel pole.`,
     };
-  

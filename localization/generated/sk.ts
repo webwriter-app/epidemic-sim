@@ -2,8 +2,8 @@
     // Do not modify this file by hand!
     // Re-generate this file by running lit-localize
 
-    
-    
+
+
 
     /* eslint-disable no-irregular-whitespace */
     /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -16,7 +16,6 @@
 's2e7ece256ba72b3b': `Ukazovatele SEIRD`,
 's35264f659ccd236e': `Pravdepodobnosť karantény`,
 's355b21b89ce5d9c5': `Podrobnosti`,
-'s4215a8243823eda2': `SEIR`,
 's45615e2718064d48': `Ukazovatele`,
 's45b0974d18b97957': `Ukazovatele SIRS`,
 's48e186fb300e5464': `Čas`,
@@ -32,15 +31,11 @@
 's5e8250fb85d64c23': `Zatvoriť`,
 's5fef8fa88777bdec': `Doteraz zomrelí`,
 's6144a4a2c984c772': `Počet obyvateľov`,
-'s62c095244a149fde': `SIRS`,
-'s62c0a8244a14c027': `SIRD`,
 's65aa7dfb7792b528': `Ukazovatele SIRD`,
 's6c42c02bb3a76cef': `Resetovať simuláciu`,
 's6e526bbb8672e76a': `R0 (približne)`,
-'s6eba9b8b650d3dd2': `SEIRD`,
 's6f54d7620146d1b1': `Karanténa`,
 's6fa549ec31db634a': `Simulácia môže skončiť skôr, keď epidémia skončí`,
-'s716a6024e3fe999c': `Zobraziť`,
 's71ffa36b183c46fd': `Pravdepodobnosť infekcie`,
 's7379168642ff77b3': `Exponovaní`,
 's77cc57dd46f7f5cc': `Pravdepodobnosť návštevy miesta stretávania`,
@@ -49,12 +44,12 @@
 's7be45f343cb15665': `Konečný podiel uzdravených`,
 's8f6ded5587ad8969': `Prah kolektívnej imunity`,
 's941a41d587a259fd': `Trvanie imunity`,
-'s97e4c519fa4905f9': `SIR`,
 's984d2b333eff760a': `Ťuknutím na mapu simulácie umiestnite miesto stretávania.`,
 's99adf8f78a414996': `Komunity`,
 's9ac5fba6ad7337b9': `Nakazení`,
 's9d53ce2c390c880c': `Obrázok (PNG)`,
 's9ddf0979f55228fd': `Pravdepodobnosť úmrtia`,
+'s9f744a5dec575b76': `Mapa simulácie. Enter vyberie ďalšie ohnisko, šípky ho posunú a Delete ho odstráni.`,
 'sa1cbd47c70068780': `Max. počet osôb v mieste stretávania`,
 'sa7d4a2c8f4e43300': `Umiestnené miesta stretávania`,
 'sae1c7f13b7c0c47f': `Spustiť`,
@@ -88,4 +83,3 @@
 'sf62c2403c94966db': `Aktuálne vnímaví`,
 'sfc12d40fe5fa5f7d': `Zatiaľ žiadne snímky.`,
     };
-  

@@ -2,8 +2,8 @@
     // Do not modify this file by hand!
     // Re-generate this file by running lit-localize
 
-    
-    
+
+
 
     /* eslint-disable no-irregular-whitespace */
     /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -16,7 +16,6 @@
 's2e7ece256ba72b3b': `SEIRD 지표`,
 's35264f659ccd236e': `격리 확률`,
 's355b21b89ce5d9c5': `상세 정보`,
-'s4215a8243823eda2': `SEIR`,
 's45615e2718064d48': `지표`,
 's45b0974d18b97957': `SIRS 지표`,
 's48e186fb300e5464': `시간`,
@@ -32,15 +31,11 @@
 's5e8250fb85d64c23': `닫기`,
 's5fef8fa88777bdec': `현재 사망자`,
 's6144a4a2c984c772': `인구`,
-'s62c095244a149fde': `SIRS`,
-'s62c0a8244a14c027': `SIRD`,
 's65aa7dfb7792b528': `SIRD 지표`,
 's6c42c02bb3a76cef': `시뮬레이션 초기화`,
 's6e526bbb8672e76a': `R0 (근삿값)`,
-'s6eba9b8b650d3dd2': `SEIRD`,
 's6f54d7620146d1b1': `격리`,
 's6fa549ec31db634a': `전염병이 종식되면 시뮬레이션이 더 일찍 끝날 수 있습니다`,
-'s716a6024e3fe999c': `표시`,
 's71ffa36b183c46fd': `감염 확률`,
 's7379168642ff77b3': `노출자`,
 's77cc57dd46f7f5cc': `핫스팟 방문 확률`,
@@ -49,12 +44,12 @@
 's7be45f343cb15665': `최종 회복자 비율`,
 's8f6ded5587ad8969': `집단 면역 임계치`,
 's941a41d587a259fd': `면역 지속 기간`,
-'s97e4c519fa4905f9': `SIR`,
 's984d2b333eff760a': `시뮬레이션 지도를 탭하여 핫스팟을 배치하세요.`,
 's99adf8f78a414996': `커뮤니티`,
 's9ac5fba6ad7337b9': `감염자`,
 's9d53ce2c390c880c': `이미지 (PNG)`,
 's9ddf0979f55228fd': `사망 확률`,
+'s9f744a5dec575b76': `시뮬레이션 지도. Enter로 다음 발생 지점을 선택하고, 방향키로 이동하고, Delete로 삭제합니다.`,
 'sa1cbd47c70068780': `핫스팟당 최대 인원`,
 'sa7d4a2c8f4e43300': `배치된 핫스팟`,
 'sae1c7f13b7c0c47f': `시작`,
@@ -88,4 +83,3 @@
 'sf62c2403c94966db': `현재 감수성자`,
 'sfc12d40fe5fa5f7d': `아직 스냅샷이 없습니다.`,
     };
-  

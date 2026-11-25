@@ -2,8 +2,8 @@
     // Do not modify this file by hand!
     // Re-generate this file by running lit-localize
 
-    
-    
+
+
 
     /* eslint-disable no-irregular-whitespace */
     /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -16,7 +16,6 @@
 's2e7ece256ba72b3b': `SEIRD-nøgletal`,
 's35264f659ccd236e': `Sandsynlighed for karantæne`,
 's355b21b89ce5d9c5': `Detaljer`,
-'s4215a8243823eda2': `SEIR`,
 's45615e2718064d48': `Nøgletal`,
 's45b0974d18b97957': `SIRS-nøgletal`,
 's48e186fb300e5464': `Tid`,
@@ -32,15 +31,11 @@
 's5e8250fb85d64c23': `Luk`,
 's5fef8fa88777bdec': `Døde indtil nu`,
 's6144a4a2c984c772': `Befolkning`,
-'s62c095244a149fde': `SIRS`,
-'s62c0a8244a14c027': `SIRD`,
 's65aa7dfb7792b528': `SIRD-nøgletal`,
 's6c42c02bb3a76cef': `Nulstil simuleringen`,
 's6e526bbb8672e76a': `R0 (ca.)`,
-'s6eba9b8b650d3dd2': `SEIRD`,
 's6f54d7620146d1b1': `Karantæne`,
 's6fa549ec31db634a': `Simuleringen kan slutte tidligere, når epidemien er ovre`,
-'s716a6024e3fe999c': `Vis`,
 's71ffa36b183c46fd': `Sandsynlighed for smitte`,
 's7379168642ff77b3': `Eksponerede`,
 's77cc57dd46f7f5cc': `Sandsynlighed for besøg på hotspot`,
@@ -49,12 +44,12 @@
 's7be45f343cb15665': `Endelig andel raske`,
 's8f6ded5587ad8969': `Tærskel for flokimmunitet`,
 's941a41d587a259fd': `Immunitetens varighed`,
-'s97e4c519fa4905f9': `SIR`,
 's984d2b333eff760a': `Tryk på simuleringskortet for at placere hotspottet.`,
 's99adf8f78a414996': `Fællesskaber`,
 's9ac5fba6ad7337b9': `Smittede`,
 's9d53ce2c390c880c': `Billede (PNG)`,
 's9ddf0979f55228fd': `Sandsynlighed for død`,
+'s9f744a5dec575b76': `Simulationskort. Enter vælger det næste hotspot, piletasterne flytter det, og Delete fjerner det.`,
 'sa1cbd47c70068780': `Maks. personer pr. hotspot`,
 'sa7d4a2c8f4e43300': `Placerede hotspots`,
 'sae1c7f13b7c0c47f': `Start`,
@@ -88,4 +83,3 @@
 'sf62c2403c94966db': `Modtagelige nu`,
 'sfc12d40fe5fa5f7d': `Ingen øjebliksbilleder endnu.`,
     };
-  

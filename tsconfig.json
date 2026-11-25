@@ -1,9 +1,4 @@
 {
-  "compilerOptions": {
-    "experimentalDecorators": true,
-    "target": "es2022",
-    "moduleResolution": "Bundler",
-    "module": "ES2022",
-    "types": ["mocha"]
-  }
+  "extends": "@webwriter/build/tsconfig.json",
+  "include": ["src", "tests"]
 }

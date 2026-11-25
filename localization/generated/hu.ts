@@ -2,8 +2,8 @@
     // Do not modify this file by hand!
     // Re-generate this file by running lit-localize
 
-    
-    
+
+
 
     /* eslint-disable no-irregular-whitespace */
     /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -16,7 +16,6 @@
 's2e7ece256ba72b3b': `SEIRD-mutatók`,
 's35264f659ccd236e': `Karantén valószínűsége`,
 's355b21b89ce5d9c5': `Részletek`,
-'s4215a8243823eda2': `SEIR`,
 's45615e2718064d48': `Mutatók`,
 's45b0974d18b97957': `SIRS-mutatók`,
 's48e186fb300e5464': `Idő`,
@@ -32,15 +31,11 @@
 's5e8250fb85d64c23': `Bezárás`,
 's5fef8fa88777bdec': `Eddig elhunytak`,
 's6144a4a2c984c772': `Népesség`,
-'s62c095244a149fde': `SIRS`,
-'s62c0a8244a14c027': `SIRD`,
 's65aa7dfb7792b528': `SIRD-mutatók`,
 's6c42c02bb3a76cef': `Szimuláció alaphelyzetbe állítása`,
 's6e526bbb8672e76a': `R0 (kb.)`,
-'s6eba9b8b650d3dd2': `SEIRD`,
 's6f54d7620146d1b1': `Karantén`,
 's6fa549ec31db634a': `A szimuláció korábban is véget érhet, ha a járvány lecseng`,
-'s716a6024e3fe999c': `Megjelenítés`,
 's71ffa36b183c46fd': `A fertőzés valószínűsége`,
 's7379168642ff77b3': `Exponáltak`,
 's77cc57dd46f7f5cc': `Gyülekezőhely felkeresésének valószínűsége`,
@@ -49,12 +44,12 @@
 's7be45f343cb15665': `A gyógyultak végső aránya`,
 's8f6ded5587ad8969': `A nyájimmunitás küszöbe`,
 's941a41d587a259fd': `Az immunitás időtartama`,
-'s97e4c519fa4905f9': `SIR`,
 's984d2b333eff760a': `Koppintson a szimulációs térképre a gyülekezőhely elhelyezéséhez.`,
 's99adf8f78a414996': `Közösségek`,
 's9ac5fba6ad7337b9': `Fertőzöttek`,
 's9d53ce2c390c880c': `Kép (PNG)`,
 's9ddf0979f55228fd': `Halálozási valószínűség`,
+'s9f744a5dec575b76': `Szimulációs térkép. Az Enter kiválasztja a következő gócpontot, a nyílbillentyűk mozgatják, a Delete törli.`,
 'sa1cbd47c70068780': `Max. létszám gyülekezőhelyenként`,
 'sa7d4a2c8f4e43300': `Elhelyezett gyülekezőhelyek`,
 'sae1c7f13b7c0c47f': `Indítás`,
@@ -88,4 +83,3 @@
 'sf62c2403c94966db': `Jelenleg fogékonyak`,
 'sfc12d40fe5fa5f7d': `Még nincsenek pillanatképek.`,
     };
-  

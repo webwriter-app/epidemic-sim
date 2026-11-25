@@ -2,8 +2,8 @@
     // Do not modify this file by hand!
     // Re-generate this file by running lit-localize
 
-    
-    
+
+
 
     /* eslint-disable no-irregular-whitespace */
     /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -16,7 +16,6 @@
 's2e7ece256ba72b3b': `SEIRD-kerncijfers`,
 's35264f659ccd236e': `Kans op quarantaine`,
 's355b21b89ce5d9c5': `Details`,
-'s4215a8243823eda2': `SEIR`,
 's45615e2718064d48': `Kerncijfers`,
 's45b0974d18b97957': `SIRS-kerncijfers`,
 's48e186fb300e5464': `Tijd`,
@@ -32,15 +31,11 @@
 's5e8250fb85d64c23': `Sluiten`,
 's5fef8fa88777bdec': `Overleden tot nu toe`,
 's6144a4a2c984c772': `Bevolking`,
-'s62c095244a149fde': `SIRS`,
-'s62c0a8244a14c027': `SIRD`,
 's65aa7dfb7792b528': `SIRD-kerncijfers`,
 's6c42c02bb3a76cef': `Simulatie resetten`,
 's6e526bbb8672e76a': `R0 (ca.)`,
-'s6eba9b8b650d3dd2': `SEIRD`,
 's6f54d7620146d1b1': `Quarantaine`,
 's6fa549ec31db634a': `De simulatie kan eerder eindigen als de epidemie voorbij is`,
-'s716a6024e3fe999c': `Tonen`,
 's71ffa36b183c46fd': `Kans op infectie`,
 's7379168642ff77b3': `Blootgesteld`,
 's77cc57dd46f7f5cc': `Kans op bezoek aan een hotspot`,
@@ -49,12 +44,12 @@
 's7be45f343cb15665': `Uiteindelijk aandeel herstelden`,
 's8f6ded5587ad8969': `Drempel voor groepsimmuniteit`,
 's941a41d587a259fd': `Duur van de immuniteit`,
-'s97e4c519fa4905f9': `SIR`,
 's984d2b333eff760a': `Tik op de simulatiekaart om de hotspot te plaatsen.`,
 's99adf8f78a414996': `Gemeenschappen`,
 's9ac5fba6ad7337b9': `Besmet`,
 's9d53ce2c390c880c': `Afbeelding (PNG)`,
 's9ddf0979f55228fd': `Kans op overlijden`,
+'s9f744a5dec575b76': `Simulatiekaart. Enter selecteert de volgende hotspot, de pijltjestoetsen verplaatsen die en Delete verwijdert die.`,
 'sa1cbd47c70068780': `Max. personen per hotspot`,
 'sa7d4a2c8f4e43300': `Geplaatste hotspots`,
 'sae1c7f13b7c0c47f': `Start`,
@@ -88,4 +83,3 @@
 'sf62c2403c94966db': `Momenteel vatbaar`,
 'sfc12d40fe5fa5f7d': `Nog geen momentopnamen.`,
     };
-  

@@ -2,8 +2,8 @@
     // Do not modify this file by hand!
     // Re-generate this file by running lit-localize
 
-    
-    
+
+
 
     /* eslint-disable no-irregular-whitespace */
     /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -16,7 +16,6 @@
 's2e7ece256ba72b3b': `Indikator SEIRD`,
 's35264f659ccd236e': `Probabilitas karantina`,
 's355b21b89ce5d9c5': `Rincian`,
-'s4215a8243823eda2': `SEIR`,
 's45615e2718064d48': `Indikator`,
 's45b0974d18b97957': `Indikator SIRS`,
 's48e186fb300e5464': `Waktu`,
@@ -32,15 +31,11 @@
 's5e8250fb85d64c23': `Tutup`,
 's5fef8fa88777bdec': `Meninggal saat ini`,
 's6144a4a2c984c772': `Penduduk`,
-'s62c095244a149fde': `SIRS`,
-'s62c0a8244a14c027': `SIRD`,
 's65aa7dfb7792b528': `Indikator SIRD`,
 's6c42c02bb3a76cef': `Atur ulang simulasi`,
 's6e526bbb8672e76a': `R0 (perkiraan)`,
-'s6eba9b8b650d3dd2': `SEIRD`,
 's6f54d7620146d1b1': `Karantina`,
 's6fa549ec31db634a': `Simulasi dapat berakhir lebih awal jika epidemi telah selesai`,
-'s716a6024e3fe999c': `Tampilkan`,
 's71ffa36b183c46fd': `Kemungkinan terinfeksi`,
 's7379168642ff77b3': `Terpapar`,
 's77cc57dd46f7f5cc': `Probabilitas mengunjungi titik kumpul`,
@@ -49,12 +44,12 @@
 's7be45f343cb15665': `Proporsi akhir yang sembuh`,
 's8f6ded5587ad8969': `Ambang kekebalan kelompok`,
 's941a41d587a259fd': `Lama kekebalan`,
-'s97e4c519fa4905f9': `SIR`,
 's984d2b333eff760a': `Ketuk peta simulasi untuk menempatkan titik kumpul.`,
 's99adf8f78a414996': `Komunitas`,
 's9ac5fba6ad7337b9': `Terinfeksi`,
 's9d53ce2c390c880c': `Gambar (PNG)`,
 's9ddf0979f55228fd': `Probabilitas kematian`,
+'s9f744a5dec575b76': `Peta simulasi. Enter memilih titik panas berikutnya, tombol panah memindahkannya, dan Delete menghapusnya.`,
 'sa1cbd47c70068780': `Maks. orang per titik kumpul`,
 'sa7d4a2c8f4e43300': `Titik kumpul yang ditempatkan`,
 'sae1c7f13b7c0c47f': `Mulai`,
@@ -88,4 +83,3 @@
 'sf62c2403c94966db': `Rentan saat ini`,
 'sfc12d40fe5fa5f7d': `Belum ada cuplikan.`,
     };
-  

@@ -2,8 +2,8 @@
     // Do not modify this file by hand!
     // Re-generate this file by running lit-localize
 
-    
-    
+
+
 
     /* eslint-disable no-irregular-whitespace */
     /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -16,7 +16,6 @@
 's2e7ece256ba72b3b': `SEIRD rādītāji`,
 's35264f659ccd236e': `Karantīnas varbūtība`,
 's355b21b89ce5d9c5': `Sīkāka informācija`,
-'s4215a8243823eda2': `SEIR`,
 's45615e2718064d48': `Rādītāji`,
 's45b0974d18b97957': `SIRS rādītāji`,
 's48e186fb300e5464': `Laiks`,
@@ -32,15 +31,11 @@
 's5e8250fb85d64c23': `Aizvērt`,
 's5fef8fa88777bdec': `Mirušie līdz šim`,
 's6144a4a2c984c772': `Iedzīvotāji`,
-'s62c095244a149fde': `SIRS`,
-'s62c0a8244a14c027': `SIRD`,
 's65aa7dfb7792b528': `SIRD rādītāji`,
 's6c42c02bb3a76cef': `Atiestatīt simulāciju`,
 's6e526bbb8672e76a': `R0 (aptuveni)`,
-'s6eba9b8b650d3dd2': `SEIRD`,
 's6f54d7620146d1b1': `Karantīna`,
 's6fa549ec31db634a': `Simulācija var beigties agrāk, ja epidēmija ir beigusies`,
-'s716a6024e3fe999c': `Rādīt`,
 's71ffa36b183c46fd': `Inficēšanās varbūtība`,
 's7379168642ff77b3': `Pakļautie`,
 's77cc57dd46f7f5cc': `Pulcēšanās vietas apmeklējuma varbūtība`,
@@ -49,12 +44,12 @@
 's7be45f343cb15665': `Izveseļojušos galīgā daļa`,
 's8f6ded5587ad8969': `Ganāmpulka imunitātes slieksnis`,
 's941a41d587a259fd': `Imunitātes ilgums`,
-'s97e4c519fa4905f9': `SIR`,
 's984d2b333eff760a': `Pieskarieties simulācijas kartei, lai novietotu pulcēšanās vietu.`,
 's99adf8f78a414996': `Kopienas`,
 's9ac5fba6ad7337b9': `Inficētie`,
 's9d53ce2c390c880c': `Attēls (PNG)`,
 's9ddf0979f55228fd': `Nāves varbūtība`,
+'s9f744a5dec575b76': `Simulācijas karte. Ar Enter atlasa nākamo perēkli, ar bulttaustiņiem to pārvieto un ar Delete to dzēš.`,
 'sa1cbd47c70068780': `Maks. cilvēku skaits pulcēšanās vietā`,
 'sa7d4a2c8f4e43300': `Novietotās pulcēšanās vietas`,
 'sae1c7f13b7c0c47f': `Sākt`,
@@ -88,4 +83,3 @@
 'sf62c2403c94966db': `Pašlaik uzņēmīgie`,
 'sfc12d40fe5fa5f7d': `Vēl nav momentuzņēmumu.`,
     };
-  
