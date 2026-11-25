@@ -2,8 +2,8 @@
     // Do not modify this file by hand!
     // Re-generate this file by running lit-localize
 
-    
-    
+
+
 
     /* eslint-disable no-irregular-whitespace */
     /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -12,19 +12,16 @@
       's00ae53430e6c31cb': `SEIR müşahidələri`,
 's061cc20e3432dead': `Fasilə`,
 's09943be8697420ce': `Sağalma müddəti`,
-'s18b7e5266a1b9512': `Ocaqları aktiv et`,
 's20c7305417726e5a': `Sağalan`,
 's2e7ece256ba72b3b': `SEIRD müşahidələri`,
 's35264f659ccd236e': `Karantin ehtimalı`,
 's355b21b89ce5d9c5': `Təfərrüatlar`,
-'s4215a8243823eda2': `SEIR`,
 's45615e2718064d48': `Müşahidələr`,
 's45b0974d18b97957': `SIRS müşahidələri`,
 's48e186fb300e5464': `Vaxt`,
 's4b10acae683d2978': `Tam ekran`,
 's4f1a78fbc7a2da7a': `Hazırda yoluxmaya məruz qalanlar`,
 's5334c0927cf25b86': `Tam ekrandan çıx`,
-'s542603d2f3836073': `İcmadan ayrılma ehtimalı`,
 's5712f84064913c57': `Karantin müddəti`,
 's5aa43edcf11f09af': `İnkubasiya müddəti`,
 's5ba7326ba78af02e': `Model növü`,
@@ -34,31 +31,25 @@
 's5e8250fb85d64c23': `Bağla`,
 's5fef8fa88777bdec': `Hazırda ölənlər`,
 's6144a4a2c984c772': `Əhali`,
-'s62c095244a149fde': `SIRS`,
-'s62c0a8244a14c027': `SIRD`,
 's65aa7dfb7792b528': `SIRD müşahidələri`,
 's6c42c02bb3a76cef': `Simulyasiyanı sıfırla`,
 's6e526bbb8672e76a': `R0 (təxmini)`,
-'s6eba9b8b650d3dd2': `SEIRD`,
 's6f54d7620146d1b1': `Karantin`,
 's6fa549ec31db634a': `Epidemiya bitdikdə simulyasiya daha tez başa çata bilər`,
-'s716a6024e3fe999c': `Göstər`,
 's71ffa36b183c46fd': `Yoluxma ehtimalı`,
 's7379168642ff77b3': `Yoluxmaya məruz qalan`,
-'s773eacc0b477d43c': `Öyrənən üçün idarəetmələr`,
 's77cc57dd46f7f5cc': `Ocağa baş çəkmə ehtimalı`,
 's7a3c4c7e8b923c76': `Bu ocağı simulyasiya xəritəsinə sürükləyin.`,
 's7b564dc9f5db9ad8': `Yoluxma radiusu`,
-'s7bb14d2609cd9c77': `İcmaları aktiv et`,
 's7be45f343cb15665': `Sonda sağalanların payı`,
 's8f6ded5587ad8969': `Kollektiv immunitet həddi`,
 's941a41d587a259fd': `İmmunitet müddəti`,
-'s97e4c519fa4905f9': `SIR`,
 's984d2b333eff760a': `Ocağı yerləşdirmək üçün simulyasiya xəritəsinə toxunun.`,
 's99adf8f78a414996': `İcmalar`,
 's9ac5fba6ad7337b9': `Yoluxan`,
 's9d53ce2c390c880c': `Şəkil (PNG)`,
 's9ddf0979f55228fd': `Ölüm ehtimalı`,
+'s9f744a5dec575b76': `Simulyasiya xəritəsi. Enter növbəti ocağı seçir, ox düymələri onu köçürür, Delete isə silir.`,
 'sa1cbd47c70068780': `Ocaqdakı maksimum agent sayı`,
 'sa7d4a2c8f4e43300': `Yerləşdirilmiş ocaqlar`,
 'sae1c7f13b7c0c47f': `Başlanğıc`,
@@ -82,9 +73,7 @@
 'sd3386a2ef42e80b9': `Yüklə`,
 'sd4755728c441b538': `Keçən vaxt`,
 'sd8f1f39f65abba47': `SIR qrafikinin görüntüsü`,
-'sdb807487fc2632a0': `Bir ocaqdakı maksimum agent sayı`,
 'sdc673e73b5c13aea': `Sil`,
-'sdc6ec6514ca70ce6': `Karantini aktiv et`,
 'se0955919920ee87d': `Gün`,
 'se24130f1123560a0': `Sürət`,
 'sed03791dbc19b9c0': `Cədvəl (CSV)`,
@@ -94,4 +83,3 @@
 'sf62c2403c94966db': `Hazırda yoluxa bilənlər`,
 'sfc12d40fe5fa5f7d': `Hələ görüntü yoxdur.`,
     };
-  

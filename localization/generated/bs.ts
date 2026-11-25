@@ -2,8 +2,8 @@
     // Do not modify this file by hand!
     // Re-generate this file by running lit-localize
 
-    
-    
+
+
 
     /* eslint-disable no-irregular-whitespace */
     /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -12,19 +12,16 @@
       's00ae53430e6c31cb': `Uvidi za SEIR`,
 's061cc20e3432dead': `Pauziraj`,
 's09943be8697420ce': `Trajanje oporavka`,
-'s18b7e5266a1b9512': `Omogući žarišta`,
 's20c7305417726e5a': `Oporavljeni`,
 's2e7ece256ba72b3b': `Uvidi za SEIRD`,
 's35264f659ccd236e': `Vjerovatnoća karantene`,
 's355b21b89ce5d9c5': `Detalji`,
-'s4215a8243823eda2': `SEIR`,
 's45615e2718064d48': `Uvidi`,
 's45b0974d18b97957': `Uvidi za SIRS`,
 's48e186fb300e5464': `Vrijeme`,
 's4b10acae683d2978': `Cijeli ekran`,
 's4f1a78fbc7a2da7a': `Trenutačno izloženi`,
 's5334c0927cf25b86': `Izađi iz prikaza preko cijelog zaslona`,
-'s542603d2f3836073': `Vjerovatnoća napuštanja zajednice`,
 's5712f84064913c57': `Trajanje karantene`,
 's5aa43edcf11f09af': `Trajanje inkubacije`,
 's5ba7326ba78af02e': `Vrsta modela`,
@@ -34,31 +31,25 @@
 's5e8250fb85d64c23': `Zatvori`,
 's5fef8fa88777bdec': `Trenutačno preminuli`,
 's6144a4a2c984c772': `Populacija`,
-'s62c095244a149fde': `SIRS`,
-'s62c0a8244a14c027': `SIRD`,
 's65aa7dfb7792b528': `Uvidi za SIRD`,
 's6c42c02bb3a76cef': `Ponovno postavi simulaciju`,
 's6e526bbb8672e76a': `R₀ (približno)`,
-'s6eba9b8b650d3dd2': `SEIRD`,
 's6f54d7620146d1b1': `Karantena`,
 's6fa549ec31db634a': `Simulacija može završiti ranije ako epidemija prestane.`,
-'s716a6024e3fe999c': `Prikaži`,
 's71ffa36b183c46fd': `Vjerovatnoća zaraze`,
 's7379168642ff77b3': `Izloženi`,
-'s773eacc0b477d43c': `Kontrole za učenike`,
 's77cc57dd46f7f5cc': `Vjerovatnoća posjeta žarištu`,
 's7a3c4c7e8b923c76': `Povucite ovo žarište na kartu simulacije.`,
 's7b564dc9f5db9ad8': `Poluprečnik zaraze`,
-'s7bb14d2609cd9c77': `Omogući zajednice`,
 's7be45f343cb15665': `Udio oporavljenih na kraju`,
 's8f6ded5587ad8969': `Prag kolektivnog imuniteta`,
 's941a41d587a259fd': `Trajanje imuniteta`,
-'s97e4c519fa4905f9': `SIR`,
 's984d2b333eff760a': `Dodirnite kartu simulacije da biste postavili žarište.`,
 's99adf8f78a414996': `Zajednice`,
 's9ac5fba6ad7337b9': `Zaraženi`,
 's9d53ce2c390c880c': `Slika (PNG)`,
 's9ddf0979f55228fd': `Vjerovatnoća smrtnog ishoda`,
+'s9f744a5dec575b76': `Karta simulacije. Enter odabire sljedeće žarište, strelice ga pomjeraju, a Delete ga uklanja.`,
 'sa1cbd47c70068780': `Maksimalan broj agenata u žarištu`,
 'sa7d4a2c8f4e43300': `Postavljena žarišta`,
 'sae1c7f13b7c0c47f': `Početak`,
@@ -82,9 +73,7 @@
 'sd3386a2ef42e80b9': `Preuzmi`,
 'sd4755728c441b538': `Proteklo vrijeme`,
 'sd8f1f39f65abba47': `Snimak grafikona SIR-a`,
-'sdb807487fc2632a0': `Maksimalan broj agenata u žarištu`,
 'sdc673e73b5c13aea': `Izbriši`,
-'sdc6ec6514ca70ce6': `Omogući karantenu`,
 'se0955919920ee87d': `Dan`,
 'se24130f1123560a0': `Brzina`,
 'sed03791dbc19b9c0': `Tablica (CSV)`,
@@ -94,4 +83,3 @@
 'sf62c2403c94966db': `Trenutačno osjetljivi`,
 'sfc12d40fe5fa5f7d': `Još nema snimki.`,
     };
-  

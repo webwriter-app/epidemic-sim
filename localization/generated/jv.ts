@@ -2,8 +2,8 @@
     // Do not modify this file by hand!
     // Re-generate this file by running lit-localize
 
-    
-    
+
+
 
     /* eslint-disable no-irregular-whitespace */
     /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -12,19 +12,16 @@
       's00ae53430e6c31cb': `Wawasan SEIR`,
 's061cc20e3432dead': `Ngaso`,
 's09943be8697420ce': `Suwene wektu mari`,
-'s18b7e5266a1b9512': `Aktifake hotspot`,
 's20c7305417726e5a': `Wis mari`,
 's2e7ece256ba72b3b': `Wawasan SEIRD`,
 's35264f659ccd236e': `Kemungkinan karantina`,
 's355b21b89ce5d9c5': `Rincian`,
-'s4215a8243823eda2': `SEIR`,
 's45615e2718064d48': `Wawasan`,
 's45b0974d18b97957': `Wawasan SIRS`,
 's48e186fb300e5464': `Wektu`,
 's4b10acae683d2978': `Layar wutuh`,
 's4f1a78fbc7a2da7a': `Saiki kena paparan`,
 's5334c0927cf25b86': `Metu saka layar wutuh`,
-'s542603d2f3836073': `Kemungkinan metu saka komunitas`,
 's5712f84064913c57': `Suwene karantina`,
 's5aa43edcf11f09af': `Suwene inkubasi`,
 's5ba7326ba78af02e': `Jinis model`,
@@ -34,31 +31,25 @@
 's5e8250fb85d64c23': `Tutup`,
 's5fef8fa88777bdec': `Saiki tilar donya`,
 's6144a4a2c984c772': `Populasi`,
-'s62c095244a149fde': `SIRS`,
-'s62c0a8244a14c027': `SIRD`,
 's65aa7dfb7792b528': `Wawasan SIRD`,
 's6c42c02bb3a76cef': `Setel ulang simulasi`,
 's6e526bbb8672e76a': `R0 (kira-kira)`,
-'s6eba9b8b650d3dd2': `SEIRD`,
 's6f54d7620146d1b1': `Karantina`,
 's6fa549ec31db634a': `Simulasi bisa rampung luwih awal nalika epidemi wis rampung`,
-'s716a6024e3fe999c': `Tampilake`,
 's71ffa36b183c46fd': `Kemungkinan infeksi`,
 's7379168642ff77b3': `Kena paparan`,
-'s773eacc0b477d43c': `Kontrol siswa`,
 's77cc57dd46f7f5cc': `Kemungkinan ngunjungi hotspot`,
 's7a3c4c7e8b923c76': `Seret hotspot iki menyang peta simulasi.`,
 's7b564dc9f5db9ad8': `Jangkauan infeksi`,
-'s7bb14d2609cd9c77': `Aktifake komunitas`,
 's7be45f343cb15665': `Pérangan sing mari ing pungkasan`,
 's8f6ded5587ad8969': `Ambang kekebalan kelompok`,
 's941a41d587a259fd': `Suwene kekebalan`,
-'s97e4c519fa4905f9': `SIR`,
 's984d2b333eff760a': `Tutul peta simulasi kanggo nyelehake hotspot.`,
 's99adf8f78a414996': `Komunitas`,
 's9ac5fba6ad7337b9': `Kena infeksi`,
 's9d53ce2c390c880c': `Gambar (PNG)`,
 's9ddf0979f55228fd': `Kemungkinan pati`,
+'s9f744a5dec575b76': `Peta simulasi. Enter milih titik panas sabanjure, tombol panah mindhah, lan Delete mbusak.`,
 'sa1cbd47c70068780': `Agen maksimal ing hotspot`,
 'sa7d4a2c8f4e43300': `Hotspot sing wis dipasang`,
 'sae1c7f13b7c0c47f': `Wiwitan`,
@@ -82,9 +73,7 @@
 'sd3386a2ef42e80b9': `Undhuh`,
 'sd4755728c441b538': `Wektu sing wis lumaku`,
 'sd8f1f39f65abba47': `Potret grafik SIR`,
-'sdb807487fc2632a0': `Agen maksimal ing hotspot`,
 'sdc673e73b5c13aea': `Busak`,
-'sdc6ec6514ca70ce6': `Aktifake karantina`,
 'se0955919920ee87d': `Dina`,
 'se24130f1123560a0': `Kacepetan`,
 'sed03791dbc19b9c0': `Tabel (CSV)`,
@@ -94,4 +83,3 @@
 'sf62c2403c94966db': `Saiki rentan`,
 'sfc12d40fe5fa5f7d': `Durung ana potret.`,
     };
-  

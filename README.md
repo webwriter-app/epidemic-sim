@@ -1,7 +1,7 @@
 # Epidemic Sim (`@webwriter/epidemic-sim@2.0.0`)
 [License: MIT](LICENSE) | Version: 2.0.0
 
-Interactive agent-based epidemic simulation (SIR/SIRS/SEIR/SIRD/SEIRD) for WebWriter explorables, with charts, quarantine, hotspots, and communities.
+Model how diseases spread through populations and explore intervention effects.
 
 ## Snippets
 [Snippets](https://webwriter.app/docs/snippets/snippets/) are examples and templates using the package's widgets.
@@ -116,4 +116,4 @@ npm install @webwriter/epidemic-sim
 
 
 ---
-*Generated with @webwriter/build@1.14.0*
+*Generated with @webwriter/build@1.15.0*

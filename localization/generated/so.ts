@@ -2,8 +2,8 @@
     // Do not modify this file by hand!
     // Re-generate this file by running lit-localize
 
-    
-    
+
+
 
     /* eslint-disable no-irregular-whitespace */
     /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -12,19 +12,16 @@
       's00ae53430e6c31cb': `Natiijooyinka SEIR`,
 's061cc20e3432dead': `Haki`,
 's09943be8697420ce': `Muddada bogsashada`,
-'s18b7e5266a1b9512': `Daar goobaha faafiddu ku badan tahay`,
 's20c7305417726e5a': `Ka bogsaday`,
 's2e7ece256ba72b3b': `Natiijooyinka SEIRD`,
 's35264f659ccd236e': `Suurtagalnimada karantiilka`,
 's355b21b89ce5d9c5': `Faahfaahin`,
-'s4215a8243823eda2': `SEIR`,
 's45615e2718064d48': `Natiijooyinka falanqaynta`,
 's45b0974d18b97957': `Natiijooyinka SIRS`,
 's48e186fb300e5464': `Waqti`,
 's4b10acae683d2978': `Shaashad buuxda`,
 's4f1a78fbc7a2da7a': `Hadda cudurka la kulmay`,
 's5334c0927cf25b86': `Ka bax shaashadda buuxda`,
-'s542603d2f3836073': `Suurtagalnimada ka bixidda bulshada`,
 's5712f84064913c57': `Muddada karantiilka`,
 's5aa43edcf11f09af': `Muddada ka horraysa calaamadaha`,
 's5ba7326ba78af02e': `Nooca qaabka`,
@@ -34,31 +31,25 @@
 's5e8250fb85d64c23': `Xir`,
 's5fef8fa88777bdec': `Ilaa hadda dhintay`,
 's6144a4a2c984c772': `Tirada dadka`,
-'s62c095244a149fde': `SIRS`,
-'s62c0a8244a14c027': `SIRD`,
 's65aa7dfb7792b528': `Natiijooyinka SIRD`,
 's6c42c02bb3a76cef': `Dib u bilow jilidda`,
 's6e526bbb8672e76a': `R0 (qiyaas)`,
-'s6eba9b8b650d3dd2': `SEIRD`,
 's6f54d7620146d1b1': `Karantiil`,
 's6fa549ec31db634a': `Jiliddu hore ayay u dhammaan kartaa haddii cudur-faafku joogsado`,
-'s716a6024e3fe999c': `Muuji`,
 's71ffa36b183c46fd': `Suurtagalnimada qaadista cudurka`,
 's7379168642ff77b3': `Cudurka la kulmay`,
-'s773eacc0b477d43c': `Kontaroollada ardayga`,
 's77cc57dd46f7f5cc': `Suurtagalnimada booqashada goobta faafiddu ku badan tahay`,
 's7a3c4c7e8b923c76': `U jiid goobtan khariidadda jilidda.`,
 's7b564dc9f5db9ad8': `Masaafada gudbinta cudurka`,
-'s7bb14d2609cd9c77': `Daar bulshooyinka`,
 's7be45f343cb15665': `Qaybta ka bogsatay dhammaadka`,
 's8f6ded5587ad8969': `Xadka difaaca guud ee bulshada`,
 's941a41d587a259fd': `Muddada difaaca jirka`,
-'s97e4c519fa4905f9': `SIR`,
 's984d2b333eff760a': `Taabo khariidadda jilidda si aad u dhigto goob faafiddu ku badan tahay.`,
 's99adf8f78a414996': `Bulshooyin`,
 's9ac5fba6ad7337b9': `Cudurka qaba`,
 's9d53ce2c390c880c': `Sawir (PNG)`,
 's9ddf0979f55228fd': `Suurtagalnimada dhimashada`,
+'s9f744a5dec575b76': `Khariidadda jilidda. Enter wuxuu doortaa goobta faafitaanka ee xigta, furayaasha fallaadhuhu way dhaqaajiyaan, Delete-na wuu tirtiraa.`,
 'sa1cbd47c70068780': `Tirada ugu badan ee dadka goobta faafiddu ku badan tahay`,
 'sa7d4a2c8f4e43300': `Goobaha faafiddu ku badan tahay ee la dhigay`,
 'sae1c7f13b7c0c47f': `Bilow`,
@@ -82,9 +73,7 @@
 'sd3386a2ef42e80b9': `Soo deji`,
 'sd4755728c441b538': `Waqtiga tagay`,
 'sd8f1f39f65abba47': `Sawirka jaantuska SIR`,
-'sdb807487fc2632a0': `Tirada ugu badan ee dadka goobta faafiddu ku badan tahay`,
 'sdc673e73b5c13aea': `Tirtir`,
-'sdc6ec6514ca70ce6': `Daar karantiilka`,
 'se0955919920ee87d': `Maalin`,
 'se24130f1123560a0': `Xawaare`,
 'sed03791dbc19b9c0': `Shax (CSV)`,
@@ -94,4 +83,3 @@
 'sf62c2403c94966db': `Hadda cudurka u nugul`,
 'sfc12d40fe5fa5f7d': `Weli wax sawir ah lama qaadin.`,
     };
-  

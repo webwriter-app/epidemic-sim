@@ -2,8 +2,8 @@
     // Do not modify this file by hand!
     // Re-generate this file by running lit-localize
 
-    
-    
+
+
 
     /* eslint-disable no-irregular-whitespace */
     /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -12,19 +12,16 @@
       's00ae53430e6c31cb': `Anàlisis SEIR`,
 's061cc20e3432dead': `Posa en pausa`,
 's09943be8697420ce': `Durada de la recuperació`,
-'s18b7e5266a1b9512': `Activa els focus`,
 's20c7305417726e5a': `Recuperats`,
 's2e7ece256ba72b3b': `Anàlisis SEIRD`,
 's35264f659ccd236e': `Probabilitat de quarantena`,
 's355b21b89ce5d9c5': `Detalls`,
-'s4215a8243823eda2': `SEIR`,
 's45615e2718064d48': `Anàlisis`,
 's45b0974d18b97957': `Anàlisis SIRS`,
 's48e186fb300e5464': `Hora`,
 's4b10acae683d2978': `Pantalla completa`,
 's4f1a78fbc7a2da7a': `Exposats actuals`,
 's5334c0927cf25b86': `Surt de la pantalla completa`,
-'s542603d2f3836073': `Probabilitat d’abandonar la comunitat`,
 's5712f84064913c57': `Durada de la quarantena`,
 's5aa43edcf11f09af': `Durada de la incubació`,
 's5ba7326ba78af02e': `Tipus de model`,
@@ -34,31 +31,25 @@
 's5e8250fb85d64c23': `Tanca`,
 's5fef8fa88777bdec': `Morts actuals`,
 's6144a4a2c984c772': `Població`,
-'s62c095244a149fde': `SIRS`,
-'s62c0a8244a14c027': `SIRD`,
 's65aa7dfb7792b528': `Anàlisis SIRD`,
 's6c42c02bb3a76cef': `Reinicia la simulació`,
 's6e526bbb8672e76a': `R₀ (aprox.)`,
-'s6eba9b8b650d3dd2': `SEIRD`,
 's6f54d7620146d1b1': `Quarantena`,
 's6fa549ec31db634a': `La simulació pot acabar abans si l’epidèmia s’ha acabat.`,
-'s716a6024e3fe999c': `Mostra`,
 's71ffa36b183c46fd': `Probabilitat d’infecció`,
 's7379168642ff77b3': `Exposats`,
-'s773eacc0b477d43c': `Controls per a l’alumnat`,
 's77cc57dd46f7f5cc': `Probabilitat de visitar un focus`,
 's7a3c4c7e8b923c76': `Arrossega aquest focus fins al mapa de simulació.`,
 's7b564dc9f5db9ad8': `Radi d’infecció`,
-'s7bb14d2609cd9c77': `Activa les comunitats`,
 's7be45f343cb15665': `Percentatge final de recuperats`,
 's8f6ded5587ad8969': `Llindar d’immunitat de grup`,
 's941a41d587a259fd': `Durada de la immunitat`,
-'s97e4c519fa4905f9': `SIR`,
 's984d2b333eff760a': `Toca el mapa de simulació per col·locar-hi el focus.`,
 's99adf8f78a414996': `Comunitats`,
 's9ac5fba6ad7337b9': `Infectats`,
 's9d53ce2c390c880c': `Imatge (PNG)`,
 's9ddf0979f55228fd': `Probabilitat de mortalitat`,
+'s9f744a5dec575b76': `Mapa de la simulació. Retorn selecciona el focus següent, les fletxes el mouen i Supr l'elimina.`,
 'sa1cbd47c70068780': `Nombre màxim d’agents en un focus`,
 'sa7d4a2c8f4e43300': `Focus col·locats`,
 'sae1c7f13b7c0c47f': `Inici`,
@@ -82,9 +73,7 @@
 'sd3386a2ef42e80b9': `Baixa`,
 'sd4755728c441b538': `Temps transcorregut`,
 'sd8f1f39f65abba47': `Captura del gràfic SIR`,
-'sdb807487fc2632a0': `Nombre màxim d’agents en un focus`,
 'sdc673e73b5c13aea': `Suprimeix`,
-'sdc6ec6514ca70ce6': `Activa la quarantena`,
 'se0955919920ee87d': `Dia`,
 'se24130f1123560a0': `Velocitat`,
 'sed03791dbc19b9c0': `Taula (CSV)`,
@@ -94,4 +83,3 @@
 'sf62c2403c94966db': `Susceptibles actuals`,
 'sfc12d40fe5fa5f7d': `Encara no hi ha captures.`,
     };
-  

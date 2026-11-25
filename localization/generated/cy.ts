@@ -2,8 +2,8 @@
     // Do not modify this file by hand!
     // Re-generate this file by running lit-localize
 
-    
-    
+
+
 
     /* eslint-disable no-irregular-whitespace */
     /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -12,19 +12,16 @@
       's00ae53430e6c31cb': `Mewnwelediadau SEIR`,
 's061cc20e3432dead': `Oedi`,
 's09943be8697420ce': `Hyd yr adferiad`,
-'s18b7e5266a1b9512': `Galluogi mannau poeth`,
 's20c7305417726e5a': `Wedi gwella`,
 's2e7ece256ba72b3b': `Mewnwelediadau SEIRD`,
 's35264f659ccd236e': `Tebygolrwydd cwarantin`,
 's355b21b89ce5d9c5': `Manylion`,
-'s4215a8243823eda2': `SEIR`,
 's45615e2718064d48': `Mewnwelediadau`,
 's45b0974d18b97957': `Mewnwelediadau SIRS`,
 's48e186fb300e5464': `Amser`,
 's4b10acae683d2978': `Sgrin lawn`,
 's4f1a78fbc7a2da7a': `Wedi’u hamlygu ar hyn o bryd`,
 's5334c0927cf25b86': `Gadael sgrin lawn`,
-'s542603d2f3836073': `Tebygolrwydd gadael y gymuned`,
 's5712f84064913c57': `Hyd cwarantin`,
 's5aa43edcf11f09af': `Hyd y cyfnod magu`,
 's5ba7326ba78af02e': `Math o fodel`,
@@ -34,31 +31,25 @@
 's5e8250fb85d64c23': `Cau`,
 's5fef8fa88777bdec': `Wedi marw ar hyn o bryd`,
 's6144a4a2c984c772': `Poblogaeth`,
-'s62c095244a149fde': `SIRS`,
-'s62c0a8244a14c027': `SIRD`,
 's65aa7dfb7792b528': `Mewnwelediadau SIRD`,
 's6c42c02bb3a76cef': `Ailosod yr efelychiad`,
 's6e526bbb8672e76a': `R₀ (tua)`,
-'s6eba9b8b650d3dd2': `SEIRD`,
 's6f54d7620146d1b1': `Cwarantin`,
 's6fa549ec31db634a': `Gall yr efelychiad ddod i ben yn gynt pan fydd yr epidemig drosodd.`,
-'s716a6024e3fe999c': `Dangos`,
 's71ffa36b183c46fd': `Tebygolrwydd heintio`,
 's7379168642ff77b3': `Wedi’u hamlygu`,
-'s773eacc0b477d43c': `Rheolyddion dysgwyr`,
 's77cc57dd46f7f5cc': `Tebygolrwydd ymweld â man poeth`,
 's7a3c4c7e8b923c76': `Llusgwch y man poeth hwn i fap yr efelychiad.`,
 's7b564dc9f5db9ad8': `Radiws haint`,
-'s7bb14d2609cd9c77': `Galluogi cymunedau`,
 's7be45f343cb15665': `Cyfran derfynol y rhai a wellodd`,
 's8f6ded5587ad8969': `Trothwy imiwnedd torfol`,
 's941a41d587a259fd': `Hyd imiwnedd`,
-'s97e4c519fa4905f9': `SIR`,
 's984d2b333eff760a': `Tapiwch fap yr efelychiad i osod y man poeth.`,
 's99adf8f78a414996': `Cymunedau`,
 's9ac5fba6ad7337b9': `Wedi’u heintio`,
 's9d53ce2c390c880c': `Delwedd (PNG)`,
 's9ddf0979f55228fd': `Tebygolrwydd marwolaeth`,
+'s9f744a5dec575b76': `Map efelychu. Mae Enter yn dewis y man poeth nesaf, y bysellau saeth yn ei symud a Delete yn ei dynnu.`,
 'sa1cbd47c70068780': `Uchafswm asiantau mewn man poeth`,
 'sa7d4a2c8f4e43300': `Mannau poeth wedi’u gosod`,
 'sae1c7f13b7c0c47f': `Cychwyn`,
@@ -82,9 +73,7 @@
 'sd3386a2ef42e80b9': `Lawrlwytho`,
 'sd4755728c441b538': `Amser wedi mynd heibio`,
 'sd8f1f39f65abba47': `Ciplun o siart SIR`,
-'sdb807487fc2632a0': `Uchafswm asiantau mewn man poeth`,
 'sdc673e73b5c13aea': `Dileu`,
-'sdc6ec6514ca70ce6': `Galluogi cwarantin`,
 'se0955919920ee87d': `Diwrnod`,
 'se24130f1123560a0': `Cyflymder`,
 'sed03791dbc19b9c0': `Tabl (CSV)`,
@@ -94,4 +83,3 @@
 'sf62c2403c94966db': `Agored i niwed ar hyn o bryd`,
 'sfc12d40fe5fa5f7d': `Dim cipluniau eto.`,
     };
-  

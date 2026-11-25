@@ -2,8 +2,8 @@
     // Do not modify this file by hand!
     // Re-generate this file by running lit-localize
 
-    
-    
+
+
 
     /* eslint-disable no-irregular-whitespace */
     /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -12,19 +12,16 @@
       's00ae53430e6c31cb': `Analiza SEIR`,
 's061cc20e3432dead': `Pauzë`,
 's09943be8697420ce': `Kohëzgjatja e shërimit`,
-'s18b7e5266a1b9512': `Aktivizo vatrat`,
 's20c7305417726e5a': `Të shëruar`,
 's2e7ece256ba72b3b': `Analiza SEIRD`,
 's35264f659ccd236e': `Probabiliteti i karantinës`,
 's355b21b89ce5d9c5': `Detajet`,
-'s4215a8243823eda2': `SEIR`,
 's45615e2718064d48': `Analiza`,
 's45b0974d18b97957': `Analiza SIRS`,
 's48e186fb300e5464': `Orë`,
 's4b10acae683d2978': `Ekran i plotë`,
 's4f1a78fbc7a2da7a': `Aktualisht të ekspozuar`,
 's5334c0927cf25b86': `Dil nga ekrani i plotë`,
-'s542603d2f3836073': `Probabiliteti i largimit nga komuniteti`,
 's5712f84064913c57': `Kohëzgjatja e karantinës`,
 's5aa43edcf11f09af': `Kohëzgjatja e inkubacionit`,
 's5ba7326ba78af02e': `Lloji i modelit`,
@@ -34,31 +31,25 @@
 's5e8250fb85d64c23': `Mbyll`,
 's5fef8fa88777bdec': `Aktualisht të vdekur`,
 's6144a4a2c984c772': `Popullsia`,
-'s62c095244a149fde': `SIRS`,
-'s62c0a8244a14c027': `SIRD`,
 's65aa7dfb7792b528': `Analiza SIRD`,
 's6c42c02bb3a76cef': `Rivendos simulimin`,
 's6e526bbb8672e76a': `R₀ (përafërsisht)`,
-'s6eba9b8b650d3dd2': `SEIRD`,
 's6f54d7620146d1b1': `Karantina`,
 's6fa549ec31db634a': `Simulimi mund të përfundojë më herët kur epidemia të ketë mbaruar.`,
-'s716a6024e3fe999c': `Shfaq`,
 's71ffa36b183c46fd': `Probabiliteti i infektimit`,
 's7379168642ff77b3': `Të ekspozuar`,
-'s773eacc0b477d43c': `Kontrollet e nxënësit`,
 's77cc57dd46f7f5cc': `Probabiliteti i vizitës në vatër`,
 's7a3c4c7e8b923c76': `Tërhiqe këtë vatër brenda hartës së simulimit.`,
 's7b564dc9f5db9ad8': `Rrezja e infektimit`,
-'s7bb14d2609cd9c77': `Aktivizo komunitetet`,
 's7be45f343cb15665': `Përqindja përfundimtare e të shëruarve`,
 's8f6ded5587ad8969': `Pragu i imunitetit të tufës`,
 's941a41d587a259fd': `Kohëzgjatja e imunitetit`,
-'s97e4c519fa4905f9': `SIR`,
 's984d2b333eff760a': `Prek hartën e simulimit për të vendosur vatrën.`,
 's99adf8f78a414996': `Komunitetet`,
 's9ac5fba6ad7337b9': `Të infektuar`,
 's9d53ce2c390c880c': `Imazh (PNG)`,
 's9ddf0979f55228fd': `Probabiliteti i vdekshmërisë`,
+'s9f744a5dec575b76': `Harta e simulimit. Enter zgjedh vatrën e radhës, shigjetat e lëvizin dhe Delete e heq.`,
 'sa1cbd47c70068780': `Numri maksimal i agjentëve në vatër`,
 'sa7d4a2c8f4e43300': `Vatrat e vendosura`,
 'sae1c7f13b7c0c47f': `Nisja`,
@@ -82,9 +73,7 @@
 'sd3386a2ef42e80b9': `Shkarko`,
 'sd4755728c441b538': `Koha e kaluar`,
 'sd8f1f39f65abba47': `Pamje e grafikut SIR`,
-'sdb807487fc2632a0': `Numri maksimal i agjentëve në vatër`,
 'sdc673e73b5c13aea': `Fshi`,
-'sdc6ec6514ca70ce6': `Aktivizo karantinën`,
 'se0955919920ee87d': `Dita`,
 'se24130f1123560a0': `Shpejtësia`,
 'sed03791dbc19b9c0': `Tabelë (CSV)`,
@@ -94,4 +83,3 @@
 'sf62c2403c94966db': `Aktualisht të ndjeshëm`,
 'sfc12d40fe5fa5f7d': `Nuk ka ende pamje.`,
     };
-  

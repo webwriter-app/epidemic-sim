@@ -2,8 +2,8 @@
     // Do not modify this file by hand!
     // Re-generate this file by running lit-localize
 
-    
-    
+
+
 
     /* eslint-disable no-irregular-whitespace */
     /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -12,19 +12,16 @@
       's00ae53430e6c31cb': `SEIR-Erkenntnesser`,
 's061cc20e3432dead': `Pauséieren`,
 's09943be8697420ce': `Dauer vun der Erhuelung`,
-'s18b7e5266a1b9512': `Ausbrochspunkten aktivéieren`,
 's20c7305417726e5a': `Erholl`,
 's2e7ece256ba72b3b': `SEIRD-Erkenntnesser`,
 's35264f659ccd236e': `Quarantän-Wahrscheinlechkeet`,
 's355b21b89ce5d9c5': `Detailer`,
-'s4215a8243823eda2': `SEIR`,
 's45615e2718064d48': `Erkenntnesser`,
 's45b0974d18b97957': `SIRS-Erkenntnesser`,
 's48e186fb300e5464': `Auerzäit`,
 's4b10acae683d2978': `Vollbild`,
 's4f1a78fbc7a2da7a': `Aktuell exponéiert`,
 's5334c0927cf25b86': `Vollbild verloossen`,
-'s542603d2f3836073': `Wahrscheinlechkeet, d’Communautéit ze verloossen`,
 's5712f84064913c57': `Dauer vun der Quarantän`,
 's5aa43edcf11f09af': `Dauer vun der Inkubatioun`,
 's5ba7326ba78af02e': `Modelltyp`,
@@ -34,31 +31,25 @@
 's5e8250fb85d64c23': `Zoumaachen`,
 's5fef8fa88777bdec': `Aktuell verstuerwen`,
 's6144a4a2c984c772': `Bevëlkerung`,
-'s62c095244a149fde': `SIRS`,
-'s62c0a8244a14c027': `SIRD`,
 's65aa7dfb7792b528': `SIRD-Erkenntnesser`,
 's6c42c02bb3a76cef': `Simulatioun zrécksetzen`,
 's6e526bbb8672e76a': `R₀ (ongeféier)`,
-'s6eba9b8b650d3dd2': `SEIRD`,
 's6f54d7620146d1b1': `Quarantän`,
 's6fa549ec31db634a': `D’Simulatioun kann éischter ophalen, wann d’Epidemie eriwwer ass.`,
-'s716a6024e3fe999c': `Weisen`,
 's71ffa36b183c46fd': `Infektiouns-Wahrscheinlechkeet`,
 's7379168642ff77b3': `Exponéiert`,
-'s773eacc0b477d43c': `Steierelementer fir Léierender`,
 's77cc57dd46f7f5cc': `Wahrscheinlechkeet, en Ausbrochspunkt ze besichen`,
 's7a3c4c7e8b923c76': `Zitt dësen Ausbrochspunkt op d’Simulatiounskaart.`,
 's7b564dc9f5db9ad8': `Infektiouns-Radius`,
-'s7bb14d2609cd9c77': `Communautéiten aktivéieren`,
 's7be45f343cb15665': `Endgültegen Undeel vun den Erhollenen`,
 's8f6ded5587ad8969': `Schwellwäert vun der Herdenimmunitéit`,
 's941a41d587a259fd': `Dauer vun der Immunitéit`,
-'s97e4c519fa4905f9': `SIR`,
 's984d2b333eff760a': `Tippt op d’Simulatiounskaart, fir den Ausbrochspunkt ze placéieren.`,
 's99adf8f78a414996': `Communautéiten`,
 's9ac5fba6ad7337b9': `Infizéiert`,
 's9d53ce2c390c880c': `Bild (PNG)`,
 's9ddf0979f55228fd': `Stierflechkeets-Wahrscheinlechkeet`,
+'s9f744a5dec575b76': `Simulatiounskaart. Enter wielt den nächsten Hotspot, d'Feiltaste verréckelen en an Delete läscht en.`,
 'sa1cbd47c70068780': `Maximal Unzuel vun Agenten op engem Ausbrochspunkt`,
 'sa7d4a2c8f4e43300': `Placéiert Ausbrochspunkten`,
 'sae1c7f13b7c0c47f': `Start`,
@@ -82,9 +73,7 @@
 'sd3386a2ef42e80b9': `Eroflueden`,
 'sd4755728c441b538': `Vergaangen Zäit`,
 'sd8f1f39f65abba47': `SIR-Grafik-Snapshot`,
-'sdb807487fc2632a0': `Maximal Unzuel vun Agenten op engem Ausbrochspunkt`,
 'sdc673e73b5c13aea': `Läschen`,
-'sdc6ec6514ca70ce6': `Quarantän aktivéieren`,
 'se0955919920ee87d': `Dag`,
 'se24130f1123560a0': `Vitess`,
 'sed03791dbc19b9c0': `Tabell (CSV)`,
@@ -94,4 +83,3 @@
 'sf62c2403c94966db': `Aktuell empfänglech`,
 'sfc12d40fe5fa5f7d': `Et gëtt nach keng Snapshots.`,
     };
-  

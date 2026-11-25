@@ -256,6 +256,10 @@
 <trans-unit id="s542603d2f3836073">
   <source>Probability of leaving the community</source>
 <target>Xác suất rời khỏi cộng đồng</target></trans-unit>
+<trans-unit id="s9f744a5dec575b76">
+  <source>Simulation map. Enter selects the next hotspot, arrow keys move it, Delete removes it.</source>
+  <target>Bản đồ mô phỏng. Enter chọn ổ dịch tiếp theo, các phím mũi tên di chuyển ổ dịch và Delete xóa ổ dịch.</target>
+</trans-unit>
 </body>
 </file>
 </xliff>

@@ -2,8 +2,8 @@
     // Do not modify this file by hand!
     // Re-generate this file by running lit-localize
 
-    
-    
+
+
 
     /* eslint-disable no-irregular-whitespace */
     /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -12,19 +12,16 @@
       's00ae53430e6c31cb': `Innsikter om SEIR`,
 's061cc20e3432dead': `Pause`,
 's09943be8697420ce': `Tid til friskning`,
-'s18b7e5266a1b9512': `Slå på smittepunkt`,
 's20c7305417726e5a': `Friskna`,
 's2e7ece256ba72b3b': `Innsikter om SEIRD`,
 's35264f659ccd236e': `Sannsyn for karantene`,
 's355b21b89ce5d9c5': `Detaljar`,
-'s4215a8243823eda2': `SEIR`,
 's45615e2718064d48': `Innsikter`,
 's45b0974d18b97957': `Innsikter om SIRS`,
 's48e186fb300e5464': `Klokkeslett`,
 's4b10acae683d2978': `Fullskjerm`,
 's4f1a78fbc7a2da7a': `Utsette no`,
 's5334c0927cf25b86': `Gå ut av fullskjerm`,
-'s542603d2f3836073': `Sannsyn for å forlata fellesskapet`,
 's5712f84064913c57': `Lengda på karantenen`,
 's5aa43edcf11f09af': `Lengda på inkubasjonstida`,
 's5ba7326ba78af02e': `Modelltype`,
@@ -34,31 +31,25 @@
 's5e8250fb85d64c23': `Lukk`,
 's5fef8fa88777bdec': `Døde no`,
 's6144a4a2c984c772': `Folketal`,
-'s62c095244a149fde': `SIRS`,
-'s62c0a8244a14c027': `SIRD`,
 's65aa7dfb7792b528': `Innsikter om SIRD`,
 's6c42c02bb3a76cef': `Nullstill simuleringa`,
 's6e526bbb8672e76a': `R₀ (om lag)`,
-'s6eba9b8b650d3dd2': `SEIRD`,
 's6f54d7620146d1b1': `Karantene`,
 's6fa549ec31db634a': `Simuleringa kan ta slutt tidlegare når epidemien er over.`,
-'s716a6024e3fe999c': `Vis`,
 's71ffa36b183c46fd': `Sannsyn for smitte`,
 's7379168642ff77b3': `Utsette`,
-'s773eacc0b477d43c': `Kontrollar for elevar`,
 's77cc57dd46f7f5cc': `Sannsyn for å vitja smittepunktet`,
 's7a3c4c7e8b923c76': `Dra dette smittepunktet inn på simuleringskartet.`,
 's7b564dc9f5db9ad8': `Smittesradius`,
-'s7bb14d2609cd9c77': `Slå på fellesskap`,
 's7be45f343cb15665': `Endeleg del som har friskna`,
 's8f6ded5587ad8969': `Terskel for flokkimmunitet`,
 's941a41d587a259fd': `Lengda på immuniteten`,
-'s97e4c519fa4905f9': `SIR`,
 's984d2b333eff760a': `Trykk på simuleringskartet for å plassere smittepunktet.`,
 's99adf8f78a414996': `Fellesskap`,
 's9ac5fba6ad7337b9': `Smitta`,
 's9d53ce2c390c880c': `Bilete (PNG)`,
 's9ddf0979f55228fd': `Sannsyn for dødsfall`,
+'s9f744a5dec575b76': `Simuleringskart. Enter vel neste hotspot, piltastane flyttar det, og Delete fjernar det.`,
 'sa1cbd47c70068780': `Maksimalt tal på agentar ved eit smittepunkt`,
 'sa7d4a2c8f4e43300': `Plasserte smittepunkt`,
 'sae1c7f13b7c0c47f': `Start`,
@@ -82,9 +73,7 @@
 'sd3386a2ef42e80b9': `Last ned`,
 'sd4755728c441b538': `Gått tid`,
 'sd8f1f39f65abba47': `Skjermbilete av SIR-diagrammet`,
-'sdb807487fc2632a0': `Maksimalt tal på agentar ved eit smittepunkt`,
 'sdc673e73b5c13aea': `Slett`,
-'sdc6ec6514ca70ce6': `Slå på karantene`,
 'se0955919920ee87d': `Dag`,
 'se24130f1123560a0': `Fart`,
 'sed03791dbc19b9c0': `Tabell (CSV)`,
@@ -94,4 +83,3 @@
 'sf62c2403c94966db': `Mottakelege no`,
 'sfc12d40fe5fa5f7d': `Ingen skjermbilete enno.`,
     };
-  

@@ -2,8 +2,8 @@
     // Do not modify this file by hand!
     // Re-generate this file by running lit-localize
 
-    
-    
+
+
 
     /* eslint-disable no-irregular-whitespace */
     /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -12,19 +12,16 @@
       's00ae53430e6c31cb': `SEIR tahlillari`,
 's061cc20e3432dead': `Pauza`,
 's09943be8697420ce': `Tuzalish davomiyligi`,
-'s18b7e5266a1b9512': `O‘choqlarni yoqish`,
 's20c7305417726e5a': `Tuzalgan`,
 's2e7ece256ba72b3b': `SEIRD tahlillari`,
 's35264f659ccd236e': `Karantin ehtimoli`,
 's355b21b89ce5d9c5': `Tafsilotlar`,
-'s4215a8243823eda2': `SEIR`,
 's45615e2718064d48': `Tahlillar`,
 's45b0974d18b97957': `SIRS tahlillari`,
 's48e186fb300e5464': `Vaqt`,
 's4b10acae683d2978': `To‘liq ekran`,
 's4f1a78fbc7a2da7a': `Hozir virus yuqqan`,
 's5334c0927cf25b86': `To‘liq ekrandan chiqish`,
-'s542603d2f3836073': `Jamoadan chiqish ehtimoli`,
 's5712f84064913c57': `Karantin davomiyligi`,
 's5aa43edcf11f09af': `Inkubatsiya davomiyligi`,
 's5ba7326ba78af02e': `Model turi`,
@@ -34,31 +31,25 @@
 's5e8250fb85d64c23': `Yopish`,
 's5fef8fa88777bdec': `Hozir vafot etgan`,
 's6144a4a2c984c772': `Aholi soni`,
-'s62c095244a149fde': `SIRS`,
-'s62c0a8244a14c027': `SIRD`,
 's65aa7dfb7792b528': `SIRD tahlillari`,
 's6c42c02bb3a76cef': `Simulyatsiyani qayta tiklash`,
 's6e526bbb8672e76a': `R0 (taxminan)`,
-'s6eba9b8b650d3dd2': `SEIRD`,
 's6f54d7620146d1b1': `Karantin`,
 's6fa549ec31db634a': `Epidemiya tugasa, simulyatsiya ertaroq yakunlanishi mumkin`,
-'s716a6024e3fe999c': `Ko‘rsatish`,
 's71ffa36b183c46fd': `Yuqtirish ehtimoli`,
 's7379168642ff77b3': `Virus yuqqan`,
-'s773eacc0b477d43c': `O‘quvchi boshqaruvlari`,
 's77cc57dd46f7f5cc': `O‘choqqa tashrif ehtimoli`,
 's7a3c4c7e8b923c76': `Bu o‘choqni simulyatsiya xaritasiga sudrab olib boring.`,
 's7b564dc9f5db9ad8': `Yuqtirish radiusi`,
-'s7bb14d2609cd9c77': `Jamoalarni yoqish`,
 's7be45f343cb15665': `Oxirida tuzalganlar ulushi`,
 's8f6ded5587ad8969': `Jamoaviy immunitet chegarasi`,
 's941a41d587a259fd': `Immunitet davomiyligi`,
-'s97e4c519fa4905f9': `SIR`,
 's984d2b333eff760a': `O‘choqni joylashtirish uchun simulyatsiya xaritasini bosing.`,
 's99adf8f78a414996': `Jamoalar`,
 's9ac5fba6ad7337b9': `Kasallangan`,
 's9d53ce2c390c880c': `Rasm (PNG)`,
 's9ddf0979f55228fd': `O‘lim ehtimoli`,
+'s9f744a5dec575b76': `Simulyatsiya xaritasi. Enter keyingi o‘choqni tanlaydi, strelkali tugmalar uni siljitadi, Delete esa o‘chiradi.`,
 'sa1cbd47c70068780': `O‘choqdagi agentlarning eng ko‘p soni`,
 'sa7d4a2c8f4e43300': `Joylashtirilgan o‘choqlar`,
 'sae1c7f13b7c0c47f': `Boshlash`,
@@ -82,9 +73,7 @@
 'sd3386a2ef42e80b9': `Yuklab olish`,
 'sd4755728c441b538': `O‘tgan vaqt`,
 'sd8f1f39f65abba47': `SIR grafigi surati`,
-'sdb807487fc2632a0': `Bitta o‘choqdagi agentlarning eng ko‘p soni`,
 'sdc673e73b5c13aea': `O‘chirish`,
-'sdc6ec6514ca70ce6': `Karantinni yoqish`,
 'se0955919920ee87d': `Kun`,
 'se24130f1123560a0': `Tezlik`,
 'sed03791dbc19b9c0': `Jadval (CSV)`,
@@ -94,4 +83,3 @@
 'sf62c2403c94966db': `Hozir yuqtirishga moyil`,
 'sfc12d40fe5fa5f7d': `Hozircha suratlar yo‘q.`,
     };
-  

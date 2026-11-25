@@ -2,8 +2,8 @@
     // Do not modify this file by hand!
     // Re-generate this file by running lit-localize
 
-    
-    
+
+
 
     /* eslint-disable no-irregular-whitespace */
     /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -12,19 +12,16 @@
       's00ae53430e6c31cb': `Léargais SEIR`,
 's061cc20e3432dead': `Cuir ar shos`,
 's09943be8697420ce': `Tréimhse téarnaimh`,
-'s18b7e5266a1b9512': `Cumasaigh láithreacha ráige`,
 's20c7305417726e5a': `Tagtha chucu féin`,
 's2e7ece256ba72b3b': `Léargais SEIRD`,
 's35264f659ccd236e': `Dóchúlacht coraintín`,
 's355b21b89ce5d9c5': `Sonraí`,
-'s4215a8243823eda2': `SEIR`,
 's45615e2718064d48': `Léargais`,
 's45b0974d18b97957': `Léargais SIRS`,
 's48e186fb300e5464': `Am`,
 's4b10acae683d2978': `Lánscáileán`,
 's4f1a78fbc7a2da7a': `Nochtaithe faoi láthair`,
 's5334c0927cf25b86': `Scoir den lánscáileán`,
-'s542603d2f3836073': `Dóchúlacht an pobal a fhágáil`,
 's5712f84064913c57': `Fad an choraintín`,
 's5aa43edcf11f09af': `Fad na tréimhse goir`,
 's5ba7326ba78af02e': `Cineál samhla`,
@@ -34,31 +31,25 @@
 's5e8250fb85d64c23': `Dún`,
 's5fef8fa88777bdec': `Marbh faoi láthair`,
 's6144a4a2c984c772': `Daonra`,
-'s62c095244a149fde': `SIRS`,
-'s62c0a8244a14c027': `SIRD`,
 's65aa7dfb7792b528': `Léargais SIRD`,
 's6c42c02bb3a76cef': `Athshocraigh an ionsamhlúchán`,
 's6e526bbb8672e76a': `R₀ (thart ar)`,
-'s6eba9b8b650d3dd2': `SEIRD`,
 's6f54d7620146d1b1': `Coraintín`,
 's6fa549ec31db634a': `Seans go dtiocfaidh deireadh leis an ionsamhlúchán níos luaithe nuair a bheidh an eipidéim thart.`,
-'s716a6024e3fe999c': `Taispeáin`,
 's71ffa36b183c46fd': `Dóchúlacht ionfhabhtaithe`,
 's7379168642ff77b3': `Nochtaithe`,
-'s773eacc0b477d43c': `Rialuithe foghlaimeora`,
 's77cc57dd46f7f5cc': `Dóchúlacht cuairt a thabhairt ar láthair ráige`,
 's7a3c4c7e8b923c76': `Tarraing an láthair ráige seo isteach i léarscáil an ionsamhlúcháin.`,
 's7b564dc9f5db9ad8': `Ga an ionfhabhtaithe`,
-'s7bb14d2609cd9c77': `Cumasaigh pobail`,
 's7be45f343cb15665': `Céatadán deiridh na ndaoine tagtha chucu féin`,
 's8f6ded5587ad8969': `Tairseach na díolúine tréada`,
 's941a41d587a259fd': `Fad na díolúine`,
-'s97e4c519fa4905f9': `SIR`,
 's984d2b333eff760a': `Tapáil léarscáil an ionsamhlúcháin chun an láthair ráige a chur ann.`,
 's99adf8f78a414996': `Pobail`,
 's9ac5fba6ad7337b9': `Ionfhabhtaithe`,
 's9d53ce2c390c880c': `Íomhá (PNG)`,
 's9ddf0979f55228fd': `Dóchúlacht báis`,
+'s9f744a5dec575b76': `Léarscáil insamhalta. Roghnaíonn Enter an chéad bhall te eile, bogann na saigheadeochracha é agus scriosann Delete é.`,
 'sa1cbd47c70068780': `Uaslíon gníomhairí ag láthair ráige`,
 'sa7d4a2c8f4e43300': `Láithreacha ráige curtha`,
 'sae1c7f13b7c0c47f': `Tús`,
@@ -82,9 +73,7 @@
 'sd3386a2ef42e80b9': `Íoslódáil`,
 'sd4755728c441b538': `Am caite`,
 'sd8f1f39f65abba47': `Seat den ghraf SIR`,
-'sdb807487fc2632a0': `Uaslíon gníomhairí ag láthair ráige`,
 'sdc673e73b5c13aea': `Scrios`,
-'sdc6ec6514ca70ce6': `Cumasaigh coraintín`,
 'se0955919920ee87d': `Lá`,
 'se24130f1123560a0': `Luas`,
 'sed03791dbc19b9c0': `Tábla (CSV)`,
@@ -94,4 +83,3 @@
 'sf62c2403c94966db': `Soghonta faoi láthair`,
 'sfc12d40fe5fa5f7d': `Níl aon seatanna ann fós.`,
     };
-  

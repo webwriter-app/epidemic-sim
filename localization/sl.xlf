@@ -166,10 +166,6 @@
         <source>Model type</source>
         <target>Vrsta modela</target>
       </trans-unit>
-      <trans-unit id="s97e4c519fa4905f9">
-        <source>SIR</source>
-        <target>SIR</target>
-      </trans-unit>
       <trans-unit id="s6f54d7620146d1b1">
         <source>Quarantine</source>
         <target>Karantena</target>
@@ -185,10 +181,6 @@
       <trans-unit id="sfc12d40fe5fa5f7d">
         <source>No snapshots yet.</source>
         <target>Še ni posnetkov.</target>
-      </trans-unit>
-      <trans-unit id="s716a6024e3fe999c">
-        <source>Show</source>
-        <target>Prikaži</target>
       </trans-unit>
       <trans-unit id="sc94818fddfdfdbc6">
         <source>SIR insights</source>
@@ -241,22 +233,6 @@
       <trans-unit id="s5fef8fa88777bdec">
         <source>Current dead</source>
         <target>Umrli do zdaj</target>
-      </trans-unit>
-      <trans-unit id="s62c095244a149fde">
-        <source>SIRS</source>
-        <target>SIRS</target>
-      </trans-unit>
-      <trans-unit id="s4215a8243823eda2">
-        <source>SEIR</source>
-        <target>SEIR</target>
-      </trans-unit>
-      <trans-unit id="s62c0a8244a14c027">
-        <source>SIRD</source>
-        <target>SIRD</target>
-      </trans-unit>
-      <trans-unit id="s6eba9b8b650d3dd2">
-        <source>SEIRD</source>
-        <target>SEIRD</target>
       </trans-unit>
       <trans-unit id="s7a3c4c7e8b923c76">
         <source>Drag this hotspot into the simulation map.</source>
@@ -316,7 +292,35 @@
   <target>d</target>
   <note from="lit-localize">Unit abbreviation for days, shown after a number</note>
 </trans-unit>
-    <trans-unit id="s773eacc0b477d43c">
+<trans-unit id="s9f744a5dec575b76">
+  <source>Simulation map. Enter selects the next hotspot, arrow keys move it, Delete removes it.</source>
+  <target>Zemljevid simulacije. Enter izbere naslednje žarišče, puščice ga premaknejo, Delete pa odstrani.</target>
+</trans-unit>
+<trans-unit id="s97e4c519fa4905f9">
+        <source>SIR</source>
+        <target>SIR</target>
+      </trans-unit>
+<trans-unit id="s716a6024e3fe999c">
+        <source>Show</source>
+        <target>Prikaži</target>
+      </trans-unit>
+<trans-unit id="s62c095244a149fde">
+        <source>SIRS</source>
+        <target>SIRS</target>
+      </trans-unit>
+<trans-unit id="s4215a8243823eda2">
+        <source>SEIR</source>
+        <target>SEIR</target>
+      </trans-unit>
+<trans-unit id="s62c0a8244a14c027">
+        <source>SIRD</source>
+        <target>SIRD</target>
+      </trans-unit>
+<trans-unit id="s6eba9b8b650d3dd2">
+        <source>SEIRD</source>
+        <target>SEIRD</target>
+      </trans-unit>
+<trans-unit id="s773eacc0b477d43c">
   <source>Learner controls</source>
 <target>Kontrolniki za učence</target></trans-unit>
 <trans-unit id="sdc6ec6514ca70ce6">

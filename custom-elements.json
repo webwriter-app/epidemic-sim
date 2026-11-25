@@ -616,9 +616,7 @@
             "package": "@webwriter/lit"
           },
           "tagName": "webwriter-epidemic-sim",
-          "customElement": true,
-          "modulePath": "src/widgets/webwriter-epidemic-sim.ts",
-          "definitionPath": "src/widgets/webwriter-epidemic-sim.ts"
+          "customElement": true
         }
       ],
       "exports": [

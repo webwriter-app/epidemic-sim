@@ -2,8 +2,8 @@
     // Do not modify this file by hand!
     // Re-generate this file by running lit-localize
 
-    
-    
+
+
 
     /* eslint-disable no-irregular-whitespace */
     /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -12,19 +12,16 @@
       's00ae53430e6c31cb': `Maarifa ya SEIR`,
 's061cc20e3432dead': `Sitisha kwa muda`,
 's09943be8697420ce': `Muda wa kupona`,
-'s18b7e5266a1b9512': `Washa maeneo ya maambukizi`,
 's20c7305417726e5a': `Waliopona`,
 's2e7ece256ba72b3b': `Maarifa ya SEIRD`,
 's35264f659ccd236e': `Uwezekano wa karantini`,
 's355b21b89ce5d9c5': `Maelezo`,
-'s4215a8243823eda2': `SEIR`,
 's45615e2718064d48': `Maarifa`,
 's45b0974d18b97957': `Maarifa ya SIRS`,
 's48e186fb300e5464': `Wakati`,
 's4b10acae683d2978': `Skrini nzima`,
 's4f1a78fbc7a2da7a': `Waliowekwa wazi sasa`,
 's5334c0927cf25b86': `Toka kwenye skrini nzima`,
-'s542603d2f3836073': `Uwezekano wa kuondoka kwenye jumuiya`,
 's5712f84064913c57': `Muda wa karantini`,
 's5aa43edcf11f09af': `Muda wa kuatamia`,
 's5ba7326ba78af02e': `Aina ya modeli`,
@@ -34,31 +31,25 @@
 's5e8250fb85d64c23': `Funga`,
 's5fef8fa88777bdec': `Waliokufa sasa`,
 's6144a4a2c984c772': `Idadi ya watu`,
-'s62c095244a149fde': `SIRS`,
-'s62c0a8244a14c027': `SIRD`,
 's65aa7dfb7792b528': `Maarifa ya SIRD`,
 's6c42c02bb3a76cef': `Weka upya uigaji`,
 's6e526bbb8672e76a': `R0 (takriban)`,
-'s6eba9b8b650d3dd2': `SEIRD`,
 's6f54d7620146d1b1': `Karantini`,
 's6fa549ec31db634a': `Uigaji unaweza kumalizika mapema janga linapoisha`,
-'s716a6024e3fe999c': `Onyesha`,
 's71ffa36b183c46fd': `Uwezekano wa maambukizi`,
 's7379168642ff77b3': `Waliowekwa wazi`,
-'s773eacc0b477d43c': `Vidhibiti vya mwanafunzi`,
 's77cc57dd46f7f5cc': `Uwezekano wa kutembelea eneo la maambukizi`,
 's7a3c4c7e8b923c76': `Buruta eneo hili la maambukizi hadi kwenye ramani ya uigaji.`,
 's7b564dc9f5db9ad8': `Radi ya maambukizi`,
-'s7bb14d2609cd9c77': `Washa jumuiya`,
 's7be45f343cb15665': `Sehemu ya waliopona mwishoni`,
 's8f6ded5587ad8969': `Kiwango cha kinga ya kundi`,
 's941a41d587a259fd': `Muda wa kinga`,
-'s97e4c519fa4905f9': `SIR`,
 's984d2b333eff760a': `Gusa ramani ya uigaji ili kuweka eneo la maambukizi.`,
 's99adf8f78a414996': `Jumuiya`,
 's9ac5fba6ad7337b9': `Walioambukizwa`,
 's9d53ce2c390c880c': `Picha (PNG)`,
 's9ddf0979f55228fd': `Uwezekano wa kifo`,
+'s9f744a5dec575b76': `Ramani ya uigaji. Enter huchagua kitovu kinachofuata, vitufe vya mishale hukisogeza, na Delete hukifuta.`,
 'sa1cbd47c70068780': `Idadi ya juu ya mawakala katika eneo la maambukizi`,
 'sa7d4a2c8f4e43300': `Maeneo ya maambukizi yaliyowekwa`,
 'sae1c7f13b7c0c47f': `Mwanzo`,
@@ -82,9 +73,7 @@
 'sd3386a2ef42e80b9': `Pakua`,
 'sd4755728c441b538': `Muda uliopita`,
 'sd8f1f39f65abba47': `Picha ya chati ya SIR`,
-'sdb807487fc2632a0': `Idadi ya juu ya mawakala katika eneo la maambukizi`,
 'sdc673e73b5c13aea': `Futa`,
-'sdc6ec6514ca70ce6': `Washa karantini`,
 'se0955919920ee87d': `Siku`,
 'se24130f1123560a0': `Kasi`,
 'sed03791dbc19b9c0': `Jedwali (CSV)`,
@@ -94,4 +83,3 @@
 'sf62c2403c94966db': `Wanaoweza kuambukizwa sasa`,
 'sfc12d40fe5fa5f7d': `Bado hakuna picha.`,
     };
-  

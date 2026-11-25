@@ -2,8 +2,8 @@
     // Do not modify this file by hand!
     // Re-generate this file by running lit-localize
 
-    
-    
+
+
 
     /* eslint-disable no-irregular-whitespace */
     /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -12,19 +12,16 @@
       's00ae53430e6c31cb': `SEIR-Kennzahlen`,
 's061cc20e3432dead': `Pause`,
 's09943be8697420ce': `Genesungsdauer`,
-'s18b7e5266a1b9512': `Hotspots aktivieren`,
 's20c7305417726e5a': `Genesen`,
 's2e7ece256ba72b3b': `SEIRD-Kennzahlen`,
 's35264f659ccd236e': `Quarantänewahrscheinlichkeit`,
 's355b21b89ce5d9c5': `Details`,
-'s4215a8243823eda2': `SEIR`,
 's45615e2718064d48': `Kennzahlen`,
 's45b0974d18b97957': `SIRS-Kennzahlen`,
 's48e186fb300e5464': `Zeit`,
 's4b10acae683d2978': `Vollbild`,
 's4f1a78fbc7a2da7a': `Aktuell exponiert`,
 's5334c0927cf25b86': `Vollbild beenden`,
-'s542603d2f3836073': `Wahrscheinlichkeit, die Gemeinschaft zu verlassen`,
 's5712f84064913c57': `Quarantänedauer`,
 's5aa43edcf11f09af': `Inkubationszeit`,
 's5ba7326ba78af02e': `Modelltyp`,
@@ -34,31 +31,25 @@
 's5e8250fb85d64c23': `Schließen`,
 's5fef8fa88777bdec': `Aktuell verstorben`,
 's6144a4a2c984c772': `Bevölkerung`,
-'s62c095244a149fde': `SIRS`,
-'s62c0a8244a14c027': `SIRD`,
 's65aa7dfb7792b528': `SIRD-Kennzahlen`,
 's6c42c02bb3a76cef': `Simulation zurücksetzen`,
 's6e526bbb8672e76a': `R0 (ca.)`,
-'s6eba9b8b650d3dd2': `SEIRD`,
 's6f54d7620146d1b1': `Quarantäne`,
 's6fa549ec31db634a': `Die Simulation kann früher enden, wenn die Epidemie vorbei ist`,
-'s716a6024e3fe999c': `Anzeigen`,
 's71ffa36b183c46fd': `Infektionswahrscheinlichkeit`,
 's7379168642ff77b3': `Exponiert`,
-'s773eacc0b477d43c': `Steuerung für Lernende`,
 's77cc57dd46f7f5cc': `Wahrscheinlichkeit eines Hotspot-Besuchs`,
 's7a3c4c7e8b923c76': `Ziehen Sie diesen Hotspot auf die Simulationskarte.`,
 's7b564dc9f5db9ad8': `Infektionsradius`,
-'s7bb14d2609cd9c77': `Gemeinschaften aktivieren`,
 's7be45f343cb15665': `Anteil Genesener am Ende`,
 's8f6ded5587ad8969': `Schwelle zur Herdenimmunität`,
 's941a41d587a259fd': `Immunitätsdauer`,
-'s97e4c519fa4905f9': `SIR`,
 's984d2b333eff760a': `Tippen Sie auf die Simulationskarte, um den Hotspot zu platzieren.`,
 's99adf8f78a414996': `Gemeinschaften`,
 's9ac5fba6ad7337b9': `Infiziert`,
 's9d53ce2c390c880c': `Bild (PNG)`,
 's9ddf0979f55228fd': `Sterbewahrscheinlichkeit`,
+'s9f744a5dec575b76': `Simulationskarte. Die Eingabetaste wählt den nächsten Hotspot aus. Die Pfeiltasten verschieben ihn, Entf löscht ihn.`,
 'sa1cbd47c70068780': `Max. Personen pro Hotspot`,
 'sa7d4a2c8f4e43300': `Platzierte Hotspots`,
 'sae1c7f13b7c0c47f': `Start`,
@@ -82,9 +73,7 @@
 'sd3386a2ef42e80b9': `Herunterladen`,
 'sd4755728c441b538': `Verstrichene Zeit`,
 'sd8f1f39f65abba47': `Snapshot des SIR-Diagramms`,
-'sdb807487fc2632a0': `Maximale Personen im Hotspot`,
 'sdc673e73b5c13aea': `Löschen`,
-'sdc6ec6514ca70ce6': `Quarantäne aktivieren`,
 'se0955919920ee87d': `Tag`,
 'se24130f1123560a0': `Geschwindigkeit`,
 'sed03791dbc19b9c0': `Tabelle (CSV)`,
@@ -94,4 +83,3 @@
 'sf62c2403c94966db': `Aktuell anfällig`,
 'sfc12d40fe5fa5f7d': `Noch keine Snapshots.`,
     };
-  

@@ -2,8 +2,8 @@
     // Do not modify this file by hand!
     // Re-generate this file by running lit-localize
 
-    
-    
+
+
 
     /* eslint-disable no-irregular-whitespace */
     /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -12,19 +12,16 @@
       's00ae53430e6c31cb': `Mga kabatiran sa SEIR`,
 's061cc20e3432dead': `I-pause`,
 's09943be8697420ce': `Tagal ng paggaling`,
-'s18b7e5266a1b9512': `Paganahin ang mga hotspot`,
 's20c7305417726e5a': `Gumaling`,
 's2e7ece256ba72b3b': `Mga kabatiran sa SEIRD`,
 's35264f659ccd236e': `Posibilidad ng kuwarentina`,
 's355b21b89ce5d9c5': `Mga detalye`,
-'s4215a8243823eda2': `SEIR`,
 's45615e2718064d48': `Mga kabatiran`,
 's45b0974d18b97957': `Mga kabatiran sa SIRS`,
 's48e186fb300e5464': `Oras`,
 's4b10acae683d2978': `Fullscreen`,
 's4f1a78fbc7a2da7a': `Kasalukuyang nalantad`,
 's5334c0927cf25b86': `Lumabas sa full screen`,
-'s542603d2f3836073': `Posibilidad na umalis sa komunidad`,
 's5712f84064913c57': `Tagal ng kuwarentina`,
 's5aa43edcf11f09af': `Tagal ng incubation`,
 's5ba7326ba78af02e': `Uri ng modelo`,
@@ -34,31 +31,25 @@
 's5e8250fb85d64c23': `Isara`,
 's5fef8fa88777bdec': `Kasalukuyang namatay`,
 's6144a4a2c984c772': `Populasyon`,
-'s62c095244a149fde': `SIRS`,
-'s62c0a8244a14c027': `SIRD`,
 's65aa7dfb7792b528': `Mga kabatiran sa SIRD`,
 's6c42c02bb3a76cef': `I-reset ang simulation`,
 's6e526bbb8672e76a': `R0 (tinataya)`,
-'s6eba9b8b650d3dd2': `SEIRD`,
 's6f54d7620146d1b1': `Kuwarentina`,
 's6fa549ec31db634a': `Maaaring matapos nang mas maaga ang simulation kapag tapos na ang epidemya`,
-'s716a6024e3fe999c': `Ipakita`,
 's71ffa36b183c46fd': `Posibilidad ng impeksiyon`,
 's7379168642ff77b3': `Nalantad`,
-'s773eacc0b477d43c': `Mga kontrol ng mag-aaral`,
 's77cc57dd46f7f5cc': `Posibilidad na bumisita sa hotspot`,
 's7a3c4c7e8b923c76': `I-drag ang hotspot na ito papunta sa mapa ng simulation.`,
 's7b564dc9f5db9ad8': `Saklaw ng impeksiyon`,
-'s7bb14d2609cd9c77': `Paganahin ang mga komunidad`,
 's7be45f343cb15665': `Bahagi ng gumaling sa huli`,
 's8f6ded5587ad8969': `Hangganan ng herd immunity`,
 's941a41d587a259fd': `Tagal ng immunity`,
-'s97e4c519fa4905f9': `SIR`,
 's984d2b333eff760a': `I-tap ang mapa ng simulation upang maglagay ng hotspot.`,
 's99adf8f78a414996': `Mga komunidad`,
 's9ac5fba6ad7337b9': `Nahawahan`,
 's9d53ce2c390c880c': `Larawan (PNG)`,
 's9ddf0979f55228fd': `Posibilidad ng pagkamatay`,
+'s9f744a5dec575b76': `Mapa ng simulasyon. Pinipili ng Enter ang susunod na hotspot, ginagalaw ito ng mga arrow key, at inaalis ito ng Delete.`,
 'sa1cbd47c70068780': `Pinakamaraming ahente sa hotspot`,
 'sa7d4a2c8f4e43300': `Mga inilagay na hotspot`,
 'sae1c7f13b7c0c47f': `Simula`,
@@ -82,9 +73,7 @@
 'sd3386a2ef42e80b9': `I-download`,
 'sd4755728c441b538': `Lumipas na oras`,
 'sd8f1f39f65abba47': `Snapshot ng tsart ng SIR`,
-'sdb807487fc2632a0': `Pinakamaraming ahente sa isang hotspot`,
 'sdc673e73b5c13aea': `Burahin`,
-'sdc6ec6514ca70ce6': `Paganahin ang kuwarentina`,
 'se0955919920ee87d': `Araw`,
 'se24130f1123560a0': `Bilis`,
 'sed03791dbc19b9c0': `Talahanayan (CSV)`,
@@ -94,4 +83,3 @@
 'sf62c2403c94966db': `Kasalukuyang madaling mahawa`,
 'sfc12d40fe5fa5f7d': `Wala pang mga snapshot.`,
     };
-  

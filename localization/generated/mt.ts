@@ -2,8 +2,8 @@
     // Do not modify this file by hand!
     // Re-generate this file by running lit-localize
 
-    
-    
+
+
 
     /* eslint-disable no-irregular-whitespace */
     /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -12,19 +12,16 @@
       's00ae53430e6c31cb': `Tagħrif dwar SEIR`,
 's061cc20e3432dead': `Pawża`,
 's09943be8697420ce': `Tul tal-fejqan`,
-'s18b7e5266a1b9512': `Attiva l-punti tat-tifqigħa`,
 's20c7305417726e5a': `Irrkupraw`,
 's2e7ece256ba72b3b': `Tagħrif dwar SEIRD`,
 's35264f659ccd236e': `Probabbiltà ta’ kwarantina`,
 's355b21b89ce5d9c5': `Dettalji`,
-'s4215a8243823eda2': `SEIR`,
 's45615e2718064d48': `Tagħrif`,
 's45b0974d18b97957': `Tagħrif dwar SIRS`,
 's48e186fb300e5464': `Ħin`,
 's4b10acae683d2978': `Skrin sħiħ`,
 's4f1a78fbc7a2da7a': `Esposti bħalissa`,
 's5334c0927cf25b86': `Oħroġ mill-iskrin sħiħ`,
-'s542603d2f3836073': `Probabbiltà li titlaq mill-komunità`,
 's5712f84064913c57': `Tul tal-kwarantina`,
 's5aa43edcf11f09af': `Tul tal-inkubazzjoni`,
 's5ba7326ba78af02e': `Tip ta’ mudell`,
@@ -34,31 +31,25 @@
 's5e8250fb85d64c23': `Agħlaq`,
 's5fef8fa88777bdec': `Mietu bħalissa`,
 's6144a4a2c984c772': `Popolazzjoni`,
-'s62c095244a149fde': `SIRS`,
-'s62c0a8244a14c027': `SIRD`,
 's65aa7dfb7792b528': `Tagħrif dwar SIRD`,
 's6c42c02bb3a76cef': `Irrisettja s-simulazzjoni`,
 's6e526bbb8672e76a': `R₀ (madwar)`,
-'s6eba9b8b650d3dd2': `SEIRD`,
 's6f54d7620146d1b1': `Kwarantina`,
 's6fa549ec31db634a': `Is-simulazzjoni tista’ tintemm qabel jekk tintemm l-epidemija.`,
-'s716a6024e3fe999c': `Uri`,
 's71ffa36b183c46fd': `Probabbiltà ta’ infezzjoni`,
 's7379168642ff77b3': `Esposti`,
-'s773eacc0b477d43c': `Kontrolli għall-istudenti`,
 's77cc57dd46f7f5cc': `Probabbiltà li żżur punt ta’ tifqigħa`,
 's7a3c4c7e8b923c76': `Iddreggja dan il-punt tat-tifqigħa fuq il-mappa tas-simulazzjoni.`,
 's7b564dc9f5db9ad8': `Raġġ tal-infezzjoni`,
-'s7bb14d2609cd9c77': `Attiva l-komunitajiet`,
 's7be45f343cb15665': `Sehem finali ta’ dawk li rkupraw`,
 's8f6ded5587ad8969': `Limitu tal-immunità tal-merħla`,
 's941a41d587a259fd': `Tul tal-immunità`,
-'s97e4c519fa4905f9': `SIR`,
 's984d2b333eff760a': `Taptap fuq il-mappa tas-simulazzjoni biex tpoġġi l-punt tat-tifqigħa.`,
 's99adf8f78a414996': `Komunitajiet`,
 's9ac5fba6ad7337b9': `Infettati`,
 's9d53ce2c390c880c': `Immaġni (PNG)`,
 's9ddf0979f55228fd': `Probabbiltà ta’ mewt`,
+'s9f744a5dec575b76': `Mappa tas-simulazzjoni. Enter jagħżel il-fokus li jmiss, il-vleġeġ iċaqalquh u Delete ineħħih.`,
 'sa1cbd47c70068780': `Numru massimu ta’ aġenti f’punt ta’ tifqigħa`,
 'sa7d4a2c8f4e43300': `Punti tat-tifqigħa mqiegħda`,
 'sae1c7f13b7c0c47f': `Bidu`,
@@ -82,9 +73,7 @@
 'sd3386a2ef42e80b9': `Niżżel`,
 'sd4755728c441b538': `Ħin li għadda`,
 'sd8f1f39f65abba47': `Ritratt tal-graff SIR`,
-'sdb807487fc2632a0': `Numru massimu ta’ aġenti f’punt ta’ tifqigħa`,
 'sdc673e73b5c13aea': `Ħassar`,
-'sdc6ec6514ca70ce6': `Attiva l-kwarantina`,
 'se0955919920ee87d': `Jum`,
 'se24130f1123560a0': `Veloċità`,
 'sed03791dbc19b9c0': `Tabella (CSV)`,
@@ -94,4 +83,3 @@
 'sf62c2403c94966db': `Suxxettibbli bħalissa`,
 'sfc12d40fe5fa5f7d': `Għad m’hemmx ritratti.`,
     };
-  
