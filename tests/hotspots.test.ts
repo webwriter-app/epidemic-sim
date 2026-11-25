@@ -28,6 +28,31 @@ describe("<webwriter-epidemic-sim> hotspots", function () {
   })
 
   describe("dragging the token", function () {
+    it("shows hover cursors for hotspot moves and resize corners without changing authored data", async function () {
+      const widget = await mount(controlled)
+      await dragToken(widget, box => ({x: box.left + box.width / 2, y: box.top + box.height / 2}))
+      const canvas = root(widget).querySelector<HTMLCanvasElement>("#simulation-canvas")!
+      const rect = hotspots(widget).at(-1)!.rect
+      const box = canvas.getBoundingClientRect()
+      const move = (x: number, y: number, pointerType = "mouse") => canvas.dispatchEvent(new PointerEvent("pointermove", {
+        clientX: box.left + x * box.width / 600,
+        clientY: box.top + y * box.height / 360,
+        pointerType,
+      }))
+      const before = widget.innerHTML
+      move(rect.x + rect.width / 2, rect.y + rect.height / 2)
+      assert.equal(canvas.style.cursor, "pointer")
+      move(rect.x, rect.y)
+      assert.equal(canvas.style.cursor, "nwse-resize")
+      move(rect.x + rect.width, rect.y)
+      assert.equal(canvas.style.cursor, "nesw-resize")
+      move(0, 0, "touch")
+      assert.equal(canvas.style.cursor, "nesw-resize", "touch does not change the hover cursor")
+      move(0, 0)
+      assert.equal(canvas.style.cursor, "")
+      assert.equal(widget.innerHTML, before)
+    })
+
     it("creates a hotspot centred where it is dropped on the map", async function () {
       const widget = await mount(controlled)
       const canvas = root(widget).querySelector("#simulation-canvas")!

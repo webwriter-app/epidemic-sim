@@ -22,6 +22,7 @@ type CanvasPanelInput = {
   isRunning: boolean
   onCanvasDragCommit: (event: DragCommitEvent) => void
   onCanvasPointerDown: (event: PointerEvent) => void
+  onCanvasPointerMove: (event: PointerEvent) => void
   onCanvasContextMenu: (event: MouseEvent) => void
   onCanvasKeyDown: (event: KeyboardEvent) => void
   printImage: string | null
@@ -67,6 +68,7 @@ export function renderCanvasPanel(input: CanvasPanelInput, msg: MsgFn = sourceMs
           data-ww-drop-position="point"
           @ww-dragcommit=${input.onCanvasDragCommit}
           @pointerdown=${input.onCanvasPointerDown}
+          @pointermove=${input.onCanvasPointerMove}
           @contextmenu=${input.onCanvasContextMenu}
         ></canvas>
         ${input.printImage ? html`<img class="print-image" alt="" src=${input.printImage}>` : null}

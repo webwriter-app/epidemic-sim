@@ -563,6 +563,7 @@ export class WebwriterEpidemicSim extends Settings(LitElementWw, SETTINGS) {
       isFullscreen: this.isFullscreen,
       onCanvasDragCommit: this.hotspotEditing.onCanvasDragCommit,
       onCanvasPointerDown: this.hotspotSelection.onCanvasPointerDown,
+      onCanvasPointerMove: this.hotspotSelection.onCanvasPointerMove,
       onCanvasContextMenu: this.hotspotSelection.onCanvasContextMenu,
       onCanvasKeyDown: this.hotspotSelection.onCanvasKeyDown,
       printImages: this.printImages.images,

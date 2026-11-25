@@ -30,6 +30,7 @@ type WidgetLayoutInput = {
   isFullscreen: boolean
   onCanvasDragCommit: (event: DragCommitEvent) => void
   onCanvasPointerDown: (event: PointerEvent) => void
+  onCanvasPointerMove: (event: PointerEvent) => void
   onCanvasContextMenu: (event: MouseEvent) => void
   onCanvasKeyDown: (event: KeyboardEvent) => void
   printImages: {chart: string; map: string} | null
@@ -92,6 +93,7 @@ export function renderWidgetLayout(input: WidgetLayoutInput, msg: MsgFn = source
             isRunning: input.isRunning,
             onCanvasDragCommit: input.onCanvasDragCommit,
             onCanvasPointerDown: input.onCanvasPointerDown,
+            onCanvasPointerMove: input.onCanvasPointerMove,
             onCanvasContextMenu: input.onCanvasContextMenu,
             onCanvasKeyDown: input.onCanvasKeyDown,
             printImage: input.printImages?.map ?? null,

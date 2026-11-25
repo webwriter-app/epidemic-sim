@@ -59,6 +59,17 @@ export class HotspotSelection {
     this.select(hotspot?.id ?? (handled ? this.selectedId : null))
   }
 
+  onCanvasPointerMove = (event: PointerEvent): void => {
+    if (event.pointerType === "touch") {
+      return
+    }
+    const config = this.host.getConfig()
+    const hotspots = config.hotspotsEnabled && !this.placementActive
+      ? this.host.editing.getAreas(config).hotspots
+      : []
+    this.host.pointer.updateHoverCursor(event, hotspots)
+  }
+
   onCanvasContextMenu = (event: MouseEvent): void => {
     const config = this.host.getConfig()
     if (!config.hotspotsEnabled) {

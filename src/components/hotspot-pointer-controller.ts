@@ -145,6 +145,29 @@ export class HotspotPointerController implements ReactiveController {
     return false
   }
 
+  updateHoverCursor(event: PointerEvent, hotspots: Hotspot[]): void {
+    const canvas = this.callbacks.getCanvas()
+    if (!canvas || this.draggingHotspotId !== null || this.resizingHotspotId !== null) {
+      return
+    }
+    const point = getCanvasPoint(canvas, event.clientX, event.clientY)
+    let cursor = ""
+    for (let i = hotspots.length - 1; point && i >= 0; i -= 1) {
+      const rect = hotspots[i].rect
+      const corner = getHotspotCornerAtPoint(point.x, point.y, rect)
+      if (corner) {
+        cursor = corner === "nw" || corner === "se" ? "nwse-resize" : "nesw-resize"
+        break
+      }
+      if (point.x >= rect.x && point.x <= rect.x + rect.width &&
+          point.y >= rect.y && point.y <= rect.y + rect.height) {
+        cursor = "pointer"
+        break
+      }
+    }
+    canvas.style.cursor = cursor
+  }
+
   clear(): void {
     const hadInteraction = this.draggingHotspotId !== null || this.resizingHotspotId !== null
     this.draggingHotspotId = null
