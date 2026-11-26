@@ -1,5 +1,5 @@
-# Epidemic Sim (`@webwriter/epidemic-sim@2.0.1`)
-[License: MIT](LICENSE) | Version: 2.0.1
+# Epidemic Sim (`@webwriter/epidemic-sim@2.1.0`)
+[License: MIT](LICENSE) | Version: 2.1.0
 
 Model how diseases spread through populations and explore intervention effects.
 
